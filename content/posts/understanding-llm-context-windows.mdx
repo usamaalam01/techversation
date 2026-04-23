@@ -1,0 +1,45 @@
+---
+title: "Understanding LLM Context Windows"
+description: "Why attention limits matter and how models like Claude handle long documents through extended context capabilities."
+date: "2026-04-23"
+author: "AI Pulse"
+tags: ["llm", "transformers", "ai"]
+aiSummary: "This article explains context windows in large language models — what they are, why they constrain model behavior, and how recent advances like Claude's extended context and sliding window attention are pushing past previous limits. Essential reading for anyone building on top of modern LLMs."
+draft: false
+---
+
+## What is a context window?
+
+A context window is the maximum amount of text a language model can process at once. Every token — roughly a word or sub-word — you send to the model counts against this limit. When you exceed it, the model simply cannot see the earlier parts of the conversation.
+
+## Why it matters
+
+If you're building a document summarizer, a code reviewer, or a long-form assistant, you'll hit this wall sooner than expected. A 100,000-token context sounds vast, but a single codebase or research paper can fill it quickly.
+
+```python
+# Estimate token count (rough approximation)
+def estimate_tokens(text: str) -> int:
+    return len(text.split()) * 1.3  # words * average tokens-per-word
+
+doc = open("research_paper.txt").read()
+print(f"~{estimate_tokens(doc):,.0f} tokens")
+```
+
+## How modern models extend context
+
+Recent architectures tackle this in several ways:
+
+1. **Sliding window attention** — rather than attending to all past tokens equally, the model focuses on a rolling window plus a few special "global" tokens.
+2. **Positional encoding improvements** — RoPE (Rotary Position Embedding) and ALiBi allow models to generalize to longer sequences than they saw during training.
+3. **Memory-augmented architectures** — models like Memorizing Transformers store key-value pairs in external memory, retrieved at inference time.
+
+## Practical implications
+
+When building with LLMs:
+
+- Chunk long documents and process them in overlapping windows
+- Summarize intermediate results before passing them forward
+- Use retrieval-augmented generation (RAG) to avoid stuffing the context at all
+- Monitor actual token usage — `tiktoken` for OpenAI models, Anthropic's token counter for Claude
+
+The context window is not a bug — it's a fundamental architectural constraint with elegant workarounds. Understanding it makes you a better builder.
