@@ -6,56 +6,64 @@ import type { Post, SearchIndexItem } from "@/types/post";
 
 const POSTS_DIR = path.join(process.cwd(), "content", "posts");
 
-function slugFromFilename(filename: string): string {
-  return filename.replace(/\.mdx?$/, "");
-}
-
-export function getAllPosts(): Post[] {
+function getPostFiles(): Array<{ slug: string; filePath: string }> {
   if (!fs.existsSync(POSTS_DIR)) return [];
 
-  const filenames = fs.readdirSync(POSTS_DIR).filter((f) => f.endsWith(".mdx"));
+  const entries = fs.readdirSync(POSTS_DIR, { withFileTypes: true });
+  const result: Array<{ slug: string; filePath: string }> = [];
 
-  const posts = filenames
-    .map((filename) => {
-      const slug = slugFromFilename(filename);
-      const raw = fs.readFileSync(path.join(POSTS_DIR, filename), "utf-8");
-      const { data, content } = matter(raw);
-      const rt = readingTime(content);
+  for (const entry of entries) {
+    if (entry.isFile() && entry.name.endsWith(".mdx")) {
+      // Flat file: content/posts/slug.mdx (manually created)
+      result.push({
+        slug: entry.name.replace(/\.mdx$/, ""),
+        filePath: path.join(POSTS_DIR, entry.name),
+      });
+    } else if (entry.isDirectory()) {
+      // Directory: content/posts/slug/index.mdx (Keystatic format)
+      const indexPath = path.join(POSTS_DIR, entry.name, "index.mdx");
+      if (fs.existsSync(indexPath)) {
+        result.push({ slug: entry.name, filePath: indexPath });
+      }
+    }
+  }
 
-      return {
-        ...(data as Post),
-        slug,
-        readingTime: Math.ceil(rt.minutes),
-        content,
-      } as Post;
-    })
-    .filter((post) => !post.draft);
-
-  return posts.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
+  return result;
 }
 
-export function getPostBySlug(slug: string): Post | null {
-  const filePath = path.join(POSTS_DIR, `${slug}.mdx`);
-  if (!fs.existsSync(filePath)) return null;
-
+function parsePost(slug: string, filePath: string): Post | null {
   const raw = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(raw);
-  const rt = readingTime(content);
+  if (data.draft) return null;
 
+  const rt = readingTime(content);
   return {
     ...(data as Post),
     slug,
     readingTime: Math.ceil(rt.minutes),
     content,
-  } as Post;
+  };
+}
+
+export function getAllPosts(): Post[] {
+  return getPostFiles()
+    .map(({ slug, filePath }) => parsePost(slug, filePath))
+    .filter((p): p is Post => p !== null)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+}
+
+export function getPostBySlug(slug: string): Post | null {
+  // Try flat file first, then directory format
+  const flat = path.join(POSTS_DIR, `${slug}.mdx`);
+  const dir = path.join(POSTS_DIR, slug, "index.mdx");
+  const filePath = fs.existsSync(flat) ? flat : fs.existsSync(dir) ? dir : null;
+  if (!filePath) return null;
+  return parsePost(slug, filePath);
 }
 
 export function getAllTags(): string[] {
-  const posts = getAllPosts();
   const tagSet = new Set<string>();
-  posts.forEach((post) => post.tags?.forEach((tag) => tagSet.add(tag)));
+  getAllPosts().forEach((post) => post.tags?.forEach((tag) => tagSet.add(tag)));
   return Array.from(tagSet).sort();
 }
 

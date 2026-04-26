@@ -2,39 +2,19 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/components/layout/ThemeProvider";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://localhost:3000";
 const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME ?? "AI Pulse";
 
 export const metadata: Metadata = {
-  title: {
-    default: SITE_NAME,
-    template: `%s | ${SITE_NAME}`,
-  },
+  title: { default: SITE_NAME, template: `%s | ${SITE_NAME}` },
   description: "Latest articles on artificial intelligence, LLMs, and technology.",
   metadataBase: new URL(SITE_URL),
-  openGraph: {
-    type: "website",
-    siteName: SITE_NAME,
-    locale: "en_US",
-  },
-  alternates: {
-    types: {
-      "application/rss+xml": `${SITE_URL}/rss.xml`,
-    },
-  },
+  openGraph: { type: "website", siteName: SITE_NAME, locale: "en_US" },
+  alternates: { types: { "application/rss+xml": `${SITE_URL}/rss.xml` } },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -45,11 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
-        <ThemeProvider>
-          <Header />
-          <div className="flex-1">{children}</div>
-          <Footer />
-        </ThemeProvider>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );
