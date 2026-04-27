@@ -1,9 +1,28 @@
-import os
+"""
+LLM content generation via LangChain.
+Switch provider/model/key entirely through env vars — no code changes needed.
+
+Supported providers (LLM_PROVIDER env var):
+  gemini     → Google Gemini (default, free tier available)
+  anthropic  → Anthropic Claude
+  groq       → Groq (free tier, Llama models)
+  deepseek   → DeepSeek (OpenAI-compatible API)
+  openai     → OpenAI GPT models
+
+Example env vars:
+  LLM_PROVIDER=gemini      LLM_MODEL=gemini-2.0-flash          LLM_API_KEY=AIza...
+  LLM_PROVIDER=anthropic   LLM_MODEL=claude-sonnet-4-6         LLM_API_KEY=sk-ant-...
+  LLM_PROVIDER=groq        LLM_MODEL=llama-3.3-70b-versatile   LLM_API_KEY=gsk_...
+  LLM_PROVIDER=deepseek    LLM_MODEL=deepseek-chat             LLM_API_KEY=sk-...
+  LLM_PROVIDER=openai      LLM_MODEL=gpt-4o-mini               LLM_API_KEY=sk-...
+"""
 import time
 from datetime import date
 from typing import Any
 
-import anthropic
+from langchain_core.messages import HumanMessage, SystemMessage
+
+import config
 
 _FORMAT_LENGTHS = {
     "analysis": "600–900 words",
@@ -62,42 +81,100 @@ Rules:
 """
 
 
-def generate_post(story: dict[str, Any], retries: int = 3) -> str:
-    """Call Claude to generate a full MDX post. Returns the raw MDX string."""
-    client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+def _build_llm():
+    """Instantiate the correct LangChain chat model based on LLM_PROVIDER."""
+    provider = config.LLM_PROVIDER.lower()
+    model = config.LLM_MODEL
+    api_key = config.LLM_API_KEY
 
-    today = date.today().isoformat()
-    fmt = story["_format"]
+    if not api_key:
+        raise RuntimeError(
+            f"LLM_API_KEY is not set. "
+            f"Add it as a GitHub Actions secret or export it locally."
+        )
 
-    user_prompt = (
-        f"Write {_FORMAT_DESCRIPTIONS[fmt]} about the following story.\n\n"
-        f"Story title: {story['title']}\n"
-        f"Source: {story['source_name']}\n"
-        f"URL: {story['url']}\n"
-        f"Description: {story.get('description') or 'No description available.'}\n"
-        f"Post date: {today}\n"
-        f"Target length: {_FORMAT_LENGTHS[fmt]}\n"
+    if provider == "gemini":
+        from langchain_google_genai import ChatGoogleGenerativeAI
+        return ChatGoogleGenerativeAI(
+            model=model,
+            google_api_key=api_key,
+            temperature=0.7,
+        )
+
+    if provider == "anthropic":
+        from langchain_anthropic import ChatAnthropic
+        return ChatAnthropic(
+            model=model,
+            anthropic_api_key=api_key,
+            temperature=0.7,
+            max_tokens=4096,
+        )
+
+    if provider == "groq":
+        from langchain_groq import ChatGroq
+        return ChatGroq(
+            model=model,
+            groq_api_key=api_key,
+            temperature=0.7,
+        )
+
+    if provider == "deepseek":
+        from langchain_openai import ChatOpenAI
+        return ChatOpenAI(
+            model=model,
+            openai_api_key=api_key,
+            openai_api_base="https://api.deepseek.com/v1",
+            temperature=0.7,
+            max_tokens=4096,
+        )
+
+    if provider == "openai":
+        from langchain_openai import ChatOpenAI
+        return ChatOpenAI(
+            model=model,
+            openai_api_key=api_key,
+            temperature=0.7,
+            max_tokens=4096,
+        )
+
+    raise ValueError(
+        f"Unknown LLM_PROVIDER '{provider}'. "
+        f"Choose from: gemini, anthropic, groq, deepseek, openai"
     )
 
-    last_error: Exception | None = None
+
+def generate_post(story: dict[str, Any], retries: int = 3) -> str:
+    """Generate a full MDX blog post for the given story. Returns raw MDX string."""
+    llm = _build_llm()
+    fmt = story["_format"]
+    today = date.today().isoformat()
+
+    messages = [
+        SystemMessage(content=_SYSTEM_PROMPT),
+        HumanMessage(content=(
+            f"Write {_FORMAT_DESCRIPTIONS[fmt]} about the following story.\n\n"
+            f"Story title: {story['title']}\n"
+            f"Source: {story['source_name']}\n"
+            f"URL: {story['url']}\n"
+            f"Description: {story.get('description') or 'No description available.'}\n"
+            f"Post date: {today}\n"
+            f"Target length: {_FORMAT_LENGTHS[fmt]}\n"
+        )),
+    ]
+
+    print(f"[Generator] Using {config.LLM_PROVIDER}/{config.LLM_MODEL}")
+
     for attempt in range(retries):
         try:
-            response = client.messages.create(
-                model="claude-sonnet-4-6",
-                max_tokens=4096,
-                system=_SYSTEM_PROMPT,
-                messages=[{"role": "user", "content": user_prompt}],
-            )
-            return response.content[0].text
-        except anthropic.RateLimitError as e:
-            wait = 10 * (2 ** attempt)
-            print(f"[Generator] Rate limit, waiting {wait}s (attempt {attempt + 1}/{retries})")
-            time.sleep(wait)
-            last_error = e
-        except anthropic.APIError as e:
-            wait = 5 * (2 ** attempt)
-            print(f"[Generator] API error: {e}, retrying in {wait}s (attempt {attempt + 1}/{retries})")
-            time.sleep(wait)
-            last_error = e
-
-    raise RuntimeError(f"Claude API failed after {retries} attempts: {last_error}")
+            response = llm.invoke(messages)
+            return response.content
+        except Exception as e:
+            if attempt < retries - 1:
+                wait = 5 * (2 ** attempt)  # 5s, 10s, 20s
+                print(f"[Generator] Error: {e} — retrying in {wait}s (attempt {attempt + 1}/{retries})")
+                time.sleep(wait)
+            else:
+                raise RuntimeError(
+                    f"LLM ({config.LLM_PROVIDER}/{config.LLM_MODEL}) failed "
+                    f"after {retries} attempts: {e}"
+                ) from e

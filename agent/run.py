@@ -58,9 +58,18 @@ def _extract_keywords(title: str) -> list[str]:
 def main() -> None:
     print(f"[Run] Agent starting — {datetime.now(timezone.utc).isoformat()}")
 
-    if not os.environ.get("ANTHROPIC_API_KEY"):
-        print("[Run] ERROR: ANTHROPIC_API_KEY is not set.")
+    if not os.environ.get("LLM_API_KEY"):
+        print(
+            f"[Run] ERROR: LLM_API_KEY is not set.\n"
+            f"       Current provider: {os.environ.get('LLM_PROVIDER', 'gemini')}\n"
+            f"       Set LLM_API_KEY as a GitHub Actions secret or export it locally."
+        )
         sys.exit(1)
+
+    print(
+        f"[Run] Provider: {os.environ.get('LLM_PROVIDER', 'gemini')} / "
+        f"Model: {os.environ.get('LLM_MODEL', 'gemini-2.0-flash')}"
+    )
 
     covered = _load_covered()
     print(f"[Run] {len(covered['covered_urls'])} URLs already covered, "

@@ -9,6 +9,19 @@ on:
     - cron: '0 */6 * * *'
   workflow_dispatch: # Manual trigger from GitHub Actions tab
 
+# ── To switch LLM provider ────────────────────────────────────────────────────
+# Go to: GitHub repo → Settings → Secrets and variables → Actions
+#
+# Secrets (sensitive):
+#   LLM_API_KEY  →  your API key for whichever provider you choose
+#
+# Variables (non-sensitive, visible in logs):
+#   LLM_PROVIDER →  gemini | anthropic | groq | deepseek | openai
+#   LLM_MODEL    →  e.g. gemini-2.0-flash | claude-sonnet-4-6 | llama-3.3-70b-versatile
+#
+# Defaults (used when variables are not set): gemini / gemini-2.0-flash
+# ─────────────────────────────────────────────────────────────────────────────
+
 jobs:
   run-agent:
     runs-on: ubuntu-latest
@@ -32,7 +45,9 @@ jobs:
       - name: Run agent
         run: python agent/run.py
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_PROVIDER: ${{ vars.LLM_PROVIDER || 'gemini' }}
+          LLM_MODEL: ${{ vars.LLM_MODEL || 'gemini-2.0-flash' }}
           HN_MIN_SCORE: '100'
           MAX_AGE_HOURS: '48'
 
