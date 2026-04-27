@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const secret = process.env.KEYSTATIC_SECRET;
 
   // If no secret is configured, block access entirely in production
@@ -17,8 +17,9 @@ export function middleware(request: NextRequest) {
     if (scheme === "Basic" && encoded) {
       const decoded = Buffer.from(encoded, "base64").toString("utf-8");
       const colon = decoded.indexOf(":");
+      const username = decoded.slice(0, colon);
       const password = decoded.slice(colon + 1);
-      if (password === secret) {
+      if (username === process.env.KEYSTATIC_USER && password === secret) {
         return NextResponse.next();
       }
     }
@@ -33,3 +34,4 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: ["/keystatic/:path*", "/api/keystatic/:path*"],
 };
+

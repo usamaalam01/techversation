@@ -1,0 +1,219 @@
+---
+title: "Building AI Agents That Actually Work"
+description: "Most AI agent tutorials show you hello-world demos. This post covers the patterns that make agents reliable in production: tool design, error handling, and knowing when to hand back control to humans."
+date: "2026-04-15"
+author: "Usama"
+tags: ["agents", "llm", "ai", "python"]
+aiSummary: "AI agents are powerful but notoriously fragile. This post goes beyond the basics to cover tool design principles, error recovery, prompt architecture, and the human-in-the-loop patterns that make the difference between a demo and a production system."
+draft: false
+---
+
+Everyone has seen the demo. You give an LLM a goal and a set of tools, and it autonomously browses the web, writes code, and completes complex tasks. The demo is impressive. The production system is a different story.
+
+Real agent systems fail silently, get stuck in loops, hallucinate tool arguments, and accumulate errors across long chains of reasoning. This post is about the patterns that prevent those failures.
+
+---
+
+## What makes an agent different from a chatbot
+
+A chatbot answers one question at a time. An agent takes a goal and figures out the steps to achieve it, using tools along the way. The key properties:
+
+- **Tool use**: the model can call functions (search, write files, call APIs)
+- **Multi-step reasoning**: the model decides what to do next based on previous results
+- **State management**: the model tracks what it's done and what's left to do
+
+The problem is that LLMs are probabilistic. Chain enough probabilistic steps together and small errors compound into completely wrong outcomes.
+
+---
+
+## Tool design is everything
+
+The most common mistake is giving agents tools that are too broad. A `run_python_code` tool sounds powerful. It's also a footgun — the model will misuse it in ways you can't predict.
+
+Better: give agents **narrow, well-defined tools** with obvious names and clear docstrings.
+
+```python
+from anthropic import Anthropic
+
+client = Anthropic()
+
+tools = [
+    {
+        "name": "search_knowledge_base",
+        "description": (
+            "Search the internal knowledge base for information. "
+            "Use this when the user asks about company policies, "
+            "product details, or procedures. "
+            "Returns up to 3 relevant excerpts."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "description": "The search query in plain English"
+                }
+            },
+            "required": ["query"]
+        }
+    },
+    {
+        "name": "create_ticket",
+        "description": (
+            "Create a support ticket. Use this ONLY when the user "
+            "explicitly asks to create a ticket or when an issue "
+            "cannot be resolved through the knowledge base."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "title": {"type": "string"},
+                "description": {"type": "string"},
+                "priority": {
+                    "type": "string",
+                    "enum": ["low", "medium", "high"]
+                }
+            },
+            "required": ["title", "description", "priority"]
+        }
+    }
+]
+```
+
+Notice three things:
+1. Each tool name is a verb + noun that describes exactly what it does
+2. The descriptions tell the model **when** to use the tool, not just what it does
+3. Input schemas are strict — enum values prevent the model from inventing invalid options
+
+---
+
+## The agent loop
+
+A basic agent loop looks like this:
+
+```python
+def run_agent(user_message: str, max_iterations: int = 10) -> str:
+    messages = [{"role": "user", "content": user_message}]
+
+    for iteration in range(max_iterations):
+        response = client.messages.create(
+            model="claude-opus-4-5",
+            max_tokens=4096,
+            tools=tools,
+            messages=messages
+        )
+
+        # Model finished — return the final answer
+        if response.stop_reason == "end_turn":
+            return response.content[0].text
+
+        # Model wants to use a tool
+        if response.stop_reason == "tool_use":
+            messages.append({"role": "assistant", "content": response.content})
+
+            tool_results = []
+            for block in response.content:
+                if block.type == "tool_use":
+                    result = execute_tool(block.name, block.input)
+                    tool_results.append({
+                        "type": "tool_result",
+                        "tool_use_id": block.id,
+                        "content": result
+                    })
+
+            messages.append({"role": "user", "content": tool_results})
+
+    return "Agent reached maximum iterations without completing the task."
+```
+
+The `max_iterations` guard is non-negotiable. Without it, a confused agent will spin forever and drain your API budget.
+
+---
+
+## Error handling inside tools
+
+What happens when a tool fails? Most tutorials return an empty string or raise an exception. Both are wrong.
+
+Return structured errors that the model can reason about:
+
+```python
+def execute_tool(name: str, inputs: dict) -> str:
+    try:
+        if name == "search_knowledge_base":
+            results = kb.search(inputs["query"])
+            if not results:
+                return "No results found for that query. Try different keywords."
+            return "\n\n".join(f"[{i+1}] {r}" for i, r in enumerate(results))
+
+        if name == "create_ticket":
+            ticket_id = ticketing.create(**inputs)
+            return f"Ticket created successfully. ID: {ticket_id}"
+
+        return f"Unknown tool: {name}"
+
+    except Exception as e:
+        # Tell the model what went wrong so it can adapt
+        return f"Error: {str(e)}. Please try a different approach."
+```
+
+When you return a useful error message instead of raising an exception, the model can often recover — try a different search query, ask the user for clarification, or gracefully tell the user the task failed.
+
+---
+
+## When to hand back to a human
+
+The hardest engineering decision in agent design: when should the agent stop and ask for help?
+
+Define irreversible actions explicitly. Sending an email, charging a credit card, deleting a record — these should always require human confirmation:
+
+```python
+IRREVERSIBLE_TOOLS = {"send_email", "charge_payment", "delete_record"}
+
+def execute_tool(name: str, inputs: dict) -> str:
+    if name in IRREVERSIBLE_TOOLS:
+        # Return a confirmation request instead of executing
+        return (
+            f"ACTION REQUIRES CONFIRMATION: {name} with inputs {inputs}. "
+            "Please confirm with the user before proceeding."
+        )
+    # ... rest of tool execution
+```
+
+Your system prompt should tell the agent to surface this confirmation to the user and wait for explicit approval.
+
+---
+
+## The system prompt matters more than you think
+
+Half of agent reliability comes from the system prompt. A few patterns that help:
+
+```
+You are a support agent for Acme Corp. Your goal is to resolve 
+customer issues using the provided tools.
+
+Rules:
+- Always search the knowledge base before creating a ticket
+- If you cannot find a relevant answer after 2 searches, escalate to a ticket
+- Never guess at information you don't have — say "I don't know" instead
+- When creating a ticket, always confirm the priority level with the user first
+
+If you're unsure what to do next, ask the user a clarifying question 
+rather than making an assumption.
+```
+
+Explicit rules beat implicit expectations. The model will follow instructions if they're clear. If your agent is misbehaving, the fix is usually in the system prompt.
+
+---
+
+## Testing agents
+
+Don't test agents with happy-path demos. Test the failure modes:
+
+- What happens when a tool returns nothing?
+- What happens when the user's request is ambiguous?
+- What happens when the model tries to use a tool that doesn't exist?
+- What happens when the user says something completely off-topic?
+
+Maintain a suite of these edge-case scenarios and run them whenever you change the prompt or tools. Agent behavior is fragile — small prompt changes can break previously working flows.
+
+Building agents is genuinely hard. The reward is AI systems that can handle complex, multi-step workflows that would otherwise require significant human effort. Get the foundations right and they're worth it.

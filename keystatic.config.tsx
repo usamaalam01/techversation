@@ -9,10 +9,10 @@ export default config({
     posts: collection({
       label: "Posts",
       slugField: "title",
-      path: "content/posts/*/",
+      path: "content/posts/*",
       format: { contentField: "content" },
       schema: {
-        title: fields.slug({ name: { label: "Title" } }),
+        title: fields.text({ label: "Title", validation: { length: { min: 1 } } }),
         description: fields.text({
           label: "Description",
           multiline: true,

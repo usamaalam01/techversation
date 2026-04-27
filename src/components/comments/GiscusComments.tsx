@@ -16,7 +16,13 @@ export default function GiscusComments({ slug }: GiscusCommentsProps) {
   const repoId = process.env.NEXT_PUBLIC_GISCUS_REPO_ID;
   const categoryId = process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID;
 
-  if (!repo || !repoId || !categoryId) {
+  const configured =
+    repo && repoId && categoryId &&
+    repo !== "owner/repo" &&
+    !repoId.startsWith("R_your") &&
+    !categoryId.startsWith("DIC_your");
+
+  if (!configured) {
     return (
       <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 text-sm text-gray-500 dark:text-gray-400">
         Comments not configured — set NEXT_PUBLIC_GISCUS_* environment variables.
