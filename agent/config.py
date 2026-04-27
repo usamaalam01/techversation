@@ -1,5 +1,14 @@
 import os
 
+# GitHub Actions doesn't allow empty secret values, so placeholders like "-"
+# are used instead. This helper normalises them all to an empty string.
+_PLACEHOLDERS = {"-", "none", "null", "n/a", "na", "placeholder", "undefined"}
+
+def _env(key: str, default: str = "") -> str:
+    val = os.environ.get(key, default).strip()
+    return "" if val.lower() in _PLACEHOLDERS else val
+
+
 MAX_AGE_HOURS = int(os.environ.get("MAX_AGE_HOURS", "48"))
 HN_MIN_SCORE = int(os.environ.get("HN_MIN_SCORE", "100"))
 POSTS_PER_RUN = int(os.environ.get("POSTS_PER_RUN", "1"))
@@ -18,21 +27,21 @@ POSTS_PER_RUN = int(os.environ.get("POSTS_PER_RUN", "1"))
 LLM_CHAIN = [
     {
         "slot": 1,
-        "provider": os.environ.get("LLM_1_PROVIDER", "gemini"),
-        "model":    os.environ.get("LLM_1_MODEL",    "gemini-2.0-flash"),
-        "api_key":  os.environ.get("LLM_1_API_KEY",  ""),
+        "provider": _env("LLM_1_PROVIDER", "gemini"),
+        "model":    _env("LLM_1_MODEL",    "gemini-2.0-flash"),
+        "api_key":  _env("LLM_1_API_KEY"),
     },
     {
         "slot": 2,
-        "provider": os.environ.get("LLM_2_PROVIDER", "groq"),
-        "model":    os.environ.get("LLM_2_MODEL",    "llama-3.3-70b-versatile"),
-        "api_key":  os.environ.get("LLM_2_API_KEY",  ""),
+        "provider": _env("LLM_2_PROVIDER", "groq"),
+        "model":    _env("LLM_2_MODEL",    "llama-3.3-70b-versatile"),
+        "api_key":  _env("LLM_2_API_KEY"),
     },
     {
         "slot": 3,
-        "provider": os.environ.get("LLM_3_PROVIDER", ""),
-        "model":    os.environ.get("LLM_3_MODEL",    ""),
-        "api_key":  os.environ.get("LLM_3_API_KEY",  ""),
+        "provider": _env("LLM_3_PROVIDER"),
+        "model":    _env("LLM_3_MODEL"),
+        "api_key":  _env("LLM_3_API_KEY"),
     },
 ]
 
