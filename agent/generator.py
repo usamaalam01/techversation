@@ -31,6 +31,34 @@ _FORMAT_LENGTHS = {
     "explainer": "800–1200 words, make the concepts accessible to developers",
 }
 
+_CATEGORY_GUIDANCE = {
+    "news": (
+        "This post belongs to the News category. "
+        "Write a concise, timely news analysis — what happened, why it matters, what comes next. "
+        "Keep it punchy and to the point."
+    ),
+    "articles": (
+        "This post belongs to the Articles category. "
+        "Write an in-depth, opinionated piece. Explore implications, trade-offs, and developer impact. "
+        "Back opinions with reasoning."
+    ),
+    "tools": (
+        "This post belongs to the Tools category. "
+        "Write a practical tutorial or hands-on review of the new tool/API/framework. "
+        "Show real code examples, explain how to get started, and give an honest assessment."
+    ),
+    "trending": (
+        "This post belongs to the Trending category. "
+        "Write a sharp analysis of why this topic is blowing up right now. "
+        "Capture the community sentiment and give your honest take."
+    ),
+    "tutorials": (
+        "This post belongs to the Tutorials category. "
+        "Write a clear, step-by-step guide. Start from scratch, build to something useful. "
+        "Prioritize working code, clear explanations, and practical takeaways."
+    ),
+}
+
 _FORMAT_DESCRIPTIONS = {
     "analysis": (
         "a news analysis post: summarize what happened, explain why it matters "
@@ -149,7 +177,7 @@ def _invoke_llm(llm_cfg: dict[str, Any], messages: list) -> str:
                 raise  # Let outer loop catch and fall through to next slot
 
 
-def generate_post(story: dict[str, Any], inline_images: list[dict] | None = None) -> str:
+def generate_post(story: dict[str, Any], inline_images: list[dict] | None = None, category: str | None = None) -> str:
     """
     Generate a full MDX post using the fallback chain.
     Tries each configured LLM slot in order; falls through on any failure.
@@ -173,6 +201,10 @@ def generate_post(story: dict[str, Any], inline_images: list[dict] | None = None
             lines.append(f"  Image {i}: {img['url']}  (suggested alt: \"{img['alt']}\")")
         image_section = "\n\n" + "\n".join(lines)
 
+    category_section = ""
+    if category and category in _CATEGORY_GUIDANCE:
+        category_section = f"\n\nCategory context: {_CATEGORY_GUIDANCE[category]}"
+
     messages = [
         SystemMessage(content=_SYSTEM_PROMPT),
         HumanMessage(content=(
@@ -183,6 +215,7 @@ def generate_post(story: dict[str, Any], inline_images: list[dict] | None = None
             f"Description: {story.get('description') or 'No description available.'}\n"
             f"Post date: {today}\n"
             f"Target length: {_FORMAT_LENGTHS[fmt]}"
+            f"{category_section}"
             f"{image_section}\n"
         )),
     ]

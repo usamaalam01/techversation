@@ -10,6 +10,14 @@ def inject_cover_image(mdx: str, url: str) -> str:
     return re.sub(r'^(draft:)', f'coverImage: "{url}"\n\\1', mdx, flags=re.MULTILINE)
 
 
+def inject_category(mdx: str, category: str) -> str:
+    """Add or replace the category field in MDX frontmatter."""
+    if re.search(r"^category:", mdx, re.MULTILINE):
+        return re.sub(r'^category:.*$', f'category: "{category}"', mdx, flags=re.MULTILINE)
+    # Insert before the draft: line
+    return re.sub(r'^(draft:)', f'category: "{category}"\n\\1', mdx, flags=re.MULTILINE)
+
+
 def _slugify(title: str) -> str:
     title = title.strip("\"'")
     slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")

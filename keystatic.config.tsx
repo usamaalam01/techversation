@@ -37,6 +37,18 @@ export default config({
           description: "Short summary shown at the top of the post.",
           multiline: true,
         }),
+        category: fields.select({
+          label: "Category",
+          description: "Section this post belongs to.",
+          options: [
+            { label: "News",      value: "news" },
+            { label: "Articles",  value: "articles" },
+            { label: "Tools",     value: "tools" },
+            { label: "Trending",  value: "trending" },
+            { label: "Tutorials", value: "tutorials" },
+          ],
+          defaultValue: "articles",
+        }),
         draft: fields.checkbox({ label: "Draft", defaultValue: false }),
         content: fields.mdx({
           label: "Content",

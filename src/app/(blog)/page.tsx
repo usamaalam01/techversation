@@ -1,11 +1,24 @@
 import Link from "next/link";
-import { getAllPosts } from "@/lib/posts";
+import { getPostsByCategory } from "@/lib/posts";
+import { POST_CATEGORIES } from "@/types/post";
 import PostCard from "@/components/blog/PostCard";
 import NewsletterForm from "@/components/newsletter/NewsletterForm";
 
+const CATEGORY_ICONS: Record<string, string> = {
+  news:      "📰",
+  articles:  "✍️",
+  tools:     "🛠️",
+  trending:  "🔥",
+  tutorials: "📚",
+};
+
 export default function HomePage() {
-  const posts = getAllPosts();
-  const featured = posts.slice(0, 3);
+  const categorySections = POST_CATEGORIES.map((cat) => ({
+    ...cat,
+    posts: getPostsByCategory(cat.id, 3),
+  }));
+
+  const hasAnyPost = categorySections.some((s) => s.posts.length > 0);
 
   return (
     <main>
@@ -18,36 +31,48 @@ export default function HomePage() {
         <p className="text-lg text-gray-600 dark:text-gray-400 max-w-xl mx-auto mb-8">
           Deep dives into LLMs, AI agents, and emerging tech — published by humans and AI alike.
         </p>
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Link
-            href="/blog"
-            className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors"
-          >
-            Read articles
-          </Link>
-          <Link
-            href="/search"
-            className="px-6 py-3 rounded-xl border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 font-medium transition-colors"
-          >
-            Search
-          </Link>
+        <div className="flex flex-wrap gap-3 justify-center">
+          {POST_CATEGORIES.map((cat) => (
+            <Link
+              key={cat.id}
+              href={`/${cat.id}`}
+              className="px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-700 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 font-medium transition-colors"
+            >
+              {CATEGORY_ICONS[cat.id]} {cat.label}
+            </Link>
+          ))}
         </div>
       </section>
 
-      {/* Latest posts */}
-      {featured.length > 0 && (
-        <section className="max-w-5xl mx-auto px-4 pb-16">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Latest articles</h2>
-            <Link href="/blog" className="text-sm text-blue-600 dark:text-blue-400 hover:underline">
-              View all →
-            </Link>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {featured.map((post) => (
-              <PostCard key={post.slug} post={post} />
-            ))}
-          </div>
+      {/* Category sections */}
+      {hasAnyPost ? (
+        categorySections.map((section) =>
+          section.posts.length > 0 ? (
+            <section key={section.id} className="max-w-5xl mx-auto px-4 pb-16">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                  {CATEGORY_ICONS[section.id]} {section.label}
+                </h2>
+                <Link
+                  href={`/${section.id}`}
+                  className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  View all →
+                </Link>
+              </div>
+              <div className="grid md:grid-cols-3 gap-6">
+                {section.posts.map((post) => (
+                  <PostCard key={post.slug} post={post} />
+                ))}
+              </div>
+            </section>
+          ) : null
+        )
+      ) : (
+        <section className="max-w-5xl mx-auto px-4 pb-16 text-center py-16">
+          <p className="text-gray-500 dark:text-gray-400">
+            No posts yet — the AI agent will publish soon. Check back shortly!
+          </p>
         </section>
       )}
 

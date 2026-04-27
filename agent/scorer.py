@@ -69,3 +69,43 @@ def rank_stories(
         story["_format"] = classify_format(story)
 
     return sorted(unique, key=lambda s: s["_score"], reverse=True)
+
+
+def rank_stories_for_category(
+    stories: list[dict[str, Any]],
+    category: dict,
+    covered_urls: list[str],
+    covered_topics: list[str],
+    hn_min_score: int,
+) -> list[dict[str, Any]]:
+    """Filter and rank stories for a specific category config dict."""
+    age_hours = category.get("age_hours") or config.MAX_AGE_HOURS
+    min_score = category.get("min_score") or hn_min_score
+    allowed_sources = set(category["source_categories"])
+    require_release = category.get("require_release_keywords", False)
+    forced_format = category.get("format")
+
+    covered_set = set(covered_urls)
+
+    candidates = []
+    for s in stories:
+        if s["url"] in covered_set:
+            continue
+        if s["source_category"] not in allowed_sources:
+            continue
+        if s["source_category"] == "hackernews" and s.get("score", 0) < min_score:
+            continue
+        if require_release and not _TUTORIAL_RE.search(s["title"]):
+            continue
+        candidates.append(s)
+
+    for story in candidates:
+        story["_score"] = (
+            _recency_score(story["published"], age_hours)
+            + _engagement_score(story)
+            + config.SOURCE_WEIGHTS.get(story["source_category"], 10)
+            + _novelty_bonus(story, covered_topics)
+        )
+        story["_format"] = forced_format if forced_format else classify_format(story)
+
+    return sorted(candidates, key=lambda s: s["_score"], reverse=True)

@@ -61,6 +61,11 @@ export function getPostBySlug(slug: string): Post | null {
   return parsePost(slug, filePath);
 }
 
+export function getPostsByCategory(category: string, limit?: number): Post[] {
+  const posts = getAllPosts().filter((p) => p.category === category);
+  return limit ? posts.slice(0, limit) : posts;
+}
+
 export function getAllTags(): string[] {
   const tagSet = new Set<string>();
   getAllPosts().forEach((post) => post.tags?.forEach((tag) => tagSet.add(tag)));

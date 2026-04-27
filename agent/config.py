@@ -11,7 +11,61 @@ def _env(key: str, default: str = "") -> str:
 
 MAX_AGE_HOURS = int(os.environ.get("MAX_AGE_HOURS", "48"))
 HN_MIN_SCORE = int(os.environ.get("HN_MIN_SCORE", "100"))
-POSTS_PER_RUN = int(os.environ.get("POSTS_PER_RUN", "1"))
+
+# ── Per-category publishing config ────────────────────────────────────────────
+# Each run generates one post per category (5 total).
+# source_categories: which RSS/HN source groups to pull from for this category
+# require_release_keywords: only pick stories that sound like product launches
+# min_score: override HN_MIN_SCORE for this category (None = use default)
+# age_hours: override MAX_AGE_HOURS for this category (None = use default)
+# format: force a specific post format; None = auto-detect per classify_format()
+CATEGORIES = [
+    {
+        "id": "news",
+        "label": "News",
+        "source_categories": ["tech_news", "hackernews"],
+        "require_release_keywords": False,
+        "min_score": None,
+        "age_hours": 24,
+        "format": "analysis",
+    },
+    {
+        "id": "articles",
+        "label": "Articles",
+        "source_categories": ["ai_blog"],
+        "require_release_keywords": False,
+        "min_score": None,
+        "age_hours": 48,
+        "format": None,  # auto-detect: analysis or tutorial
+    },
+    {
+        "id": "tools",
+        "label": "Tools",
+        "source_categories": ["ai_blog", "tech_news", "hackernews"],
+        "require_release_keywords": True,
+        "min_score": None,
+        "age_hours": 48,
+        "format": "tutorial",
+    },
+    {
+        "id": "trending",
+        "label": "Trending",
+        "source_categories": ["hackernews"],
+        "require_release_keywords": False,
+        "min_score": 200,  # higher bar — only truly hot stories
+        "age_hours": 24,
+        "format": "analysis",
+    },
+    {
+        "id": "tutorials",
+        "label": "Tutorials",
+        "source_categories": ["arxiv", "ai_blog"],
+        "require_release_keywords": False,
+        "min_score": None,
+        "age_hours": 48,
+        "format": "tutorial",
+    },
+]
 
 # ── LLM fallback chain ────────────────────────────────────────────────────────
 # The agent tries LLM_1 first. On any failure (quota, bad key, rate limit, etc.)
