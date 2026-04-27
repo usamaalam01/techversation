@@ -1,0 +1,43 @@
+name: AI Blog Agent
+
+on:
+  schedule:
+    # Runs every 6 hours. To change frequency:
+    #   Every 2 hours:  '0 */2 * * *'
+    #   Every 12 hours: '0 */12 * * *'
+    #   Once daily at 8am UTC: '0 8 * * *'
+    - cron: '0 */6 * * *'
+  workflow_dispatch: # Manual trigger from GitHub Actions tab
+
+jobs:
+  run-agent:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required to commit the draft post back to the repo
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: agent/requirements.txt
+
+      - name: Install agent dependencies
+        run: pip install -r agent/requirements.txt
+
+      - name: Run agent
+        run: python agent/run.py
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          HN_MIN_SCORE: '100'
+          MAX_AGE_HOURS: '48'
+
+      - name: Commit draft post
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'agent: new draft post [skip vercel]'
+          file_pattern: content/posts/*.mdx agent/covered.json
