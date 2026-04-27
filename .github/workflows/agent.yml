@@ -9,17 +9,29 @@ on:
     - cron: '0 */6 * * *'
   workflow_dispatch: # Manual trigger from GitHub Actions tab
 
-# ── To switch LLM provider ────────────────────────────────────────────────────
-# Go to: GitHub repo → Settings → Secrets and variables → Actions
+# ── LLM Fallback Chain Configuration ─────────────────────────────────────────
+# The agent tries LLM 1 first. On any failure it falls through to LLM 2,
+# then LLM 3. Keep LLM 1 & 2 as free-tier providers; LLM 3 as paid backup.
 #
-# Secrets (sensitive):
-#   LLM_API_KEY  →  your API key for whichever provider you choose
+# Add these in: GitHub repo → Settings → Secrets and variables → Actions
 #
-# Variables (non-sensitive, visible in logs):
-#   LLM_PROVIDER →  gemini | anthropic | groq | deepseek | openai
-#   LLM_MODEL    →  e.g. gemini-2.0-flash | claude-sonnet-4-6 | llama-3.3-70b-versatile
+# SECRETS (sensitive — never visible in logs):
+#   LLM_1_API_KEY   →  API key for your primary LLM     (e.g. Gemini key)
+#   LLM_2_API_KEY   →  API key for your secondary LLM   (e.g. Groq key)
+#   LLM_3_API_KEY   →  API key for your paid fallback   (e.g. Anthropic key)
 #
-# Defaults (used when variables are not set): gemini / gemini-2.0-flash
+# VARIABLES (non-sensitive — visible in logs):
+#   LLM_1_PROVIDER  →  gemini | groq | anthropic | deepseek | openai
+#   LLM_1_MODEL     →  e.g. gemini-2.0-flash
+#   LLM_2_PROVIDER  →  groq | gemini | anthropic | deepseek | openai
+#   LLM_2_MODEL     →  e.g. llama-3.3-70b-versatile
+#   LLM_3_PROVIDER  →  (leave blank if you don't want a paid fallback)
+#   LLM_3_MODEL     →  e.g. claude-haiku-4-5-20251001
+#
+# Defaults (used when variables are not set):
+#   LLM 1: gemini / gemini-2.0-flash        ← free
+#   LLM 2: groq  / llama-3.3-70b-versatile  ← free
+#   LLM 3: (disabled unless you set LLM_3_PROVIDER + LLM_3_API_KEY)
 # ─────────────────────────────────────────────────────────────────────────────
 
 jobs:
@@ -45,9 +57,19 @@ jobs:
       - name: Run agent
         run: python agent/run.py
         env:
-          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
-          LLM_PROVIDER: ${{ vars.LLM_PROVIDER || 'gemini' }}
-          LLM_MODEL: ${{ vars.LLM_MODEL || 'gemini-2.0-flash' }}
+          # LLM 1 — primary (free)
+          LLM_1_API_KEY:  ${{ secrets.LLM_1_API_KEY }}
+          LLM_1_PROVIDER: ${{ vars.LLM_1_PROVIDER || 'gemini' }}
+          LLM_1_MODEL:    ${{ vars.LLM_1_MODEL    || 'gemini-2.0-flash' }}
+          # LLM 2 — secondary fallback (free)
+          LLM_2_API_KEY:  ${{ secrets.LLM_2_API_KEY }}
+          LLM_2_PROVIDER: ${{ vars.LLM_2_PROVIDER || 'groq' }}
+          LLM_2_MODEL:    ${{ vars.LLM_2_MODEL    || 'llama-3.3-70b-versatile' }}
+          # LLM 3 — paid last resort (optional, disabled if key not set)
+          LLM_3_API_KEY:  ${{ secrets.LLM_3_API_KEY }}
+          LLM_3_PROVIDER: ${{ vars.LLM_3_PROVIDER || '' }}
+          LLM_3_MODEL:    ${{ vars.LLM_3_MODEL    || '' }}
+          # General
           HN_MIN_SCORE: '100'
           MAX_AGE_HOURS: '48'
 

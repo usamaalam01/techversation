@@ -4,12 +4,37 @@ MAX_AGE_HOURS = int(os.environ.get("MAX_AGE_HOURS", "48"))
 HN_MIN_SCORE = int(os.environ.get("HN_MIN_SCORE", "100"))
 POSTS_PER_RUN = int(os.environ.get("POSTS_PER_RUN", "1"))
 
-# LLM provider config — all switchable via environment variables.
+# ── LLM fallback chain ────────────────────────────────────────────────────────
+# The agent tries LLM_1 first. On any failure (quota, bad key, rate limit, etc.)
+# it falls through to LLM_2, then LLM_3.
+# Recommended: keep LLM_1 and LLM_2 as free-tier providers, LLM_3 as paid backup.
+#
+# Set in GitHub Actions:
+#   Secrets (sensitive):  LLM_1_API_KEY, LLM_2_API_KEY, LLM_3_API_KEY
+#   Variables (visible):  LLM_1_PROVIDER, LLM_1_MODEL, LLM_2_PROVIDER, ...
+#
 # Provider choices: gemini | anthropic | groq | deepseek | openai
-# Set these in GitHub Actions repo variables/secrets (or .env for local runs).
-LLM_PROVIDER = os.environ.get("LLM_PROVIDER", "gemini")
-LLM_MODEL = os.environ.get("LLM_MODEL", "gemini-2.0-flash")
-LLM_API_KEY = os.environ.get("LLM_API_KEY", "")
+# ─────────────────────────────────────────────────────────────────────────────
+LLM_CHAIN = [
+    {
+        "slot": 1,
+        "provider": os.environ.get("LLM_1_PROVIDER", "gemini"),
+        "model":    os.environ.get("LLM_1_MODEL",    "gemini-2.0-flash"),
+        "api_key":  os.environ.get("LLM_1_API_KEY",  ""),
+    },
+    {
+        "slot": 2,
+        "provider": os.environ.get("LLM_2_PROVIDER", "groq"),
+        "model":    os.environ.get("LLM_2_MODEL",    "llama-3.3-70b-versatile"),
+        "api_key":  os.environ.get("LLM_2_API_KEY",  ""),
+    },
+    {
+        "slot": 3,
+        "provider": os.environ.get("LLM_3_PROVIDER", ""),
+        "model":    os.environ.get("LLM_3_MODEL",    ""),
+        "api_key":  os.environ.get("LLM_3_API_KEY",  ""),
+    },
+]
 
 RSS_FEEDS = [
     # AI/ML primary sources

@@ -1,20 +1,21 @@
 """
-LLM content generation via LangChain.
-Switch provider/model/key entirely through env vars — no code changes needed.
+LLM content generation with a 3-slot fallback chain via LangChain.
 
-Supported providers (LLM_PROVIDER env var):
-  gemini     → Google Gemini (default, free tier available)
+The agent tries LLM_1 first. On any failure (quota exhausted, invalid key,
+rate limit, provider outage) it falls through to LLM_2, then LLM_3.
+Keep LLM_1/LLM_2 as free-tier providers and LLM_3 as a paid safety net.
+
+Supported providers (LLM_N_PROVIDER env var):
+  gemini     → Google Gemini  (free tier: 1 500 req/day)
+  groq       → Groq           (free tier: generous daily limits)
   anthropic  → Anthropic Claude
-  groq       → Groq (free tier, Llama models)
-  deepseek   → DeepSeek (OpenAI-compatible API)
-  openai     → OpenAI GPT models
+  deepseek   → DeepSeek       (OpenAI-compatible API)
+  openai     → OpenAI
 
-Example env vars:
-  LLM_PROVIDER=gemini      LLM_MODEL=gemini-2.0-flash          LLM_API_KEY=AIza...
-  LLM_PROVIDER=anthropic   LLM_MODEL=claude-sonnet-4-6         LLM_API_KEY=sk-ant-...
-  LLM_PROVIDER=groq        LLM_MODEL=llama-3.3-70b-versatile   LLM_API_KEY=gsk_...
-  LLM_PROVIDER=deepseek    LLM_MODEL=deepseek-chat             LLM_API_KEY=sk-...
-  LLM_PROVIDER=openai      LLM_MODEL=gpt-4o-mini               LLM_API_KEY=sk-...
+Example config (GitHub Actions Variables + Secrets):
+  LLM_1_PROVIDER=gemini    LLM_1_MODEL=gemini-2.0-flash          LLM_1_API_KEY=AIza...
+  LLM_2_PROVIDER=groq      LLM_2_MODEL=llama-3.3-70b-versatile   LLM_2_API_KEY=gsk_...
+  LLM_3_PROVIDER=anthropic LLM_3_MODEL=claude-haiku-4-5-20251001 LLM_3_API_KEY=sk-ant-...
 """
 import time
 from datetime import date
@@ -81,71 +82,83 @@ Rules:
 """
 
 
-def _build_llm():
-    """Instantiate the correct LangChain chat model based on LLM_PROVIDER."""
-    provider = config.LLM_PROVIDER.lower()
-    model = config.LLM_MODEL
-    api_key = config.LLM_API_KEY
-
-    if not api_key:
-        raise RuntimeError(
-            f"LLM_API_KEY is not set. "
-            f"Add it as a GitHub Actions secret or export it locally."
-        )
+def _build_llm(provider: str, model: str, api_key: str):
+    """Instantiate the LangChain chat model for the given provider."""
+    provider = provider.lower()
 
     if provider == "gemini":
         from langchain_google_genai import ChatGoogleGenerativeAI
         return ChatGoogleGenerativeAI(
-            model=model,
-            google_api_key=api_key,
-            temperature=0.7,
+            model=model, google_api_key=api_key, temperature=0.7,
         )
-
     if provider == "anthropic":
         from langchain_anthropic import ChatAnthropic
         return ChatAnthropic(
-            model=model,
-            anthropic_api_key=api_key,
-            temperature=0.7,
-            max_tokens=4096,
+            model=model, anthropic_api_key=api_key, temperature=0.7, max_tokens=4096,
         )
-
     if provider == "groq":
         from langchain_groq import ChatGroq
         return ChatGroq(
-            model=model,
-            groq_api_key=api_key,
-            temperature=0.7,
+            model=model, groq_api_key=api_key, temperature=0.7,
         )
-
     if provider == "deepseek":
         from langchain_openai import ChatOpenAI
         return ChatOpenAI(
-            model=model,
-            openai_api_key=api_key,
-            openai_api_base="https://api.deepseek.com/v1",
-            temperature=0.7,
-            max_tokens=4096,
+            model=model, openai_api_key=api_key,
+            openai_api_base="https://api.deepseek.com/v1", temperature=0.7, max_tokens=4096,
         )
-
     if provider == "openai":
         from langchain_openai import ChatOpenAI
         return ChatOpenAI(
-            model=model,
-            openai_api_key=api_key,
-            temperature=0.7,
-            max_tokens=4096,
+            model=model, openai_api_key=api_key, temperature=0.7, max_tokens=4096,
         )
 
     raise ValueError(
-        f"Unknown LLM_PROVIDER '{provider}'. "
+        f"Unknown provider '{provider}'. "
         f"Choose from: gemini, anthropic, groq, deepseek, openai"
     )
 
 
-def generate_post(story: dict[str, Any], retries: int = 3) -> str:
-    """Generate a full MDX blog post for the given story. Returns raw MDX string."""
-    llm = _build_llm()
+def _invoke_llm(llm_cfg: dict[str, Any], messages: list) -> str:
+    """
+    Try a single LLM slot once (plus one quick retry for transient network errors).
+    Raises on failure so the caller can fall through to the next slot.
+    """
+    provider = llm_cfg["provider"]
+    model = llm_cfg["model"]
+    slot = llm_cfg["slot"]
+    label = f"LLM {slot} ({provider}/{model})"
+
+    llm = _build_llm(provider, model, llm_cfg["api_key"])
+
+    for attempt in range(2):  # 1 retry per slot for transient blips
+        try:
+            print(f"[Generator] {label} — attempt {attempt + 1}")
+            response = llm.invoke(messages)
+            print(f"[Generator] {label} — success")
+            return response.content
+        except Exception as e:
+            if attempt == 0:
+                print(f"[Generator] {label} — transient error: {e!r}, retrying in 5s")
+                time.sleep(5)
+            else:
+                raise  # Let outer loop catch and fall through to next slot
+
+
+def generate_post(story: dict[str, Any]) -> str:
+    """
+    Generate a full MDX post using the fallback chain.
+    Tries each configured LLM slot in order; falls through on any failure.
+    Raises RuntimeError if all slots fail.
+    """
+    # Only include slots that have both provider and api_key set
+    chain = [s for s in config.LLM_CHAIN if s.get("provider") and s.get("api_key")]
+
+    if not chain:
+        raise RuntimeError(
+            "No LLMs configured. Set at least LLM_1_PROVIDER and LLM_1_API_KEY."
+        )
+
     fmt = story["_format"]
     today = date.today().isoformat()
 
@@ -162,19 +175,22 @@ def generate_post(story: dict[str, Any], retries: int = 3) -> str:
         )),
     ]
 
-    print(f"[Generator] Using {config.LLM_PROVIDER}/{config.LLM_MODEL}")
+    errors: list[str] = []
 
-    for attempt in range(retries):
+    for llm_cfg in chain:
+        slot = llm_cfg["slot"]
+        provider = llm_cfg["provider"]
+        model = llm_cfg["model"]
+        label = f"LLM {slot} ({provider}/{model})"
         try:
-            response = llm.invoke(messages)
-            return response.content
+            return _invoke_llm(llm_cfg, messages)
         except Exception as e:
-            if attempt < retries - 1:
-                wait = 5 * (2 ** attempt)  # 5s, 10s, 20s
-                print(f"[Generator] Error: {e} — retrying in {wait}s (attempt {attempt + 1}/{retries})")
-                time.sleep(wait)
-            else:
-                raise RuntimeError(
-                    f"LLM ({config.LLM_PROVIDER}/{config.LLM_MODEL}) failed "
-                    f"after {retries} attempts: {e}"
-                ) from e
+            msg = f"{label} failed: {e!r}"
+            print(f"[Generator] {msg}")
+            errors.append(msg)
+            if llm_cfg is not chain[-1]:
+                print(f"[Generator] Falling back to next LLM...")
+
+    raise RuntimeError(
+        f"All {len(chain)} LLM(s) in the chain failed.\n" + "\n".join(errors)
+    )

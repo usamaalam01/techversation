@@ -6,8 +6,9 @@ Fetches tech/AI news, picks the best story, generates an MDX post, saves as draf
 Usage:
     python agent/run.py
 
-Required env var:
-    ANTHROPIC_API_KEY
+Required env vars:
+    LLM_1_API_KEY (+ LLM_1_PROVIDER, LLM_1_MODEL)
+    Optionally: LLM_2_* and LLM_3_* for fallback chain
 """
 import json
 import os
@@ -58,18 +59,19 @@ def _extract_keywords(title: str) -> list[str]:
 def main() -> None:
     print(f"[Run] Agent starting — {datetime.now(timezone.utc).isoformat()}")
 
-    if not os.environ.get("LLM_API_KEY"):
+    active_chain = [s for s in config.LLM_CHAIN if s.get("provider") and s.get("api_key")]
+    if not active_chain:
         print(
-            f"[Run] ERROR: LLM_API_KEY is not set.\n"
-            f"       Current provider: {os.environ.get('LLM_PROVIDER', 'gemini')}\n"
-            f"       Set LLM_API_KEY as a GitHub Actions secret or export it locally."
+            "[Run] ERROR: No LLMs configured.\n"
+            "       Set at least LLM_1_PROVIDER and LLM_1_API_KEY.\n"
+            "       Add them as GitHub Actions Variables/Secrets (or export locally)."
         )
         sys.exit(1)
 
-    print(
-        f"[Run] Provider: {os.environ.get('LLM_PROVIDER', 'gemini')} / "
-        f"Model: {os.environ.get('LLM_MODEL', 'gemini-2.0-flash')}"
+    chain_summary = " → ".join(
+        f"LLM {s['slot']} ({s['provider']}/{s['model']})" for s in active_chain
     )
+    print(f"[Run] Fallback chain: {chain_summary}")
 
     covered = _load_covered()
     print(f"[Run] {len(covered['covered_urls'])} URLs already covered, "
