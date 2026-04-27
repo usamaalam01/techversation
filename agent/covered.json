@@ -1,12 +1,16 @@
 {
   "covered_urls": [
-    "https://ca98am79.medium.com/i-bought-friendster-for-30k-heres-what-i-m-doing-with-it-d5e8ddb3991d"
+    "https://ca98am79.medium.com/i-bought-friendster-for-30k-heres-what-i-m-doing-with-it-d5e8ddb3991d",
+    "https://www.koshyjohn.com/blog/ai-should-elevate-your-thinking-not-replace-it/"
   ],
   "covered_topics": [
+    "bought",
+    "thinking",
     "here",
     "friendster",
-    "bought"
+    "elevate",
+    "should"
   ],
-  "last_run": "2026-04-27T14:01:54.576112+00:00",
-  "total_posts": 1
+  "last_run": "2026-04-27T14:18:18.737418+00:00",
+  "total_posts": 2
 }
