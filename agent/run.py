@@ -23,10 +23,11 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__)))
 
 import config
 from generator import generate_post
+from images import attribution_line, fetch_images
 from scorer import rank_stories
 from sources.hackernews import fetch_top_stories
 from sources.rss import fetch_all_rss_feeds
-from writer import validate_mdx, write_post
+from writer import inject_cover_image, validate_mdx, write_post
 
 
 def _load_covered() -> dict:
@@ -113,12 +114,17 @@ def main() -> None:
         f"'{story['title']}' ({story['source_name']}) → {story['_format']}"
     )
 
-    # ── 3. Generate post (retry once on validation failure) ───────────────────
+    # ── 3. Fetch images from Unsplash ─────────────────────────────────────────
+    images = fetch_images(story["title"], story["source_category"], count=4)
+    cover_image = images[0] if images else None
+    inline_images = images[1:] if len(images) > 1 else []
+
+    # ── 4. Generate post (retry once on validation failure) ───────────────────
     mdx: str | None = None
     for attempt in range(2):
         print(f"[Run] Generating {story['_format']} post (attempt {attempt + 1}/2)...")
         try:
-            raw = generate_post(story)
+            raw = generate_post(story, inline_images=inline_images)
         except RuntimeError as e:
             print(f"[Run] Generation failed: {e}")
             sys.exit(1)
@@ -134,10 +140,16 @@ def main() -> None:
         print("[Run] Could not generate a valid post after 2 attempts. Exiting.")
         sys.exit(0)
 
-    # ── 4. Write MDX file ─────────────────────────────────────────────────────
+    # ── 5. Inject cover image + attribution into MDX ──────────────────────────
+    if cover_image:
+        mdx = inject_cover_image(mdx, cover_image["url"])
+        mdx = mdx.rstrip() + f"\n\n{attribution_line(cover_image)}\n"
+        print(f"[Run] Cover image set: {cover_image['url'][:60]}...")
+
+    # ── 6. Write MDX file ─────────────────────────────────────────────────────
     slug = write_post(mdx, config.POSTS_DIR)
 
-    # ── 5. Update covered.json ────────────────────────────────────────────────
+    # ── 7. Update covered.json ────────────────────────────────────────────────
     covered["covered_urls"].append(story["url"])
     new_keywords = _extract_keywords(story["title"])
     covered["covered_topics"] = list(set(covered["covered_topics"] + new_keywords))[-200:]

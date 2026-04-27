@@ -2,6 +2,14 @@ import re
 from pathlib import Path
 
 
+def inject_cover_image(mdx: str, url: str) -> str:
+    """Add or replace the coverImage field in MDX frontmatter."""
+    if re.search(r"^coverImage:", mdx, re.MULTILINE):
+        return re.sub(r'^coverImage:.*$', f'coverImage: "{url}"', mdx, flags=re.MULTILINE)
+    # Insert before the draft: line
+    return re.sub(r'^(draft:)', f'coverImage: "{url}"\n\\1', mdx, flags=re.MULTILINE)
+
+
 def _slugify(title: str) -> str:
     title = title.strip("\"'")
     slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")

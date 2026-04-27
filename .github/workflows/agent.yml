@@ -72,6 +72,9 @@ jobs:
           LLM_3_API_KEY:  ${{ secrets.LLM_3_API_KEY }}
           LLM_3_PROVIDER: ${{ vars.LLM_3_PROVIDER || '' }}
           LLM_3_MODEL:    ${{ vars.LLM_3_MODEL    || '' }}
+          # Images — free Unsplash API key (unsplash.com/developers)
+          # If not set, posts are generated without cover/inline images.
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
           # General
           HN_MIN_SCORE: '100'
           MAX_AGE_HOURS: '48'

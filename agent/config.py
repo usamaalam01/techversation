@@ -70,3 +70,7 @@ SOURCE_WEIGHTS = {
 
 POSTS_DIR = "content/posts"
 COVERED_FILE = "agent/covered.json"
+
+# Unsplash image search (free API key at unsplash.com/developers)
+# If not set, posts are generated without images.
+UNSPLASH_ACCESS_KEY = _env("UNSPLASH_ACCESS_KEY")

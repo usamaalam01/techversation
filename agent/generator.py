@@ -78,7 +78,11 @@ Rules:
 - Code blocks must have language hints (```python, ```typescript, ```bash, etc.)
 - Link naturally to the original source within the body text
 - End the post body with this line on its own paragraph: *This post was drafted with AI assistance.*
-- Do not add any text before the opening ---\
+- Do not add any text before the opening ---
+- If inline image URLs are provided in the user message, use 1–2 of them naturally \
+in the body using standard markdown: ![descriptive alt text](url). \
+Only place images where they genuinely add value — after explaining a concept, \
+to break up a long section, or to illustrate a point. Never place images inside code blocks.\
 """
 
 
@@ -145,7 +149,7 @@ def _invoke_llm(llm_cfg: dict[str, Any], messages: list) -> str:
                 raise  # Let outer loop catch and fall through to next slot
 
 
-def generate_post(story: dict[str, Any]) -> str:
+def generate_post(story: dict[str, Any], inline_images: list[dict] | None = None) -> str:
     """
     Generate a full MDX post using the fallback chain.
     Tries each configured LLM slot in order; falls through on any failure.
@@ -162,6 +166,13 @@ def generate_post(story: dict[str, Any]) -> str:
     fmt = story["_format"]
     today = date.today().isoformat()
 
+    image_section = ""
+    if inline_images:
+        lines = ["Inline images available for use in the post body (use 1–2 where appropriate):"]
+        for i, img in enumerate(inline_images, 1):
+            lines.append(f"  Image {i}: {img['url']}  (suggested alt: \"{img['alt']}\")")
+        image_section = "\n\n" + "\n".join(lines)
+
     messages = [
         SystemMessage(content=_SYSTEM_PROMPT),
         HumanMessage(content=(
@@ -171,7 +182,8 @@ def generate_post(story: dict[str, Any]) -> str:
             f"URL: {story['url']}\n"
             f"Description: {story.get('description') or 'No description available.'}\n"
             f"Post date: {today}\n"
-            f"Target length: {_FORMAT_LENGTHS[fmt]}\n"
+            f"Target length: {_FORMAT_LENGTHS[fmt]}"
+            f"{image_section}\n"
         )),
     ]
 
