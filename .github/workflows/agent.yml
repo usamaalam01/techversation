@@ -34,6 +34,9 @@ on:
 #   LLM 3: (disabled unless you set LLM_3_PROVIDER + LLM_3_API_KEY)
 # ─────────────────────────────────────────────────────────────────────────────
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   run-agent:
     runs-on: ubuntu-latest
