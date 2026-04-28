@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { draftMode } from "next/headers";
 import type { Metadata } from "next";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
 import PostHeader from "@/components/blog/PostHeader";
@@ -46,7 +47,9 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
 
 export default async function PostPage({ params }: PostPageProps) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const { isEnabled: preview } = await draftMode();
+
+  const post = getPostBySlug(slug, { includeDraft: preview });
   if (!post) notFound();
 
   const jsonLd = {
@@ -61,16 +64,26 @@ export default async function PostPage({ params }: PostPageProps) {
   };
 
   return (
-    <article className="max-w-3xl mx-auto px-4 py-12">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <PostHeader post={post} />
-      {post.aiSummary && <AISummary summary={post.aiSummary} />}
-      <PostContent content={post.content} />
-      <ShareButtons title={post.title} slug={post.slug} />
-      <GiscusComments slug={post.slug} />
-    </article>
+    <>
+      {preview && (
+        <div className="sticky top-14 z-40 bg-amber-400 text-amber-950 text-sm font-medium px-4 py-2 flex items-center justify-between">
+          <span>Draft preview — this post is not yet published</span>
+          <a href="/api/disable-preview" className="underline hover:no-underline">
+            Exit preview
+          </a>
+        </div>
+      )}
+      <article className="max-w-3xl mx-auto px-4 py-12">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <PostHeader post={post} />
+        {post.aiSummary && <AISummary summary={post.aiSummary} />}
+        <PostContent content={post.content} />
+        <ShareButtons title={post.title} slug={post.slug} />
+        <GiscusComments slug={post.slug} />
+      </article>
+    </>
   );
 }

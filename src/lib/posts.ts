@@ -31,10 +31,10 @@ function getPostFiles(): Array<{ slug: string; filePath: string }> {
   return result;
 }
 
-function parsePost(slug: string, filePath: string): Post | null {
+function parsePost(slug: string, filePath: string, includeDraft = false): Post | null {
   const raw = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(raw);
-  if (data.draft) return null;
+  if (data.draft && !includeDraft) return null;
 
   const rt = readingTime(content);
   return {
@@ -52,13 +52,12 @@ export function getAllPosts(): Post[] {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
-export function getPostBySlug(slug: string): Post | null {
-  // Try flat file first, then directory format
+export function getPostBySlug(slug: string, { includeDraft = false } = {}): Post | null {
   const flat = path.join(POSTS_DIR, `${slug}.mdx`);
   const dir = path.join(POSTS_DIR, slug, "index.mdx");
   const filePath = fs.existsSync(flat) ? flat : fs.existsSync(dir) ? dir : null;
   if (!filePath) return null;
-  return parsePost(slug, filePath);
+  return parsePost(slug, filePath, includeDraft);
 }
 
 export function getPostsByCategory(category: string, limit?: number): Post[] {

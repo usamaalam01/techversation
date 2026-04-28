@@ -11,6 +11,7 @@ export default config({
       slugField: "title",
       path: "content/posts/*",
       format: { contentField: "content" },
+      previewUrl: `/api/preview?secret=${process.env.NEXT_PUBLIC_PREVIEW_SECRET ?? ""}&slug={slug}`,
       schema: {
         title: fields.text({ label: "Title", validation: { length: { min: 1 } } }),
         description: fields.text({
