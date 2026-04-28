@@ -105,7 +105,6 @@ Rules:
 - Use ## for section headings, ### for subsections
 - Code blocks must have language hints (```python, ```typescript, ```bash, etc.)
 - Link naturally to the original source within the body text
-- End the post body with this line on its own paragraph: *This post was drafted with AI assistance.*
 - Do not add any text before the opening ---
 - If inline image URLs are provided in the user message, use 1–2 of them naturally \
 in the body using standard markdown: ![descriptive alt text](url). \
