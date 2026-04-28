@@ -1,0 +1,115 @@
+---
+title: "Easyduino for KiCad"
+description: "Getting started with Easyduino open source PCB devboards for KiCad."
+date: "2026-04-28"
+author: "Usama"
+tags: ["kicad", "pcb", "easyduino"]
+aiSummary: "Easyduino is an open-source PCB devboard designed for KiCad, providing a simple and easy-to-use platform for developers. The project is hosted on GitHub and offers a range of features for building and designing custom PCBs. In this tutorial, we will explore how to get started with Easyduino and create a custom PCB devboard using KiCad."
+category: "tools"
+draft: true
+---
+
+## Introduction to Easyduino
+
+Easyduino is an open-source PCB devboard designed specifically for KiCad, a popular open-source PCB design software. The project, hosted on [GitHub](https://github.com/Hanqaqa/Easyduino), aims to provide a simple and easy-to-use platform for developers to build and design custom PCBs. In this tutorial, we will delve into the world of Easyduino and explore how to get started with creating custom PCB devboards using KiCad.
+
+### What is KiCad?
+
+Before we dive into Easyduino, let's take a brief look at KiCad. KiCad is a free and open-source PCB design software that allows users to design and build custom PCBs. It offers a range of features, including schematic capture, PCB layout, and gerber file generation. KiCad is widely used in the maker community and is a popular choice among hobbyists and professionals alike.
+
+## Getting Started with Easyduino
+
+To get started with Easyduino, you will need to have KiCad installed on your system. If you haven't already, download and install KiCad from the official [KiCad website](https://www.kicad.org/).
+
+### Installing Easyduino
+
+Easyduino is a KiCad library, which means you can easily install it as a plugin within KiCad. To install Easyduino, follow these steps:
+
+1. Clone the Easyduino repository from GitHub using the following command:
+```bash
+git clone https://github.com/Hanqaqa/Easyduino.git
+```
+2. Open KiCad and navigate to **Preferences** > **Library Tables**.
+3. Click on **Add** and select the Easyduino library folder.
+4. Click **OK** to save the changes.
+
+### Creating a New Project with Easyduino
+
+Now that you have Easyduino installed, let's create a new project using the Easyduino library. To do this, follow these steps:
+
+1. Open KiCad and create a new project by selecting **File** > **New Project**.
+2. In the **New Project** dialog box, select **Easyduino** as the library.
+3. Choose a project name and location, and click **OK**.
+
+## Designing a Custom PCB Devboard
+
+With Easyduino installed and a new project created, we can now start designing a custom PCB devboard. Easyduino provides a range of components and modules that you can use to build your custom PCB.
+
+### Adding Components
+
+To add components to your PCB, navigate to the **Schematic Editor** and select the **Place Component** tool. You can then browse the Easyduino library and add components to your schematic.
+
+For example, let's add an Arduino Uno component to our schematic:
+```python
+# Import the Easyduino library
+import easyduino
+
+# Create a new schematic
+schematic = easyduino.Schematic()
+
+# Add an Arduino Uno component
+arduino_uno = easyduino.ArduinoUno()
+schematic.add_component(arduino_uno)
+```
+Note: The above code is a Python representation of the process and is not actual KiCad code.
+
+### Routing Tracks
+
+Once you have added components to your schematic, you can start routing tracks to connect them. To do this, navigate to the **PCB Editor** and select the **Route Track** tool.
+
+For example, let's route a track between two components:
+```python
+# Import the Easyduino library
+import easyduino
+
+# Create a new PCB
+pcb = easyduino.PCB()
+
+# Add two components
+component1 = easyduino.Component()
+component2 = easyduino.Component()
+
+# Route a track between the components
+track = easyduino.Track(component1, component2)
+pcb.add_track(track)
+```
+Note: The above code is a Python representation of the process and is not actual KiCad code.
+
+## Generating Gerber Files
+
+Once you have designed and routed your custom PCB devboard, you can generate gerber files to send to a PCB manufacturer. To do this, navigate to the **PCB Editor** and select **File** > **Export** > **Gerber**.
+
+Easyduino provides a range of options for generating gerber files, including the ability to customize the file format and contents.
+
+## Conclusion
+
+In this tutorial, we have explored how to get started with Easyduino and create a custom PCB devboard using KiCad. Easyduino provides a simple and easy-to-use platform for developers to build and design custom PCBs, and its integration with KiCad makes it a powerful tool for PCB design.
+
+With Easyduino, you can create custom PCB devboards with ease, and its open-source nature means that you can contribute to the project and help shape its future.
+
+### Example Use Cases
+
+Easyduino can be used in a range of applications, including:
+
+* Custom Arduino shields
+* IoT devices
+* Wearable technology
+* Robotics
+
+The possibilities are endless, and with Easyduino, you can bring your ideas to life.
+
+### Final Thoughts
+
+Easyduino is a powerful tool for PCB design, and its integration with KiCad makes it a must-have for any developer or maker. With its easy-to-use interface and range of features, Easyduino is the perfect choice for anyone looking to create custom PCB devboards.
+
+So why not give Easyduino a try? Head over to the [Easyduino GitHub page](https://github.com/Hanqaqa/Easyduino) and start designing your own custom PCB devboards today!
