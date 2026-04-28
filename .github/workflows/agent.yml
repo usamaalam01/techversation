@@ -83,8 +83,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # Rebase on remote changes BEFORE staging (rebase requires a clean index)
-          git pull --rebase origin main
+          # Rebase on remote changes; --autostash handles agent-written untracked files
+          git pull --rebase --autostash origin main
           git add content/posts/*.mdx agent/covered.json
           # Only commit+push if there are staged changes
           git diff --staged --quiet && echo "Nothing to commit." && exit 0
