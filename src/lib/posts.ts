@@ -71,6 +71,20 @@ export function getAllTags(): string[] {
   return Array.from(tagSet).sort();
 }
 
+export function getRelatedPosts(current: Post, limit = 3): Post[] {
+  return getAllPosts()
+    .filter((p) => p.slug !== current.slug)
+    .map((p) => {
+      const sharedTags = (p.tags ?? []).filter((t) => current.tags?.includes(t)).length;
+      const sameCategory = p.category && p.category === current.category ? 1 : 0;
+      return { post: p, score: sharedTags * 2 + sameCategory };
+    })
+    .filter(({ score }) => score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map(({ post }) => post);
+}
+
 export function buildSearchIndex(): SearchIndexItem[] {
   return getAllPosts().map(({ slug, title, description, tags, date }) => ({
     slug,

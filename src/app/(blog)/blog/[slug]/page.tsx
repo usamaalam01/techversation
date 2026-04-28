@@ -1,10 +1,11 @@
 import { notFound } from "next/navigation";
 import { draftMode } from "next/headers";
 import type { Metadata } from "next";
-import { getAllPosts, getPostBySlug } from "@/lib/posts";
+import { getAllPosts, getPostBySlug, getRelatedPosts } from "@/lib/posts";
 import PostHeader from "@/components/blog/PostHeader";
 import PostContent from "@/components/blog/PostContent";
 import AISummary from "@/components/blog/AISummary";
+import RelatedPosts from "@/components/blog/RelatedPosts";
 import ShareButtons from "@/components/sharing/ShareButtons";
 import GiscusComments from "@/components/comments/GiscusComments";
 
@@ -52,6 +53,8 @@ export default async function PostPage({ params }: PostPageProps) {
   const post = getPostBySlug(slug, { includeDraft: preview });
   if (!post) notFound();
 
+  const related = getRelatedPosts(post);
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -81,6 +84,7 @@ export default async function PostPage({ params }: PostPageProps) {
         <PostHeader post={post} />
         {post.aiSummary && <AISummary summary={post.aiSummary} />}
         <PostContent content={post.content} />
+        <RelatedPosts posts={related} />
         <ShareButtons title={post.title} slug={post.slug} />
         <GiscusComments slug={post.slug} />
       </article>
