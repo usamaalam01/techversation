@@ -1,0 +1,94 @@
+---
+title: "OpenAI at FedRAMP Moderate"
+description: "OpenAI achieves FedRAMP Moderate authorization for ChatGPT Enterprise and API."
+date: "2026-04-28"
+author: "Usama"
+tags: ["ai", "openai", "fedramp"]
+aiSummary: "OpenAI is now available at FedRAMP Moderate authorization, enabling U.S. federal agencies to securely adopt AI solutions. This post provides a step-by-step guide on how to integrate OpenAI's API into your application. We will cover the basics of OpenAI's API, setting up a developer account, and using the API to build a simple chatbot."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1675557009317-bb59e35aba82?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxPcGVuQUklMjBhdmFpbGFibGUlMjBGZWRSQU1QJTIwTW9kZXJhdGUlMjBhcnRpZmljaWFsJTIwaW50ZWxsaWdlbmNlJTIwbWFjaGluZSUyMGxlYXJuaW5nfGVufDF8MHx8fDE3NzczMzgyOTN8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to OpenAI and FedRAMP Moderate
+OpenAI has achieved FedRAMP Moderate authorization for ChatGPT Enterprise and the OpenAI API, allowing U.S. federal agencies to securely adopt AI solutions. This authorization ensures that OpenAI's API meets the stringent security requirements of the federal government, providing a secure and reliable platform for agencies to build and deploy AI-powered applications.
+
+## Setting up an OpenAI Developer Account
+To get started with OpenAI's API, you need to create a developer account. Follow these steps:
+1. Go to the [OpenAI website](https://openai.com/index/openai-available-at-fedramp-moderate) and click on "Sign up" in the top right corner.
+2. Fill out the registration form with your email address, password, and other required information.
+3. Verify your email address by clicking on the link sent by OpenAI.
+4. Once your account is verified, you can log in to the OpenAI dashboard and access the API documentation and other resources.
+
+## Using the OpenAI API
+The OpenAI API provides a range of endpoints for building AI-powered applications. Here is an example of how to use the API to generate text:
+```python
+import requests
+
+# Set your API key
+api_key = "YOUR_API_KEY"
+
+# Set the API endpoint and parameters
+endpoint = "https://api.openai.com/v1/completions"
+params = {
+    "model": "text-davinci-003",
+    "prompt": "Write a short story about a character who discovers a hidden world.",
+    "max_tokens": 2048
+}
+
+# Set the API key in the headers
+headers = {
+    "Authorization": f"Bearer {api_key}"
+}
+
+# Send the request and get the response
+response = requests.post(endpoint, headers=headers, json=params)
+
+# Print the response
+print(response.json())
+```
+This code snippet demonstrates how to use the OpenAI API to generate text based on a given prompt. You can modify the parameters to suit your specific use case.
+
+## Building a Simple Chatbot with OpenAI
+To build a simple chatbot using OpenAI's API, you can use the following code:
+```python
+import requests
+
+# Set your API key
+api_key = "YOUR_API_KEY"
+
+# Set the API endpoint and parameters
+endpoint = "https://api.openai.com/v1/completions"
+params = {
+    "model": "text-davinci-003",
+    "prompt": "",
+    "max_tokens": 2048
+}
+
+# Set the API key in the headers
+headers = {
+    "Authorization": f"Bearer {api_key}"
+}
+
+# Function to generate response
+def generate_response(user_input):
+    params["prompt"] = user_input
+    response = requests.post(endpoint, headers=headers, json=params)
+    return response.json()["choices"][0]["text"]
+
+# Test the chatbot
+while True:
+    user_input = input("User: ")
+    response = generate_response(user_input)
+    print("Chatbot: ", response)
+```
+This code snippet demonstrates how to build a simple chatbot using OpenAI's API. The chatbot generates responses based on the user's input.
+
+![a close up of a computer screen with a message on it](https://images.unsplash.com/photo-1675557009285-b55f562641b9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxPcGVuQUklMjBhdmFpbGFibGUlMjBGZWRSQU1QJTIwTW9kZXJhdGUlMjBhcnRpZmljaWFsJTIwaW50ZWxsaWdlbmNlJTIwbWFjaGluZSUyMGxlYXJuaW5nfGVufDF8MHx8fDE3NzczMzgyOTN8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we covered the basics of OpenAI's API and how to integrate it into your application. We also built a simple chatbot using the API. With OpenAI's API, you can build a wide range of AI-powered applications, from natural language processing to computer vision. By following the steps outlined in this tutorial, you can get started with building your own AI-powered applications using OpenAI's API.
+
+*This post was drafted with AI assistance.*
+
+*Photo by [Jonathan Kemper](https://unsplash.com/@jupp?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-computer-screen-with-a-quote-on-it-urlFSUT2zyM?utm_source=techversation&utm_medium=referral)*
