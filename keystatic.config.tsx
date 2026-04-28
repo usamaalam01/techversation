@@ -29,7 +29,7 @@ export default config({
           label: "Tags",
           itemLabel: (props) => props.value || "Tag",
         }),
-        coverImage: fields.url({
+        coverImage: fields.text({
           label: "Cover Image URL",
           description: "Paste an image URL (Unsplash or any direct link). Leave blank for no cover image.",
         }),
