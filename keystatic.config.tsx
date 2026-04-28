@@ -12,6 +12,7 @@ export default config({
       path: "content/posts/*",
       format: { contentField: "content" },
       previewUrl: `/api/preview?secret=${process.env.NEXT_PUBLIC_PREVIEW_SECRET ?? ""}&slug={slug}`,
+      columns: ["draft", "category", "date"],
       schema: {
         title: fields.text({ label: "Title", validation: { length: { min: 1 } } }),
         description: fields.text({
