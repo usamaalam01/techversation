@@ -83,10 +83,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Rebase on remote changes BEFORE staging (rebase requires a clean index)
+          git pull --rebase origin main
           git add content/posts/*.mdx agent/covered.json
           # Only commit+push if there are staged changes
           git diff --staged --quiet && echo "Nothing to commit." && exit 0
-          # Rebase on any commits that landed while the agent was running
-          git pull --rebase origin main
           git commit -m "agent: new draft posts [skip vercel]"
           git push origin main
