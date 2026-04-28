@@ -27,10 +27,9 @@ export default config({
           label: "Tags",
           itemLabel: (props) => props.value || "Tag",
         }),
-        coverImage: fields.image({
-          label: "Cover Image",
-          directory: "public/images/posts",
-          publicPath: "/images/posts/",
+        coverImage: fields.url({
+          label: "Cover Image URL",
+          description: "Paste an image URL (Unsplash or any direct link). Leave blank for no cover image.",
         }),
         aiSummary: fields.text({
           label: "AI Summary",
