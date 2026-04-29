@@ -1,0 +1,98 @@
+---
+title: "Inverse Solutions in Preference-Based Argumentation"
+description: "Exploring the existence of inverse solutions in preference-based reductions."
+date: "2026-04-29"
+author: "Usama"
+tags: ["ai", "argumentation", "preferences"]
+aiSummary: "This post delves into the concept of preference-based argumentation frameworks and the existence of inverse solutions. We will explore the theoretical foundations and provide practical code examples to illustrate the concepts. The paper 'On the Existence of an Inverse Solution for Preference-Based Reductions in Argumentation' serves as the foundation for this tutorial."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1692607431208-28cc794e0067?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxFeGlzdGVuY2UlMjBJbnZlcnNlJTIwU29sdXRpb24lMjBQcmVmZXJlbmNlJTIwQmFzZWQlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzc0MzUwMDR8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Preference-based argumentation frameworks (PAFs) are an extension of Dung's abstract argumentation frameworks (AAFs), where preferences over arguments are encoded. These preferences control the transformation of attacks into defeats, resulting in different reductions from a PAF to an AAF. In this post, we will explore the concept of inverse solutions in preference-based reductions, as discussed in the paper [On the Existence of an Inverse Solution for Preference-Based Reductions in Argumentation](https://arxiv.org/abs/2604.22958).
+
+## Theoretical Foundations
+
+To understand the concept of inverse solutions, we need to delve into the theoretical foundations of PAFs and AAFs. In AAFs, arguments are represented as a set of nodes, and attacks between arguments are represented as edges. The semantics of AAFs define the acceptable sets of arguments, which are also known as extensions.
+
+PAFs extend AAFs by introducing preferences over arguments. These preferences are used to transform attacks into defeats, which in turn affect the extensions of the framework. The reduction of a PAF to an AAF is done by applying a preference-based reduction, which takes into account the preferences over arguments.
+
+## Preference-Based Reductions
+
+There are different approaches to reducing a PAF to an AAF, each resulting in a different reduction. The most common approaches are:
+
+* **Weak preference**: This approach only considers the preferences of the arguments that are directly involved in an attack.
+* **Strong preference**: This approach considers the preferences of all arguments that are reachable from the arguments involved in an attack.
+
+Each of these approaches results in a different reduction, which in turn affects the extensions of the framework.
+
+## Inverse Solutions
+
+The inverse problem in PAFs is to find a PAF that, when reduced to an AAF using a given reduction, results in a desired extension. In other words, given a desired extension, can we find a PAF that, when reduced, results in that extension?
+
+The paper [On the Existence of an Inverse Solution for Preference-Based Reductions in Argumentation](https://arxiv.org/abs/2604.22958) explores the existence of inverse solutions for preference-based reductions. The authors provide a theoretical framework for analyzing the existence of inverse solutions and provide algorithms for computing them.
+
+## Practical Implementation
+
+To illustrate the concept of inverse solutions, let's consider a simple example. Suppose we have a PAF with three arguments: A, B, and C. The preferences over these arguments are as follows:
+
+* A is preferred over B
+* B is preferred over C
+
+We want to find a PAF that, when reduced to an AAF using the weak preference approach, results in an extension that contains only argument A.
+
+```python
+import networkx as nx
+
+# Create a directed graph to represent the PAF
+G = nx.DiGraph()
+
+# Add nodes for each argument
+G.add_node('A')
+G.add_node('B')
+G.add_node('C')
+
+# Add edges to represent the attacks between arguments
+G.add_edge('A', 'B')
+G.add_edge('B', 'C')
+
+# Define the preferences over the arguments
+preferences = {'A': 1, 'B': 2, 'C': 3}
+
+# Define the weak preference reduction function
+def weak_preference_reduction(G, preferences):
+    # Create a new graph to represent the reduced AAF
+    reduced_G = nx.DiGraph()
+    
+    # Add nodes for each argument
+    for node in G.nodes():
+        reduced_G.add_node(node)
+    
+    # Add edges to represent the defeats between arguments
+    for edge in G.edges():
+        if preferences[edge[0]] < preferences[edge[1]]:
+            reduced_G.add_edge(edge[0], edge[1])
+    
+    return reduced_G
+
+# Compute the reduced AAF using the weak preference approach
+reduced_G = weak_preference_reduction(G, preferences)
+
+# Print the resulting extension
+print("Resulting extension:", [node for node in reduced_G.nodes() if reduced_G.in_degree(node) == 0])
+```
+
+In this example, we define a PAF with three arguments and their corresponding preferences. We then define a function to compute the reduced AAF using the weak preference approach. The resulting extension contains only argument A, which is the desired outcome.
+
+![Mathematical equations are written on a white page.](https://images.unsplash.com/photo-1754304342448-3eef0ab5ba9e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxFeGlzdGVuY2UlMjBJbnZlcnNlJTIwU29sdXRpb24lMjBQcmVmZXJlbmNlJTIwQmFzZWQlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzc0MzUwMDR8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this post, we explored the concept of inverse solutions in preference-based reductions in argumentation. We provided a theoretical foundation for understanding the problem and illustrated the concept with a practical example. The code example demonstrated how to compute the reduced AAF using the weak preference approach and resulted in the desired extension.
+
+The existence of inverse solutions has significant implications for the field of argumentation and can be applied to various real-world problems, such as decision-making and conflict resolution. Further research is needed to explore the theoretical foundations and practical applications of inverse solutions in preference-based reductions.
+
+*Photo by [Google DeepMind](https://unsplash.com/@googledeepmind?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-close-up-of-a-container-with-words-on-it-b8GH92xVoUw?utm_source=techversation&utm_medium=referral)*
