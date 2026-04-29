@@ -1,0 +1,116 @@
+---
+title: "Decoupled Human-in-the-Loop System"
+description: "Implementing controlled autonomy in agentic workflows."
+date: "2026-04-29"
+author: "Usama"
+tags: ["ai", "autonomy", "human-in-the-loop"]
+aiSummary: "This tutorial guides developers through building a decoupled human-in-the-loop system for controlled autonomy in agentic workflows. We'll cover the importance of human oversight and provide concrete code examples. By the end, you'll have a working system that ensures transparency, accountability, and trustworthiness."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1638604813811-6f3c53deff9c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxEZWNvdXBsZWQlMjBIdW1hbiUyMExvb3AlMjBTeXN0ZW0lMjBDb250cm9sbGVkJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc3NDcyOTQ4fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+As AI agents become increasingly deployed in agentic workflows, the need for safe and controlled autonomy grows. Human oversight is crucial for ensuring transparency, accountability, and trustworthiness in these systems. In this tutorial, we'll explore the concept of a decoupled human-in-the-loop system and provide a step-by-step guide on how to implement it.
+
+## Background
+
+Prior work has established the importance of human-in-the-loop systems, where human operators are involved in the decision-making process to ensure that AI agents operate within acceptable boundaries. However, existing implementations often suffer from tight coupling between the human and AI components, making it difficult to scale and maintain these systems.
+
+## Decoupled Human-in-the-Loop System
+
+A decoupled human-in-the-loop system addresses these limitations by separating the human and AI components into distinct modules. This architecture enables greater flexibility, scalability, and maintainability.
+
+### System Components
+
+The decoupled human-in-the-loop system consists of three primary components:
+
+1. **AI Agent**: Responsible for executing tasks and making decisions within the agentic workflow.
+2. **Human Operator**: Provides oversight and guidance to the AI agent, ensuring that its decisions align with human values and intentions.
+3. **Interface Module**: Facilitates communication between the AI agent and human operator, enabling the exchange of information and feedback.
+
+## Implementation
+
+We'll implement the decoupled human-in-the-loop system using Python and the Flask web framework. Our example will focus on a simple workflow where an AI agent makes decisions based on input data, and a human operator provides feedback to correct or validate these decisions.
+
+### AI Agent
+
+The AI agent will be implemented using a basic machine learning model. For this example, we'll use a simple decision tree classifier.
+```python
+# ai_agent.py
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+
+# Load iris dataset
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train decision tree classifier
+clf = DecisionTreeClassifier(random_state=42)
+clf.fit(X_train, y_train)
+```
+### Human Operator
+
+The human operator will be implemented as a simple web interface using Flask. This interface will allow the human operator to provide feedback to the AI agent.
+```python
+# app.py
+from flask import Flask, request, jsonify
+from ai_agent import clf
+
+app = Flask(__name__)
+
+@app.route('/feedback', methods=['POST'])
+def feedback():
+    data = request.get_json()
+    prediction = clf.predict(data['input_data'])
+    return jsonify({'prediction': prediction.tolist()})
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+### Interface Module
+
+The interface module will facilitate communication between the AI agent and human operator. This module will be responsible for sending input data to the AI agent, receiving predictions, and forwarding feedback from the human operator.
+```python
+# interface.py
+import requests
+
+def send_input_data(input_data):
+    response = requests.post('http://localhost:5000/feedback', json={'input_data': input_data})
+    return response.json()
+
+def send_feedback(feedback_data):
+    response = requests.post('http://localhost:5000/feedback', json={'feedback': feedback_data})
+    return response.json()
+```
+## Example Use Case
+
+Let's consider an example where the AI agent is tasked with classifying iris flowers based on their characteristics. The human operator provides feedback to correct or validate the AI agent's predictions.
+
+1. The AI agent receives input data from the interface module and makes a prediction using the decision tree classifier.
+2. The prediction is sent to the human operator through the interface module.
+3. The human operator reviews the prediction and provides feedback to correct or validate it.
+4. The feedback is sent back to the AI agent through the interface module.
+5. The AI agent updates its model based on the feedback and makes a new prediction.
+
+![a picture of a human body with a diagram of the human body](https://images.unsplash.com/photo-1649073586373-b6d49022d567?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxEZWNvdXBsZWQlMjBIdW1hbiUyMExvb3AlMjBTeXN0ZW0lMjBDb250cm9sbGVkJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc3NDcyOTQ4fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we've implemented a decoupled human-in-the-loop system for controlled autonomy in agentic workflows. By separating the human and AI components into distinct modules, we've created a more flexible, scalable, and maintainable system. The example use case demonstrates how the system can be applied to real-world problems, such as classifying iris flowers.
+
+## Future Work
+
+Future work can focus on improving the AI agent's decision-making capabilities, enhancing the human operator's interface, and exploring applications in various domains. Additionally, researchers can investigate the use of more advanced machine learning models and human-in-the-loop techniques to further improve the system's performance and efficiency.
+
+![a black wall with a neon light drawing on it](https://images.unsplash.com/photo-1636953099671-481a72803051?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxEZWNvdXBsZWQlMjBIdW1hbiUyMExvb3AlMjBTeXN0ZW0lMjBDb250cm9sbGVkJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc3NDcyOTQ4fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+Note: The code examples provided are simplified and intended for illustrative purposes only. In a real-world implementation, you would need to consider additional factors such as data preprocessing, model evaluation, and security.
+
+*Photo by [julien Tromeur](https://unsplash.com/@julientromeur?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-man-with-a-red-ball-in-his-hand-mzXOXmTEnlA?utm_source=techversation&utm_medium=referral)*
