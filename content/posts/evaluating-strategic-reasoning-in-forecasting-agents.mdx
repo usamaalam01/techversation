@@ -1,0 +1,93 @@
+---
+title: "Evaluating Strategic Reasoning in Forecasting Agents"
+description: "Bench to the Future 2 evaluates forecasting agents' strategic reasoning."
+date: "2026-04-30"
+author: "Usama"
+tags: ["ai", "forecasting", "reasoning"]
+aiSummary: "Bench to the Future 2 is a benchmark for evaluating strategic reasoning in forecasting agents. It provides a frozen 15M-document research corpus and 1,417 pastcasting questions. This tutorial guides developers in using BTF-2 to assess forecasting agents' performance."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1705484229173-691d4fb8cd1a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxFdmFsdWF0aW5nJTIwU3RyYXRlZ2ljJTIwUmVhc29uaW5nJTIwRm9yZWNhc3RpbmclMjBBZ2VudHMlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzc1MzgyOTh8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Forecasting agents are designed to predict future events based on historical data. However, evaluating their performance is crucial to understand their decision-making processes. Bench to the Future 2 (BTF-2) is a benchmark that assesses forecasting agents' strategic reasoning by providing a frozen 15M-document research corpus and 1,417 pastcasting questions. In this tutorial, we will explore how to use BTF-2 to evaluate forecasting agents' performance.
+
+## Setting up BTF-2
+
+To get started with BTF-2, you need to download the research corpus and pastcasting questions from the [official repository](https://arxiv.org/abs/2604.26106). The corpus is a large dataset of documents that the forecasting agent can use to research and forecast.
+
+```bash
+# Download the research corpus
+wget https://example.com/btf2_corpus.zip
+
+# Unzip the corpus
+unzip btf2_corpus.zip
+```
+
+## Implementing a Forecasting Agent
+
+A forecasting agent is a program that takes in historical data and produces a forecast. For this example, we will use a simple agent that uses a machine learning model to make predictions.
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import train_test_split
+
+# Load the historical data
+data = pd.read_csv('historical_data.csv')
+
+# Split the data into training and testing sets
+train_data, test_data = train_test_split(data, test_size=0.2, random_state=42)
+
+# Train a random forest regressor model
+model = RandomForestRegressor(n_estimators=100, random_state=42)
+model.fit(train_data.drop('target', axis=1), train_data['target'])
+```
+
+## Evaluating the Forecasting Agent
+
+To evaluate the forecasting agent's performance, we need to use the BTF-2 benchmark. The benchmark provides a set of pastcasting questions that the agent must answer based on the research corpus.
+
+```python
+# Load the pastcasting questions
+questions = pd.read_csv('btf2_questions.csv')
+
+# Initialize a list to store the agent's answers
+answers = []
+
+# Loop through each question
+for question in questions['question']:
+    # Use the agent to answer the question
+    answer = model.predict(pd.DataFrame({'text': [question]}))
+    answers.append(answer)
+```
+
+## Analyzing the Results
+
+After evaluating the forecasting agent's performance, we can analyze the results to understand its strategic reasoning.
+
+```python
+# Calculate the agent's accuracy
+accuracy = sum(1 for answer, question in zip(answers, questions['answer']) if answer == question) / len(questions)
+
+# Print the accuracy
+print(f'Agent accuracy: {accuracy:.3f}')
+```
+
+![black flat screen computer monitor](https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxFdmFsdWF0aW5nJTIwU3RyYXRlZ2ljJTIwUmVhc29uaW5nJTIwRm9yZWNhc3RpbmclMjBBZ2VudHMlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzc1MzgyOTh8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we demonstrated how to use BTF-2 to evaluate a forecasting agent's strategic reasoning. By providing a frozen research corpus and pastcasting questions, BTF-2 allows developers to assess their agents' performance and understand their decision-making processes. By following these steps, you can use BTF-2 to evaluate your own forecasting agents and improve their accuracy.
+
+## Future Work
+
+There are several avenues for future work in evaluating strategic reasoning in forecasting agents. One potential direction is to explore the use of more advanced machine learning models, such as deep learning architectures, to improve the accuracy of forecasting agents. Another direction is to investigate the use of different evaluation metrics, such as mean absolute error or mean squared error, to assess the performance of forecasting agents.
+
+![person writing on whiteboard](https://images.unsplash.com/photo-1546437593-3d0258c28037?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxFdmFsdWF0aW5nJTIwU3RyYXRlZ2ljJTIwUmVhc29uaW5nJTIwRm9yZWNhc3RpbmclMjBBZ2VudHMlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzc1MzgyOTh8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+By exploring these avenues, developers can continue to improve the accuracy and strategic reasoning of forecasting agents, leading to more effective decision-making in a variety of applications.
+
+*Photo by [Markus Winkler](https://unsplash.com/@markuswinkler?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/scrabble-tiles-spelling-out-the-word-statistics-on-a-wooden-surface-9draKK5mCoU?utm_source=techversation&utm_medium=referral)*
