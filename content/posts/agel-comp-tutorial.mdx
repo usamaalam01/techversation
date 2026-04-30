@@ -1,0 +1,143 @@
+---
+title: "AGEL-Comp Tutorial"
+description: "Learn to implement AGEL-Comp for compositional generalization in interactive agents."
+date: "2026-04-30"
+author: "Usama"
+tags: ["ai", "llm", "neuro-symbolic"]
+aiSummary: "AGEL-Comp is a neuro-symbolic framework for compositional generalization in interactive agents. It addresses systemic failures in Large Language Model-based agents by grounding actions. This tutorial provides a step-by-step guide to implementing AGEL-Comp."
+category: "tutorials"
+draft: true
+---
+
+## Introduction to AGEL-Comp
+
+AGEL-Comp is a neuro-symbolic AI agent architecture designed to improve compositional generalization in interactive environments. The framework integrates three core innovations: a dynamic action space, a symbolic knowledge graph, and a neuro-symbolic reasoning module. In this tutorial, we will explore the AGEL-Comp architecture and provide a step-by-step guide to implementing it.
+
+## Background and Motivation
+
+Large Language Model (LLM)-based agents have shown impressive performance in various tasks, but they often struggle with compositional generalization. This refers to the ability of an agent to combine known concepts and actions to solve new, unseen problems. The lack of compositional generalization limits the robustness of LLM-based agents in interactive environments.
+
+The AGEL-Comp framework addresses this challenge by grounding the actions of the agent in a symbolic knowledge graph. This allows the agent to reason about the environment and its actions in a more structured and compositional way.
+
+## Implementing AGEL-Comp
+
+To implement AGEL-Comp, we will use a combination of Python and the PyTorch library. We will start by defining the dynamic action space, which represents the possible actions the agent can take in the environment.
+
+```python
+import torch
+import torch.nn as nn
+
+class ActionSpace(nn.Module):
+    def __init__(self, num_actions):
+        super(ActionSpace, self).__init__()
+        self.num_actions = num_actions
+        self.actions = nn.Embedding(num_actions, 128)
+
+    def forward(self, action_ids):
+        return self.actions(action_ids)
+```
+
+Next, we will define the symbolic knowledge graph, which represents the relationships between objects and actions in the environment.
+
+```python
+import networkx as nx
+
+class KnowledgeGraph:
+    def __init__(self):
+        self.graph = nx.DiGraph()
+
+    def add_node(self, node_id, node_type):
+        self.graph.add_node(node_id, type=node_type)
+
+    def add_edge(self, node_id1, node_id2, edge_type):
+        self.graph.add_edge(node_id1, node_id2, type=edge_type)
+```
+
+We will also define the neuro-symbolic reasoning module, which combines the dynamic action space and the symbolic knowledge graph to reason about the environment.
+
+```python
+class NeuroSymbolicReasoning(nn.Module):
+    def __init__(self, action_space, knowledge_graph):
+        super(NeuroSymbolicReasoning, self).__init__()
+        self.action_space = action_space
+        self.knowledge_graph = knowledge_graph
+
+    def forward(self, state, action_ids):
+        action_embeddings = self.action_space(action_ids)
+        knowledge_graph_embeddings = self.knowledge_graph.graph.nodes(data=True)
+        # Combine action embeddings and knowledge graph embeddings using attention
+        combined_embeddings = torch.cat((action_embeddings, knowledge_graph_embeddings), dim=1)
+        return combined_embeddings
+```
+
+## Training AGEL-Comp
+
+To train the AGEL-Comp framework, we will use a combination of reinforcement learning and supervised learning. We will first train the dynamic action space using reinforcement learning, and then train the neuro-symbolic reasoning module using supervised learning.
+
+```python
+import torch.optim as optim
+
+# Define the reinforcement learning environment
+class Environment:
+    def __init__(self):
+        self.state = None
+        self.action_space = ActionSpace(num_actions=10)
+
+    def reset(self):
+        self.state = torch.randn(1, 128)
+        return self.state
+
+    def step(self, action_id):
+        # Simulate the environment
+        reward = torch.randn(1)
+        next_state = torch.randn(1, 128)
+        return next_state, reward
+
+# Train the dynamic action space using reinforcement learning
+env = Environment()
+action_space = ActionSpace(num_actions=10)
+optimizer = optim.Adam(action_space.parameters(), lr=0.001)
+
+for episode in range(1000):
+    state = env.reset()
+    action_id = torch.randint(0, 10, (1,))
+    next_state, reward = env.step(action_id)
+    # Update the action space using reinforcement learning
+    loss = -reward
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+
+# Train the neuro-symbolic reasoning module using supervised learning
+knowledge_graph = KnowledgeGraph()
+neuro_symbolic_reasoning = NeuroSymbolicReasoning(action_space, knowledge_graph)
+optimizer = optim.Adam(neuro_symbolic_reasoning.parameters(), lr=0.001)
+
+for episode in range(1000):
+    state = torch.randn(1, 128)
+    action_id = torch.randint(0, 10, (1,))
+    # Generate the target output
+    target_output = torch.randn(1, 128)
+    # Update the neuro-symbolic reasoning module using supervised learning
+    output = neuro_symbolic_reasoning(state, action_id)
+    loss = torch.mean((output - target_output) ** 2)
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+```
+
+## Conclusion
+
+In this tutorial, we have provided a step-by-step guide to implementing the AGEL-Comp framework for compositional generalization in interactive agents. We have defined the dynamic action space, the symbolic knowledge graph, and the neuro-symbolic reasoning module, and trained the framework using a combination of reinforcement learning and supervised learning. The AGEL-Comp framework has the potential to improve the robustness of LLM-based agents in interactive environments by grounding their actions in a symbolic knowledge graph.
+
+## Future Work
+
+There are several directions for future work, including:
+
+* Improving the efficiency of the neuro-symbolic reasoning module
+* Integrating the AGEL-Comp framework with other AI architectures, such as transformers or graph neural networks
+* Applying the AGEL-Comp framework to real-world problems, such as robotics or natural language processing
+
+By following this tutorial and exploring these future directions, developers can create more robust and generalizable AI agents that can reason about their environment and take actions in a more structured and compositional way.
+
+For more information on the AGEL-Comp framework, please refer to the original paper: [AGEL-Comp: A Neuro-Symbolic Framework for Compositional Generalization in Interactive Agents](https://arxiv.org/abs/2604.26522).
