@@ -1,0 +1,103 @@
+---
+title: "Spotify Verified Artist Badges"
+description: "Spotify introduces verified artist badges to distinguish humans from AI."
+date: "2026-04-30"
+author: "Usama"
+tags: ["spotify", "music", "ai"]
+aiSummary: "Spotify is rolling out verified artist badges to help listeners identify authentic human artists. Artists must meet certain criteria to receive the badge. This tutorial will guide developers through the process of verifying artists and using the Spotify API to retrieve verified artist information."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1658489958427-325ded050829?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxTcG90aWZ5JTIwaW50cm9kdWNlcyUyMHZlcmlmaWVkJTIwYXJ0aXN0JTIwYmFkZ2VzJTIwdGVjaG5vbG9neSUyMGRpZ2l0YWwlMjBpbm5vdmF0aW9ufGVufDF8MHx8fDE3Nzc1NTg3MjJ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+As AI-generated music continues to flood music streaming platforms, it's becoming increasingly difficult for listeners to distinguish between human and AI-created content. To address this issue, Spotify has introduced a new "Verified by Spotify" badge to help listeners identify authentic human artists. In this tutorial, we'll explore the criteria for receiving the badge and demonstrate how to use the Spotify API to retrieve verified artist information.
+
+## Criteria for Verified Artist Badges
+
+To receive a verified artist badge, artists must meet certain criteria, including:
+
+* An identifiable artist presence both on and off the Spotify platform
+* Concert dates, merchandise, and linked social media profiles
+* A consistent and engaging online presence
+
+Spotify uses a combination of human evaluation and automated processes to verify artist identities.
+
+## Using the Spotify API to Retrieve Verified Artist Information
+
+The Spotify API provides a convenient way to retrieve information about verified artists. To get started, you'll need to register for a Spotify Developer account and create a new application. This will provide you with a client ID and client secret, which you'll use to authenticate your API requests.
+
+### Authenticating with the Spotify API
+
+To authenticate with the Spotify API, you'll need to use the client credentials flow. This involves sending a POST request to the Spotify API with your client ID and client secret.
+```python
+import requests
+
+client_id = "your_client_id"
+client_secret = "your_client_secret"
+
+auth_url = "https://accounts.spotify.com/api/token"
+auth_data = {
+    "grant_type": "client_credentials",
+    "client_id": client_id,
+    "client_secret": client_secret
+}
+
+auth_response = requests.post(auth_url, data=auth_data)
+access_token = auth_response.json()["access_token"]
+```
+### Retrieving Verified Artist Information
+
+Once you've authenticated with the Spotify API, you can use the `GET /artists` endpoint to retrieve information about verified artists. You can filter the results by specifying the `q` parameter, which allows you to search for artists by name.
+```python
+import requests
+
+access_token = "your_access_token"
+artist_name = "The Beatles"
+
+search_url = f"https://api.spotify.com/v1/search?q={artist_name}&type=artist"
+headers = {
+    "Authorization": f"Bearer {access_token}"
+}
+
+search_response = requests.get(search_url, headers=headers)
+artist_data = search_response.json()["artists"]["items"][0]
+
+verified = artist_data["verified"]
+print(f"Is {artist_name} verified? {verified}")
+```
+## Displaying Verified Artist Badges
+
+To display verified artist badges in your application, you can use the Spotify API to retrieve the artist's profile image and verified status. You can then use this information to display a badge next to the artist's name.
+```python
+import requests
+
+access_token = "your_access_token"
+artist_name = "The Beatles"
+
+search_url = f"https://api.spotify.com/v1/search?q={artist_name}&type=artist"
+headers = {
+    "Authorization": f"Bearer {access_token}"
+}
+
+search_response = requests.get(search_url, headers=headers)
+artist_data = search_response.json()["artists"]["items"][0]
+
+verified = artist_data["verified"]
+image_url = artist_data["images"][0]["url"]
+
+if verified:
+    print(f"{artist_name} is verified!")
+    # Display verified badge
+    print(f"![Verified Artist]({image_url})")
+else:
+    print(f"{artist_name} is not verified.")
+```
+![a laptop computer sitting on top of a bed](https://images.unsplash.com/photo-1643208589889-4f02359645c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxTcG90aWZ5JTIwaW50cm9kdWNlcyUyMHZlcmlmaWVkJTIwYXJ0aXN0JTIwYmFkZ2VzJTIwdGVjaG5vbG9neSUyMGRpZ2l0YWwlMjBpbm5vdmF0aW9ufGVufDF8MHx8fDE3Nzc1NTg3MjJ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we've explored the criteria for receiving a verified artist badge on Spotify and demonstrated how to use the Spotify API to retrieve verified artist information. By following these steps, you can display verified artist badges in your application and help listeners distinguish between human and AI-created content. For more information, visit the [Spotify API documentation](https://developer.spotify.com/documentation/web-api/).
+
+*Photo by [Shutter Speed](https://unsplash.com/@shutter_speed_?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/icon-TXhtXaPhyN4?utm_source=techversation&utm_medium=referral)*
