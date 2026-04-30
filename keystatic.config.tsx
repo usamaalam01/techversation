@@ -1,9 +1,18 @@
 import { config, collection, fields } from "@keystatic/core";
 
+// Use GitHub storage only when OAuth credentials are present (i.e. on Vercel).
+// Locally, credentials are not set so it falls back to local file storage.
+const storage = process.env.GITHUB_CLIENT_ID
+  ? ({
+      kind: "github",
+      repo: { owner: "usamaalam01", name: "techversation" },
+    } as const)
+  : ({ kind: "local" } as const);
+
 export default config({
-  storage: { kind: "local" },
+  storage,
   ui: {
-    brand: { name: "AI Pulse" },
+    brand: { name: "Techversation" },
   },
   collections: {
     posts: collection({
