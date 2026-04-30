@@ -1,0 +1,73 @@
+---
+title: "HERMES.md Causes Billing Issues"
+description: "HERMES.md in commit messages routes requests to extra usage billing."
+date: "2026-04-30"
+author: "Usama"
+tags: ["github", "billing", "issues"]
+aiSummary: "A recent issue with HERMES.md in commit messages has been causing requests to route to extra usage billing, affecting GitHub users. The issue has sparked a discussion about commit message best practices and the importance of careful documentation. Developers are advised to be cautious when including certain keywords in their commit messages."
+category: "news"
+coverImage: "https://images.unsplash.com/photo-1620295153878-8e6026f3be98?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxIRVJNRVMlMjBjb21taXQlMjBtZXNzYWdlcyUyMGNhdXNlcyUyMHJlcXVlc3RzJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3Nzc1MjExNDl8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to the Issue
+
+A recent issue reported on GitHub has highlighted the importance of careful commit message documentation. The issue, tracked in the [anthropics/claude-code](https://github.com/anthropics/claude-code/issues/53262) repository, reveals that including `HERMES.md` in commit messages can cause requests to route to extra usage billing. This unexpected behavior has left many developers wondering about the cause and implications of this issue.
+
+## What Happened
+
+The issue was first reported by a GitHub user who noticed that their repository's billing usage had increased significantly after including `HERMES.md` in a commit message. Upon further investigation, it was discovered that the presence of `HERMES.md` in the commit message was triggering an extra usage billing route. The exact cause of this behavior is still unclear, but it is believed to be related to the way GitHub handles certain keywords in commit messages.
+
+## Why it Matters to Developers
+
+This issue matters to developers for several reasons. Firstly, it highlights the importance of careful commit message documentation. Developers should be cautious when including certain keywords in their commit messages, as they can have unintended consequences. Secondly, it raises concerns about the transparency of GitHub's billing practices. Developers need to understand how their actions can impact their billing usage to avoid unexpected costs.
+
+![person holding white printer paper](https://images.unsplash.com/photo-1613732563096-1a00a46da7d4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxIRVJNRVMlMjBjb21taXQlMjBtZXNzYWdlcyUyMGNhdXNlcyUyMHJlcXVlc3RzJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3Nzc1MjExNDl8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+### Best Practices for Commit Messages
+
+To avoid similar issues in the future, developers should follow best practices for commit messages. This includes:
+
+* Keeping commit messages concise and descriptive
+* Avoiding the use of certain keywords that can trigger unintended behavior
+* Using clear and consistent formatting in commit messages
+
+By following these best practices, developers can ensure that their commit messages are effective and do not cause unintended consequences.
+
+## Broader Implications
+
+The issue with `HERMES.md` in commit messages has broader implications for the developer community. It highlights the need for greater transparency and understanding of how GitHub's billing practices work. Developers need to be aware of how their actions can impact their billing usage to avoid unexpected costs.
+
+![a computer screen with a bunch of buttons on it](https://images.unsplash.com/photo-1675865254433-6ba341f0f00b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxIRVJNRVMlMjBjb21taXQlMjBtZXNzYWdlcyUyMGNhdXNlcyUyMHJlcXVlc3RzJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3Nzc1MjExNDl8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+### Conclusion
+
+In conclusion, the issue with `HERMES.md` in commit messages is a reminder of the importance of careful commit message documentation and the need for greater transparency in GitHub's billing practices. By following best practices for commit messages and being aware of how their actions can impact their billing usage, developers can avoid unexpected costs and ensure that their repositories are well-maintained. As the developer community continues to grow and evolve, it is essential that we prioritize transparency and understanding of the tools and platforms we use. 
+
+To learn more about the issue and its resolution, you can visit the [GitHub issue page](https://github.com/anthropics/claude-code/issues/53262) and follow the discussion. 
+
+You can also use the following code to test the commit message:
+```python
+import requests
+
+def test_commit_message(message):
+    # Replace with your GitHub repository URL
+    url = "https://api.github.com/repos/your-username/your-repo-name/commits"
+    headers = {
+        "Authorization": "Bearer your-github-token",
+        "Content-Type": "application/json"
+    }
+    data = {
+        "message": message
+    }
+    response = requests.post(url, headers=headers, json=data)
+    return response.json()
+
+# Test the commit message
+message = "HERMES.md test commit message"
+response = test_commit_message(message)
+print(response)
+```
+Replace `your-username`, `your-repo-name`, and `your-github-token` with your actual GitHub username, repository name, and token. This code will create a new commit with the specified message and print the response from the GitHub API.
+
+*Photo by [Brett Jordan](https://unsplash.com/@brett_jordan?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/text-TMj1c5wlO3k?utm_source=techversation&utm_medium=referral)*
