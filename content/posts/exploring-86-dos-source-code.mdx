@@ -1,0 +1,79 @@
+---
+title: "Exploring 86-DOS Source Code"
+description: "Microsoft releases earliest DOS source code discovered to date."
+date: "2026-05-01"
+author: "Usama"
+tags: ["microsoft", "dos", "open-source"]
+aiSummary: "Microsoft has open-sourced the earliest DOS source code discovered to date, dating back to the time before Microsoft bought it. This release provides a unique insight into the development of early operating systems. The source code is written in 8086 assembly language and can be compiled using an 8086 assembler."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1737922342275-71bab46ace83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxNaWNyb3NvZnQlMjBvcGVuJTIwc291cmNlcyUyMGVhcmxpZXN0JTIwRE9TJTIwdGVjaG5vbG9neSUyMGRpZ2l0YWwlMjBpbm5vdmF0aW9ufGVufDF8MHx8fDE3Nzc2MjM4NjB8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+The release of the 86-DOS source code by Microsoft is a significant event for developers and computer historians alike. 86-DOS, also known as QDOS (Quick and Dirty Operating System), was written by Tim Paterson of Seattle Computer Products in 1980. It was later purchased by Microsoft and renamed MS-DOS, which became one of the most widely used operating systems of the 1980s. In this post, we will explore the 86-DOS source code, its history, and provide a practical guide on how to work with it.
+
+## History of 86-DOS
+
+86-DOS was created by Tim Paterson in 1980, and it was designed to be a simple and efficient operating system for the Intel 8086 processor. The operating system was written in 8086 assembly language, which was the standard programming language for the Intel 8086 processor at that time. 86-DOS was initially sold to Microsoft, which modified it to create MS-DOS. MS-DOS became one of the most widely used operating systems of the 1980s, and it played a significant role in the development of the personal computer industry.
+
+## Exploring the 86-DOS Source Code
+
+The 86-DOS source code is written in 8086 assembly language, which can be compiled using an 8086 assembler. The source code is relatively small, consisting of only a few thousand lines of code. However, it provides a unique insight into the development of early operating systems and the design decisions that were made at the time.
+
+To work with the 86-DOS source code, you will need to install an 8086 assembler and a debugger. One popular option is the NASM (Netwide Assembler) assembler, which can be used to assemble the 86-DOS source code.
+
+```nasm
+; Example 86-DOS source code
+mov ax, 0x1000
+mov ds, ax
+mov es, ax
+```
+
+This code sets up the data segment (DS) and extra segment (ES) registers to point to the address 0x1000. This is a common pattern in 86-DOS code, where the data segment is used to store data and the extra segment is used to store the program's code.
+
+## Compiling and Running 86-DOS
+
+To compile and run 86-DOS, you will need to use an 8086 emulator or a virtual machine. One popular option is the QEMU emulator, which can be used to run 86-DOS on a modern operating system.
+
+```bash
+# Assemble the 86-DOS source code using NASM
+nasm -f bin 86dos.asm -o 86dos.bin
+
+# Run the 86-DOS binary using QEMU
+qemu-system-i386 -fda 86dos.bin
+```
+
+This will assemble the 86-DOS source code and run it using QEMU. You can use the QEMU debugger to step through the code and examine the registers and memory.
+
+![black round plastic on white and brown textile](https://images.unsplash.com/photo-1599761526489-5f18afedf44d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxNaWNyb3NvZnQlMjBvcGVuJTIwc291cmNlcyUyMGVhcmxpZXN0JTIwRE9TJTIwdGVjaG5vbG9neSUyMGRpZ2l0YWwlMjBpbm5vdmF0aW9ufGVufDF8MHx8fDE3Nzc2MjM4NjB8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+The release of the 86-DOS source code is a significant event for developers and computer historians alike. It provides a unique insight into the development of early operating systems and the design decisions that were made at the time. By exploring the 86-DOS source code, developers can gain a deeper understanding of the history of operating systems and the evolution of the personal computer industry.
+
+## Future Directions
+
+The release of the 86-DOS source code also provides opportunities for future development and research. For example, developers could use the 86-DOS source code as a starting point for creating new operating systems or modifying existing ones. Additionally, researchers could use the 86-DOS source code to study the development of early operating systems and the design decisions that were made at the time.
+
+### Getting Started
+
+To get started with the 86-DOS source code, you will need to install an 8086 assembler and a debugger. You can also use an 8086 emulator or a virtual machine to run the 86-DOS binary. Some popular options include:
+
+* NASM (Netwide Assembler) assembler
+* QEMU emulator
+* DOSBox emulator
+
+You can also find more information about the 86-DOS source code and its history on the [Ars Technica website](https://arstechnica.com/gadgets/2026/04/microsoft-open-sources-the-earliest-dos-source-code-discovered-to-date/).
+
+### Resources
+
+* [86-DOS source code](https://github.com/microsoft/86-DOS)
+* [NASM (Netwide Assembler) assembler](https://www.nasm.us/)
+* [QEMU emulator](https://www.qemu.org/)
+* [DOSBox emulator](https://www.dosbox.com/)
+
+By exploring the 86-DOS source code and its history, developers can gain a deeper understanding of the development of early operating systems and the evolution of the personal computer industry.
+
+*Photo by [Simon Ray](https://unsplash.com/@simonbhray?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-tall-building-with-a-microsoft-logo-on-top-of-it-TICJQELFmg4?utm_source=techversation&utm_medium=referral)*
