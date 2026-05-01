@@ -1,0 +1,77 @@
+---
+title: "Vibe Coding Tutorial"
+description: "Students collaborate with AI via natural language for programming."
+date: "2026-05-01"
+author: "Usama"
+tags: ["ai", "vibe-coding", "programming"]
+aiSummary: "Vibe coding is a new approach to programming where students collaborate with AI via natural language. This tutorial will guide you through the process of implementing vibe coding using Python and the Hugging Face Transformers library. We will explore the concepts of help-seeking processes in student-AI interactions and provide working code examples."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1771942202908-6ce86ef73701?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxVbnBhY2tpbmclMjBWaWJlJTIwQ29kaW5nJTIwSGVscCUyMFNlZWtpbmclMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzc2NjM2MjB8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Vibe Coding
+Vibe coding is a novel approach to programming that involves collaborating with AI via natural language. This approach has gained significant attention in recent years, particularly in the context of higher education. According to a recent study published on [arXiv](https://arxiv.org/abs/2604.27134), vibe coding can be conceptualized as a help-seeking process, where students interact with AI to seek assistance with programming tasks.
+
+## Understanding Help-Seeking Processes
+Help-seeking processes in student-AI interactions involve a series of turns, where students provide input to the AI, and the AI responds with relevant output. These interactions can be analyzed using inductive coding and Heterogeneous Transition Network Analysis. To demonstrate this concept, let's consider an example interaction between a student and an AI:
+```python
+# Student input
+student_input = "Write a Python function to calculate the area of a rectangle."
+
+# AI response
+ai_response = "Here is a Python function to calculate the area of a rectangle: def calculate_area(length, width): return length * width"
+```
+In this example, the student provides input to the AI, and the AI responds with a relevant output.
+
+## Implementing Vibe Coding using Python
+To implement vibe coding using Python, we can utilize the Hugging Face Transformers library. This library provides a wide range of pre-trained models that can be fine-tuned for specific tasks, including natural language processing and code generation. Let's create a simple example using the T5 model:
+```python
+import torch
+from transformers import T5Tokenizer, T5ForConditionalGeneration
+
+# Load pre-trained T5 model and tokenizer
+model = T5ForConditionalGeneration.from_pretrained('t5-small')
+tokenizer = T5Tokenizer.from_pretrained('t5-small')
+
+# Define a function to generate code based on student input
+def generate_code(student_input):
+    input_ids = tokenizer.encode("Generate code: " + student_input, return_tensors='pt')
+    output = model.generate(input_ids, max_length=100)
+    return tokenizer.decode(output[0], skip_special_tokens=True)
+
+# Test the function
+student_input = "Write a Python function to calculate the area of a rectangle."
+print(generate_code(student_input))
+```
+This code defines a function `generate_code` that takes student input as a string and generates relevant code using the T5 model.
+
+![Computer screen displays "vibe vibe coding" text.](https://images.unsplash.com/photo-1774649704786-298b96807db5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxVbnBhY2tpbmclMjBWaWJlJTIwQ29kaW5nJTIwSGVscCUyMFNlZWtpbmclMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzc2NjM2MjB8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Analyzing Student-AI Interactions
+To analyze student-AI interactions, we can utilize the Heterogeneous Transition Network Analysis. This involves creating a graph that represents the interactions between students and AI. Each node in the graph represents a state, and the edges represent transitions between states. Let's create a simple example using the NetworkX library:
+```python
+import networkx as nx
+
+# Create a graph
+G = nx.DiGraph()
+
+# Add nodes and edges
+G.add_node("Student Input")
+G.add_node("AI Response")
+G.add_edge("Student Input", "AI Response")
+
+# Print the graph
+print(G.nodes())
+print(G.edges())
+```
+This code creates a simple graph with two nodes and one edge, representing the interaction between a student and an AI.
+
+## Conclusion
+Vibe coding is a novel approach to programming that involves collaborating with AI via natural language. By understanding help-seeking processes in student-AI interactions, we can design more effective systems that support students in their programming tasks. In this tutorial, we provided a step-by-step guide to implementing vibe coding using Python and the Hugging Face Transformers library. We also demonstrated how to analyze student-AI interactions using the Heterogeneous Transition Network Analysis.
+
+![Woman reading a book with red accents](https://images.unsplash.com/photo-1768335550181-26cda1bc1a61?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxVbnBhY2tpbmclMjBWaWJlJTIwQ29kaW5nJTIwSGVscCUyMFNlZWtpbmclMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzc2NjM2MjB8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+By following this tutorial, developers can gain a deeper understanding of vibe coding and its applications in programming education. The code examples provided in this tutorial can be extended and modified to support more complex interactions between students and AI.
+
+*Photo by [Bharath Kumar](https://unsplash.com/@bharath9110?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/tabs-labeled-vibe-coding-with-code-on-bottom-8IoNCI3K0AQ?utm_source=techversation&utm_medium=referral)*
