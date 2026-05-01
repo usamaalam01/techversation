@@ -1,0 +1,93 @@
+---
+title: "Migrating LLMs with Confidence"
+description: "A framework for replacing end-of-life large language models in production systems."
+date: "2026-05-01"
+author: "Usama"
+tags: ["llm", "migration", "bayesian"]
+aiSummary: "We present a framework for migrating production Large Language Model based systems when the underlying model reaches end-of-life. Our approach uses Bayesian statistical methods to calibrate automated evaluation metrics against human judgments. This enables confident model comparison even with limited manual evaluation. We provide a step-by-step guide on how to implement this framework in practice."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxMTE0lMjBSZWFjaGVzJTIwRW5kJTIwTGlmZSUyMEZyYW1ld29yayUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3NzYwODQ3MXww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Large Language Models (LLMs) have become a crucial component in many production systems, including chatbots, language translators, and text summarizers. However, like any other software component, LLMs have a limited lifespan and may need to be replaced when they reach end-of-life. This can be a challenging task, especially when dealing with complex systems that rely heavily on the LLM. In this post, we will explore a framework for migrating LLMs in production systems with confidence.
+
+## The Challenge of LLM Migration
+When an LLM reaches end-of-life, it can be difficult to determine which replacement model to use. This is because the performance of different models can vary significantly, and automated evaluation metrics may not always accurately reflect the model's performance in practice. Furthermore, manual evaluation of models can be time-consuming and expensive, making it challenging to compare multiple models.
+
+## A Bayesian Framework for Model Migration
+To address this challenge, we propose a Bayesian framework for model migration. This framework uses Bayesian statistical methods to calibrate automated evaluation metrics against human judgments. The key idea is to use a Bayesian model to estimate the probability that a given model is better than another model, based on both automated evaluation metrics and human judgments.
+
+### Bayesian Model
+The Bayesian model we propose is based on the following equation:
+
+p(model1 > model2 | data) = ∫p(model1 > model2 | θ)p(θ | data)dθ
+
+where p(model1 > model2 | θ) is the probability that model1 is better than model2 given the model parameters θ, and p(θ | data) is the posterior distribution of the model parameters given the data.
+
+### Implementation
+To implement this framework in practice, we can use the following steps:
+
+1. **Collect data**: Collect a dataset of examples that can be used to evaluate the performance of different models.
+2. **Train models**: Train multiple models on the dataset, including the current model and potential replacement models.
+3. **Evaluate models**: Evaluate the performance of each model using automated evaluation metrics, such as perplexity or accuracy.
+4. **Collect human judgments**: Collect human judgments on the performance of each model, such as ratings or rankings.
+5. **Calibrate metrics**: Use the Bayesian model to calibrate the automated evaluation metrics against the human judgments.
+
+Here is an example code snippet in Python that demonstrates how to implement this framework:
+```python
+import numpy as np
+import pandas as pd
+from scipy.stats import norm
+
+# Load dataset
+data = pd.read_csv("data.csv")
+
+# Train models
+models = []
+for i in range(5):
+    model = train_model(data, i)
+    models.append(model)
+
+# Evaluate models
+metrics = []
+for model in models:
+    metric = evaluate_model(model, data)
+    metrics.append(metric)
+
+# Collect human judgments
+judgments = []
+for model in models:
+    judgment = collect_human_judgment(model, data)
+    judgments.append(judgment)
+
+# Calibrate metrics
+calibrated_metrics = []
+for i in range(len(models)):
+    calibrated_metric = calibrate_metric(metrics[i], judgments[i])
+    calibrated_metrics.append(calibrated_metric)
+
+# Compare models
+best_model = np.argmax(calibrated_metrics)
+```
+In this example, we first load a dataset and train multiple models. We then evaluate the performance of each model using automated evaluation metrics and collect human judgments on the performance of each model. We use the Bayesian model to calibrate the automated evaluation metrics against the human judgments and compare the performance of each model.
+
+## Example Use Case
+To illustrate the use of this framework, let's consider an example use case. Suppose we have a chatbot that uses an LLM to generate responses to user queries. The LLM has reached end-of-life and needs to be replaced. We have three potential replacement models, each with different performance characteristics. We can use the framework we proposed to compare the performance of each model and determine which one to use.
+
+![an abstract image of a network of dots](https://images.unsplash.com/photo-1678845536613-5cf0ec5245cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxMTE0lMjBSZWFjaGVzJTIwRW5kJTIwTGlmZSUyMEZyYW1ld29yayUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3NzYwODQ3MXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this post, we presented a framework for migrating LLMs in production systems with confidence. The framework uses Bayesian statistical methods to calibrate automated evaluation metrics against human judgments, enabling confident model comparison even with limited manual evaluation. We provided a step-by-step guide on how to implement this framework in practice and illustrated its use with an example use case. By using this framework, developers can ensure that their production systems continue to perform well even when the underlying LLM needs to be replaced.
+
+## Future Work
+There are several directions for future work, including:
+
+* **Improving the Bayesian model**: The Bayesian model we proposed is a simple one and can be improved in several ways, such as using more sophisticated prior distributions or incorporating additional data sources.
+* **Automating the evaluation process**: The evaluation process can be automated using techniques such as active learning or transfer learning.
+* **Applying the framework to other domains**: The framework we proposed can be applied to other domains, such as computer vision or speech recognition.
+
+By continuing to improve and apply this framework, we can ensure that production systems that rely on LLMs continue to perform well even as the underlying models evolve and improve.
+
+*Photo by [Sharad Bhat](https://unsplash.com/@sharadmbhat?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/black-flat-screen-computer-monitor-Q_Swg0rZouw?utm_source=techversation&utm_medium=referral)*

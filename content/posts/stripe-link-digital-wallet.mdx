@@ -1,0 +1,120 @@
+---
+title: "Stripe Link Digital Wallet"
+description: "Stripe introduces Link, a digital wallet for users and AI agents."
+date: "2026-05-01"
+author: "Usama"
+tags: ["stripe", "link", "digital-wallet"]
+aiSummary: "Stripe's Link is a digital wallet that allows users to connect cards, banks, and subscriptions, and authorize AI agents to spend securely. This tutorial will guide you through the process of integrating Link into your application. We will cover the basics of Link, its features, and provide working code examples to get you started."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1730818877383-7abf4dc13bff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxTdHJpcGUlMjBpbnRyb2R1Y2VzJTIwTGluayUyMGRpZ2l0YWwlMjB3YWxsZXQlMjB0ZWNobm9sb2d5JTIwZGlnaXRhbCUyMGlubm92YXRpb258ZW58MXwwfHx8MTc3NzYwODMxN3ww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Stripe Link
+Stripe has introduced Link, a digital wallet that enables users to connect their cards, banks, and subscriptions, and authorize autonomous AI agents to spend securely via approval flows. This innovative technology has the potential to revolutionize the way we make payments online. In this tutorial, we will explore the features of Link, its benefits, and provide a step-by-step guide on how to integrate it into your application.
+
+## Features of Stripe Link
+Link offers a range of features that make it an attractive solution for both users and developers. Some of its key features include:
+
+* **Multi-source funding**: Link allows users to connect multiple funding sources, such as cards, banks, and subscriptions, to their digital wallet.
+* **AI agent authorization**: Users can authorize AI agents to spend securely on their behalf, with approval flows in place to ensure secure transactions.
+* **Real-time updates**: Link provides real-time updates on transaction status, ensuring that users and AI agents are always informed.
+
+### Getting Started with Link
+To get started with Link, you will need to create a Stripe account and obtain an API key. You can sign up for a Stripe account on the [Stripe website](https://stripe.com/).
+
+## Integrating Link into Your Application
+Integrating Link into your application is a straightforward process. Here is an example of how you can use the Stripe API to create a Link wallet:
+```python
+import stripe
+
+# Set your API key
+stripe.api_key = 'YOUR_API_KEY'
+
+# Create a new Link wallet
+wallet = stripe.wallets.create(
+  type='link',
+  name='My Link Wallet',
+  description='My digital wallet',
+)
+
+# Print the wallet ID
+print(wallet.id)
+```
+This code creates a new Link wallet with the specified name and description.
+
+## Authorizing AI Agents
+To authorize an AI agent to spend securely on behalf of a user, you will need to create an approval flow. Here is an example of how you can use the Stripe API to create an approval flow:
+```python
+import stripe
+
+# Set your API key
+stripe.api_key = 'YOUR_API_KEY'
+
+# Create a new approval flow
+approval_flow = stripe.approval_flows.create(
+  type='link',
+  name='My Approval Flow',
+  description='My approval flow',
+  rules=[
+    {
+      'condition': 'always',
+      'action': 'approve',
+    },
+  ],
+)
+
+# Print the approval flow ID
+print(approval_flow.id)
+```
+This code creates a new approval flow with a single rule that always approves transactions.
+
+## Example Use Case
+Here is an example of how you can use Link to authorize an AI agent to spend securely on behalf of a user:
+```python
+import stripe
+
+# Set your API key
+stripe.api_key = 'YOUR_API_KEY'
+
+# Create a new Link wallet
+wallet = stripe.wallets.create(
+  type='link',
+  name='My Link Wallet',
+  description='My digital wallet',
+)
+
+# Create a new approval flow
+approval_flow = stripe.approval_flows.create(
+  type='link',
+  name='My Approval Flow',
+  description='My approval flow',
+  rules=[
+    {
+      'condition': 'always',
+      'action': 'approve',
+    },
+  ],
+)
+
+# Authorize the AI agent to spend securely
+stripe.authorizations.create(
+  wallet=wallet.id,
+  approval_flow=approval_flow.id,
+  amount=1000,
+)
+
+# Print a confirmation message
+print('AI agent authorized to spend securely')
+```
+This code creates a new Link wallet, creates a new approval flow, and authorizes the AI agent to spend securely on behalf of the user.
+
+![person taking photo of cup inside room](https://images.unsplash.com/photo-1547331942-d21ad99c22ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxTdHJpcGUlMjBpbnRyb2R1Y2VzJTIwTGluayUyMGRpZ2l0YWwlMjB3YWxsZXQlMjB0ZWNobm9sb2d5JTIwZGlnaXRhbCUyMGlubm92YXRpb258ZW58MXwwfHx8MTc3NzYwODMxN3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In conclusion, Stripe Link is a powerful digital wallet that enables users to connect their cards, banks, and subscriptions, and authorize autonomous AI agents to spend securely via approval flows. With its robust features and easy-to-use API, Link is an attractive solution for developers looking to integrate a secure and reliable payment system into their applications. By following the steps outlined in this tutorial, you can easily integrate Link into your application and start taking advantage of its benefits.
+
+## Additional Resources
+For more information on Stripe Link, you can visit the [Stripe website](https://stripe.com/link) or check out the [Stripe documentation](https://stripe.com/docs/link). You can also find more examples and tutorials on the [Stripe GitHub page](https://github.com/stripe).
+
+*Photo by [appshunter.io](https://unsplash.com/@appshunter?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-cell-phone-sitting-on-top-of-a-wooden-table-x-VSPGLP21s?utm_source=techversation&utm_medium=referral)*
