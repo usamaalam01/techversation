@@ -1,0 +1,115 @@
+---
+title: "Unsupervised Electrofacies Classification"
+description: "Machine learning workflow for electrofacies analysis in the offshore Keta Basin."
+date: "2026-05-01"
+author: "Usama"
+tags: ["ai", "machine-learning", "geoscience"]
+aiSummary: "This study presents an unsupervised machine learning workflow for electrofacies analysis in the offshore Keta Basin. The workflow uses K-means clustering to classify electrofacies and estimate porosity. The approach is applied to wireline logs from Well C, comprising approximately 11,195 samples."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1692607431208-28cc794e0067?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxVbnN1cGVydmlzZWQlMjBFbGVjdHJvZmFjaWVzJTIwQ2xhc3NpZmljYXRpb24lMjBQb3Jvc2l0eSUyMENoYXJhY3Rlcml6YXRpb24lMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzc2NDMzNDV8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Electrofacies classification is a crucial step in understanding the geological properties of a reservoir. It involves identifying different rock types based on their electrical properties, which can be measured using wireline logs. In this tutorial, we will demonstrate an unsupervised machine learning workflow for electrofacies classification and porosity characterization using wireline logs from the offshore Keta Basin.
+
+The workflow consists of the following steps:
+
+1. Data preprocessing: cleaning and normalizing the wireline log data.
+2. Feature selection: selecting the most relevant features from the preprocessed data.
+3. K-means clustering: applying K-means clustering to the selected features to classify electrofacies.
+4. Porosity estimation: estimating porosity using the classified electrofacies.
+
+## Data Preprocessing
+
+The first step in the workflow is to preprocess the wireline log data. This involves cleaning and normalizing the data to prepare it for feature selection and clustering. The data used in this study consists of six standard wireline logs from Well C, comprising approximately 11,195 samples.
+
+```python
+import pandas as pd
+import numpy as np
+
+# Load the wireline log data
+data = pd.read_csv('wireline_logs.csv')
+
+# Clean and normalize the data
+data = data.dropna()  # remove missing values
+data = (data - data.mean()) / data.std()  # normalize the data
+```
+
+## Feature Selection
+
+The next step is to select the most relevant features from the preprocessed data. In this study, we will use all six wireline logs as features.
+
+```python
+# Select the features
+features = data[['GR', 'RT', 'RHOB', 'NPHI', 'PEF', 'DT']]
+```
+
+## K-means Clustering
+
+Now, we will apply K-means clustering to the selected features to classify electrofacies. The number of clusters (K) is determined using the elbow method.
+
+```python
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
+
+# Determine the number of clusters (K) using the elbow method
+silhouette_scores = []
+for k in range(2, 10):
+    kmeans = KMeans(n_clusters=k)
+    cluster_labels = kmeans.fit_predict(features)
+    silhouette_avg = silhouette_score(features, cluster_labels)
+    silhouette_scores.append(silhouette_avg)
+
+# Plot the silhouette scores to determine the optimal K
+import matplotlib.pyplot as plt
+plt.plot(range(2, 10), silhouette_scores)
+plt.xlabel('Number of Clusters')
+plt.ylabel('Silhouette Score')
+plt.show()
+
+# Apply K-means clustering with the optimal K
+optimal_k = np.argmax(silhouette_scores) + 2
+kmeans = KMeans(n_clusters=optimal_k)
+cluster_labels = kmeans.fit_predict(features)
+```
+
+## Porosity Estimation
+
+Finally, we will estimate porosity using the classified electrofacies. In this study, we will use a simple linear regression model to estimate porosity.
+
+```python
+from sklearn.linear_model import LinearRegression
+
+# Estimate porosity using the classified electrofacies
+porosity_model = LinearRegression()
+porosity_model.fit(cluster_labels.reshape(-1, 1), data['POR'])
+porosity_estimates = porosity_model.predict(cluster_labels.reshape(-1, 1))
+```
+
+The estimated porosity values can be used to characterize the reservoir and make informed decisions about exploration and production.
+
+![An abstract image of a network of dots](https://images.unsplash.com/photo-1678845536613-5cf0ec5245cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxVbnN1cGVydmlzZWQlMjBFbGVjdHJvZmFjaWVzJTIwQ2xhc3NpZmljYXRpb24lMjBQb3Jvc2l0eSUyMENoYXJhY3Rlcml6YXRpb24lMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzc2NDMzNDV8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+### Conclusion
+
+In this tutorial, we demonstrated an unsupervised machine learning workflow for electrofacies classification and porosity characterization using wireline logs from the offshore Keta Basin. The workflow consists of data preprocessing, feature selection, K-means clustering, and porosity estimation. The estimated porosity values can be used to characterize the reservoir and make informed decisions about exploration and production.
+
+### Future Work
+
+There are several directions for future work, including:
+
+* Using more advanced machine learning algorithms, such as deep learning models, to improve the accuracy of electrofacies classification and porosity estimation.
+* Integrating other types of data, such as seismic data, to improve the accuracy of electrofacies classification and porosity estimation.
+* Applying the workflow to other reservoirs and comparing the results to determine the generalizability of the approach.
+
+### References
+
+* [1] The original paper on arXiv: https://arxiv.org/abs/2604.27126
+* [2] The K-means clustering algorithm: https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html
+* [3] The linear regression model: https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html
+
+Note: The code examples provided in this tutorial are for illustration purposes only and may need to be modified to work with the specific data and requirements of the reader.
+
+*Photo by [Google DeepMind](https://unsplash.com/@googledeepmind?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-close-up-of-a-container-with-words-on-it-b8GH92xVoUw?utm_source=techversation&utm_medium=referral)*

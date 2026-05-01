@@ -1,0 +1,101 @@
+---
+title: "Mike: Open-Source Legal AI"
+description: "Explore Mike, an open-source legal AI tool, and learn how to integrate it into your workflow."
+date: "2026-05-01"
+author: "Usama"
+tags: ["ai", "legal-tech", "open-source"]
+aiSummary: "Mike is an open-source legal AI tool that helps automate legal tasks. It provides a range of features, including document analysis and contract review. In this tutorial, we'll show you how to get started with Mike and integrate it into your workflow. We'll also provide working code examples to demonstrate its capabilities."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1662528593017-925bc9ff3a36?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxNaWtlJTIwb3BlbiUyMHNvdXJjZSUyMGxlZ2FsJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3Nzc2NDMxOTB8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Mike
+
+Mike is an open-source legal AI tool that aims to automate legal tasks and provide insights to legal professionals. It's a promising tool that can help streamline legal workflows and reduce the burden of manual tasks. In this tutorial, we'll explore Mike's features and capabilities, and provide a hands-on guide on how to get started with it.
+
+## Setting Up Mike
+
+To get started with Mike, you'll need to visit the [Mike website](https://mikeoss.com/) and follow the installation instructions. Mike provides a range of installation options, including Docker and GitHub repositories. For this tutorial, we'll use the Docker installation method.
+
+```bash
+# Pull the Mike Docker image
+docker pull mikeoss/mike
+
+# Run the Mike Docker container
+docker run -p 8080:8080 mikeoss/mike
+```
+
+Once you've installed Mike, you can access the web interface by navigating to `http://localhost:8080` in your web browser.
+
+## Using Mike for Document Analysis
+
+One of Mike's key features is its document analysis capability. You can upload a document to Mike, and it will provide insights and summaries of the content. To demonstrate this feature, let's upload a sample document to Mike.
+
+```python
+# Import the required libraries
+import requests
+
+# Set the Mike API endpoint and authentication token
+mike_api_endpoint = "http://localhost:8080/api/v1/documents"
+auth_token = "your_auth_token"
+
+# Set the document file path and name
+document_file_path = "/path/to/your/document.pdf"
+document_name = "sample_document.pdf"
+
+# Upload the document to Mike
+with open(document_file_path, "rb") as document_file:
+    response = requests.post(
+        mike_api_endpoint,
+        headers={"Authorization": f"Bearer {auth_token}"},
+        files={"document": (document_name, document_file)},
+    )
+
+# Print the response from Mike
+print(response.json())
+```
+
+This code snippet demonstrates how to upload a document to Mike using the API. You'll need to replace `your_auth_token` with your actual authentication token, which can be obtained by registering for a Mike account.
+
+![black and silver laptop computer on white table](https://images.unsplash.com/photo-1604758571514-49b1ac668d60?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxNaWtlJTIwb3BlbiUyMHNvdXJjZSUyMGxlZ2FsJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3Nzc2NDMxOTB8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Using Mike for Contract Review
+
+Mike also provides a contract review feature, which can help automate the process of reviewing contracts. To demonstrate this feature, let's create a sample contract and upload it to Mike.
+
+```python
+# Import the required libraries
+import requests
+
+# Set the Mike API endpoint and authentication token
+mike_api_endpoint = "http://localhost:8080/api/v1/contracts"
+auth_token = "your_auth_token"
+
+# Set the contract file path and name
+contract_file_path = "/path/to/your/contract.pdf"
+contract_name = "sample_contract.pdf"
+
+# Upload the contract to Mike
+with open(contract_file_path, "rb") as contract_file:
+    response = requests.post(
+        mike_api_endpoint,
+        headers={"Authorization": f"Bearer {auth_token}"},
+        files={"contract": (contract_name, contract_file)},
+    )
+
+# Print the response from Mike
+print(response.json())
+```
+
+This code snippet demonstrates how to upload a contract to Mike using the API. You'll need to replace `your_auth_token` with your actual authentication token, which can be obtained by registering for a Mike account.
+
+## Conclusion
+
+In this tutorial, we've explored Mike's features and capabilities, and provided a hands-on guide on how to get started with it. We've also demonstrated how to use Mike for document analysis and contract review. Mike is a powerful tool that can help automate legal tasks and provide insights to legal professionals. With its open-source nature and API-driven architecture, Mike has the potential to become a leading tool in the legal tech industry.
+
+![a microphone sitting on top of a desk next to a computer](https://images.unsplash.com/photo-1674644651631-0a96c4bb9a3b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxNaWtlJTIwb3BlbiUyMHNvdXJjZSUyMGxlZ2FsJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3Nzc2NDMxOTB8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+Overall, Mike is a promising tool that can help streamline legal workflows and reduce the burden of manual tasks. We hope this tutorial has provided a comprehensive overview of Mike's features and capabilities, and has inspired you to explore its potential in your own workflow.
+
+*Photo by [Tommy L](https://unsplash.com/@0x746f6d6d796a746c?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-close-up-of-a-computer-chip-XvTt3KYLZdQ?utm_source=techversation&utm_medium=referral)*
