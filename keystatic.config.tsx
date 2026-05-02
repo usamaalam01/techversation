@@ -1,8 +1,9 @@
 import { config, collection, fields } from "@keystatic/core";
 
-// Use GitHub storage only when OAuth credentials are present (i.e. on Vercel).
-// Locally, credentials are not set so it falls back to local file storage.
-const storage = process.env.GITHUB_CLIENT_ID
+// Keystatic generates env var names from the repo slug:
+// KEYSTATIC_GITHUB_CLIENT_ID_<OWNER>_<REPO> (uppercase, non-alphanum → _)
+// Only enable GitHub storage when that var is present (i.e. on Vercel).
+const storage = process.env.KEYSTATIC_GITHUB_CLIENT_ID_USAMAALAM01_TECHVERSATION
   ? ({
       kind: "github",
       repo: { owner: "usamaalam01", name: "techversation" },
