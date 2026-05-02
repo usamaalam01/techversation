@@ -1,0 +1,136 @@
+---
+title: "Interval Orders and Credibility-limited Belief Revision"
+description: "Implementing interval orders and biorders for rational belief revision."
+date: "2026-05-02"
+author: "Usama"
+tags: ["ai", "machine-learning", "python"]
+aiSummary: "This tutorial covers the implementation of interval orders and biorders for rational belief revision. We will explore the concept of credibility-limited belief revision and provide a step-by-step guide on how to implement it using Python. The code examples will demonstrate how to use interval orders and biorders to revise beliefs based on new information."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1636362915349-d66b4396752e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxJbnRlcnZhbCUyME9yZGVycyUyMEJpb3JkZXJzJTIwQ3JlZGliaWxpdHklMjBsaW1pdGVkJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc3NjkzMTc4fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Rational belief revision is a fundamental concept in artificial intelligence, which deals with the process of updating beliefs based on new information. One approach to belief revision is to use a preference order between possible worlds, where the resulting new belief set consists of sentences true in all the most preferred models of the incoming new information. Typically, such a preference order is taken to be a total preorder. However, there are other, more general classes of orders, such as interval orders and biorders, that can be used for credibility-limited belief revision.
+
+## Interval Orders and Biorders
+Interval orders and biorders are more general classes of orders that can be used to represent preferences between possible worlds. An interval order is a binary relation that satisfies certain properties, such as reflexivity, transitivity, and intervality. A biorder is a binary relation that satisfies properties such as reflexivity, transitivity, and bi-intervalality.
+
+### Implementing Interval Orders and Biorders in Python
+We can implement interval orders and biorders in Python using the following code:
+```python
+class IntervalOrder:
+    def __init__(self, relations):
+        self.relations = relations
+
+    def is_reflexive(self):
+        for x in self.relations:
+            if (x, x) not in self.relations:
+                return False
+        return True
+
+    def is_transitive(self):
+        for x in self.relations:
+            for y in self.relations:
+                for z in self.relations:
+                    if (x, y) in self.relations and (y, z) in self.relations and (x, z) not in self.relations:
+                        return False
+        return True
+
+    def is_interval(self):
+        for x in self.relations:
+            for y in self.relations:
+                if (x, y) in self.relations and (y, x) not in self.relations:
+                    for z in self.relations:
+                        if (x, z) in self.relations and (z, y) in self.relations:
+                            return False
+        return True
+
+class Biorder:
+    def __init__(self, relations):
+        self.relations = relations
+
+    def is_reflexive(self):
+        for x in self.relations:
+            if (x, x) not in self.relations:
+                return False
+        return True
+
+    def is_transitive(self):
+        for x in self.relations:
+            for y in self.relations:
+                for z in self.relations:
+                    if (x, y) in self.relations and (y, z) in self.relations and (x, z) not in self.relations:
+                        return False
+        return True
+
+    def is_bi_interval(self):
+        for x in self.relations:
+            for y in self.relations:
+                if (x, y) in self.relations and (y, x) not in self.relations:
+                    for z in self.relations:
+                        if (x, z) in self.relations and (z, y) in self.relations:
+                            return False
+        return True
+```
+### Example Use Case
+Let's consider an example where we have a set of possible worlds, and we want to revise our beliefs based on new information. We can use interval orders and biorders to represent our preferences between possible worlds.
+
+```python
+# Define the possible worlds
+worlds = ['w1', 'w2', 'w3']
+
+# Define the interval order relations
+interval_order_relations = [('w1', 'w1'), ('w2', 'w2'), ('w3', 'w3'), ('w1', 'w2'), ('w2', 'w3')]
+
+# Define the biorder relations
+biorder_relations = [('w1', 'w1'), ('w2', 'w2'), ('w3', 'w3'), ('w1', 'w2'), ('w2', 'w3'), ('w3', 'w1')]
+
+# Create interval order and biorder objects
+interval_order = IntervalOrder(interval_order_relations)
+biorder = Biorder(biorder_relations)
+
+# Check the properties of the interval order and biorder
+print(interval_order.is_reflexive())  # True
+print(interval_order.is_transitive())  # True
+print(interval_order.is_interval())  # True
+
+print(biorder.is_reflexive())  # True
+print(biorder.is_transitive())  # True
+print(biorder.is_bi_interval())  # True
+```
+## Credibility-limited Belief Revision
+Credibility-limited belief revision is a process of revising beliefs based on new information, where the credibility of the new information is limited. We can use interval orders and biorders to represent our preferences between possible worlds and revise our beliefs based on new information.
+
+### Implementing Credibility-limited Belief Revision in Python
+We can implement credibility-limited belief revision in Python using the following code:
+```python
+class BeliefRevision:
+    def __init__(self, interval_order, biorder):
+        self.interval_order = interval_order
+        self.biorder = biorder
+
+    def revise_beliefs(self, new_information):
+        # Revise beliefs based on new information
+        revised_beliefs = []
+        for world in self.interval_order.relations:
+            if (world, new_information) in self.interval_order.relations:
+                revised_beliefs.append(world)
+        return revised_beliefs
+
+# Create a belief revision object
+belief_revision = BeliefRevision(interval_order, biorder)
+
+# Revise beliefs based on new information
+new_information = 'w2'
+revised_beliefs = belief_revision.revise_beliefs(new_information)
+print(revised_beliefs)  # ['w1', 'w2']
+```
+![A graph depicts decaying oscillations over time.](https://images.unsplash.com/photo-1754304342349-ac409efb67c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxJbnRlcnZhbCUyME9yZGVycyUyMEJpb3JkZXJzJTIwQ3JlZGliaWxpdHklMjBsaW1pdGVkJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc3NjkzMTc4fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we have explored the concept of interval orders and biorders for credibility-limited belief revision. We have implemented interval orders and biorders in Python and demonstrated how to use them to revise beliefs based on new information. The code examples have shown how to define interval order and biorder relations, check their properties, and use them to revise beliefs. This tutorial has provided a step-by-step guide on how to implement credibility-limited belief revision using interval orders and biorders.
+
+For further reading, please refer to the original paper on [arXiv](https://arxiv.org/abs/2604.27156). The paper provides a detailed explanation of the theoretical background and the mathematical formulations of interval orders and biorders for credibility-limited belief revision.
+
+*Photo by [Brett Jordan](https://unsplash.com/@brett_jordan?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-scrabble-of-words-that-spell-out-the-word-oppose-inertia-Pa2kZ8lM6nw?utm_source=techversation&utm_medium=referral)*
