@@ -1,0 +1,82 @@
+---
+title: "Open Source vs Open Community"
+description: "Open source does not imply open community, a deeper look."
+date: "2026-05-03"
+author: "Usama"
+tags: ["open-source", "community", "software"]
+aiSummary: "Open source software does not always imply an open community. This post explores the differences between open source and open community, and provides guidance on how to build an open community around an open source project. We will also look at a practical example of building a community-driven project using Python and GitHub."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1652111865960-15f4a46a7688?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxPcGVuJTIwc291cmNlJTIwbm90JTIwaW1wbHklMjBvcGVuJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3Nzc3OTU4ODZ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+The terms "open source" and "open community" are often used interchangeably, but they do not necessarily mean the same thing. Open source refers to software that is released under a license that allows users to view, modify, and distribute the code. On the other hand, an open community refers to a group of people who collaborate and contribute to a project in a transparent and inclusive manner. In this post, we will explore the differences between open source and open community, and provide guidance on how to build an open community around an open source project.
+
+## The Difference Between Open Source and Open Community
+
+Open source software is characterized by its license, which determines how the software can be used, modified, and distributed. Some popular open source licenses include the MIT License, the Apache License, and the GNU General Public License. These licenses allow users to use, modify, and distribute the software, but they do not necessarily require the project maintainers to engage with the community or accept contributions from outside developers.
+
+On the other hand, an open community is characterized by its transparency, inclusivity, and responsiveness to feedback. An open community is one where anyone can participate, contribute, and provide feedback, and where the project maintainers are responsive to the needs and concerns of the community. Building an open community around an open source project requires more than just releasing the code under an open source license. It requires a deliberate effort to engage with the community, solicit feedback, and incorporate contributions from outside developers.
+
+![a typewriter on a table](https://images.unsplash.com/photo-1653213096280-57d895842861?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxPcGVuJTIwc291cmNlJTIwbm90JTIwaW1wbHklMjBvcGVuJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3Nzc3OTU4ODZ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Building an Open Community
+
+So, how can you build an open community around an open source project? Here are some tips:
+
+* **Be transparent**: Provide clear and concise documentation about your project, including its goals, roadmap, and contribution guidelines.
+* **Be inclusive**: Encourage participation from anyone who is interested, regardless of their background or level of expertise.
+* **Be responsive**: Respond promptly to feedback, questions, and contributions from the community.
+* **Use open communication channels**: Use public communication channels such as GitHub issues, mailing lists, or forums to discuss project-related topics.
+
+### A Practical Example
+
+Let's consider a practical example of building a community-driven project using Python and GitHub. Suppose we want to build a simple web scraper that extracts data from a website and stores it in a database. We can start by creating a new GitHub repository and adding a `README.md` file that describes the project and its goals.
+
+```python
+# scraper.py
+import requests
+from bs4 import BeautifulSoup
+
+def scrape_data(url):
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    data = []
+    for item in soup.find_all('div', {'class': 'item'}):
+        data.append(item.text.strip())
+    return data
+
+def store_data(data):
+    # code to store data in a database
+    pass
+
+if __name__ == '__main__':
+    url = 'https://example.com'
+    data = scrape_data(url)
+    store_data(data)
+```
+
+We can then create a `CONTRIBUTING.md` file that outlines the contribution guidelines for the project.
+
+```markdown
+# CONTRIBUTING.md
+## Getting Started
+
+1. Fork the repository
+2. Clone the repository to your local machine
+3. Create a new branch for your feature or bug fix
+4. Make your changes and commit them
+5. Open a pull request against the main branch
+```
+
+By following these steps, we can create a community-driven project that is open to contributions from anyone. We can also use GitHub issues and pull requests to manage feedback and contributions from the community.
+
+![a computer screen with the open ai logo on it](https://images.unsplash.com/photo-1679403766680-9aa2b959417d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxPcGVuJTIwc291cmNlJTIwbm90JTIwaW1wbHklMjBvcGVuJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3Nzc3OTU4ODZ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In conclusion, open source does not imply open community. Building an open community around an open source project requires a deliberate effort to engage with the community, solicit feedback, and incorporate contributions from outside developers. By following the tips outlined in this post, you can create a community-driven project that is open to contributions from anyone. Remember to be transparent, inclusive, and responsive to feedback, and to use open communication channels to discuss project-related topics. With these principles in mind, you can build a thriving open community around your open source project.
+
+*Photo by [Markus Winkler](https://unsplash.com/@markuswinkler?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-box-with-a-key-chain-and-a-key-chain-on-it-Z8yWSsx8OWE?utm_source=techversation&utm_medium=referral)*
