@@ -1,0 +1,115 @@
+---
+title: "Causal Foundations of Collective Agency"
+description: "Understanding collective agency in AI systems through causal foundations."
+date: "2026-05-05"
+author: "Usama"
+tags: ["ai", "collective-agency", "causal-foundations"]
+aiSummary: "The paper 'Causal Foundations of Collective Agency' explores the concept of collective agency in AI systems, providing a framework for understanding when a group of agents can be viewed as a unified collective agent. This tutorial will guide developers through implementing the key concepts of the paper. The tutorial will cover the basics of causal foundations and provide working code examples to demonstrate the concepts."
+category: "tutorials"
+draft: true
+---
+
+## Introduction to Collective Agency
+
+Collective agency refers to the phenomenon where multiple individual agents, each with their own goals and capabilities, come together to form a unified entity that can achieve more than the sum of its parts. This concept is crucial in understanding the behavior of advanced AI systems, where multiple simpler agents might inadvertently form a collective agent with capabilities and goals distinct from those of any individual.
+
+The paper "Causal Foundations of Collective Agency" provides a framework for understanding when a group of agents can be viewed as a unified collective agent. The framework is based on causal foundations, which provide a way to reason about the causal relationships between agents and their environment.
+
+## Causal Foundations
+
+Causal foundations are a way to represent the causal relationships between variables in a system. In the context of collective agency, causal foundations can be used to model the relationships between agents and their environment.
+
+A causal foundation can be represented as a directed graph, where each node represents a variable, and each edge represents a causal relationship between variables. The graph can be used to reason about the causal relationships between agents and their environment.
+
+### Implementing Causal Foundations in Python
+
+We can implement a simple causal foundation in Python using the `networkx` library. Here is an example of how to create a causal foundation graph:
+```python
+import networkx as nx
+import matplotlib.pyplot as plt
+
+# Create a new graph
+G = nx.DiGraph()
+
+# Add nodes to the graph
+G.add_node("Agent 1")
+G.add_node("Agent 2")
+G.add_node("Environment")
+
+# Add edges to the graph
+G.add_edge("Agent 1", "Environment")
+G.add_edge("Agent 2", "Environment")
+G.add_edge("Environment", "Agent 1")
+G.add_edge("Environment", "Agent 2")
+
+# Draw the graph
+nx.draw(G, with_labels=True)
+plt.show()
+```
+This code creates a simple causal foundation graph with two agents and an environment. The graph represents the causal relationships between the agents and their environment.
+
+## Collective Agency
+
+Collective agency refers to the phenomenon where multiple individual agents, each with their own goals and capabilities, come together to form a unified entity that can achieve more than the sum of its parts.
+
+To determine whether a group of agents can be viewed as a unified collective agent, we need to analyze the causal relationships between the agents and their environment.
+
+### Implementing Collective Agency in Python
+
+We can implement a simple collective agency model in Python using the `scipy` library. Here is an example of how to analyze the causal relationships between agents:
+```python
+import numpy as np
+from scipy.stats import norm
+
+# Define the agents and their goals
+agents = ["Agent 1", "Agent 2"]
+goals = [1, 2]
+
+# Define the environment and its state
+environment = "Environment"
+state = 0
+
+# Define the causal relationships between agents and environment
+causal_relationships = {
+    "Agent 1": {"Environment": 0.5},
+    "Agent 2": {"Environment": 0.3},
+    "Environment": {"Agent 1": 0.2, "Agent 2": 0.1}
+}
+
+# Analyze the causal relationships
+def analyze_causal_relationships(agents, environment, causal_relationships):
+    # Calculate the causal influence of each agent on the environment
+    influences = {}
+    for agent in agents:
+        influence = causal_relationships[agent][environment]
+        influences[agent] = influence
+
+    # Calculate the collective influence of all agents on the environment
+    collective_influence = sum(influences.values())
+
+    return influences, collective_influence
+
+influences, collective_influence = analyze_causal_relationships(agents, environment, causal_relationships)
+
+print("Influences:", influences)
+print("Collective Influence:", collective_influence)
+```
+This code analyzes the causal relationships between the agents and their environment, and calculates the collective influence of all agents on the environment.
+
+## Conclusion
+
+In this tutorial, we have explored the concept of collective agency and how it can be understood through causal foundations. We have implemented a simple causal foundation graph and a collective agency model in Python, and demonstrated how to analyze the causal relationships between agents and their environment.
+
+By understanding the causal relationships between agents and their environment, we can better design and control collective agency in AI systems. This can help to prevent unintended consequences, such as the formation of a collective agent with capabilities and goals distinct from those of any individual.
+
+### Future Work
+
+There are many potential directions for future work in this area. Some possible avenues for exploration include:
+
+* Developing more sophisticated models of collective agency, such as those that incorporate multiple levels of abstraction or that account for the dynamics of agent-environment interactions.
+* Investigating the application of collective agency to real-world problems, such as the control of swarms of robots or the optimization of complex systems.
+* Exploring the relationship between collective agency and other concepts, such as emergence or self-organization.
+
+By continuing to develop our understanding of collective agency and its underlying causal foundations, we can create more sophisticated and effective AI systems that are capable of achieving complex goals in a wide range of contexts.
+
+To learn more about the paper "Causal Foundations of Collective Agency", you can visit the [arXiv website](https://arxiv.org/abs/2605.00248) and read the full paper.
