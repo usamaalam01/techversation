@@ -80,19 +80,27 @@ def _run_category(
         print(f"[Run] {cat_label}: no eligible stories found, skipping.")
         return
 
-    story = ranked[0]
+    # Try ranked stories in order until one gets a cover image
+    story = None
+    images = []
+    for candidate in ranked[:5]:  # try up to 5 candidates
+        imgs = fetch_images(candidate["title"], candidate["source_category"], count=4)
+        if imgs:
+            story = candidate
+            images = imgs
+            break
+        print(f"[Run] {cat_label}: no image for '{candidate['title']}', trying next...")
+
+    if story is None:
+        print(f"[Run] {cat_label}: no story with a cover image found, skipping.")
+        return
+
+    cover_image = images[0]
+    inline_images = images[1:]
     print(
         f"[Run] {cat_label}: selected [{story['_score']:.1f} pts] "
         f"'{story['title']}' ({story['source_name']}) → {story['_format']}"
     )
-
-    # Fetch images — skip this category entirely if no cover image is available
-    images = fetch_images(story["title"], story["source_category"], count=4)
-    if not images:
-        print(f"[Run] {cat_label}: no cover image found, skipping.")
-        return
-    cover_image = images[0]
-    inline_images = images[1:]
 
     # Generate post (retry once on validation failure)
     mdx: str | None = None
