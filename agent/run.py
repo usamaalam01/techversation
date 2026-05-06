@@ -86,10 +86,13 @@ def _run_category(
         f"'{story['title']}' ({story['source_name']}) → {story['_format']}"
     )
 
-    # Fetch images
+    # Fetch images — skip this category entirely if no cover image is available
     images = fetch_images(story["title"], story["source_category"], count=4)
-    cover_image = images[0] if images else None
-    inline_images = images[1:] if len(images) > 1 else []
+    if not images:
+        print(f"[Run] {cat_label}: no cover image found, skipping.")
+        return
+    cover_image = images[0]
+    inline_images = images[1:]
 
     # Generate post (retry once on validation failure)
     mdx: str | None = None
