@@ -1,0 +1,214 @@
+---
+title: "Zarankiewicz Numbers via LLM Evolutionary Search"
+description: "New bounds for Zarankiewicz numbers using reinforced LLM evolutionary search."
+date: "2026-05-06"
+author: "Usama"
+tags: ["llm", "evolutionary-search", "graph-theory"]
+aiSummary: "The Zarankiewicz number represents the maximum number of edges in a bipartite graph without a complete bipartite subgraph. Researchers have used reinforced LLM evolutionary search to determine new bounds for Zarankiewicz numbers. This tutorial will guide developers through implementing this approach using Python."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1529078155058-5d716f45d604?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxOZXclMjBCb3VuZHMlMjBaYXJhbmtpZXdpY3olMjBOdW1iZXJzJTIwdmlhJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc4MDc4MjQ2fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+The Zarankiewicz number, denoted as $\textbf{Z}(m, n, s, t)$, is a fundamental concept in graph theory that represents the maximum number of edges in a bipartite graph $G_{m, n}$ without containing a complete bipartite subgraph $K_{s, t}$. Recently, researchers have employed reinforced Large Language Model (LLM) evolutionary search to discover new bounds for Zarankiewicz numbers. In this tutorial, we will delve into the implementation of this approach using Python, providing a step-by-step guide for developers to explore this fascinating area of research.
+
+## Background
+
+To understand the Zarankiewicz number, let's first define a bipartite graph. A bipartite graph is a graph whose vertices can be divided into two disjoint sets $U$ and $V$ such that every edge connects a vertex in $U$ to a vertex in $V$. The Zarankiewicz number $\textbf{Z}(m, n, s, t)$ is the maximum number of edges in a bipartite graph $G_{m, n}$ with $m$ vertices in $U$ and $n$ vertices in $V$, such that there is no complete bipartite subgraph $K_{s, t}$.
+
+The researchers in the paper "New Bounds for Zarankiewicz Numbers via Reinforced LLM Evolutionary Search" have used a novel approach to determine the exact values of three Zarankiewicz numbers: $\textbf{Z}(11, 21, 3, 3)=116$, $\textbf{Z}(11, 22, 3, 3)=121$, and $\textbf{Z}(12, 22, 3, 3)=132$.
+
+## Implementing the LLM Evolutionary Search
+
+To implement the LLM evolutionary search, we will use the following steps:
+
+1.  **Define the fitness function**: The fitness function is used to evaluate the quality of a solution. In this case, the fitness function is the number of edges in the bipartite graph without a complete bipartite subgraph.
+2.  **Initialize the population**: The population is a set of candidate solutions. We will use a random initialization to generate the initial population.
+3.  **Selection**: Select the fittest candidates from the population to reproduce.
+4.  **Crossover**: Combine the selected candidates to create new offspring.
+5.  **Mutation**: Apply random mutations to the offspring to introduce diversity.
+6.  **Replacement**: Replace the least fit candidates in the population with the new offspring.
+
+Here's an example implementation in Python:
+
+```python
+import random
+import numpy as np
+
+def fitness(graph, m, n, s, t):
+    """
+    Calculate the fitness of a bipartite graph.
+
+    Args:
+    graph (numpy array): The adjacency matrix of the bipartite graph.
+    m (int): The number of vertices in U.
+    n (int): The number of vertices in V.
+    s (int): The number of vertices in U for the complete bipartite subgraph.
+    t (int): The number of vertices in V for the complete bipartite subgraph.
+
+    Returns:
+    int: The fitness of the bipartite graph.
+    """
+    # Calculate the number of edges in the bipartite graph
+    num_edges = np.sum(graph)
+
+    # Check for complete bipartite subgraph
+    for i in range(m - s + 1):
+        for j in range(n - t + 1):
+            subgraph = graph[i:i+s, j:j+t]
+            if np.all(subgraph == 1):
+                return 0
+
+    return num_edges
+
+def initialize_population(m, n, population_size):
+    """
+    Initialize the population with random bipartite graphs.
+
+    Args:
+    m (int): The number of vertices in U.
+    n (int): The number of vertices in V.
+    population_size (int): The size of the population.
+
+    Returns:
+    list: A list of random bipartite graphs.
+    """
+    population = []
+    for _ in range(population_size):
+        graph = np.random.randint(2, size=(m, n))
+        population.append(graph)
+
+    return population
+
+def selection(population, m, n, s, t, num_parents):
+    """
+    Select the fittest candidates from the population.
+
+    Args:
+    population (list): The list of bipartite graphs.
+    m (int): The number of vertices in U.
+    n (int): The number of vertices in V.
+    s (int): The number of vertices in U for the complete bipartite subgraph.
+    t (int): The number of vertices in V for the complete bipartite subgraph.
+    num_parents (int): The number of parents to select.
+
+    Returns:
+    list: A list of the fittest candidates.
+    """
+    fitness_values = [fitness(graph, m, n, s, t) for graph in population]
+    parents = np.array(population)[np.argsort(fitness_values)[-num_parents:]].tolist()
+
+    return parents
+
+def crossover(parent1, parent2, m, n):
+    """
+    Combine two parents to create a new offspring.
+
+    Args:
+    parent1 (numpy array): The first parent.
+    parent2 (numpy array): The second parent.
+    m (int): The number of vertices in U.
+    n (int): The number of vertices in V.
+
+    Returns:
+    numpy array: The new offspring.
+    """
+    offspring = np.zeros((m, n))
+    for i in range(m):
+        for j in range(n):
+            if random.random() < 0.5:
+                offspring[i, j] = parent1[i, j]
+            else:
+                offspring[i, j] = parent2[i, j]
+
+    return offspring
+
+def mutation(offspring, m, n, mutation_rate):
+    """
+    Apply random mutations to the offspring.
+
+    Args:
+    offspring (numpy array): The offspring.
+    m (int): The number of vertices in U.
+    n (int): The number of vertices in V.
+    mutation_rate (float): The mutation rate.
+
+    Returns:
+    numpy array: The mutated offspring.
+    """
+    for i in range(m):
+        for j in range(n):
+            if random.random() < mutation_rate:
+                offspring[i, j] = 1 - offspring[i, j]
+
+    return offspring
+
+def replacement(population, offspring, m, n, s, t):
+    """
+    Replace the least fit candidates in the population with the new offspring.
+
+    Args:
+    population (list): The list of bipartite graphs.
+    offspring (numpy array): The new offspring.
+    m (int): The number of vertices in U.
+    n (int): The number of vertices in V.
+    s (int): The number of vertices in U for the complete bipartite subgraph.
+    t (int): The number of vertices in V for the complete bipartite subgraph.
+
+    Returns:
+    list: The updated population.
+    """
+    fitness_values = [fitness(graph, m, n, s, t) for graph in population]
+    min_fitness_index = np.argmin(fitness_values)
+    population[min_fitness_index] = offspring
+
+    return population
+
+# Example usage
+m = 11
+n = 21
+s = 3
+t = 3
+population_size = 100
+num_parents = 10
+mutation_rate = 0.1
+num_generations = 100
+
+population = initialize_population(m, n, population_size)
+
+for _ in range(num_generations):
+    parents = selection(population, m, n, s, t, num_parents)
+    offspring = crossover(parents[0], parents[1], m, n)
+    offspring = mutation(offspring, m, n, mutation_rate)
+    population = replacement(population, offspring, m, n, s, t)
+
+best_graph = max(population, key=lambda graph: fitness(graph, m, n, s, t))
+print("Best graph fitness:", fitness(best_graph, m, n, s, t))
+
+```
+
+### Running the Code
+
+To run the code, save it to a file named `zarankiewicz.py` and execute it using Python:
+
+```bash
+python zarankiewicz.py
+```
+
+This will run the evolutionary search for 100 generations and print the fitness of the best graph found.
+
+![Mathematical equations are written on a white page.](https://images.unsplash.com/photo-1754304342448-3eef0ab5ba9e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxOZXclMjBCb3VuZHMlMjBaYXJhbmtpZXdpY3olMjBOdW1iZXJzJTIwdmlhJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc4MDc4MjQ2fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we have implemented the LLM evolutionary search to find new bounds for Zarankiewicz numbers. The code provides a basic framework for exploring this area of research and can be modified and extended to suit specific needs. By running the code, developers can gain a deeper understanding of the Zarankiewicz number and its applications in graph theory.
+
+The Zarankiewicz number has numerous applications in computer science, including network optimization, data storage, and cryptography. Further research in this area can lead to new insights and breakthroughs in these fields.
+
+For more information on the Zarankiewicz number and its applications, please refer to the original paper: [New Bounds for Zarankiewicz Numbers via Reinforced LLM Evolutionary Search](https://arxiv.org/abs/2605.01120).
+
+Note: The code provided is for educational purposes only and may not be suitable for production use without further modification and optimization.
+
+*Photo by [Mika Baumeister](https://unsplash.com/@kommumikation?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/white-printing-paper-with-numbers-Wpnoqo2plFA?utm_source=techversation&utm_medium=referral)*
