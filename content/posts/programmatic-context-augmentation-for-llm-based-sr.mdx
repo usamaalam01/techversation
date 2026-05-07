@@ -1,0 +1,115 @@
+---
+title: "Programmatic Context Augmentation for LLM-based SR"
+description: "Discover mathematical expressions with LLM-based symbolic regression."
+date: "2026-05-07"
+author: "Usama"
+tags: ["llm", "symbolic-regression", "ai"]
+aiSummary: "Programmatic context augmentation enhances LLM-based symbolic regression by providing more informative input. This approach improves model performance and discoverability of mathematical expressions. By leveraging programmatic context augmentation, researchers can uncover more accurate and complex relationships in their data."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxQcm9ncmFtbWF0aWMlMjBDb250ZXh0JTIwQXVnbWVudGF0aW9uJTIwTExNJTIwYmFzZWQlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3NzgxNjQ3NTR8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Symbolic Regression
+Symbolic regression (SR) is a fundamental challenge in scientific discovery, where the goal is to discover mathematical expressions that best describe a given dataset. Traditional approaches, primarily based on genetic algorithms and related evolutionary methods, have proven useful but suffer from scalability and expressivity limitations. Recently, Large Language Models (LLMs) have been applied to SR, offering a promising alternative.
+
+## Programmatic Context Augmentation
+Programmatic context augmentation is a technique that enhances LLM-based SR by providing more informative input. This approach involves augmenting the input data with additional context that helps the LLM to better understand the underlying relationships in the data. By doing so, the model can discover more accurate and complex mathematical expressions.
+
+### Benefits of Programmatic Context Augmentation
+The benefits of programmatic context augmentation include:
+
+* Improved model performance: By providing more informative input, programmatic context augmentation can improve the performance of LLM-based SR models.
+* Increased discoverability: Programmatic context augmentation can help uncover more accurate and complex relationships in the data, leading to increased discoverability of mathematical expressions.
+
+## Implementing Programmatic Context Augmentation
+To implement programmatic context augmentation, you can use the following steps:
+
+1. **Prepare the input data**: Prepare the input data by augmenting it with additional context. This can include features such as variable names, data types, and units.
+2. **Define the LLM model**: Define the LLM model architecture and configure it for SR.
+3. **Train the model**: Train the model using the augmented input data.
+
+### Example Code
+Here is an example code in Python that demonstrates how to implement programmatic context augmentation:
+```python
+import pandas as pd
+import numpy as np
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+# Prepare the input data
+data = pd.read_csv("data.csv")
+data["context"] = data.apply(lambda row: f"{row['variable_name']} ({row['data_type']}) {row['unit']}", axis=1)
+
+# Define the LLM model
+model = AutoModelForSequenceClassification.from_pretrained("llm-base")
+tokenizer = AutoTokenizer.from_pretrained("llm-base")
+
+# Train the model
+input_ids = []
+attention_masks = []
+for index, row in data.iterrows():
+    inputs = tokenizer.encode_plus(
+        row["context"],
+        add_special_tokens=True,
+        max_length=512,
+        return_attention_mask=True,
+        return_tensors="pt",
+    )
+    input_ids.append(inputs["input_ids"])
+    attention_masks.append(inputs["attention_mask"])
+
+input_ids = torch.cat(input_ids, dim=0)
+attention_masks = torch.cat(attention_masks, dim=0)
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model.to(device)
+input_ids = input_ids.to(device)
+attention_masks = attention_masks.to(device)
+
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-5)
+for epoch in range(5):
+    model.train()
+    optimizer.zero_grad()
+    outputs = model(input_ids, attention_mask=attention_masks)
+    loss = outputs.loss
+    loss.backward()
+    optimizer.step()
+    print(f"Epoch {epoch+1}, Loss: {loss.item()}")
+```
+In this example, we first prepare the input data by augmenting it with additional context. We then define the LLM model architecture and configure it for SR. Finally, we train the model using the augmented input data.
+
+## Evaluating the Model
+To evaluate the performance of the model, you can use metrics such as mean squared error (MSE) or mean absolute error (MAE). You can also use visualizations such as plots or graphs to understand the relationships between the variables.
+
+![graphs of performance analytics on a laptop screen](https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxQcm9ncmFtbWF0aWMlMjBDb250ZXh0JTIwQXVnbWVudGF0aW9uJTIwTExNJTIwYmFzZWQlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3NzgxNjQ3NTR8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+### Example Evaluation Code
+Here is an example code in Python that demonstrates how to evaluate the performance of the model:
+```python
+import matplotlib.pyplot as plt
+from sklearn.metrics import mean_squared_error
+
+# Predict the output
+predictions = model.predict(input_ids, attention_mask=attention_masks)
+
+# Evaluate the performance
+mse = mean_squared_error(data["target"], predictions)
+print(f"MSE: {mse}")
+
+# Visualize the relationships
+plt.scatter(data["variable_name"], predictions)
+plt.xlabel("Variable Name")
+plt.ylabel("Predicted Value")
+plt.title("Relationship between Variable Name and Predicted Value")
+plt.show()
+```
+In this example, we first predict the output using the trained model. We then evaluate the performance of the model using the MSE metric. Finally, we visualize the relationships between the variables using a scatter plot.
+
+## Conclusion
+Programmatic context augmentation is a powerful technique that can enhance the performance of LLM-based SR models. By providing more informative input, programmatic context augmentation can help uncover more accurate and complex relationships in the data. By following the steps outlined in this tutorial, you can implement programmatic context augmentation and improve the performance of your LLM-based SR models.
+
+![graphical user interface, application, shape, arrow](https://images.unsplash.com/photo-1667984436026-99b165e3672b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxQcm9ncmFtbWF0aWMlMjBDb250ZXh0JTIwQXVnbWVudGF0aW9uJTIwTExNJTIwYmFzZWQlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3NzgxNjQ3NTR8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+Note: The code examples provided in this tutorial are for illustrative purposes only and may require modification to work with your specific use case. Additionally, the performance of the model may vary depending on the quality of the input data and the complexity of the relationships in the data.
+
+*Photo by [Sharad Bhat](https://unsplash.com/@sharadmbhat?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/black-flat-screen-computer-monitor-Q_Swg0rZouw?utm_source=techversation&utm_medium=referral)*
