@@ -1,0 +1,85 @@
+---
+title: "Making the Invisible Visible"
+description: "Understanding the mismatch between organizational goals and worker experiences in AI adoption."
+date: "2026-05-07"
+author: "Usama"
+tags: ["ai", "adoption", "workers"]
+aiSummary: "AI adoption efforts often fail due to a mismatch between organizational goals and worker experiences. This post explores the issue and provides a step-by-step guide to making worker experiences visible. We'll use Python and the scikit-learn library to analyze worker feedback and identify areas for improvement."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1573511860302-28c524319d2a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxNYWtpbmclMjBJbnZpc2libGUlMjBWaXNpYmxlJTIwVW5kZXJzdGFuZGluZyUyME1pc21hdGNoJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc4MTQzODU2fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+The adoption of AI in organizations is often driven by the desire to innovate and increase efficiency. However, many adoption efforts fail due to resistance from workers who struggle to integrate these systems into their daily tasks. This failure points to a deeper issue: workers, the people expected to collaborate with AI, are often invisible in decisions about how AI is designed and used.
+
+To address this issue, we need to make worker experiences visible and understand the mismatch between organizational goals and worker experiences. In this post, we'll explore the concept of making the invisible visible and provide a step-by-step guide to analyzing worker feedback using Python and the scikit-learn library.
+
+## Understanding the Mismatch
+
+The mismatch between organizational goals and worker experiences arises from the fact that workers are often not involved in the decision-making process when it comes to AI adoption. This leads to a lack of understanding of the workers' needs and concerns, resulting in AI systems that are not tailored to their requirements.
+
+To illustrate this concept, let's consider a simple example. Suppose an organization decides to implement an AI-powered chatbot to handle customer inquiries. The organization's goal is to reduce the workload of customer support agents and improve response times. However, the customer support agents may have concerns about the chatbot's ability to handle complex inquiries or the potential loss of jobs.
+
+![a close up of a container with words on it](https://images.unsplash.com/photo-1692607431208-28cc794e0067?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxNYWtpbmclMjBJbnZpc2libGUlMjBWaXNpYmxlJTIwVW5kZXJzdGFuZGluZyUyME1pc21hdGNoJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc4MTQzODU2fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Collecting Worker Feedback
+
+To make worker experiences visible, we need to collect feedback from workers about their experiences with AI systems. This can be done through surveys, interviews, or focus groups. For this example, let's assume we have collected feedback from customer support agents about their experiences with the AI-powered chatbot.
+
+```python
+import pandas as pd
+
+# Sample feedback data
+feedback_data = {
+    'agent_id': [1, 2, 3, 4, 5],
+    'chatbot_experience': ['positive', 'negative', 'neutral', 'positive', 'negative'],
+    'concerns': ['none', 'job loss', 'complex inquiries', 'none', 'complex inquiries']
+}
+
+# Create a Pandas dataframe
+df = pd.DataFrame(feedback_data)
+```
+
+## Analyzing Worker Feedback
+
+Once we have collected worker feedback, we can analyze it using machine learning techniques. For this example, let's use the scikit-learn library to perform sentiment analysis on the worker feedback.
+
+```python
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import MultinomialNB
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(df['concerns'], df['chatbot_experience'], test_size=0.2, random_state=42)
+
+# Create a TF-IDF vectorizer
+vectorizer = TfidfVectorizer()
+
+# Fit the vectorizer to the training data and transform both the training and testing data
+X_train_tfidf = vectorizer.fit_transform(X_train)
+X_test_tfidf = vectorizer.transform(X_test)
+
+# Train a Multinomial Naive Bayes classifier
+clf = MultinomialNB()
+clf.fit(X_train_tfidf, y_train)
+
+# Evaluate the classifier on the testing data
+accuracy = clf.score(X_test_tfidf, y_test)
+print(f'Accuracy: {accuracy:.3f}')
+```
+
+## Identifying Areas for Improvement
+
+By analyzing worker feedback, we can identify areas for improvement in the AI system. For example, if the sentiment analysis reveals that many workers are concerned about the chatbot's ability to handle complex inquiries, we can improve the chatbot's natural language processing capabilities or provide additional training to the customer support agents.
+
+![a large group of colorful balls floating in the air](https://images.unsplash.com/photo-1678845530864-18a666ca9762?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxNYWtpbmclMjBJbnZpc2libGUlMjBWaXNpYmxlJTIwVW5kZXJzdGFuZGluZyUyME1pc21hdGNoJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc4MTQzODU2fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+Making worker experiences visible is crucial to the successful adoption of AI in organizations. By collecting and analyzing worker feedback, we can identify areas for improvement in the AI system and tailor it to the workers' needs. In this post, we provided a step-by-step guide to analyzing worker feedback using Python and the scikit-learn library. We hope this guide will help organizations make their workers' experiences visible and improve the adoption of AI systems.
+
+For more information on the research behind this post, please refer to the [original paper](https://arxiv.org/abs/2605.03078) published on arXiv.
+
+*Photo by [Bret Kavanaugh](https://unsplash.com/@bretkavanaugh?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-neon-display-of-a-mans-head-and-brain-_af0_qAh4K4?utm_source=techversation&utm_medium=referral)*
