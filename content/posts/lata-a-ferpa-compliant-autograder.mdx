@@ -1,0 +1,92 @@
+---
+title: "LaTA: A FERPA-Compliant Autograder"
+description: "LaTA is a local LLM autograder for upper-division STEM coursework"
+date: "2026-05-08"
+author: "Usama"
+tags: ["ai", "llm", "education"]
+aiSummary: "LaTA is a drop-in, FERPA-compliant local LLM autograder for upper-division STEM coursework. It promises to relieve the grading burden while keeping student data secure. LaTA can be integrated into existing workflows with minimal modification."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1647314683497-a4b9a75ea017?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxMYVRBJTIwRHJvcCUyMEZFUlBBJTIwQ29tcGxpYW50JTIwTG9jYWwlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3NzgyNjk1MzZ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Grading assignments for upper-division STEM courses can be a time-consuming task. Large-language-model (LLM) graders have emerged as a solution to alleviate this burden. However, most existing LLM graders require sending student work to third-party APIs, which can violate FERPA (Family Educational Rights and Privacy Act) regulations and expose institutions to data risk. To address this issue, researchers have developed LaTA (LaTeX Teaching Assistant), a drop-in, FERPA-compliant local LLM autograder.
+
+## What is LaTA?
+LaTA is an open-source, local LLM autograder designed for upper-division STEM coursework. It is built on top of the LaTeX typesetting system, which is widely used in academic and scientific publishing. LaTA can automatically grade assignments, provide feedback, and detect plagiarism, all while keeping student data secure and compliant with FERPA regulations.
+
+## Setting up LaTA
+To get started with LaTA, you will need to install the following dependencies:
+* Python 3.8 or later
+* LaTeX (any distribution)
+* A compatible LLM model (e.g., transformer-based models like BERT or RoBERTa)
+
+You can install LaTA using pip:
+```bash
+pip install lata
+```
+Once installed, you can configure LaTA by creating a `config.json` file with the following settings:
+```json
+{
+    "llm_model": "bert-base-uncased",
+    "latex_path": "/usr/local/texlive/2022/bin/xelatex",
+    "assignment_dir": "./assignments"
+}
+```
+This configuration tells LaTA to use the BERT base model, specify the path to the LaTeX executable, and set the directory for assignments.
+
+## Grading Assignments with LaTA
+To grade an assignment with LaTA, you will need to create a LaTeX template for the assignment. This template should include the assignment questions, formatting, and any other relevant details. Here is an example template:
+```latex
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+
+\begin{document}
+
+\section{Assignment 1: Introduction to Machine Learning}
+Please answer the following questions:
+
+\begin{enumerate}
+    \item What is the definition of machine learning?
+    \item Describe the difference between supervised and unsupervised learning.
+\end{enumerate}
+
+\end{document}
+```
+Once you have created the template, you can use LaTA to grade student submissions. LaTA will automatically compile the LaTeX template, run the LLM model to grade the assignment, and provide feedback.
+
+## Example Code
+Here is an example of how you can use LaTA to grade an assignment:
+```python
+import lata
+
+# Load the assignment template
+template = lata.load_template("assignment_template.tex")
+
+# Load the student submission
+submission = lata.load_submission("student_submission.tex")
+
+# Grade the submission using LaTA
+grade = lata.grade_submission(template, submission)
+
+# Print the grade and feedback
+print("Grade:", grade)
+print("Feedback:", lata.get_feedback(grade))
+```
+This code loads the assignment template and student submission, grades the submission using LaTA, and prints the grade and feedback.
+
+![a glass tube with a liquid inside of it](https://images.unsplash.com/photo-1642548522966-821884871340?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxMYVRBJTIwRHJvcCUyMEZFUlBBJTIwQ29tcGxpYW50JTIwTG9jYWwlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3NzgyNjk1MzZ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+LaTA is a powerful tool for grading upper-division STEM coursework while keeping student data secure and compliant with FERPA regulations. By following the steps outlined in this tutorial, you can integrate LaTA into your existing workflow and start grading assignments with ease. For more information on LaTA, please refer to the [original paper](https://arxiv.org/abs/2605.05410).
+
+## Future Work
+There are several areas for future work with LaTA, including:
+* Integrating LaTA with popular learning management systems (LMS)
+* Developing new LLM models specifically designed for grading STEM coursework
+* Improving the user interface and experience for instructors and students
+
+By continuing to develop and improve LaTA, we can create a more efficient and effective grading system for upper-division STEM coursework.
+
+*Photo by [Mateo Chérrez](https://unsplash.com/@pepecherrez?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-drop-of-liquid-in-a-glass-of-water-7KThJJcztGo?utm_source=techversation&utm_medium=referral)*
