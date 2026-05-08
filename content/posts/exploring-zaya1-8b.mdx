@@ -1,0 +1,100 @@
+---
+title: "Exploring ZAYA1-8B"
+description: "ZAYA1-8B model tutorial for developers"
+date: "2026-05-08"
+author: "Usama"
+tags: ["ai", "moe", "zyphra"]
+aiSummary: "ZAYA1-8B is a reasoning-focused mixture-of-experts model with 700M active and 8B total parameters. This tutorial will guide developers through the process of working with ZAYA1-8B. We will cover the architecture, pretraining, and fine-tuning of the model."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1612278247414-b5df9638e1e7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxUZWNobmljYWwlMjBSZXBvcnQlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3NzgyMjY5NDN8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to ZAYA1-8B
+ZAYA1-8B is a mixture-of-experts (MoE) model built on Zyphra's MoE++ architecture. With 700M active and 8B total parameters, it is a powerful tool for reasoning-focused tasks. In this tutorial, we will explore the architecture, pretraining, and fine-tuning of ZAYA1-8B.
+
+### Architecture of ZAYA1-8B
+The ZAYA1-8B model consists of multiple experts, each with its own weights and biases. The experts are combined using a gating mechanism, which determines the contribution of each expert to the final output. The MoE++ architecture used in ZAYA1-8B is an extension of the traditional MoE architecture, with additional features such as hierarchical gating and sparse experts.
+
+## Pretraining ZAYA1-8B
+The pretraining of ZAYA1-8B was performed on a full-stack AMD compute, networking, and software platform. The pretraining process involved training the model on a large dataset, with the goal of learning a general representation of the data.
+
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+# Define the ZAYA1-8B model architecture
+class ZAYA1_8B(nn.Module):
+    def __init__(self):
+        super(ZAYA1_8B, self).__init__()
+        self.experts = nn.ModuleList([nn.Linear(128, 128) for _ in range(8)])
+        self.gating = nn.Linear(128, 8)
+
+    def forward(self, x):
+        expert_outputs = [expert(x) for expert in self.experts]
+        gating_weights = self.gating(x)
+        output = torch.sum(torch.stack(expert_outputs) * gating_weights.softmax(dim=-1), dim=0)
+        return output
+
+# Initialize the model, optimizer, and loss function
+model = ZAYA1_8B()
+optimizer = optim.Adam(model.parameters(), lr=1e-4)
+loss_fn = nn.MSELoss()
+
+# Pretrain the model
+for epoch in range(10):
+    for x, y in train_data:
+        optimizer.zero_grad()
+        output = model(x)
+        loss = loss_fn(output, y)
+        loss.backward()
+        optimizer.step()
+```
+
+## Fine-Tuning ZAYA1-8B
+After pretraining, the ZAYA1-8B model can be fine-tuned on a specific task using supervised fine-tuning (SFT). The SFT process involves training the model on a smaller dataset, with the goal of adapting the model to the specific task.
+
+```python
+# Fine-tune the model
+for epoch in range(5):
+    for x, y in fine_tune_data:
+        optimizer.zero_grad()
+        output = model(x)
+        loss = loss_fn(output, y)
+        loss.backward()
+        optimizer.step()
+```
+
+## Using ZAYA1-8B for Reasoning-Focused Tasks
+ZAYA1-8B can be used for a variety of reasoning-focused tasks, such as question answering, text classification, and natural language inference.
+
+```python
+# Use ZAYA1-8B for question answering
+def question_answering(question, context):
+    input_ids = tokenizer.encode(question + context, return_tensors='pt')
+    output = model(input_ids)
+    answer = torch.argmax(output.logits)
+    return answer
+
+# Use ZAYA1-8B for text classification
+def text_classification(text):
+    input_ids = tokenizer.encode(text, return_tensors='pt')
+    output = model(input_ids)
+    label = torch.argmax(output.logits)
+    return label
+```
+
+![text](https://images.unsplash.com/photo-1585123607296-3e3357c5a7ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxUZWNobmljYWwlMjBSZXBvcnQlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3NzgyMjY5NDN8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we explored the ZAYA1-8B model, including its architecture, pretraining, and fine-tuning. We also demonstrated how to use ZAYA1-8B for reasoning-focused tasks, such as question answering and text classification. With its powerful mixture-of-experts architecture and large parameter space, ZAYA1-8B is a valuable tool for developers working on AI and machine learning projects.
+
+![black flat screen computer monitor](https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxUZWNobmljYWwlMjBSZXBvcnQlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3NzgyMjY5NDN8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Future Work
+Future work on ZAYA1-8B could include exploring its applications in other domains, such as computer vision and speech recognition. Additionally, researchers could investigate ways to improve the efficiency and scalability of the model, such as using sparse experts or hierarchical gating mechanisms.
+
+![graphs of performance analytics on a laptop screen](https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxUZWNobmljYWwlMjBSZXBvcnQlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3NzgyMjY5NDN8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [CDC](https://unsplash.com/@cdc?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/black-flat-screen-computer-monitor-IgMj3JQgcoA?utm_source=techversation&utm_medium=referral)*
