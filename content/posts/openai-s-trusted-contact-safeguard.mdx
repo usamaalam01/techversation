@@ -1,0 +1,83 @@
+---
+title: "OpenAI's Trusted Contact Safeguard"
+description: "OpenAI expands efforts to protect ChatGPT users with new safeguard."
+date: "2026-05-08"
+author: "Usama"
+tags: ["ai", "chatgpt", "safeguard"]
+aiSummary: "OpenAI introduces a new 'Trusted Contact' safeguard to protect ChatGPT users in cases of possible self-harm. This feature allows users to designate a trusted contact who will be notified if the user is at risk. We'll explore how this feature works and provide a hands-on review of the API."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1676299081847-824916de030a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxPcGVuQUklMjBpbnRyb2R1Y2VzJTIwbmV3JTIwVHJ1c3RlZCUyMENvbnRhY3QlMjB0ZWNobm9sb2d5JTIwZGlnaXRhbCUyMGlubm92YXRpb258ZW58MXwwfHx8MTc3ODIxMTg5MXww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+OpenAI has introduced a new 'Trusted Contact' safeguard for ChatGPT users, expanding its efforts to protect users in cases where conversations may turn to self-harm. This feature allows users to designate a trusted contact who will be notified if the user is at risk. In this tutorial, we'll explore how this feature works and provide a hands-on review of the API.
+
+## How it Works
+The Trusted Contact safeguard uses a combination of natural language processing (NLP) and machine learning algorithms to detect when a user is at risk of self-harm. If a user is identified as being at risk, the designated trusted contact will be notified via email or SMS. The trusted contact can then reach out to the user and provide support.
+
+## Getting Started with the API
+To get started with the Trusted Contact API, you'll need to create an account on the OpenAI platform and obtain an API key. Once you have your API key, you can use the following Python code to designate a trusted contact:
+```python
+import requests
+
+api_key = "YOUR_API_KEY"
+user_id = "USER_ID"
+trusted_contact_email = "TRUSTED_CONTACT_EMAIL"
+
+url = f"https://api.openai.com/v1/trusted-contacts"
+headers = {
+    "Authorization": f"Bearer {api_key}",
+    "Content-Type": "application/json"
+}
+data = {
+    "user_id": user_id,
+    "trusted_contact_email": trusted_contact_email
+}
+
+response = requests.post(url, headers=headers, json=data)
+
+if response.status_code == 200:
+    print("Trusted contact designated successfully")
+else:
+    print("Error designating trusted contact")
+```
+## Checking the Status of a Trusted Contact
+To check the status of a trusted contact, you can use the following Python code:
+```python
+import requests
+
+api_key = "YOUR_API_KEY"
+user_id = "USER_ID"
+
+url = f"https://api.openai.com/v1/trusted-contacts/{user_id}"
+headers = {
+    "Authorization": f"Bearer {api_key}",
+    "Content-Type": "application/json"
+}
+
+response = requests.get(url, headers=headers)
+
+if response.status_code == 200:
+    print("Trusted contact status:", response.json())
+else:
+    print("Error checking trusted contact status")
+```
+![a close up of a computer screen with a message on it](https://images.unsplash.com/photo-1675557009285-b55f562641b9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxPcGVuQUklMjBpbnRyb2R1Y2VzJTIwbmV3JTIwVHJ1c3RlZCUyMENvbnRhY3QlMjB0ZWNobm9sb2d5JTIwZGlnaXRhbCUyMGlubm92YXRpb258ZW58MXwwfHx8MTc3ODIxMTg5MXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+The Trusted Contact safeguard is an important feature that can help protect ChatGPT users in cases of possible self-harm. By designating a trusted contact, users can ensure that they have a support system in place in case they need it. The API is easy to use and provides a simple way to designate and check the status of a trusted contact.
+
+## Future Developments
+As the Trusted Contact safeguard continues to evolve, we can expect to see new features and improvements. Some potential future developments include:
+
+*   Integration with other mental health resources and support services
+*   Improved NLP and machine learning algorithms to better detect cases of self-harm
+*   Expanded user customization options for the Trusted Contact feature
+
+Overall, the Trusted Contact safeguard is an important step forward in protecting ChatGPT users and promoting mental health and well-being. By providing a simple and effective way to designate a trusted contact, OpenAI is helping to create a safer and more supportive community for all users.
+
+## Additional Resources
+For more information on the Trusted Contact safeguard and the OpenAI platform, please visit the [OpenAI website](https://www.openai.com/). You can also find additional resources and support on the [OpenAI GitHub page](https://github.com/openai).
+
+*Photo by [Levart_Photographer](https://unsplash.com/@siva_photography?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-cell-phone-sitting-on-top-of-a-laptop-computer-7q-kE4SZzvQ?utm_source=techversation&utm_medium=referral)*

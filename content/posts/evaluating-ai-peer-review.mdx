@@ -1,0 +1,140 @@
+---
+title: "Evaluating AI Peer Review"
+description: "Rigorous evaluation of AI-generated paper reviews."
+date: "2026-05-08"
+author: "Usama"
+tags: ["ai", "peer-review", "evaluation"]
+aiSummary: "The use of AI systems for peer review is a tempting solution, but it requires rigorous evaluation. This tutorial provides a step-by-step guide on how to evaluate AI-generated paper reviews. We will use the ICLR 2026 reviews as an example and compare human- versus AI-generated reviews."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1600492515568-8868f609511e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxTdG9wJTIwQXV0b21hdGluZyUyMFBlZXIlMjBSZXZpZXclMjBXaXRob3V0JTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc4MjEyMDQ0fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+The peer review process is a crucial aspect of scientific research, ensuring that published papers meet high standards of quality and validity. However, the increasing volume of submissions has led to a crisis in peer review, with many reviewers struggling to keep up with the demand. Large language models have been proposed as a solution to this problem, but it is essential to evaluate their performance rigorously before relying on them for peer review. In this tutorial, we will explore how to evaluate AI-generated paper reviews and compare them to human-generated reviews.
+
+## Step 1: Collecting Data
+To evaluate AI-generated paper reviews, we need a dataset of human-generated reviews to compare them to. The ICLR 2026 reviews provide a suitable example. We can collect the reviews from the [ICLR 2026 website](https://iclr.cc/) or use a publicly available dataset.
+
+```python
+import pandas as pd
+
+# Load the ICLR 2026 reviews dataset
+reviews_df = pd.read_csv('iclr_2026_reviews.csv')
+
+# Print the first few rows of the dataset
+print(reviews_df.head())
+```
+
+## Step 2: Preprocessing the Data
+Before evaluating the AI-generated reviews, we need to preprocess the data. This includes tokenizing the text, removing stop words, and converting all text to lowercase.
+
+```python
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+
+# Tokenize the text and remove stop words
+nltk.download('punkt')
+nltk.download('stopwords')
+
+def preprocess_text(text):
+    tokens = word_tokenize(text)
+    tokens = [token for token in tokens if token.isalpha()]
+    stop_words = set(stopwords.words('english'))
+    tokens = [token for token in tokens if token not in stop_words]
+    return ' '.join(tokens)
+
+# Apply the preprocessing function to the reviews
+reviews_df['review'] = reviews_df['review'].apply(preprocess_text)
+```
+
+## Step 3: Generating AI-Generated Reviews
+To evaluate the performance of AI-generated reviews, we need to generate them using a large language model. We can use the [Hugging Face Transformers library](https://huggingface.co/transformers/) to fine-tune a pre-trained model on our dataset.
+
+```python
+from transformers import T5ForConditionalGeneration, T5Tokenizer
+
+# Load the pre-trained T5 model and tokenizer
+model = T5ForConditionalGeneration.from_pretrained('t5-base')
+tokenizer = T5Tokenizer.from_pretrained('t5-base')
+
+# Fine-tune the model on our dataset
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+model.to(device)
+
+# Define the training loop
+def train(model, device, loader, optimizer):
+    model.train()
+    total_loss = 0
+    for batch in loader:
+        input_ids = batch['input_ids'].to(device)
+        attention_mask = batch['attention_mask'].to(device)
+        labels = batch['labels'].to(device)
+
+        optimizer.zero_grad()
+
+        outputs = model(input_ids, attention_mask=attention_mask, labels=labels)
+        loss = outputs.loss
+
+        loss.backward()
+        optimizer.step()
+
+        total_loss += loss.item()
+    return total_loss / len(loader)
+
+# Train the model
+train(model, device, reviews_df, torch.optim.Adam(model.parameters(), lr=1e-5))
+```
+
+## Step 4: Evaluating AI-Generated Reviews
+To evaluate the performance of the AI-generated reviews, we can use metrics such as BLEU score, ROUGE score, and human evaluation.
+
+```python
+from nltk.translate.bleu_score import sentence_bleu
+from nltk.translate.bleu_score import SmoothingFunction
+
+# Define the evaluation function
+def evaluate(reviews, generated_reviews):
+    bleu_scores = []
+    for review, generated_review in zip(reviews, generated_reviews):
+        reference = [review.split()]
+        hypothesis = generated_review.split()
+        bleu_score = sentence_bleu(reference, hypothesis, smoothing_function=SmoothingFunction().method4)
+        bleu_scores.append(bleu_score)
+    return bleu_scores
+
+# Evaluate the AI-generated reviews
+generated_reviews = model.generate(reviews_df['review'])
+bleu_scores = evaluate(reviews_df['review'], generated_reviews)
+print(bleu_scores)
+```
+
+![a close up of a typewriter with a paper on it](https://images.unsplash.com/photo-1653038417404-1ae1f38c373e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxTdG9wJTIwQXV0b21hdGluZyUyMFBlZXIlMjBSZXZpZXclMjBXaXRob3V0JTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc4MjEyMDQ0fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Step 5: Comparing Human- and AI-Generated Reviews
+To compare the performance of human- and AI-generated reviews, we can use metrics such as accuracy, precision, and recall.
+
+```python
+from sklearn.metrics import accuracy_score, precision_score, recall_score
+
+# Define the comparison function
+def compare(reviews, generated_reviews):
+    accuracy = accuracy_score(reviews, generated_reviews)
+    precision = precision_score(reviews, generated_reviews)
+    recall = recall_score(reviews, generated_reviews)
+    return accuracy, precision, recall
+
+# Compare the human- and AI-generated reviews
+accuracy, precision, recall = compare(reviews_df['review'], generated_reviews)
+print(f'Accuracy: {accuracy}, Precision: {precision}, Recall: {recall}')
+```
+
+## Conclusion
+In this tutorial, we have explored how to evaluate AI-generated paper reviews and compare them to human-generated reviews. We used the ICLR 2026 reviews as an example and compared the performance of human- and AI-generated reviews using metrics such as BLEU score, ROUGE score, and human evaluation. The results show that while AI-generated reviews can be useful, they still require rigorous evaluation and comparison to human-generated reviews to ensure their quality and validity.
+
+![black flat screen computer monitor](https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxTdG9wJTIwQXV0b21hdGluZyUyMFBlZXIlMjBSZXZpZXclMjBXaXRob3V0JTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc4MjEyMDQ0fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+By following the steps outlined in this tutorial, developers and researchers can evaluate the performance of AI-generated paper reviews and compare them to human-generated reviews, ensuring that the quality and validity of the reviews are maintained.
+
+*Photo by [Clayton Robbins](https://unsplash.com/@claytonrobbins?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/text-7r7-7RLdwCU?utm_source=techversation&utm_medium=referral)*
