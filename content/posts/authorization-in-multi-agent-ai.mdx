@@ -1,0 +1,102 @@
+---
+title: "Authorization in Multi-Agent AI"
+description: "Maintaining authorization in multi-agent AI systems."
+date: "2026-05-09"
+author: "Usama"
+tags: ["ai", "security", "authorization"]
+aiSummary: "Multi-agent AI systems create distinct authorization problems. This tutorial shows how to implement authorization propagation in such systems. We'll explore a step-by-step approach to maintaining authorization invariants."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1730303827725-6cc9143877e7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxBdXRob3JpemF0aW9uJTIwUHJvcGFnYXRpb24lMjBNdWx0aSUyMEFnZW50JTIwU3lzdGVtcyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3ODI5ODQ0OHww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+The security discussion around agentic AI focuses heavily on prompt injection. However, multi-agent systems also create a distinct authorization problem: maintaining authorization invariants as non-human principals retrieve data, delegate tasks, and synthesize results across changing boundaries. In this tutorial, we'll explore how to implement authorization propagation in multi-agent AI systems.
+
+## Understanding Authorization Propagation
+Authorization propagation is the process of maintaining authorization invariants across multiple agents in a system. This involves ensuring that each agent has the necessary permissions to access and manipulate data, as well as delegate tasks to other agents. The problem of authorization propagation becomes increasingly complex as the number of agents and the scope of their interactions increase.
+
+![a computer screen with a bunch of data on it](https://images.unsplash.com/photo-1698087908802-baae881e41e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxBdXRob3JpemF0aW9uJTIwUHJvcGFnYXRpb24lMjBNdWx0aSUyMEFnZW50JTIwU3lzdGVtcyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3ODI5ODQ0OHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+### Key Concepts
+To understand authorization propagation, we need to familiarize ourselves with the following key concepts:
+
+* **Agents**: Autonomous entities that interact with each other and their environment.
+* **Permissions**: The rights or privileges granted to an agent to access or manipulate data.
+* **Authorization invariants**: The set of rules that govern the access and manipulation of data by agents.
+
+## Implementing Authorization Propagation
+To implement authorization propagation in a multi-agent AI system, we can follow a step-by-step approach:
+
+### Step 1: Define Agents and Permissions
+First, we need to define the agents and their permissions. We can represent agents as objects with unique identifiers and permissions as a set of strings.
+
+```python
+class Agent:
+    def __init__(self, id, permissions):
+        self.id = id
+        self.permissions = permissions
+
+# Define agents
+agent1 = Agent("agent1", ["read_data", "write_data"])
+agent2 = Agent("agent2", ["read_data"])
+```
+
+### Step 2: Define Authorization Invariants
+Next, we need to define the authorization invariants that govern the access and manipulation of data by agents. We can represent authorization invariants as a set of rules.
+
+```python
+class AuthorizationInvariant:
+    def __init__(self, rule):
+        self.rule = rule
+
+# Define authorization invariants
+invariant1 = AuthorizationInvariant("agent1 can read data")
+invariant2 = AuthorizationInvariant("agent2 can only read data")
+```
+
+### Step 3: Implement Authorization Propagation
+Finally, we need to implement the authorization propagation mechanism. We can use a graph-based approach to represent the interactions between agents and their permissions.
+
+```python
+import networkx as nx
+
+class AuthorizationGraph:
+    def __init__(self):
+        self.graph = nx.DiGraph()
+
+    def add_agent(self, agent):
+        self.graph.add_node(agent.id)
+
+    def add_permission(self, agent, permission):
+        self.graph.add_edge(agent.id, permission)
+
+    def propagate_authorization(self, agent, permission):
+        if self.graph.has_edge(agent.id, permission):
+            return True
+        else:
+            return False
+
+# Create an authorization graph
+graph = AuthorizationGraph()
+
+# Add agents and permissions
+graph.add_agent(agent1)
+graph.add_agent(agent2)
+graph.add_permission(agent1, "read_data")
+graph.add_permission(agent1, "write_data")
+graph.add_permission(agent2, "read_data")
+
+# Propagate authorization
+print(graph.propagate_authorization(agent1, "read_data"))  # True
+print(graph.propagate_authorization(agent2, "write_data"))  # False
+```
+
+## Conclusion
+In this tutorial, we explored the concept of authorization propagation in multi-agent AI systems. We defined agents, permissions, and authorization invariants, and implemented a graph-based approach to propagate authorization. By following this step-by-step approach, developers can ensure that their multi-agent AI systems maintain authorization invariants and prevent unauthorized access to data.
+
+![an abstract image of a network of dots](https://images.unsplash.com/photo-1678845536613-5cf0ec5245cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxBdXRob3JpemF0aW9uJTIwUHJvcGFnYXRpb24lMjBNdWx0aSUyMEFnZW50JTIwU3lzdGVtcyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3ODI5ODQ0OHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+For more information on authorization propagation in multi-agent AI systems, please refer to the [original paper](https://arxiv.org/abs/2605.05440).
+
+*Photo by [Milad Fakurian](https://unsplash.com/@fakurian?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-computer-generated-image-of-an-orange-button-1sNumhFPMgE?utm_source=techversation&utm_medium=referral)*
