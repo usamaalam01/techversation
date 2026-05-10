@@ -1,0 +1,53 @@
+---
+title: "Banning Query Strings"
+description: "Developer bans query strings, sparks debate on web development."
+date: "2026-05-10"
+author: "Usama"
+tags: ["web-development", "security", "trending"]
+aiSummary: "A developer has sparked a debate by banning query strings in their web development projects. This decision has implications for web security and development best practices. The move highlights the importance of considering security and usability in web development."
+category: "trending"
+coverImage: "https://images.unsplash.com/photo-1582224369048-e4d2d7a6ba30?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxiYW5uZWQlMjBxdWVyeSUyMHN0cmluZ3MlMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc3ODM4NTczNnww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to the Debate
+A recent post on Hacker News, ["I've banned query strings"](https://chrismorgan.info/no-query-strings), has sparked a heated debate among web developers. The author, Chris Morgan, explains their decision to stop using query strings in their web development projects, citing security and usability concerns. This move has significant implications for the web development community, and we'll explore the reasons behind it and what it means for developers.
+
+## Why Query Strings are a Problem
+Query strings are a common way to pass data from one web page to another. However, they can also be a security risk. For example, query strings can be used to inject malicious code or to manipulate user input. Additionally, query strings can make URLs look cluttered and confusing, which can negatively impact user experience. 
+![a computer screen with a program running on it](https://images.unsplash.com/photo-1514070706115-47c142769603?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxiYW5uZWQlMjBxdWVyeSUyMHN0cmluZ3MlMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc3ODM4NTczNnww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Alternatives to Query Strings
+So, what are the alternatives to query strings? One approach is to use path parameters, which can make URLs look cleaner and more user-friendly. For example, instead of `https://example.com/users?name=John&age=30`, you can use `https://example.com/users/John/30`. This approach can also improve security by reducing the risk of query string injection attacks.
+
+Another approach is to use JSON Web Tokens (JWT) or other token-based authentication methods. These methods can provide a more secure way to authenticate users and pass data between web pages.
+
+### Example Code
+Here's an example of how you can use path parameters in a Node.js Express.js application:
+```javascript
+const express = require('express');
+const app = express();
+
+app.get('/users/:name/:age', (req, res) => {
+  const name = req.params.name;
+  const age = req.params.age;
+  // Use the name and age variables to fetch data from a database or API
+  res.send(`Hello, ${name}! You are ${age} years old.`);
+});
+```
+In this example, the `:name` and `:age` path parameters are used to extract the values from the URL and pass them to the route handler.
+
+## Broader Implications
+The decision to ban query strings has broader implications for the web development community. It highlights the importance of considering security and usability in web development. As developers, we should always be looking for ways to improve the security and user experience of our applications.
+
+The move also sparks a debate about the role of query strings in web development. Are they still necessary, or are they a relic of the past? As the web continues to evolve, we may see a shift away from query strings and towards more modern and secure approaches to passing data between web pages.
+
+## Community Sentiment
+The community sentiment on this topic is mixed. Some developers agree with Chris Morgan's decision, citing the security and usability concerns. Others argue that query strings are still a necessary part of web development, and that banning them is an overreaction.
+
+On Hacker News, the post has sparked a lively discussion, with some commenters sharing their own experiences with query strings and others proposing alternative solutions. The debate highlights the complexity of the issue and the need for a nuanced approach to web development.
+
+## Conclusion
+In conclusion, the decision to ban query strings is a significant one, with implications for web security and development best practices. As developers, we should always be looking for ways to improve the security and user experience of our applications. While query strings may still have a place in web development, it's clear that they are no longer the best solution for every problem. By considering alternative approaches, such as path parameters and token-based authentication, we can build more secure and user-friendly web applications.
+
+*Photo by [Ferenc Almasi](https://unsplash.com/@flowforfrank?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/white-text-on-purple-background-pW3TdRsH8yM?utm_source=techversation&utm_medium=referral)*
