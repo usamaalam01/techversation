@@ -1,0 +1,99 @@
+---
+title: "Recursive Reasoning Systems"
+description: "State representation and termination for recursive reasoning systems."
+date: "2026-05-11"
+author: "Usama"
+tags: ["ai", "reasoning", "systems"]
+aiSummary: "This tutorial explores state representation and termination for recursive reasoning systems. We will implement a basic recursive reasoning system using Python and discuss the importance of state representation and termination. The system will alternate between acquiring new evidence and refining an accumulated understanding."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1667984436026-99b165e3672b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxTdGF0ZSUyMFJlcHJlc2VudGF0aW9uJTIwVGVybWluYXRpb24lMjBSZWN1cnNpdmUlMjBSZWFzb25pbmclMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzg0OTM2MDd8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Recursive reasoning systems are designed to alternate between acquiring new evidence and refining an accumulated understanding. Two crucial design choices are typically left implicit: how to represent the evolving reasoning state and when to stop iterating. In this tutorial, we will address both of these issues by representing the reasoning state as an epistemic state graph and implementing a termination condition.
+
+## State Representation
+
+The state representation is a critical component of any recursive reasoning system. It encodes the extracted claims and evidence accumulated during the reasoning process. We can represent the state as a graph, where each node represents a claim or piece of evidence, and the edges represent the relationships between them.
+
+```python
+import networkx as nx
+
+class EpistemicStateGraph:
+    def __init__(self):
+        self.graph = nx.DiGraph()
+
+    def add_claim(self, claim):
+        self.graph.add_node(claim)
+
+    def add_evidence(self, evidence, claim):
+        self.graph.add_node(evidence)
+        self.graph.add_edge(evidence, claim)
+
+    def get_state(self):
+        return self.graph
+```
+
+## Termination Condition
+
+The termination condition determines when the recursive reasoning system should stop iterating. A common approach is to use a fixed number of iterations or a threshold for the accumulated evidence. We can implement a termination condition based on the number of iterations.
+
+```python
+class TerminationCondition:
+    def __init__(self, max_iterations):
+        self.max_iterations = max_iterations
+        self.current_iteration = 0
+
+    def check_termination(self):
+        self.current_iteration += 1
+        return self.current_iteration >= self.max_iterations
+```
+
+## Recursive Reasoning System
+
+Now that we have the state representation and termination condition, we can implement the recursive reasoning system. The system will alternate between acquiring new evidence and refining the accumulated understanding.
+
+```python
+class RecursiveReasoningSystem:
+    def __init__(self, max_iterations):
+        self.state = EpistemicStateGraph()
+        self.termination_condition = TerminationCondition(max_iterations)
+
+    def acquire_evidence(self):
+        # Acquire new evidence
+        evidence = "New evidence"
+        claim = "Claim"
+        self.state.add_evidence(evidence, claim)
+
+    def refine_understanding(self):
+        # Refine the accumulated understanding
+        # This can be done by analyzing the state graph
+        pass
+
+    def run(self):
+        while not self.termination_condition.check_termination():
+            self.acquire_evidence()
+            self.refine_understanding()
+
+# Run the recursive reasoning system
+system = RecursiveReasoningSystem(10)
+system.run()
+```
+
+![a book with a diagram on it](https://images.unsplash.com/photo-1642952469120-eed4b65104be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxTdGF0ZSUyMFJlcHJlc2VudGF0aW9uJTIwVGVybWluYXRpb24lMjBSZWN1cnNpdmUlMjBSZWFzb25pbmclMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzg0OTM2MDd8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Example Use Case
+
+The recursive reasoning system can be used in various applications, such as decision-making, problem-solving, or knowledge graph construction. For example, in a decision-making scenario, the system can acquire new evidence and refine the accumulated understanding to make informed decisions.
+
+## Conclusion
+
+In this tutorial, we explored state representation and termination for recursive reasoning systems. We implemented a basic recursive reasoning system using Python and discussed the importance of state representation and termination. The system can be extended and modified to suit specific use cases and applications.
+
+![graphical user interface, application](https://images.unsplash.com/photo-1667984436063-843e8e40c643?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxTdGF0ZSUyMFJlcHJlc2VudGF0aW9uJTIwVGVybWluYXRpb24lMjBSZWN1cnNpdmUlMjBSZWFzb25pbmclMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzg0OTM2MDd8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+For more information on recursive reasoning systems, please refer to the original paper on [arXiv](https://arxiv.org/abs/2605.06690).
+
+*Photo by [Growtika](https://unsplash.com/@growtika?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphical-user-interface-application-shape-arrow-hPdY3vuLRgI?utm_source=techversation&utm_medium=referral)*
