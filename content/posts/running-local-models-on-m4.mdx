@@ -1,0 +1,79 @@
+---
+title: "Running Local Models on M4"
+description: "Developers can now run local models on M4 with 24GB memory."
+date: "2026-05-11"
+author: "Usama"
+tags: ["ai", "memory", "technology"]
+aiSummary: "A recent post on Hacker News discusses running local models on an M4 with 24GB memory. This development is significant for developers working with AI models. The M4's capabilities have implications for the future of local model deployment."
+category: "news"
+coverImage: "https://images.unsplash.com/photo-1542978709-19c95dc3bc7e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxSdW5uaW5nJTIwbG9jYWwlMjBtb2RlbHMlMjBtZW1vcnklMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc3ODQ3MjcwM3ww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Running Local Models on M4
+
+A recent post on Hacker News, [Running local models on an M4 with 24GB memory](https://jola.dev/posts/running-local-models-on-m4), has sparked interest among developers working with AI models. The possibility of running local models on an M4 with 24GB memory is a significant development, and in this post, we will explore what happened, why it matters to developers, and the broader implications of this technology.
+
+## What Happened
+
+The post on Hacker News discusses the author's experience with running local models on an M4 with 24GB memory. The author provides a detailed account of the process, including the challenges faced and the solutions implemented. The post highlights the capabilities of the M4 and its potential for running local models.
+
+## Why it Matters to Developers
+
+Running local models on an M4 with 24GB memory is significant for developers working with AI models. This development enables developers to deploy models locally, reducing the need for cloud services and improving model performance. With the M4's capabilities, developers can now run complex models on a local machine, making it easier to test and deploy models.
+
+### Benefits of Local Model Deployment
+
+Local model deployment has several benefits, including:
+
+* Improved performance: Local models can run faster than cloud-based models, reducing latency and improving overall performance.
+* Increased security: Local models are more secure than cloud-based models, as they do not require transmitting sensitive data over the internet.
+* Reduced costs: Local models can reduce costs associated with cloud services, making it a more cost-effective solution for developers.
+
+![Close-up of computer memory chips on a circuit board](https://images.unsplash.com/photo-1771189957022-63bb560121ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxSdW5uaW5nJTIwbG9jYWwlMjBtb2RlbHMlMjBtZW1vcnklMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc3ODQ3MjcwM3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Broader Implications
+
+The ability to run local models on an M4 with 24GB memory has broader implications for the future of AI model deployment. This development could lead to:
+
+* Increased adoption of local model deployment: With the M4's capabilities, more developers may adopt local model deployment, reducing the need for cloud services.
+* Improved model performance: Local models can run faster and more efficiently than cloud-based models, improving overall model performance.
+* New use cases: Local model deployment could enable new use cases, such as edge AI, where models are deployed on devices at the edge of the network.
+
+## Conclusion
+
+Running local models on an M4 with 24GB memory is a significant development for developers working with AI models. This technology has the potential to improve model performance, increase security, and reduce costs. As the field of AI continues to evolve, we can expect to see more innovations in local model deployment, enabling new use cases and improving overall model performance. 
+
+To get started with running local models on an M4, developers can explore the following code example:
+```python
+import torch
+import torch.nn as nn
+
+# Define a simple neural network model
+class Net(nn.Module):
+    def __init__(self):
+        super(Net, self).__init__()
+        self.fc1 = nn.Linear(5, 10)  # input layer (5) -> hidden layer (10)
+        self.fc2 = nn.Linear(10, 5)  # hidden layer (10) -> output layer (5)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))  # activation function for hidden layer
+        x = self.fc2(x)
+        return x
+
+# Initialize the model, loss function, and optimizer
+model = Net()
+criterion = nn.MSELoss()
+optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
+
+# Train the model
+for epoch in range(100):
+    optimizer.zero_grad()
+    outputs = model(inputs)
+    loss = criterion(outputs, labels)
+    loss.backward()
+    optimizer.step()
+```
+This example demonstrates a simple neural network model trained using PyTorch. Developers can modify this example to suit their specific use case and explore the capabilities of the M4.
+
+*Photo by [Possessed Photography](https://unsplash.com/@possessedphotography?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/sodimm-ram-stick-nuc3NFB_6po?utm_source=techversation&utm_medium=referral)*
