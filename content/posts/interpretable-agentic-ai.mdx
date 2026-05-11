@@ -1,0 +1,87 @@
+---
+title: "Interpretable Agentic AI"
+description: "Improving AI agent transparency with interpretability methods."
+date: "2026-05-11"
+author: "Usama"
+tags: ["ai", "interpretability", "agentic-ai"]
+aiSummary: "Agentic AI agents can be difficult to diagnose and control due to their complex decision-making processes. This post explores the use of interpretability methods to improve the transparency of agentic AI agents. We will discuss the challenges of working with agentic AI and provide a step-by-step guide on how to implement interpretability techniques."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxCZXlvbmQlMjBCbGFjayUyMEJveCUyMEludGVycHJldGFiaWxpdHklMjBBZ2VudGljJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc4NTI5NzgwfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Agentic AI agents are promising for high-stakes enterprise workflows, but their dependable deployment remains limited due to the difficulty in diagnosing and controlling tool-use failures. Agents may skip required tool calls, invoke tools unnecessarily, or take actions whose consequences become visible only after execution. Existing observability methods are mostly external, focusing on monitoring the agent's behavior rather than understanding its decision-making process. In this post, we will explore the use of interpretability methods to improve the transparency of agentic AI agents.
+
+## Challenges of Agentic AI
+
+Agentic AI agents are designed to make decisions autonomously, which can lead to a lack of transparency in their decision-making process. This lack of transparency can make it difficult to diagnose and control tool-use failures, resulting in unintended consequences. Some of the challenges of working with agentic AI include:
+
+* **Lack of interpretability**: Agentic AI agents can be difficult to interpret, making it challenging to understand why a particular decision was made.
+* **Complex decision-making**: Agentic AI agents can have complex decision-making processes, involving multiple factors and variables.
+* **Limited observability**: Existing observability methods are mostly external, focusing on monitoring the agent's behavior rather than understanding its decision-making process.
+
+## Interpretability Methods
+
+Interpretability methods can be used to improve the transparency of agentic AI agents. Some common interpretability methods include:
+
+* **Feature importance**: This method assigns a score to each feature, indicating its importance in the decision-making process.
+* **Partial dependence plots**: This method visualizes the relationship between a specific feature and the predicted outcome.
+* **SHAP values**: This method assigns a value to each feature, indicating its contribution to the predicted outcome.
+
+### Implementing Interpretability Methods
+
+To implement interpretability methods, we can use libraries such as scikit-learn and SHAP. Here is an example of how to use SHAP values to interpret the decision-making process of an agentic AI agent:
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+import shap
+
+# Load the dataset
+df = pd.read_csv("dataset.csv")
+
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(df.drop("target", axis=1), df["target"], test_size=0.2, random_state=42)
+
+# Train a random forest classifier
+rf = RandomForestClassifier(n_estimators=100, random_state=42)
+rf.fit(X_train, y_train)
+
+# Use SHAP values to interpret the decision-making process
+explainer = shap.Explainer(rf)
+shap_values = explainer(X_test)
+
+# Plot the SHAP values
+shap.plots.beeswarm(shap_values)
+```
+This code trains a random forest classifier on a dataset and uses SHAP values to interpret the decision-making process. The SHAP values are then plotted using a beeswarm plot, which shows the contribution of each feature to the predicted outcome.
+
+## Step-by-Step Guide
+
+Here is a step-by-step guide on how to implement interpretability methods for agentic AI agents:
+
+1. **Collect data**: Collect data on the agent's behavior, including the inputs, outputs, and decision-making process.
+2. **Preprocess data**: Preprocess the data by cleaning, transforming, and splitting it into training and testing sets.
+3. **Train a model**: Train a model on the preprocessed data, using a library such as scikit-learn.
+4. **Use interpretability methods**: Use interpretability methods such as feature importance, partial dependence plots, and SHAP values to interpret the decision-making process.
+5. **Visualize results**: Visualize the results using plots and charts, such as beeswarm plots and bar charts.
+
+![a black and white photo of a lot of numbers](https://images.unsplash.com/photo-1701523600650-007b393ed2fe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxCZXlvbmQlMjBCbGFjayUyMEJveCUyMEludGVycHJldGFiaWxpdHklMjBBZ2VudGljJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc4NTI5NzgwfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+Agentic AI agents can be difficult to diagnose and control due to their complex decision-making processes. However, by using interpretability methods, we can improve the transparency of these agents and gain a better understanding of their decision-making process. By following the step-by-step guide outlined in this post, developers can implement interpretability methods and improve the reliability and trustworthiness of agentic AI agents.
+
+## Future Work
+
+Future work can focus on developing new interpretability methods and techniques, as well as applying these methods to real-world scenarios. Additionally, researchers can explore the use of interpretability methods in combination with other techniques, such as reinforcement learning and transfer learning.
+
+## References
+
+* [arXiv:2605.06890v1](https://arxiv.org/abs/2605.06890)
+* [scikit-learn](https://scikit-learn.org/)
+* [SHAP](https://shap.readthedocs.io/en/latest/)
+
+*Photo by [Sharad Bhat](https://unsplash.com/@sharadmbhat?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/black-flat-screen-computer-monitor-Q_Swg0rZouw?utm_source=techversation&utm_medium=referral)*
