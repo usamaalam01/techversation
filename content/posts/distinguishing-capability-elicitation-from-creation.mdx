@@ -1,0 +1,190 @@
+---
+title: "Distinguishing Capability Elicitation from Creation"
+description: "Post-training methods for large language models examined."
+date: "2026-05-12"
+author: "Usama"
+tags: ["ai", "llm", "research"]
+aiSummary: "Large language models can be fine-tuned using various methods, including supervised fine-tuning and reinforcement learning. However, the distinction between capability elicitation and creation is crucial. This tutorial explores the free-energy perspective and provides code examples to demonstrate the concepts."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxEaXN0aW5ndWlzaGluZyUyMENhcGFiaWxpdHklMjBFbGljaXRhdGlvbiUyMGZyb20lMjBDYXBhYmlsaXR5JTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc4NTc2MDExfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+The distinction between capability elicitation and creation in post-training large language models is a topic of ongoing debate. While supervised fine-tuning (SFT) is often viewed as imitation, reinforcement learning (RL) is seen as discovery. However, this distinction is too coarse, and a more nuanced understanding is necessary. In this tutorial, we will delve into the free-energy perspective and explore how to distinguish between capability elicitation and creation using code examples.
+
+## Background
+Large language models are trained on vast amounts of text data, which enables them to generate human-like language. However, these models may not always produce the desired output, and fine-tuning is necessary to adapt them to specific tasks. SFT and RL are two popular fine-tuning methods, but they differ in their objectives and approaches.
+
+SFT involves training the model on a specific task with labeled data, where the goal is to minimize the loss function and maximize the likelihood of the correct output. On the other hand, RL involves training the model to maximize a reward function, which is often defined by a human evaluator.
+
+## Free-Energy Perspective
+The free-energy perspective provides a framework for understanding the distinction between capability elicitation and creation. According to this perspective, the brain (or a neural network) is an inference machine that tries to minimize the free energy of its internal states. Free energy is a measure of the difference between the expected and actual sensory input.
+
+In the context of large language models, the free-energy perspective suggests that SFT and RL can be viewed as different ways of modifying the model's internal states to minimize the free energy. SFT can be seen as a way to elicit existing capabilities by providing the model with labeled data, which helps to refine its internal states and reduce the free energy. On the other hand, RL can be viewed as a way to create new capabilities by providing the model with a reward function that encourages exploration and learning.
+
+### Code Example: Supervised Fine-Tuning
+To illustrate the concept of SFT, let's consider an example using the Hugging Face Transformers library in Python:
+```python
+import torch
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+# Load pre-trained model and tokenizer
+model = AutoModelForSequenceClassification.from_pretrained('bert-base-uncased')
+tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
+
+# Define a custom dataset class for our task
+class MyDataset(torch.utils.data.Dataset):
+    def __init__(self, texts, labels):
+        self.texts = texts
+        self.labels = labels
+
+    def __getitem__(self, idx):
+        text = self.texts[idx]
+        label = self.labels[idx]
+
+        encoding = tokenizer.encode_plus(
+            text,
+            max_length=512,
+            padding='max_length',
+            truncation=True,
+            return_attention_mask=True,
+            return_tensors='pt'
+        )
+
+        return {
+            'input_ids': encoding['input_ids'].flatten(),
+            'attention_mask': encoding['attention_mask'].flatten(),
+            'labels': torch.tensor(label, dtype=torch.long)
+        }
+
+    def __len__(self):
+        return len(self.texts)
+
+# Create a dataset instance
+texts = ['This is a positive review.', 'This is a negative review.']
+labels = [1, 0]
+dataset = MyDataset(texts, labels)
+
+# Create a data loader
+batch_size = 32
+data_loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=True)
+
+# Fine-tune the model
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+model.to(device)
+criterion = torch.nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-5)
+
+for epoch in range(5):
+    model.train()
+    total_loss = 0
+    for batch in data_loader:
+        input_ids = batch['input_ids'].to(device)
+        attention_mask = batch['attention_mask'].to(device)
+        labels = batch['labels'].to(device)
+
+        optimizer.zero_grad()
+
+        outputs = model(input_ids, attention_mask=attention_mask, labels=labels)
+        loss = criterion(outputs, labels)
+
+        loss.backward()
+        optimizer.step()
+
+        total_loss += loss.item()
+
+    print(f'Epoch {epoch+1}, Loss: {total_loss / len(data_loader)}')
+```
+This code example demonstrates how to fine-tune a pre-trained BERT model using SFT for a sentiment analysis task.
+
+## Reinforcement Learning
+RL is a different approach to fine-tuning large language models. Instead of providing labeled data, RL involves defining a reward function that encourages the model to produce desired outputs.
+
+### Code Example: Reinforcement Learning
+To illustrate the concept of RL, let's consider an example using the Gym library in Python:
+```python
+import gym
+from gym import spaces
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+# Define a custom environment class for our task
+class MyEnvironment(gym.Env):
+    def __init__(self):
+        self.action_space = spaces.Discrete(2)
+        self.observation_space = spaces.Box(low=-1, high=1, shape=(10,), dtype=np.float32)
+
+    def reset(self):
+        self.state = np.random.rand(10)
+        return self.state
+
+    def step(self, action):
+        reward = 0
+        if action == 0:
+            reward = -1
+        elif action == 1:
+            reward = 1
+
+        self.state += np.random.rand(10)
+        done = False
+        return self.state, reward, done, {}
+
+# Create an environment instance
+env = MyEnvironment()
+
+# Define a policy network
+class PolicyNetwork(nn.Module):
+    def __init__(self):
+        super(PolicyNetwork, self).__init__()
+        self.fc1 = nn.Linear(10, 128)
+        self.fc2 = nn.Linear(128, 2)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = self.fc2(x)
+        return x
+
+# Initialize the policy network and optimizer
+policy_network = PolicyNetwork()
+optimizer = optim.Adam(policy_network.parameters(), lr=0.001)
+
+# Train the policy network using RL
+for episode in range(1000):
+    state = env.reset()
+    done = False
+    rewards = 0
+
+    while not done:
+        state_tensor = torch.tensor(state, dtype=torch.float32)
+        action_logits = policy_network(state_tensor)
+        action = torch.argmax(action_logits)
+
+        next_state, reward, done, _ = env.step(action.item())
+        rewards += reward
+
+        # Update the policy network using RL
+        optimizer.zero_grad()
+        loss = -reward * action_logits[action]
+        loss.backward()
+        optimizer.step()
+
+        state = next_state
+
+    print(f'Episode {episode+1}, Reward: {rewards}')
+```
+This code example demonstrates how to train a policy network using RL for a simple task.
+
+![a computer screen with a bunch of buttons on it](https://images.unsplash.com/photo-1675865254433-6ba341f0f00b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxEaXN0aW5ndWlzaGluZyUyMENhcGFiaWxpdHklMjBFbGljaXRhdGlvbiUyMGZyb20lMjBDYXBhYmlsaXR5JTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc4NTc2MDExfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In conclusion, the distinction between capability elicitation and creation is crucial in post-training large language models. SFT and RL are two different approaches to fine-tuning these models, and understanding the free-energy perspective can provide valuable insights into the underlying mechanisms.
+
+By following the code examples provided in this tutorial, developers can gain hands-on experience with SFT and RL and explore the differences between capability elicitation and creation. The free-energy perspective offers a framework for understanding the complex interactions between the model, the task, and the environment, and can help developers to design more effective fine-tuning strategies.
+
+As the field of natural language processing continues to evolve, the distinction between capability elicitation and creation will become increasingly important. By mastering the concepts and techniques presented in this tutorial, developers can stay at the forefront of this rapidly advancing field and create more sophisticated and effective language models. 
+
+![Abstract head with colorful nature elements dissolving](https://images.unsplash.com/photo-1755210888583-6e0dc16ee35b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxEaXN0aW5ndWlzaGluZyUyMENhcGFiaWxpdHklMjBFbGljaXRhdGlvbiUyMGZyb20lMjBDYXBhYmlsaXR5JTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc4NTc2MDExfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Sharad Bhat](https://unsplash.com/@sharadmbhat?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/black-flat-screen-computer-monitor-Q_Swg0rZouw?utm_source=techversation&utm_medium=referral)*
