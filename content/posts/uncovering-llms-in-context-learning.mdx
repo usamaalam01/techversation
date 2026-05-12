@@ -1,0 +1,78 @@
+---
+title: "Uncovering LLMs' In-Context Learning"
+description: "Exploring how LLMs learn in-context with causal evidence."
+date: "2026-05-12"
+author: "Usama"
+tags: ["llm", "graph-learning", "in-context"]
+aiSummary: "This tutorial delves into the concept of in-context learning in Large Language Models (LLMs), exploring whether they learn through pattern-matching or inferring latent structure. We'll use a toy graph random-walk task to probe this question and present two lines of evidence. By the end, you'll have a working understanding of how to implement and analyze in-context graph learning in LLMs."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1674027215016-0a4abfdbf1cc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxCZWxpZWYlMjBDaXJjdWl0cnklMjBDYXVzYWwlMjBFdmlkZW5jZSUyMENvbnRleHQlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzg1OTcxMzZ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to In-Context Learning
+In-Context learning refers to the ability of Large Language Models (LLMs) to learn from the context provided within a prompt, without requiring additional training data. This concept has sparked debate among researchers, with some arguing that LLMs learn through pattern-matching recent tokens, while others believe they infer latent structure.
+
+To explore this question, we'll use a toy graph random-walk task, which involves navigating a graph structure based on local transitions or global topology. This task is decidable, meaning that the model's answer can be determined as either tracking global topology or copying local transitions.
+
+![Various perspectives of a human brain are displayed.](https://images.unsplash.com/photo-1743767588082-e754fc9874be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxCZWxpZWYlMjBDaXJjdWl0cnklMjBDYXVzYWwlMjBFdmlkZW5jZSUyMENvbnRleHQlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzg1OTcxMzZ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Implementing the Toy Graph Random-Walk Task
+To implement the toy graph random-walk task, we'll use the NetworkX library in Python to create a graph structure. We'll then define a function to generate random walks on this graph.
+
+```python
+import networkx as nx
+import numpy as np
+
+# Create a sample graph structure
+G = nx.Graph()
+G.add_edges_from([(1, 2), (2, 3), (3, 4), (4, 1)])
+
+# Define a function to generate random walks
+def generate_random_walk(G, start_node, length):
+    walk = [start_node]
+    for _ in range(length):
+        neighbors = list(G.neighbors(walk[-1]))
+        next_node = np.random.choice(neighbors)
+        walk.append(next_node)
+    return walk
+
+# Generate a random walk on the graph
+walk = generate_random_walk(G, 1, 10)
+print(walk)
+```
+
+## Probing In-Context Learning with Causal Evidence
+To probe in-context learning, we'll use two competing graph structures: a global topology graph and a local transitions graph. We'll then train an LLM on these graphs and evaluate its performance on the toy graph random-walk task.
+
+```python
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+# Load pre-trained LLM and tokenizer
+model = AutoModelForCausalLM.from_pretrained("your-llm-model")
+tokenizer = AutoTokenizer.from_pretrained("your-llm-model")
+
+# Define a function to evaluate the LLM on the toy graph random-walk task
+def evaluate_llm(G, walk):
+    inputs = tokenizer.encode(" ".join(map(str, walk)), return_tensors="pt")
+    outputs = model.generate(inputs, max_length=10)
+    predicted_walk = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    return predicted_walk
+
+# Evaluate the LLM on the toy graph random-walk task
+predicted_walk = evaluate_llm(G, walk)
+print(predicted_walk)
+```
+
+## Analyzing the Results
+By analyzing the results of the toy graph random-walk task, we can determine whether the LLM is learning through pattern-matching or inferring latent structure. If the LLM is able to track global topology, it will generate a walk that follows the global structure of the graph. On the other hand, if it is copying local transitions, it will generate a walk that is similar to the local transitions in the graph.
+
+![black flat screen computer monitor](https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxCZWxpZWYlMjBDaXJjdWl0cnklMjBDYXVzYWwlMjBFdmlkZW5jZSUyMENvbnRleHQlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzg1OTcxMzZ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we've explored the concept of in-context learning in LLMs, using a toy graph random-walk task to probe whether they learn through pattern-matching or inferring latent structure. By implementing and analyzing the results of this task, we can gain a deeper understanding of how LLMs learn in-context and develop more effective methods for training and evaluating these models.
+
+For more information on this topic, you can refer to the original research paper on [arXiv](https://arxiv.org/abs/2605.08405). The code examples provided in this tutorial are just a starting point, and you can experiment with different graph structures, LLM models, and evaluation metrics to further explore the capabilities of in-context learning in LLMs.
+
+*Photo by [Growtika](https://unsplash.com/@growtika?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-computer-generated-image-of-a-human-brain-3wXVwtdaESA?utm_source=techversation&utm_medium=referral)*
