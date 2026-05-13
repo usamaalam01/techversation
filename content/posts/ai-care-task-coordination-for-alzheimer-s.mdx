@@ -1,0 +1,106 @@
+---
+title: "AI-Care: Task Coordination for Alzheimer's"
+description: "AI-Care helps individuals with Alzheimer's manage tasks using conversational agents."
+date: "2026-05-13"
+author: "Usama"
+tags: ["ai", "alzheimer", "care"]
+aiSummary: "AI-Care is a conversational agentic system designed to assist individuals with Alzheimer's disease in managing daily tasks. The system uses natural language processing to understand user input and provide personalized support. This tutorial will guide developers in building a basic AI-Care system using Python and the Rasa framework."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1584582868986-db1781714c75?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxDYXJlJTIwQ29udmVyc2F0aW9uYWwlMjBBZ2VudGljJTIwU3lzdGVtJTIwVGFzayUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3ODcwMzEzNnww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Alzheimer's disease is a progressive neurological disorder that affects memory, thinking, and behavior. Individuals with Alzheimer's often struggle with managing daily tasks, such as scheduling appointments and taking medication. AI-Care is a conversational agentic system designed to assist these individuals in managing their daily tasks using natural language processing and machine learning.
+
+## System Overview
+The AI-Care system consists of three main components:
+
+* **Natural Language Processing (NLP)**: This component is responsible for understanding user input, such as voice or text commands.
+* **Task Management**: This component manages the user's tasks, such as scheduling appointments and sending reminders.
+* **Conversational Agent**: This component interacts with the user, providing personalized support and guidance.
+
+## Building the AI-Care System
+To build the AI-Care system, we will use the Rasa framework, a popular open-source conversational AI platform. We will also use Python as our programming language.
+
+### Step 1: Install Rasa and Required Libraries
+To start, we need to install Rasa and the required libraries. Run the following command in your terminal:
+```bash
+pip install rasa
+```
+### Step 2: Create a New Rasa Project
+Create a new Rasa project using the following command:
+```bash
+rasa init ai_care
+```
+This will create a new directory called `ai_care` with the basic structure for a Rasa project.
+
+### Step 3: Define the NLP Model
+In the `ai_care` directory, open the `nlu.yml` file and add the following code:
+```yml
+nlu:
+  - intent: schedule_appointment
+    examples:
+      - "I need to schedule an appointment with my doctor"
+      - "Can you help me schedule a meeting with my therapist?"
+  - intent: take_medication
+    examples:
+      - "I need to take my medication"
+      - "Can you remind me to take my pills?"
+```
+This code defines two intents: `schedule_appointment` and `take_medication`.
+
+### Step 4: Define the Conversational Agent
+In the `ai_care` directory, open the `domain.yml` file and add the following code:
+```yml
+intents:
+  - schedule_appointment
+  - take_medication
+
+actions:
+  - utter_schedule_appointment
+  - utter_take_medication
+```
+This code defines two actions: `utter_schedule_appointment` and `utter_take_medication`.
+
+### Step 5: Implement the Conversational Agent
+In the `ai_care` directory, open the `actions.py` file and add the following code:
+```python
+from rasa_sdk import Action
+from rasa_sdk.events import SlotSet
+
+class ScheduleAppointment(Action):
+    def name(self):
+        return "utter_schedule_appointment"
+
+    def run(self, dispatcher, tracker, domain):
+        dispatcher.utter_message("I can help you schedule an appointment. What date and time would you like to schedule it for?")
+        return [SlotSet("appointment_date", None), SlotSet("appointment_time", None)]
+
+class TakeMedication(Action):
+    def name(self):
+        return "utter_take_medication"
+
+    def run(self, dispatcher, tracker, domain):
+        dispatcher.utter_message("I can remind you to take your medication. What time would you like to take it?")
+        return [SlotSet("medication_time", None)]
+```
+This code implements the `utter_schedule_appointment` and `utter_take_medication` actions.
+
+## Testing the AI-Care System
+To test the AI-Care system, run the following command in your terminal:
+```bash
+rasa test
+```
+This will start the Rasa test server, and you can interact with the conversational agent using the `rasa shell` command.
+
+## Conclusion
+In this tutorial, we built a basic AI-Care system using the Rasa framework and Python. The system uses natural language processing to understand user input and provide personalized support. We defined two intents: `schedule_appointment` and `take_medication`, and implemented two actions: `utter_schedule_appointment` and `utter_take_medication`. We also tested the system using the Rasa test server.
+
+![a computer screen with a bunch of buttons on it](https://images.unsplash.com/photo-1675865254433-6ba341f0f00b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxDYXJlJTIwQ29udmVyc2F0aW9uYWwlMjBBZ2VudGljJTIwU3lzdGVtJTIwVGFzayUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3ODcwMzEzNnww&ixlib=rb-4.1.0&q=80&w=1080)
+
+The AI-Care system has the potential to improve the lives of individuals with Alzheimer's disease by providing personalized support and guidance. However, further development and testing are needed to ensure the system is effective and user-friendly.
+
+For more information on the AI-Care system, visit the [arXiv paper](https://arxiv.org/abs/2605.08480).
+
+*Photo by [Brian McGowan](https://unsplash.com/@sushioutlaw?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/white-printer-paper-on-red-and-white-floral-textile-ykiDoi46Xjc?utm_source=techversation&utm_medium=referral)*
