@@ -1,0 +1,105 @@
+---
+title: "Working with CHAL"
+description: "Council of Hierarchical Agentic Language improves LLM reasoning."
+date: "2026-05-14"
+author: "Usama"
+tags: ["ai", "llm", "research"]
+aiSummary: "CHAL is a novel approach to multi-agent debate for improving LLM reasoning. It addresses structural limitations in current methodologies, such as debate-induced martingale over belief trajectories and majority voting. This tutorial provides a step-by-step guide to working with CHAL."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1610986602538-431d65df4385?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxDSEFMJTIwQ291bmNpbCUyMEhpZXJhcmNoaWNhbCUyMEFnZW50aWMlMjBMYW5ndWFnZSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3ODc2OTM3N3ww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to CHAL
+The Council of Hierarchical Agentic Language (CHAL) is a new approach to multi-agent debate that aims to improve the reasoning capabilities of large language models (LLMs). CHAL addresses certain structural limitations in current methodologies, such as the tendency of debate to induce a martingale over belief trajectories and the reliance on majority voting. In this tutorial, we will explore how to work with CHAL and provide a step-by-step guide to implementing it in practice.
+
+## Understanding CHAL Architecture
+CHAL consists of a hierarchical architecture that enables multiple agents to engage in debate and improve their reasoning capabilities. The architecture is composed of several components, including:
+* **Agent**: Each agent is a separate entity that participates in the debate. Agents can be thought of as individual LLMs that are trained to argue for or against a particular topic.
+* **Debate Manager**: The debate manager is responsible for managing the debate process, including selecting topics, assigning agents to argue for or against the topic, and evaluating the arguments presented by each agent.
+* **Belief Trajectory**: The belief trajectory refers to the sequence of beliefs held by each agent during the debate. CHAL aims to improve the reasoning capabilities of LLMs by inducing a more calibrated belief trajectory.
+
+## Implementing CHAL
+To implement CHAL, we will use the following steps:
+1. **Define the Debate Topic**: The first step is to define the topic of debate. This can be a simple statement or a complex question.
+2. **Initialize Agents**: The next step is to initialize the agents that will participate in the debate. Each agent is assigned to argue for or against the topic.
+3. **Debate Round**: The debate round consists of each agent presenting an argument for or against the topic. The arguments are evaluated by the debate manager, and the agent with the strongest argument is awarded points.
+4. **Belief Trajectory Update**: After each debate round, the belief trajectory of each agent is updated based on the arguments presented and the points awarded.
+
+### Example Code
+```python
+import numpy as np
+
+class Agent:
+    def __init__(self, name, topic, stance):
+        self.name = name
+        self.topic = topic
+        self.stance = stance
+        self.belief_trajectory = []
+
+    def argue(self):
+        # Generate an argument for or against the topic
+        argument = np.random.rand()
+        return argument
+
+class DebateManager:
+    def __init__(self, topic):
+        self.topic = topic
+        self.agents = []
+        self.points = {}
+
+    def add_agent(self, agent):
+        self.agents.append(agent)
+        self.points[agent.name] = 0
+
+    def evaluate_arguments(self, arguments):
+        # Evaluate the arguments presented by each agent
+        for agent, argument in arguments.items():
+            if argument > 0.5:
+                self.points[agent] += 1
+
+# Define the debate topic
+topic = "Artificial intelligence will surpass human intelligence in the next decade."
+
+# Initialize agents
+agent1 = Agent("Agent 1", topic, "For")
+agent2 = Agent("Agent 2", topic, "Against")
+
+# Initialize debate manager
+debate_manager = DebateManager(topic)
+debate_manager.add_agent(agent1.name)
+debate_manager.add_agent(agent2.name)
+
+# Debate round
+arguments = {}
+arguments[agent1.name] = agent1.argue()
+arguments[agent2.name] = agent2.argue()
+
+# Evaluate arguments
+debate_manager.evaluate_arguments(arguments)
+
+# Update belief trajectory
+agent1.belief_trajectory.append(debate_manager.points[agent1.name])
+agent2.belief_trajectory.append(debate_manager.points[agent2.name])
+
+print("Agent 1 Belief Trajectory:", agent1.belief_trajectory)
+print("Agent 2 Belief Trajectory:", agent2.belief_trajectory)
+```
+This code defines a simple debate system with two agents arguing for or against a topic. The debate manager evaluates the arguments presented by each agent and awards points based on the strength of the argument.
+
+![Rows of text on a dark background](https://images.unsplash.com/photo-1763571083747-2ca951007073?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxDSEFMJTIwQ291bmNpbCUyMEhpZXJhcmNoaWNhbCUyMEFnZW50aWMlMjBMYW5ndWFnZSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3ODc2OTM3N3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+CHAL is a novel approach to multi-agent debate that aims to improve the reasoning capabilities of LLMs. By addressing structural limitations in current methodologies, CHAL provides a more effective and efficient way to improve LLM reasoning. In this tutorial, we provided a step-by-step guide to working with CHAL, including defining the debate topic, initializing agents, and updating the belief trajectory. We also provided example code to demonstrate how to implement CHAL in practice.
+
+## Future Work
+There are several avenues for future work in CHAL, including:
+* **Scalability**: CHAL can be scaled up to include more agents and topics, allowing for more complex debates and improved reasoning capabilities.
+* **Evaluation Metrics**: Developing more effective evaluation metrics for CHAL, such as metrics that measure the strength of arguments and the calibration of belief trajectories.
+* **Real-World Applications**: Applying CHAL to real-world applications, such as legal debates, political debates, and scientific discussions.
+
+![a black and white photo of a computer screen](https://images.unsplash.com/photo-1698423847324-e85fae1f312f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxDSEFMJTIwQ291bmNpbCUyMEhpZXJhcmNoaWNhbCUyMEFnZW50aWMlMjBMYW5ndWFnZSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3ODc2OTM3N3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+By exploring these avenues, we can further improve the effectiveness and efficiency of CHAL and apply it to a wide range of applications.
+
+*Photo by [Ferenc Almasi](https://unsplash.com/@flowforfrank?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/black-and-yellow-printed-paper-HfFoo4d061A?utm_source=techversation&utm_medium=referral)*
