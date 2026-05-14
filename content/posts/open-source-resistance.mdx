@@ -1,0 +1,97 @@
+---
+title: "Open Source Resistance"
+description: "Keep OSS alive on company time with practical tools and strategies."
+date: "2026-05-14"
+author: "Usama"
+tags: ["open-source", "oss", "resistance"]
+aiSummary: "The Open Source Resistance movement aims to keep open-source software alive and thriving, even in a corporate environment. This tutorial will show developers how to use the OSS Resistance tool to promote and contribute to open-source projects on company time. We'll explore the benefits of open-source software and provide concrete code examples to get started."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1652111865960-15f4a46a7688?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxPcGVuJTIwU291cmNlJTIwUmVzaXN0YW5jZSUyMGtlZXAlMjBPU1MlMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc3ODczMTQ0M3ww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+As a developer, you're likely no stranger to the world of open-source software (OSS). From popular frameworks like React and Angular to essential tools like Git and Node.js, open-source projects have become the backbone of modern software development. However, in a corporate environment, it can be challenging to contribute to open-source projects on company time. This is where the Open Source Resistance movement comes in – a community-driven initiative that aims to keep OSS alive and thriving, even in the face of corporate restrictions.
+
+## What is Open Source Resistance?
+
+Open Source Resistance is a movement that encourages developers to promote and contribute to open-source projects, even when their companies may not explicitly support it. The movement provides a range of tools and strategies to help developers navigate the complexities of corporate policies and contribute to OSS projects in a way that benefits both the company and the open-source community.
+
+One of the key tools provided by the Open Source Resistance movement is the [OSS Resistance website](https://ossresistance.com/), which offers a wealth of resources, including tutorials, blog posts, and community forums. The website is a great starting point for developers who want to get involved in the movement and start contributing to open-source projects.
+
+![a typewriter on a table](https://images.unsplash.com/photo-1653213096280-57d895842861?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxPcGVuJTIwU291cmNlJTIwUmVzaXN0YW5jZSUyMGtlZXAlMjBPU1MlMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc3ODczMTQ0M3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Getting Started with Open Source Resistance
+
+To get started with Open Source Resistance, you'll need to familiarize yourself with the movement's core principles and values. These include:
+
+* Promoting open-source software and its benefits to your company and colleagues
+* Contributing to open-source projects on company time, where possible
+* Advocating for open-source-friendly policies and practices within your company
+* Collaborating with other developers and community members to advance the open-source cause
+
+### Setting up Your Development Environment
+
+Before you can start contributing to open-source projects, you'll need to set up your development environment. This typically involves installing a code editor or IDE, such as Visual Studio Code or IntelliJ, and configuring your version control system, such as Git.
+
+Here's an example of how you might set up your development environment using the command line:
+```bash
+# Install Git
+sudo apt-get install git
+
+# Configure Git
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
+
+# Create a new repository
+git init my-repo
+```
+### Finding Open-Source Projects to Contribute To
+
+Once you've set up your development environment, you can start looking for open-source projects to contribute to. There are many ways to find open-source projects, including:
+
+* Searching on GitHub or other code hosting platforms
+* Browsing open-source project directories, such as Open Source Initiative or GitHub's Explore page
+* Asking colleagues or community members for recommendations
+
+Here's an example of how you might search for open-source projects on GitHub using the GitHub API:
+```python
+import requests
+
+# Set your GitHub API token
+token = "your-github-token"
+
+# Set the search query
+query = "open-source"
+
+# Make the API request
+response = requests.get(f"https://api.github.com/search/repositories?q={query}", headers={"Authorization": f"Bearer {token}"})
+
+# Parse the response
+repositories = response.json()["items"]
+
+# Print the repository names
+for repository in repositories:
+    print(repository["name"])
+```
+## Benefits of Open Source Resistance
+
+So why should you join the Open Source Resistance movement? There are many benefits to contributing to open-source projects, including:
+
+* Improved coding skills and knowledge sharing
+* Enhanced collaboration and community building
+* Increased visibility and recognition for your work
+* Better software quality and reliability through peer review and testing
+
+Additionally, by promoting open-source software and its benefits within your company, you can help create a more open and collaborative work environment. This can lead to increased innovation, improved morale, and better job satisfaction.
+
+![a black sign with a price tag on it](https://images.unsplash.com/photo-1617696795782-cedb140e2f0b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxPcGVuJTIwU291cmNlJTIwUmVzaXN0YW5jZSUyMGtlZXAlMjBPU1MlMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc3ODczMTQ0M3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In conclusion, the Open Source Resistance movement is a powerful force for promoting and contributing to open-source projects, even in a corporate environment. By joining the movement and using the tools and strategies provided, you can help keep OSS alive and thriving, while also improving your coding skills, collaborating with other developers, and creating a more open and collaborative work environment.
+
+So why not get started today? Visit the [OSS Resistance website](https://ossresistance.com/) to learn more about the movement and how you can get involved. With your help, we can keep open-source software alive and thriving for years to come.
+
+*Photo by [Markus Winkler](https://unsplash.com/@markuswinkler?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-box-with-a-key-chain-and-a-key-chain-on-it-Z8yWSsx8OWE?utm_source=techversation&utm_medium=referral)*
