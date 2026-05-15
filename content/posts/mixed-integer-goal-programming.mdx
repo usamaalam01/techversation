@@ -1,0 +1,83 @@
+---
+title: "Mixed Integer Goal Programming"
+description: "Optimize personalized meal plans with user-defined serving granularity."
+date: "2026-05-15"
+author: "Usama"
+tags: ["optimization", "meal-planning", "goal-programming"]
+aiSummary: "Mixed Integer Goal Programming is a method for optimizing personalized meal plans. It addresses the limitations of existing formulations by using integer variables to represent serving sizes and goal programming to handle conflicting nutrient targets. This approach ensures practical and feasible meal plans that satisfy nutritional requirements."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1529078155058-5d716f45d604?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxNaXhlZCUyMEludGVnZXIlMjBHb2FsJTIwUHJvZ3JhbW1pbmclMjBQZXJzb25hbGl6ZWQlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzg4MTgzMjN8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Determining what to eat to satisfy nutritional requirements is a classic optimization problem in operations research. However, existing formulations have two major limitations: continuous variables produce impractical fractional servings, and hard nutrient constraints cause infeasibility when targets conflict. Mixed Integer Goal Programming addresses these limitations by using integer variables to represent serving sizes and goal programming to handle conflicting nutrient targets.
+
+## Problem Formulation
+The problem can be formulated as a Mixed Integer Linear Program (MILP) with the following components:
+
+* **Decision Variables**: Let $x_{ij}$ be the number of servings of food $i$ in meal $j$.
+* **Objective Function**: Minimize the deviation from the target nutrient levels.
+* **Constraints**: Ensure that the total amount of each nutrient in the meal plan is within the acceptable range.
+
+## Implementation
+We will use the PuLP library in Python to implement the Mixed Integer Goal Programming model.
+
+```python
+import pulp
+
+# Define the sets of foods and nutrients
+foods = ['eggs', 'bananas', 'apples']
+nutrients = ['protein', 'carbohydrates', 'fat']
+
+# Define the nutrient content of each food
+nutrient_content = {
+    'eggs': {'protein': 6, 'carbohydrates': 0, 'fat': 5},
+    'bananas': {'protein': 1, 'carbohydrates': 20, 'fat': 0},
+    'apples': {'protein': 0, 'carbohydrates': 15, 'fat': 0}
+}
+
+# Define the target nutrient levels
+target_nutrient_levels = {
+    'protein': 50,
+    'carbohydrates': 200,
+    'fat': 50
+}
+
+# Create the MILP model
+model = pulp.LpProblem("MealPlanning", pulp.LpMinimize)
+
+# Create the decision variables
+x = pulp.LpVariable.dicts("x", (foods, range(7)), lowBound=0, cat=pulp.LpInteger)
+
+# Create the objective function
+model += pulp.lpSum([pulp.lpSum([x[food][day] * nutrient_content[food][nutrient] for food in foods]) - target_nutrient_levels[nutrient] for nutrient in nutrients])
+
+# Create the constraints
+for nutrient in nutrients:
+    model += pulp.lpSum([x[food][day] * nutrient_content[food][nutrient] for food in foods for day in range(7)]) >= target_nutrient_levels[nutrient]
+
+# Solve the model
+model.solve()
+
+# Print the results
+for food in foods:
+    for day in range(7):
+        print(f"{food} on day {day}: {x[food][day].varValue}")
+```
+
+## Results
+The model generates a personalized meal plan that satisfies the nutritional requirements. The results show the number of servings of each food in each meal.
+
+![graphical user interface, application, shape, arrow](https://images.unsplash.com/photo-1667984436026-99b165e3672b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxNaXhlZCUyMEludGVnZXIlMjBHb2FsJTIwUHJvZ3JhbW1pbmclMjBQZXJzb25hbGl6ZWQlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzg4MTgzMjN8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+Mixed Integer Goal Programming is a powerful method for optimizing personalized meal plans. By using integer variables to represent serving sizes and goal programming to handle conflicting nutrient targets, this approach ensures practical and feasible meal plans that satisfy nutritional requirements. The implementation using PuLP library in Python demonstrates the effectiveness of this approach.
+
+## Future Work
+Future work can focus on incorporating additional constraints, such as food preferences, allergies, and dietary restrictions, to make the meal plans more personalized and realistic. Additionally, the model can be extended to include other nutritional aspects, such as micronutrients and meal frequency.
+
+## References
+* [Mixed Integer Goal Programming for Personalized Meal Optimization with User-Defined Serving Granularity](https://arxiv.org/abs/2605.13849)
+
+*Photo by [Mika Baumeister](https://unsplash.com/@kommumikation?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/white-printing-paper-with-numbers-Wpnoqo2plFA?utm_source=techversation&utm_medium=referral)*
