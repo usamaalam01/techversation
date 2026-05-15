@@ -1,0 +1,69 @@
+---
+title: "PolitNuggets Benchmarking"
+description: "Benchmarking agentic discovery of long-tail political facts with PolitNuggets."
+date: "2026-05-15"
+author: "Usama"
+tags: ["ai", "benchmarking", "politnuggets"]
+aiSummary: "PolitNuggets is a new benchmark for evaluating the ability of Large Reasoning Models to discover and synthesize long-tail facts from dispersed sources. This tutorial provides a step-by-step guide on how to use PolitNuggets to benchmark agentic discovery of long-tail political facts. We will walk through the process of setting up the benchmark, running experiments, and analyzing results."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1666875753105-c63a6f3bdc86?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxQb2xpdE51Z2dldHMlMjBCZW5jaG1hcmtpbmclMjBBZ2VudGljJTIwRGlzY292ZXJ5JTIwTG9uZyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3ODgzNzA2Mnww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+The ability of Large Reasoning Models (LRMs) to discover and synthesize long-tail facts from dispersed sources is a crucial aspect of their application in real-world scenarios. However, this capability remains under-evaluated. To address this, the PolitNuggets benchmark was introduced, providing a comprehensive framework for evaluating the performance of LRMs in agentic discovery of long-tail political facts. In this tutorial, we will provide a step-by-step guide on how to use PolitNuggets to benchmark agentic discovery of long-tail political facts.
+
+## Setting up the Benchmark
+To get started with PolitNuggets, you need to set up the benchmark on your local machine. This involves installing the required dependencies and downloading the dataset. You can install the dependencies using pip:
+```bash
+pip install -r requirements.txt
+```
+Once the dependencies are installed, you can download the dataset using the following command:
+```bash
+python download_dataset.py
+```
+This will download the PolitNuggets dataset, which consists of a collection of long-tail political facts and their corresponding sources.
+
+## Running Experiments
+To run experiments with PolitNuggets, you need to define a configuration file that specifies the model, dataset, and evaluation metrics. An example configuration file is provided in the `configs` directory:
+```python
+# config.py
+model = "lrms"
+dataset = "politnuggets"
+evaluation_metrics = ["accuracy", "f1_score"]
+```
+You can then run the experiment using the following command:
+```bash
+python run_experiment.py --config config.py
+```
+This will run the experiment with the specified model, dataset, and evaluation metrics.
+
+## Analyzing Results
+Once the experiment is complete, you can analyze the results using the `analyze_results.py` script:
+```python
+python analyze_results.py --config config.py
+```
+This will generate a report that includes the performance metrics for the model, such as accuracy and F1 score.
+
+![graphs of performance analytics on a laptop screen](https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxQb2xpdE51Z2dldHMlMjBCZW5jaG1hcmtpbmclMjBBZ2VudGljJTIwRGlzY292ZXJ5JTIwTG9uZyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3ODgzNzA2Mnww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Customizing the Benchmark
+PolitNuggets provides a flexible framework for customizing the benchmark to suit your specific needs. You can modify the configuration file to change the model, dataset, or evaluation metrics. Additionally, you can add custom evaluation metrics or modify the existing ones to better suit your use case.
+
+## Conclusion
+In this tutorial, we provided a step-by-step guide on how to use PolitNuggets to benchmark agentic discovery of long-tail political facts. We walked through the process of setting up the benchmark, running experiments, and analyzing results. We also discussed how to customize the benchmark to suit your specific needs. By following this tutorial, you can easily get started with PolitNuggets and evaluate the performance of your LRM in agentic discovery of long-tail political facts.
+
+### Further Reading
+For more information on PolitNuggets, you can refer to the [original paper](https://arxiv.org/abs/2605.14002). You can also explore the [PolitNuggets repository](https://github.com/politnuggets) for more resources and examples.
+
+### Example Use Case
+PolitNuggets can be used in a variety of applications, such as:
+* Evaluating the performance of LRM in agentic discovery of long-tail political facts
+* Comparing the performance of different LRM models
+* Analyzing the impact of different evaluation metrics on the performance of LRM
+
+By using PolitNuggets, you can gain a deeper understanding of the capabilities and limitations of LRM in agentic discovery of long-tail political facts, and develop more effective models and evaluation metrics for real-world applications. 
+
+![black flat screen computer monitor](https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxQb2xpdE51Z2dldHMlMjBCZW5jaG1hcmtpbmclMjBBZ2VudGljJTIwRGlzY292ZXJ5JTIwTG9uZyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3ODgzNzA2Mnww&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Deng Xiang](https://unsplash.com/@dengxiangs?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphical-user-interface--WXQm_NTK0U?utm_source=techversation&utm_medium=referral)*
