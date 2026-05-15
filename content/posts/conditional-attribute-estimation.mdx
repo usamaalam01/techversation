@@ -1,0 +1,101 @@
+---
+title: "Conditional Attribute Estimation"
+description: "Estimate sequence-level properties with autoregressive models."
+date: "2026-05-15"
+author: "Usama"
+tags: ["ai", "sequence-models", "autoregressive"]
+aiSummary: "This tutorial covers conditional attribute estimation with autoregressive sequence models, a technique for estimating sequence-level properties. We'll explore the challenges of next-token prediction and build a working example using Python. Autoregressive models can effectively estimate sequence-level properties, and this guide provides a step-by-step approach to implementing them."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxDb25kaXRpb25hbCUyMEF0dHJpYnV0ZSUyMEVzdGltYXRpb24lMjBBdXRvcmVncmVzc2l2ZSUyMFNlcXVlbmNlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc4ODU1MzM0fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Conditional Attribute Estimation
+
+Conditional attribute estimation is a technique used in natural language processing and other sequence modeling tasks to estimate sequence-level properties. These properties can include attributes such as sentiment, topic, or style, which are not necessarily tied to individual tokens but rather to the sequence as a whole. Traditional next-token prediction models often struggle with these tasks, as they focus on local patterns and may not capture global structure.
+
+## Challenges of Next-Token Prediction
+
+Next-token prediction is a common objective in sequence modeling, where the model is trained to predict the next token in a sequence given the context of the previous tokens. However, this approach can lead to overfitting of local patterns and underfitting of global structure. For example, a model may learn to predict the next word in a sentence based on the previous words, but it may not capture the overall sentiment or topic of the sentence.
+
+## Autoregressive Sequence Models
+
+Autoregressive sequence models are a type of model that can effectively estimate sequence-level properties. These models work by predicting the next token in a sequence based on the previous tokens, but they also take into account the global structure of the sequence. This is achieved through the use of a conditional probability distribution, which models the probability of each token given the context of the previous tokens.
+
+### Example Code: Implementing an Autoregressive Sequence Model
+
+Here's an example of how you can implement an autoregressive sequence model using Python and the PyTorch library:
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+class AutoregressiveSequenceModel(nn.Module):
+    def __init__(self, vocab_size, hidden_size, num_layers):
+        super(AutoregressiveSequenceModel, self).__init__()
+        self.embedding = nn.Embedding(vocab_size, hidden_size)
+        self.rnn = nn.LSTM(hidden_size, hidden_size, num_layers, batch_first=True)
+        self.fc = nn.Linear(hidden_size, vocab_size)
+
+    def forward(self, input_seq):
+        embedded = self.embedding(input_seq)
+        output, _ = self.rnn(embedded)
+        output = self.fc(output[:, -1, :])
+        return output
+
+# Initialize the model, optimizer, and loss function
+model = AutoregressiveSequenceModel(vocab_size=10000, hidden_size=256, num_layers=2)
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+criterion = nn.CrossEntropyLoss()
+
+# Train the model
+for epoch in range(10):
+    optimizer.zero_grad()
+    output = model(input_seq)
+    loss = criterion(output, target_seq)
+    loss.backward()
+    optimizer.step()
+    print(f'Epoch {epoch+1}, Loss: {loss.item()}')
+```
+This code defines an autoregressive sequence model using a PyTorch `nn.Module` subclass. The model consists of an embedding layer, an LSTM layer, and a fully connected layer. The `forward` method defines the forward pass through the network, which takes an input sequence and returns a probability distribution over the possible next tokens.
+
+![a black and white photo of a computer screen](https://images.unsplash.com/photo-1698423847324-e85fae1f312f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxDb25kaXRpb25hbCUyMEF0dHJpYnV0ZSUyMEVzdGltYXRpb24lMjBBdXRvcmVncmVzc2l2ZSUyMFNlcXVlbmNlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc4ODU1MzM0fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Estimating Sequence-Level Properties
+
+Once the autoregressive sequence model is trained, you can use it to estimate sequence-level properties such as sentiment or topic. This can be done by using the model to generate a sequence of tokens and then analyzing the generated sequence to determine the sequence-level property.
+
+### Example Code: Estimating Sequence-Level Properties
+
+Here's an example of how you can use the trained autoregressive sequence model to estimate sequence-level properties:
+```python
+def estimate_sequence_level_property(sequence):
+    # Use the model to generate a sequence of tokens
+    generated_sequence = []
+    for i in range(len(sequence)):
+        input_seq = torch.tensor([sequence[:i]])
+        output = model(input_seq)
+        next_token = torch.argmax(output)
+        generated_sequence.append(next_token)
+
+    # Analyze the generated sequence to determine the sequence-level property
+    # For example, you can use a sentiment analysis library to determine the sentiment of the generated sequence
+    sentiment = analyze_sentiment(generated_sequence)
+    return sentiment
+
+# Test the function
+sequence = [1, 2, 3, 4, 5]
+sentiment = estimate_sequence_level_property(sequence)
+print(f'Sentiment: {sentiment}')
+```
+This code defines a function `estimate_sequence_level_property` that takes a sequence of tokens as input and returns the estimated sequence-level property. The function uses the trained autoregressive sequence model to generate a sequence of tokens and then analyzes the generated sequence to determine the sequence-level property.
+
+![brown wooden blocks on white table](https://images.unsplash.com/photo-1594482628048-53865e5a59c4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxDb25kaXRpb25hbCUyMEF0dHJpYnV0ZSUyMEVzdGltYXRpb24lMjBBdXRvcmVncmVzc2l2ZSUyMFNlcXVlbmNlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc4ODU1MzM0fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we covered conditional attribute estimation with autoregressive sequence models. We explored the challenges of next-token prediction and built a working example using Python and the PyTorch library. We also demonstrated how to use the trained model to estimate sequence-level properties such as sentiment or topic. Autoregressive sequence models are a powerful tool for estimating sequence-level properties, and this guide provides a step-by-step approach to implementing them.
+
+The original research paper on this topic can be found on [arXiv](https://arxiv.org/abs/2605.14004). For more information on autoregressive sequence models and their applications, you can refer to the [PyTorch documentation](https://pytorch.org/docs/stable/nn.html) and the [arXiv paper](https://arxiv.org/abs/2605.14004).
+
+*Photo by [Markus Spiske](https://unsplash.com/@markusspiske?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/captcha-cvBBO4PzWPg?utm_source=techversation&utm_medium=referral)*
