@@ -1,0 +1,114 @@
+---
+title: "Distribution-Aware Algorithm Design"
+description: "Learn to design algorithms with LLM agents for improved runtime."
+date: "2026-05-16"
+author: "Usama"
+tags: ["ai", "llm", "algorithm-design"]
+aiSummary: "This tutorial covers distribution-aware algorithm design using LLM agents. We'll explore how to use LLM agents to improve algorithm runtime and provide concrete code examples. By the end of this tutorial, you'll be able to design and implement your own distribution-aware algorithms."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxEaXN0cmlidXRpb24lMjBBd2FyZSUyMEFsZ29yaXRobSUyMERlc2lnbiUyMExMTSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3ODkzOTUxNHww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Algorithm design is a crucial aspect of software development, and with the advent of Large Language Models (LLMs), we can now design algorithms that are aware of the distribution of the input data. This approach can lead to significant improvements in runtime and efficiency. In this tutorial, we'll delve into the world of distribution-aware algorithm design using LLM agents.
+
+## What are LLM Agents?
+LLM agents are a type of artificial intelligence designed to learn and execute tasks. They can be used to solve a wide range of problems, from simple calculations to complex decision-making tasks. LLM agents are trained on vast amounts of data, which enables them to learn patterns and relationships that can be applied to new, unseen data.
+
+## Distribution-Aware Algorithm Design
+Distribution-aware algorithm design involves designing algorithms that take into account the distribution of the input data. This approach can lead to significant improvements in runtime and efficiency, as the algorithm can adapt to the specific characteristics of the input data.
+
+To illustrate this concept, let's consider a simple example. Suppose we have a dataset of numbers, and we want to design an algorithm to find the maximum value in the dataset. A traditional approach would be to use a simple sorting algorithm, such as bubble sort or quicksort. However, if we know that the dataset is normally distributed, we can use a more efficient algorithm, such as the [quickselect algorithm](https://en.wikipedia.org/wiki/Quickselect).
+
+```python
+import numpy as np
+
+def quickselect(arr, k):
+    """
+    Select the k-th smallest element in the array.
+    """
+    if len(arr) == 1:
+        return arr[0]
+
+    pivot = np.median(arr)
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+
+    if k < len(left):
+        return quickselect(left, k)
+    elif k < len(left) + len(middle):
+        return middle[0]
+    else:
+        return quickselect(right, k - len(left) - len(middle))
+
+# Example usage:
+arr = np.random.normal(0, 1, 100)
+k = 50
+result = quickselect(arr, k)
+print(f"The {k}-th smallest element is {result}")
+```
+
+## Using LLM Agents for Distribution-Aware Algorithm Design
+LLM agents can be used to design distribution-aware algorithms by learning the patterns and relationships in the input data. This can be done by training the LLM agent on a dataset of examples, where each example consists of an input and the corresponding output.
+
+For instance, we can train an LLM agent to learn the distribution of a dataset and then use it to design an algorithm that adapts to the specific characteristics of the input data.
+
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+class LLM.Agent(nn.Module):
+    def __init__(self):
+        super(LLM.Agent, self).__init__()
+        self.fc1 = nn.Linear(1, 128)
+        self.fc2 = nn.Linear(128, 128)
+        self.fc3 = nn.Linear(128, 1)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = torch.relu(self.fc2(x))
+        x = self.fc3(x)
+        return x
+
+# Initialize the LLM agent and the optimizer
+agent = LLM.Agent()
+optimizer = optim.Adam(agent.parameters(), lr=0.001)
+
+# Train the LLM agent
+for epoch in range(100):
+    # Generate a random dataset
+    dataset = np.random.normal(0, 1, 100)
+
+    # Convert the dataset to a PyTorch tensor
+    tensor = torch.tensor(dataset, dtype=torch.float32)
+
+    # Forward pass
+    output = agent(tensor)
+
+    # Calculate the loss
+    loss = torch.mean((output - tensor) ** 2)
+
+    # Backward pass
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+
+    # Print the loss
+    print(f"Epoch {epoch+1}, Loss: {loss.item()}")
+```
+
+## Conclusion
+In this tutorial, we've explored the concept of distribution-aware algorithm design using LLM agents. We've seen how LLM agents can be used to learn the patterns and relationships in the input data, and how this can be used to design algorithms that adapt to the specific characteristics of the input data.
+
+By using LLM agents, we can design algorithms that are more efficient and effective, leading to significant improvements in runtime and efficiency. Whether you're working on a simple sorting algorithm or a complex decision-making task, LLM agents can help you design algorithms that are tailored to the specific needs of your application.
+
+![black and silver laptop computer on brown wooden table](https://images.unsplash.com/photo-1581094289810-adf5d25690e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxEaXN0cmlidXRpb24lMjBBd2FyZSUyMEFsZ29yaXRobSUyMERlc2lnbiUyMExMTSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3ODkzOTUxNHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+As you continue to work with LLM agents, you'll discover the many benefits they can bring to your algorithm design workflow. With their ability to learn and adapt to new data, LLM agents are an invaluable tool for any developer looking to create more efficient and effective algorithms.
+
+For more information on LLM agents and distribution-aware algorithm design, be sure to check out the [original paper](https://arxiv.org/abs/2605.14141) on the topic. With its in-depth analysis and examples, you'll be well on your way to creating your own distribution-aware algorithms using LLM agents.
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
