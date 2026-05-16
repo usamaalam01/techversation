@@ -1,0 +1,140 @@
+---
+title: "Model-Adaptive Tool Necessity"
+description: "Large language models and tool necessity in autonomous agents."
+date: "2026-05-16"
+author: "Usama"
+tags: ["llm", "ai", "tool-use"]
+aiSummary: "Large language models act as autonomous agents that must decide when to answer directly or invoke external tools. The model-adaptive tool necessity reveals the knowing-doing gap in LLM tool use. This tutorial provides a step-by-step guide on working with model-adaptive tool necessity."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxNb2RlbCUyMEFkYXB0aXZlJTIwVG9vbCUyME5lY2Vzc2l0eSUyMFJldmVhbHMlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzg5MTkzOTZ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Large language models (LLMs) are increasingly being used as autonomous agents that must decide when to answer directly versus when to invoke external tools. Prior work has largely treated tool necessity as a model-agnostic property, annotated by human or LLM judge. However, this approach has limitations, as it mostly covers cases where the answer is obvious. In this tutorial, we will explore the concept of model-adaptive tool necessity and provide a step-by-step guide on working with it.
+
+## Understanding Model-Adaptive Tool Necessity
+
+Model-adaptive tool necessity refers to the ability of an LLM to determine when it needs to invoke an external tool to provide an accurate response. This is in contrast to model-agnostic tool necessity, which relies on human or LLM judges to determine tool necessity. Model-adaptive tool necessity is a more flexible and scalable approach, as it allows the LLM to adapt to different contexts and tasks.
+
+To illustrate this concept, consider a scenario where an LLM is asked to provide information on the current weather. In a model-agnostic approach, the LLM would rely on pre-defined rules or human judges to determine whether to invoke a weather API or provide a direct response. In contrast, a model-adaptive approach would allow the LLM to determine the necessity of invoking the weather API based on the context of the question.
+
+![a close up of a piece of luggage with text on it](https://images.unsplash.com/photo-1692607431225-5f4564c8f132?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxNb2RlbCUyMEFkYXB0aXZlJTIwVG9vbCUyME5lY2Vzc2l0eSUyMFJldmVhbHMlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzg5MTkzOTZ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Implementing Model-Adaptive Tool Necessity
+
+To implement model-adaptive tool necessity, we can use a combination of natural language processing (NLP) and machine learning techniques. The basic idea is to train an LLM to predict the necessity of invoking an external tool based on the input query.
+
+Here is an example code snippet in Python that demonstrates how to implement model-adaptive tool necessity:
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+# Define the LLM model and tokenizer
+model_name = "bert-base-uncased"
+model = AutoModelForSequenceClassification.from_pretrained(model_name)
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+# Define the dataset and data loader
+class ToolNecessityDataset(torch.utils.data.Dataset):
+    def __init__(self, queries, labels):
+        self.queries = queries
+        self.labels = labels
+
+    def __getitem__(self, idx):
+        query = self.queries[idx]
+        label = self.labels[idx]
+
+        encoding = tokenizer.encode_plus(
+            query,
+            add_special_tokens=True,
+            max_length=512,
+            return_attention_mask=True,
+            return_tensors='pt'
+        )
+
+        return {
+            'input_ids': encoding['input_ids'].flatten(),
+            'attention_mask': encoding['attention_mask'].flatten(),
+            'label': torch.tensor(label, dtype=torch.long)
+        }
+
+    def __len__(self):
+        return len(self.queries)
+
+# Train the LLM model
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+model.to(device)
+
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=1e-5)
+
+for epoch in range(5):
+    model.train()
+    total_loss = 0
+    for batch in train_dataloader:
+        input_ids = batch['input_ids'].to(device)
+        attention_mask = batch['attention_mask'].to(device)
+        labels = batch['label'].to(device)
+
+        optimizer.zero_grad()
+
+        outputs = model(input_ids, attention_mask=attention_mask, labels=labels)
+        loss = criterion(outputs, labels)
+
+        loss.backward()
+        optimizer.step()
+
+        total_loss += loss.item()
+
+    print(f'Epoch {epoch+1}, Loss: {total_loss / len(train_dataloader)}')
+```
+This code snippet demonstrates how to train an LLM model to predict the necessity of invoking an external tool based on the input query. The model is trained on a dataset of queries and labels, where the labels indicate whether the query requires an external tool or not.
+
+## Evaluating Model-Adaptive Tool Necessity
+
+To evaluate the performance of the model-adaptive tool necessity approach, we can use metrics such as accuracy, precision, and recall. These metrics can help us understand how well the LLM model is able to predict the necessity of invoking an external tool.
+
+Here is an example code snippet in Python that demonstrates how to evaluate the performance of the model-adaptive tool necessity approach:
+```python
+from sklearn.metrics import accuracy_score, precision_score, recall_score
+
+# Evaluate the model on the test dataset
+model.eval()
+test_pred = []
+with torch.no_grad():
+    for batch in test_dataloader:
+        input_ids = batch['input_ids'].to(device)
+        attention_mask = batch['attention_mask'].to(device)
+
+        outputs = model(input_ids, attention_mask=attention_mask)
+        logits = outputs.logits
+        pred = torch.argmax(logits, dim=1)
+
+        test_pred.extend(pred.cpu().numpy())
+
+test_labels = [batch['label'] for batch in test_dataloader]
+test_labels = torch.tensor(test_labels).numpy()
+
+accuracy = accuracy_score(test_labels, test_pred)
+precision = precision_score(test_labels, test_pred)
+recall = recall_score(test_labels, test_pred)
+
+print(f'Accuracy: {accuracy:.4f}, Precision: {precision:.4f}, Recall: {recall:.4f}')
+```
+This code snippet demonstrates how to evaluate the performance of the model-adaptive tool necessity approach using metrics such as accuracy, precision, and recall.
+
+## Conclusion
+
+In this tutorial, we explored the concept of model-adaptive tool necessity and provided a step-by-step guide on working with it. We demonstrated how to implement model-adaptive tool necessity using a combination of NLP and machine learning techniques, and how to evaluate the performance of the approach using metrics such as accuracy, precision, and recall.
+
+Model-adaptive tool necessity has the potential to improve the performance of LLMs in a wide range of applications, from question answering to text generation. By allowing the LLM to adapt to different contexts and tasks, model-adaptive tool necessity can help to bridge the knowing-doing gap in LLM tool use.
+
+![an abstract image of a network of dots](https://images.unsplash.com/photo-1678845536613-5cf0ec5245cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxNb2RlbCUyMEFkYXB0aXZlJTIwVG9vbCUyME5lY2Vzc2l0eSUyMFJldmVhbHMlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzg5MTkzOTZ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+We hope that this tutorial has provided a useful introduction to model-adaptive tool necessity and its applications in LLMs. We encourage readers to explore this topic further and to consider how model-adaptive tool necessity can be used to improve the performance of LLMs in their own applications.
+
+*Photo by [Sharad Bhat](https://unsplash.com/@sharadmbhat?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/black-flat-screen-computer-monitor-Q_Swg0rZouw?utm_source=techversation&utm_medium=referral)*
