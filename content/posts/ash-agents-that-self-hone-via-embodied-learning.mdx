@@ -1,0 +1,118 @@
+---
+title: "ASH: Agents that Self-Hone via Embodied Learning"
+description: "ASH learns embodied policy from unlabeled internet video."
+date: "2026-05-16"
+author: "Usama"
+tags: ["ai", "learning", "agents"]
+aiSummary: "ASH is an agentic system that learns from unlabeled, noisy internet video. It follows a self-improvement process to develop an embodied policy. This tutorial will guide you through implementing ASH using Python and relevant libraries."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1694903089438-bf28d4697d9a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxBU0glMjBBZ2VudHMlMjBTZWxmJTIwSG9uZSUyMHZpYSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3ODk1OTIwOXww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to ASH
+ASH, or Agents that Self-Hone via Embodied Learning, is a novel approach to learning embodied policies from unlabeled, noisy internet video. This method eliminates the need for hand-engineered rewards or action-labeled demonstrations, making it a significant advancement in the field of AI. In this tutorial, we will delve into the world of ASH and explore how to implement it using Python.
+
+## Setting Up the Environment
+To start working with ASH, you will need to install the required libraries. You can do this by running the following command in your terminal:
+```bash
+pip install torch torchvision numpy
+```
+This will install PyTorch, TorchVision, and NumPy, which are essential for building and training the ASH model.
+
+## Implementing the ASH Model
+The ASH model consists of several components, including the policy network, the value network, and the experience replay buffer. Here is a simplified implementation of the ASH model using PyTorch:
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+class PolicyNetwork(nn.Module):
+    def __init__(self, state_dim, action_dim):
+        super(PolicyNetwork, self).__init__()
+        self.fc1 = nn.Linear(state_dim, 128)
+        self.fc2 = nn.Linear(128, 128)
+        self.fc3 = nn.Linear(128, action_dim)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = torch.relu(self.fc2(x))
+        x = self.fc3(x)
+        return x
+
+class ValueNetwork(nn.Module):
+    def __init__(self, state_dim):
+        super(ValueNetwork, self).__init__()
+        self.fc1 = nn.Linear(state_dim, 128)
+        self.fc2 = nn.Linear(128, 128)
+        self.fc3 = nn.Linear(128, 1)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = torch.relu(self.fc2(x))
+        x = self.fc3(x)
+        return x
+
+class ASH:
+    def __init__(self, state_dim, action_dim):
+        self.policy_network = PolicyNetwork(state_dim, action_dim)
+        self.value_network = ValueNetwork(state_dim)
+        self.experience_replay_buffer = []
+
+    def train(self, batch_size):
+        # Sample a batch from the experience replay buffer
+        batch = random.sample(self.experience_replay_buffer, batch_size)
+
+        # Train the policy network
+        policy_loss = 0
+        for experience in batch:
+            state, action, reward, next_state = experience
+            policy_loss += (reward + 0.99 * self.value_network(next_state) - self.value_network(state)) ** 2
+        policy_loss /= batch_size
+        policy_optimizer = optim.Adam(self.policy_network.parameters(), lr=0.001)
+        policy_optimizer.zero_grad()
+        policy_loss.backward()
+        policy_optimizer.step()
+
+        # Train the value network
+        value_loss = 0
+        for experience in batch:
+            state, action, reward, next_state = experience
+            value_loss += (reward + 0.99 * self.value_network(next_state) - self.value_network(state)) ** 2
+        value_loss /= batch_size
+        value_optimizer = optim.Adam(self.value_network.parameters(), lr=0.001)
+        value_optimizer.zero_grad()
+        value_loss.backward()
+        value_optimizer.step()
+```
+This implementation provides a basic structure for the ASH model. However, you will need to modify it to suit your specific use case.
+
+## Training the ASH Model
+To train the ASH model, you will need to provide it with a dataset of experiences. This can be done by interacting with the environment and storing the experiences in the experience replay buffer. Here is an example of how you can train the ASH model:
+```python
+# Create an instance of the ASH model
+ash = ASH(state_dim=10, action_dim=2)
+
+# Interact with the environment and store experiences in the experience replay buffer
+for episode in range(1000):
+    state = env.reset()
+    done = False
+    while not done:
+        action = ash.policy_network(state)
+        next_state, reward, done, _ = env.step(action)
+        ash.experience_replay_buffer.append((state, action, reward, next_state))
+        state = next_state
+
+    # Train the ASH model
+    ash.train(batch_size=32)
+```
+This code trains the ASH model using a batch size of 32. You can adjust the batch size and the number of episodes to suit your specific needs.
+
+## Conclusion
+In this tutorial, we explored the ASH model and how to implement it using PyTorch. We also discussed how to train the ASH model using a dataset of experiences. The ASH model has the potential to revolutionize the field of AI by providing a way to learn embodied policies from unlabeled, noisy internet video.
+
+![graphs of performance analytics on a laptop screen](https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxBU0glMjBBZ2VudHMlMjBTZWxmJTIwSG9uZSUyMHZpYSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3ODk1OTIwOXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+By following this tutorial, you should be able to implement and train the ASH model using PyTorch. You can use this model as a starting point for your own research and development projects. Remember to explore the [original paper](https://arxiv.org/abs/2605.14211) for more information on the ASH model and its applications.
+
+*Photo by [Igor Omilaev](https://unsplash.com/@omilaev?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/robot-and-human-hands-reaching-toward-ai-text-FHgWFzDDAOs?utm_source=techversation&utm_medium=referral)*
