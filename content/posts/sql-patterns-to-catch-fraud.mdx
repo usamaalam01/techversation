@@ -1,0 +1,49 @@
+---
+title: "SQL Patterns to Catch Fraud"
+description: "SQL patterns help detect transaction fraud in real-time."
+date: "2026-05-17"
+author: "Usama"
+tags: ["sql", "fraud-detection", "transaction-security"]
+aiSummary: "A recent post on Hacker News shares SQL patterns to catch transaction fraud. These patterns help developers detect and prevent fraudulent activities in real-time. The post highlights the importance of using data analysis to identify suspicious transactions."
+category: "trending"
+coverImage: "https://images.unsplash.com/photo-1618044619888-009e412ff12a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxTUUwlMjBwYXR0ZXJucyUyMHVzZSUyMGNhdGNoJTIwdHJhbnNhY3Rpb24lMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc3OTAwNjc0OHww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Transaction Fraud Detection
+
+The recent post on Hacker News, [SQL patterns I use to catch transaction fraud](https://analytics.fixelsmith.com/posts/sql-fraud-patterns/), has sparked a lot of interest in the developer community. The post shares SQL patterns that can be used to detect and prevent transaction fraud in real-time. As a developer, it's essential to understand the importance of transaction security and how these patterns can help prevent fraudulent activities.
+
+## Why Transaction Fraud Detection Matters
+
+Transaction fraud can have severe consequences for businesses and individuals. It can lead to financial losses, damage to reputation, and legal issues. According to a recent study, transaction fraud costs businesses billions of dollars every year. Therefore, it's crucial to have a robust system in place to detect and prevent fraudulent transactions. The SQL patterns shared in the post provide a valuable resource for developers to improve transaction security.
+
+### SQL Patterns for Fraud Detection
+
+The post shares several SQL patterns that can be used to detect suspicious transactions. These patterns include:
+```sql
+-- Pattern 1: Detecting transactions with high amounts
+SELECT * FROM transactions
+WHERE amount > 1000
+AND timestamp > NOW() - INTERVAL 1 DAY;
+
+-- Pattern 2: Detecting transactions with multiple attempts
+SELECT * FROM transactions
+WHERE attempt_count > 3
+AND timestamp > NOW() - INTERVAL 1 DAY;
+```
+These patterns can be used to identify transactions that are likely to be fraudulent. For example, transactions with high amounts or multiple attempts in a short period can be flagged for review.
+
+## Broader Implications of Transaction Fraud Detection
+
+The post highlights the importance of using data analysis to detect and prevent transaction fraud. By using SQL patterns and machine learning algorithms, developers can build robust systems to identify suspicious transactions. This approach can help prevent financial losses and protect businesses from reputational damage.
+
+![Colorful code scrolls across a dark background.](https://images.unsplash.com/photo-1742072593996-ebdc5d605a54?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxTUUwlMjBwYXR0ZXJucyUyMHN1Y2ggb2YlMjB0cmFuc2FjdGlvbiUyMGZyYXVkJTIwc29mdHdhcmUlMjBzdW1tYXJ5fGVufDB8fHx8MTc3OTAwNjc0OHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+The community sentiment around this topic is one of concern and interest. Many developers are looking for ways to improve transaction security and prevent fraudulent activities. The post provides a valuable resource for developers to learn about SQL patterns and machine learning algorithms that can be used to detect and prevent transaction fraud.
+
+## Conclusion
+
+In conclusion, the post on Hacker News shares valuable SQL patterns that can be used to detect and prevent transaction fraud. These patterns provide a useful resource for developers to improve transaction security and prevent financial losses. The broader implications of this topic highlight the importance of using data analysis and machine learning algorithms to detect and prevent fraudulent activities. As the developer community continues to discuss and share knowledge on this topic, we can expect to see more robust systems being built to protect businesses and individuals from transaction fraud.
+
+*Photo by [Markus Spiske](https://unsplash.com/@markusspiske?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/text-6pflEeSzGUo?utm_source=techversation&utm_medium=referral)*
