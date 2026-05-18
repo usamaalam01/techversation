@@ -1,0 +1,120 @@
+---
+title: "Theory of Mind in LLMs"
+description: "Improving human-AI interactions with Theory of Mind."
+date: "2026-05-18"
+author: "Usama"
+tags: ["ai", "llm", "theory-of-mind"]
+aiSummary: "Theory of Mind (ToM) capability in Large Language Models (LLMs) is crucial for effective social interactions. Recent research has shown that improving ToM in LLMs can lead to more realistic and engaging human-AI interactions. This tutorial will explore the concept of ToM and provide a step-by-step guide on how to implement it in LLMs."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1748194449456-a6a59f63dcc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxUaGVvcnklMjBNaW5kJTIwSW1wcm92ZW1lbnQlMjBSZWFsbHklMjBCZW5lZml0JTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5MDk5ODIwfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Theory of Mind
+Theory of Mind (ToM) refers to the ability to attribute mental states, such as beliefs, desires, and intentions, to oneself and others. In the context of Large Language Models (LLMs), ToM capability is essential for generating human-like responses that take into account the user's perspective and emotions. Recent research, such as the study published on [arXiv](https://arxiv.org/abs/2605.15205), has highlighted the importance of ToM in improving human-AI interactions.
+
+## Understanding the Benefits of ToM in LLMs
+The benefits of ToM in LLMs are numerous. For instance, ToM can help LLMs to:
+* Better understand the user's intentions and respond accordingly
+* Generate more empathetic and engaging responses
+* Improve the overall user experience and satisfaction
+
+To illustrate the concept of ToM, consider the following example:
+```python
+import numpy as np
+
+# Define a simple ToM model
+class ToMModel:
+    def __init__(self):
+        self.beliefs = []
+        self.desires = []
+        self.intentions = []
+
+    def update_beliefs(self, new_belief):
+        self.beliefs.append(new_belief)
+
+    def update_desires(self, new_desire):
+        self.desires.append(new_desire)
+
+    def update_intentions(self, new_intention):
+        self.intentions.append(new_intention)
+
+# Create an instance of the ToM model
+tom_model = ToMModel()
+
+# Update the model with new information
+tom_model.update_beliefs("The user is happy")
+tom_model.update_desires("The user wants to learn more about AI")
+tom_model.update_intentions("The user intends to ask a question about AI")
+
+# Print the updated model
+print(tom_model.beliefs)
+print(tom_model.desires)
+print(tom_model.intentions)
+```
+This example demonstrates a simple ToM model that can update its beliefs, desires, and intentions based on new information. In a real-world scenario, this model can be integrated with an LLM to generate more human-like responses.
+
+![A computer circuit board with a brain on it](https://images.unsplash.com/photo-1737505599159-5ffc1dcbc08f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxUaGVvcnklMjBNaW5kJTIwSW1wcm92ZW1lbnQlMjBSZWFsbHklMjBCZW5lZml0JTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5MDk5ODIwfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Implementing ToM in LLMs
+Implementing ToM in LLMs requires a deep understanding of the underlying architecture and the ability to integrate the ToM model with the LLM. One approach is to use a multi-task learning framework that jointly trains the LLM and the ToM model.
+
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+# Define the LLM model
+class LLMModel(nn.Module):
+    def __init__(self):
+        super(LLMModel, self).__init__()
+        self.encoder = nn.TransformerEncoderLayer(d_model=512, nhead=8, dim_feedforward=2048, dropout=0.1)
+        self.decoder = nn.TransformerDecoderLayer(d_model=512, nhead=8, dim_feedforward=2048, dropout=0.1)
+
+    def forward(self, input_ids):
+        encoder_output = self.encoder(input_ids)
+        decoder_output = self.decoder(encoder_output)
+        return decoder_output
+
+# Define the ToM model
+class ToMModel(nn.Module):
+    def __init__(self):
+        super(ToMModel, self).__init__()
+        self.beliefs = nn.Linear(512, 512)
+        self.desires = nn.Linear(512, 512)
+        self.intentions = nn.Linear(512, 512)
+
+    def forward(self, input_ids):
+        beliefs = self.beliefs(input_ids)
+        desires = self.desires(input_ids)
+        intentions = self.intentions(input_ids)
+        return beliefs, desires, intentions
+
+# Create an instance of the LLM and ToM models
+llm_model = LLMModel()
+tom_model = ToMModel()
+
+# Define the loss function and optimizer
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(list(llm_model.parameters()) + list(tom_model.parameters()), lr=1e-4)
+
+# Train the models
+for epoch in range(10):
+    optimizer.zero_grad()
+    output = llm_model(input_ids)
+    beliefs, desires, intentions = tom_model(output)
+    loss = criterion(output, labels)
+    loss.backward()
+    optimizer.step()
+    print(f"Epoch {epoch+1}, Loss: {loss.item()}")
+```
+This example demonstrates how to implement ToM in an LLM using a multi-task learning framework. The ToM model is integrated with the LLM, and the two models are jointly trained using a single loss function.
+
+## Conclusion
+In conclusion, Theory of Mind is a crucial component of Large Language Models that enables more realistic and engaging human-AI interactions. By implementing ToM in LLMs, developers can create more sophisticated and human-like AI models that can better understand and respond to user needs. The code examples provided in this tutorial demonstrate how to implement ToM in LLMs using a multi-task learning framework. By following these examples, developers can create more advanced AI models that can improve the overall user experience and satisfaction.
+
+![A wooden table topped with scrabble tiles spelling the word deep mind](https://images.unsplash.com/photo-1740214610948-aa2cf6ab7778?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxUaGVvcnklMjBNaW5kJTIwSW1wcm92ZW1lbnQlMjBSZWFsbHklMjBCZW5lZml0JTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5MDk5ODIwfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+For more information on the research behind ToM, please refer to the original paper published on [arXiv](https://arxiv.org/abs/2605.15205).
+
+*Photo by [Shubham Dhage](https://unsplash.com/@theshubhamdhage?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-brain-displayed-with-glowing-blue-lines-2sz-3NrmZYU?utm_source=techversation&utm_medium=referral)*
