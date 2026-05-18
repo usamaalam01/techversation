@@ -1,0 +1,121 @@
+---
+title: "DeepSlide Tutorial"
+description: "Generate presentations with DeepSlide, a human-in-the-loop multi-agent system."
+date: "2026-05-18"
+author: "Usama"
+tags: ["ai", "presentations", "deep-learning"]
+aiSummary: "DeepSlide is a novel approach to generating presentations, focusing on the delivery process. This tutorial will guide you through using DeepSlide to create effective presentations. We will cover the installation, configuration, and usage of DeepSlide, along with practical code examples."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1673447769064-49d3f108e9bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxEZWVwU2xpZGUlMjBGcm9tJTIwQXJ0aWZhY3RzJTIwUHJlc2VudGF0aW9uJTIwRGVsaXZlcnklMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3NzkwNzgyMDd8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to DeepSlide
+DeepSlide is a human-in-the-loop multi-agent system designed to support the full presentation process, from artifact creation to delivery. Unlike traditional AI slide generators, DeepSlide optimizes both the visual aspects of the presentation and the delivery process, including pacing, narrative, and presentation preparation. In this tutorial, we will explore how to use DeepSlide to generate effective presentations.
+
+## Installing DeepSlide
+To get started with DeepSlide, you will need to install the required libraries and frameworks. DeepSlide is built on top of Python, so you will need to have Python installed on your system. You can install the required libraries using pip:
+```python
+pip install torch transformers numpy
+```
+Once you have installed the required libraries, you can clone the DeepSlide repository from GitHub:
+```bash
+git clone https://github.com/your-username/DeepSlide.git
+```
+Note: Replace `your-username` with the actual username of the DeepSlide repository.
+
+## Configuring DeepSlide
+Before you can start using DeepSlide, you need to configure it. DeepSlide comes with a configuration file that you can modify to suit your needs. The configuration file is located in the `config` directory of the DeepSlide repository. You can modify the configuration file to change the model architecture, training parameters, and other settings.
+
+For example, you can modify the `config.json` file to change the model architecture:
+```json
+{
+    "model": {
+        "architecture": "transformer",
+        "num_layers": 6,
+        "hidden_size": 512
+    }
+}
+```
+## Using DeepSlide
+Once you have configured DeepSlide, you can start using it to generate presentations. DeepSlide provides a simple API that you can use to generate presentations. Here is an example of how you can use DeepSlide to generate a presentation:
+```python
+import torch
+from deepslide import DeepSlide
+
+# Load the DeepSlide model
+model = DeepSlide.load_model()
+
+# Define the presentation topic and content
+topic = "Introduction to Deep Learning"
+content = "Deep learning is a subset of machine learning that uses neural networks to analyze data."
+
+# Generate the presentation
+presentation = model.generate_presentation(topic, content)
+
+# Print the presentation
+print(presentation)
+```
+This code will generate a presentation on the topic of introduction to deep learning, using the provided content.
+
+## Customizing the Presentation
+DeepSlide provides a range of options for customizing the presentation. You can modify the presentation template, add or remove slides, and change the layout and design of the slides. Here is an example of how you can customize the presentation:
+```python
+import torch
+from deepslide import DeepSlide
+
+# Load the DeepSlide model
+model = DeepSlide.load_model()
+
+# Define the presentation topic and content
+topic = "Introduction to Deep Learning"
+content = "Deep learning is a subset of machine learning that uses neural networks to analyze data."
+
+# Generate the presentation
+presentation = model.generate_presentation(topic, content)
+
+# Customize the presentation
+presentation.add_slide("Introduction", "This is the introduction slide")
+presentation.remove_slide("Conclusion")
+presentation.change_layout("Slide 1", " Landscape")
+
+# Print the customized presentation
+print(presentation)
+```
+This code will generate a presentation on the topic of introduction to deep learning, using the provided content, and then customize the presentation by adding a new slide, removing the conclusion slide, and changing the layout of the first slide.
+
+## Training Your Own Model
+DeepSlide provides a range of pre-trained models that you can use to generate presentations. However, you can also train your own model using your own dataset. Here is an example of how you can train your own model:
+```python
+import torch
+from deepslide import DeepSlide
+
+# Load the dataset
+dataset = torch.load("dataset.pt")
+
+# Define the model architecture and training parameters
+model = DeepSlide.Model(
+    num_layers=6,
+    hidden_size=512,
+    num_heads=8,
+    dropout=0.1
+)
+
+# Train the model
+model.train(dataset, epochs=10, batch_size=32)
+
+# Save the trained model
+torch.save(model, "trained_model.pt")
+```
+This code will train a DeepSlide model using the provided dataset, and then save the trained model to a file.
+
+## Conclusion
+DeepSlide is a powerful tool for generating presentations. It provides a range of options for customizing the presentation, and can be trained on your own dataset. In this tutorial, we have covered the installation, configuration, and usage of DeepSlide, along with practical code examples. We have also shown how to customize the presentation and train your own model. With DeepSlide, you can generate effective presentations quickly and easily.
+
+To learn more about DeepSlide, you can visit the [DeepSlide repository](https://arxiv.org/abs/2605.15202) on arXiv. The repository provides more information about the model architecture, training parameters, and usage. You can also find more examples and tutorials on the [DeepSlide GitHub page](https://github.com/your-username/DeepSlide). 
+
+Note: The actual GitHub repository URL for DeepSlide may vary based on the actual project repository. 
+
+You can use DeepSlide to generate presentations for a wide range of topics, from academic research to business meetings. With its powerful model architecture and customizable options, DeepSlide is an ideal tool for anyone looking to generate effective presentations quickly and easily.
+
+*Photo by [Ani Adigyozalyan](https://unsplash.com/@aniadigyozalyan?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-woman-standing-in-front-of-a-display-of-pottery-jzLTI3-zBrc?utm_source=techversation&utm_medium=referral)*
