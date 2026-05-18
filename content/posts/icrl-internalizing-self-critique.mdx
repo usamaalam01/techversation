@@ -1,0 +1,118 @@
+---
+title: "ICRL: Internalizing Self-Critique"
+description: "Large language models learn from self-critique with reinforcement learning."
+date: "2026-05-18"
+author: "Usama"
+tags: ["icrl", "reinforcement-learning", "ai"]
+aiSummary: "ICRL is a novel approach that enables large language models to internalize self-critique through reinforcement learning. This method improves the model's underlying capability by guiding it toward correct behavior. The ICRL framework consists of a frozen critic and a learnable actor, which work together to optimize the model's performance."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxJQ1JMJTIwTGVhcm5pbmclMjBJbnRlcm5hbGl6ZSUyMFNlbGYlMjBDcml0aXF1ZSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3OTEzNDUxM3ww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Large language models have achieved remarkable success in various natural language processing tasks. However, they often make mistakes, and critique can guide them toward correct behavior. The ICRL (Internalizing Critique with Reinforcement Learning) framework is a novel approach that enables large language models to internalize self-critique through reinforcement learning. In this tutorial, we will explore the ICRL framework and provide a step-by-step guide on how to implement it using Python.
+
+## Background
+
+The ICRL framework consists of a frozen critic and a learnable actor. The frozen critic provides feedback to the actor, which uses this feedback to optimize its performance. The actor learns to internalize the critique by updating its parameters based on the feedback received from the critic. This process is repeated until the actor converges to an optimal policy.
+
+## Implementing ICRL
+
+To implement ICRL, we need to define the actor and critic models. The actor model is a large language model that generates text based on a given input. The critic model is a smaller language model that provides feedback to the actor.
+
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+# Define the actor model
+class Actor(nn.Module):
+    def __init__(self, input_dim, hidden_dim, output_dim):
+        super(Actor, self).__init__()
+        self.fc1 = nn.Linear(input_dim, hidden_dim)
+        self.fc2 = nn.Linear(hidden_dim, output_dim)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = self.fc2(x)
+        return x
+
+# Define the critic model
+class Critic(nn.Module):
+    def __init__(self, input_dim, hidden_dim, output_dim):
+        super(Critic, self).__init__()
+        self.fc1 = nn.Linear(input_dim, hidden_dim)
+        self.fc2 = nn.Linear(hidden_dim, output_dim)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = self.fc2(x)
+        return x
+```
+
+## Training the ICRL Framework
+
+To train the ICRL framework, we need to define a reinforcement learning environment that provides rewards to the actor based on the feedback received from the critic.
+
+```python
+# Define the reinforcement learning environment
+class Environment:
+    def __init__(self, actor, critic):
+        self.actor = actor
+        self.critic = critic
+
+    def step(self, action):
+        # Get the feedback from the critic
+        feedback = self.critic(action)
+
+        # Calculate the reward
+        reward = torch.sum(feedback)
+
+        # Return the reward and the next state
+        return reward, action
+
+# Initialize the actor, critic, and environment
+actor = Actor(input_dim=128, hidden_dim=256, output_dim=128)
+critic = Critic(input_dim=128, hidden_dim=256, output_dim=128)
+env = Environment(actor, critic)
+
+# Train the ICRL framework
+for episode in range(1000):
+    # Initialize the state
+    state = torch.randn(1, 128)
+
+    # Get the action from the actor
+    action = actor(state)
+
+    # Get the reward and the next state from the environment
+    reward, next_state = env.step(action)
+
+    # Update the actor's parameters
+    actor_optimizer = optim.Adam(actor.parameters(), lr=0.001)
+    actor_optimizer.zero_grad()
+    loss = -reward
+    loss.backward()
+    actor_optimizer.step()
+```
+
+![a close up of a typewriter with a paper reading machine learning](https://images.unsplash.com/photo-1591453089816-0fbb971b454c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxJQ1JMJTIwTGVhcm5pbmclMjBJbnRlcm5hbGl6ZSUyMFNlbGYlMjBDcml0aXF1ZSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3OTEzNDUxM3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we have explored the ICRL framework and provided a step-by-step guide on how to implement it using Python. The ICRL framework is a novel approach that enables large language models to internalize self-critique through reinforcement learning. By training the ICRL framework, we can improve the model's underlying capability and guide it toward correct behavior.
+
+## Future Work
+
+There are several directions for future work, including:
+
+*   **Exploring different critic architectures**: The critic model plays a crucial role in the ICRL framework. Exploring different critic architectures, such as using a transformer-based critic, can potentially improve the performance of the ICRL framework.
+*   **Using different reinforcement learning algorithms**: The ICRL framework uses a simple reinforcement learning algorithm to update the actor's parameters. Using more advanced reinforcement learning algorithms, such as deep Q-learning or policy gradient methods, can potentially improve the performance of the ICRL framework.
+*   **Applying the ICRL framework to other tasks**: The ICRL framework can be applied to other tasks, such as image classification or game playing. Exploring the application of the ICRL framework to other tasks can potentially lead to new insights and breakthroughs.
+
+![pen on paper](https://images.unsplash.com/photo-1543286386-713bdd548da4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxJQ1JMJTIwTGVhcm5pbmclMjBJbnRlcm5hbGl6ZSUyMFNlbGYlMjBDcml0aXF1ZSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3OTEzNDUxM3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+By exploring these directions, we can further improve the ICRL framework and push the boundaries of what is possible with large language models.
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
