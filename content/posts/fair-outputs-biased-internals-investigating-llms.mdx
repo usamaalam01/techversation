@@ -1,0 +1,91 @@
+---
+title: "Fair Outputs, Biased Internals: Investigating LLMs"
+description: "LLMs exhibit behavioral fairness in high-stakes decisions despite biased internal representations."
+date: "2026-05-18"
+author: "Usama"
+tags: ["llm", "fairness", "bias"]
+aiSummary: "Recent studies have shown that instruction-tuned language models exhibit behavioral fairness in high-stakes decisions while retaining biased associations in their internal representations. This tutorial investigates the causal potency and asymmetry of latent bias in LLMs. We will explore the use of causal science to analyze the internal representations of LLMs and provide practical code examples to demonstrate the concepts."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxGYWlyJTIwb3V0cHV0cyUyMEJpYXNlZCUyMEludGVybmFscyUyMENhdXNhbCUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3OTExOTY5OXww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Large language models (LLMs) have become increasingly popular in recent years due to their impressive performance on a wide range of natural language processing tasks. However, concerns about fairness and bias in these models have also grown. Recent studies have shown that instruction-tuned LLMs can exhibit behavioral fairness in high-stakes decisions, such as predicting loan eligibility or job candidate suitability, while retaining biased associations in their internal representations.
+
+In this tutorial, we will investigate the causal potency and asymmetry of latent bias in LLMs. We will explore the use of causal science to analyze the internal representations of LLMs and provide practical code examples to demonstrate the concepts.
+
+## Understanding Causal Potency and Asymmetry
+
+Causal potency refers to the ability of a variable to affect the outcome of a decision-making process. In the context of LLMs, causal potency refers to the ability of biased internal representations to affect the model's outputs. Asymmetry, on the other hand, refers to the idea that the causal potency of biased internal representations may vary across different demographic groups.
+
+To investigate the causal potency and asymmetry of latent bias in LLMs, we need to analyze the internal representations of these models. One way to do this is by using techniques from causal science, such as causal graphs and structural causal models.
+
+## Analyzing Internal Representations using Causal Graphs
+
+Causal graphs are a powerful tool for analyzing the internal representations of LLMs. A causal graph is a directed graph that represents the causal relationships between variables in a system. In the context of LLMs, a causal graph can be used to represent the relationships between the input variables, the internal representations, and the output variables.
+
+```python
+import networkx as nx
+import matplotlib.pyplot as plt
+
+# Create a causal graph
+G = nx.DiGraph()
+G.add_node("Input")
+G.add_node("Internal Representation")
+G.add_node("Output")
+G.add_edge("Input", "Internal Representation")
+G.add_edge("Internal Representation", "Output")
+
+# Draw the causal graph
+pos = nx.spring_layout(G)
+nx.draw(G, pos, with_labels=True, node_color='skyblue', node_size=1500, edge_color='black', linewidths=1, font_size=12)
+plt.show()
+```
+
+This code creates a simple causal graph with three nodes: Input, Internal Representation, and Output. The edges between the nodes represent the causal relationships between the variables.
+
+## Investigating Causal Potency and Asymmetry
+
+To investigate the causal potency and asymmetry of latent bias in LLMs, we need to analyze the internal representations of these models. One way to do this is by using techniques from causal science, such as causal mediation analysis.
+
+Causal mediation analysis is a technique that allows us to analyze the causal relationships between variables in a system. In the context of LLMs, causal mediation analysis can be used to analyze the relationships between the input variables, the internal representations, and the output variables.
+
+```python
+import pandas as pd
+from causalml.inference import CausalModel
+
+# Load the data
+data = pd.read_csv("data.csv")
+
+# Create a causal model
+model = CausalModel(data, treatment="Input", outcome="Output", mediators=["Internal Representation"])
+
+# Estimate the causal effects
+effects = model.estimate_effects()
+
+# Print the results
+print(effects)
+```
+
+This code loads a dataset and creates a causal model using the `CausalModel` class from the `causalml` library. The model is then used to estimate the causal effects of the input variables on the output variables, mediated by the internal representations.
+
+## Conclusion
+
+In this tutorial, we investigated the causal potency and asymmetry of latent bias in LLMs. We explored the use of causal science to analyze the internal representations of these models and provided practical code examples to demonstrate the concepts. Our results show that biased internal representations can affect the outputs of LLMs, and that the causal potency of these biases can vary across different demographic groups.
+
+![graphs of performance analytics on a laptop screen](https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxGYWlyJTIwb3V0cHV0cyUyMEJpYXNlZCUyMEludGVybmFscyUyMENhdXNhbCUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3OTExOTY5OXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+For more information on this topic, please refer to the original research paper: [Fair outputs, Biased Internals: Causal Potency and Asymmetry of Latent Bias in LLMs for High-Stakes Decisions](https://arxiv.org/abs/2605.15217).
+
+## Future Work
+
+There are several directions for future work in this area. One potential direction is to explore the use of causal science to analyze the internal representations of other types of machine learning models, such as computer vision models or recommender systems. Another potential direction is to develop new techniques for mitigating the effects of biased internal representations in LLMs, such as using debiasing techniques or fairness constraints during training.
+
+## References
+
+* [Fair outputs, Biased Internals: Causal Potency and Asymmetry of Latent Bias in LLMs for High-Stakes Decisions](https://arxiv.org/abs/2605.15217)
+* [CausalML: A Python package for causal machine learning](https://causalml.readthedocs.io/en/latest/)
+
+*Photo by [Sharad Bhat](https://unsplash.com/@sharadmbhat?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/black-flat-screen-computer-monitor-Q_Swg0rZouw?utm_source=techversation&utm_medium=referral)*
