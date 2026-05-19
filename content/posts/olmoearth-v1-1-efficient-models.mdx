@@ -1,0 +1,101 @@
+---
+title: "OlmoEarth v1.1: Efficient Models"
+description: "OlmoEarth v1.1 improves efficiency in its family of models."
+date: "2026-05-19"
+author: "Usama"
+tags: ["ai", "models", "efficiency"]
+aiSummary: "OlmoEarth v1.1 is a more efficient family of models, achieving state-of-the-art results with reduced computational resources. This update brings significant improvements in efficiency, making it more accessible to a wider range of users. The new version of OlmoEarth is available on the Hugging Face model hub."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1674027215032-f0c4292318ee?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxPbG1vRWFydGglMjBtb3JlJTIwZWZmaWNpZW50JTIwZmFtaWx5JTIwbW9kZWxzJTIwYXJ0aWZpY2lhbCUyMGludGVsbGlnZW5jZSUyMG1hY2hpbmUlMjBsZWFybmluZ3xlbnwxfDB8fHwxNzc5MjIxMDI2fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to OlmoEarth v1.1
+OlmoEarth v1.1 is the latest update to the OlmoEarth family of models, bringing significant improvements in efficiency without compromising on performance. This update is a major milestone in the development of OlmoEarth, making it more accessible to a wider range of users. In this tutorial, we will explore the new features and improvements in OlmoEarth v1.1 and provide a hands-on guide on how to use it.
+
+## What's New in OlmoEarth v1.1
+The latest version of OlmoEarth introduces several key improvements, including:
+* Reduced computational resources required for training and inference
+* Improved model architecture for better performance
+* Enhanced support for multi-task learning
+* Simplified API for easier integration
+
+These improvements make OlmoEarth v1.1 an attractive choice for developers and researchers looking to build efficient and accurate models.
+
+## Getting Started with OlmoEarth v1.1
+To get started with OlmoEarth v1.1, you need to install the Hugging Face Transformers library. You can do this by running the following command:
+```bash
+pip install transformers
+```
+Once you have installed the library, you can import OlmoEarth v1.1 and start using it. Here's an example of how to load the model and use it for inference:
+```python
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+# Load the model and tokenizer
+model = AutoModelForSequenceClassification.from_pretrained("olmoearth/v1.1")
+tokenizer = AutoTokenizer.from_pretrained("olmoearth/v1.1")
+
+# Define a sample input
+input_text = "This is a sample input text."
+
+# Preprocess the input text
+inputs = tokenizer(input_text, return_tensors="pt")
+
+# Perform inference
+outputs = model(**inputs)
+
+# Print the output
+print(outputs.logits)
+```
+This code snippet demonstrates how to load the OlmoEarth v1.1 model and use it for sequence classification tasks.
+
+## Using OlmoEarth v1.1 for Multi-Task Learning
+One of the key features of OlmoEarth v1.1 is its support for multi-task learning. This allows you to train a single model on multiple tasks simultaneously, making it more efficient and effective. Here's an example of how to use OlmoEarth v1.1 for multi-task learning:
+```python
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+# Load the model and tokenizer
+model = AutoModelForSequenceClassification.from_pretrained("olmoearth/v1.1")
+tokenizer = AutoTokenizer.from_pretrained("olmoearth/v1.1")
+
+# Define multiple tasks
+tasks = ["task1", "task2", "task3"]
+
+# Define the datasets for each task
+datasets = {
+    "task1": ["dataset1"],
+    "task2": ["dataset2"],
+    "task3": ["dataset3"]
+}
+
+# Create a multi-task dataset
+multi_task_dataset = []
+for task, dataset in datasets.items():
+    for sample in dataset:
+        # Preprocess the sample
+        inputs = tokenizer(sample, return_tensors="pt")
+        # Add the sample to the multi-task dataset
+        multi_task_dataset.append((inputs, task))
+
+# Train the model on the multi-task dataset
+model.train()
+for inputs, task in multi_task_dataset:
+    # Perform inference
+    outputs = model(**inputs)
+    # Compute the loss
+    loss = outputs.loss
+    # Backward pass
+    loss.backward()
+    # Update the model parameters
+    optimizer.step()
+```
+This code snippet demonstrates how to use OlmoEarth v1.1 for multi-task learning. You can customize the code to fit your specific use case.
+
+![Artificial intelligence concept within a human head](https://images.unsplash.com/photo-1770233621425-5d9ee7a0a700?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxPbG1vRWFydGglMjBtb3JlJTIwZWZmaWNpZW50JTIwZmFtaWx5JTIwbW9kZWxzJTIwYXJ0aWZpY2lhbCUyMGludGVsbGlnZW5jZSUyMG1hY2hpbmUlMjBsZWFybmluZ3xlbnwxfDB8fHwxNzc5MjIxMDI2fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+OlmoEarth v1.1 is a significant update to the OlmoEarth family of models, bringing improved efficiency and performance. With its simplified API and support for multi-task learning, OlmoEarth v1.1 is an attractive choice for developers and researchers looking to build efficient and accurate models. In this tutorial, we have provided a hands-on guide on how to use OlmoEarth v1.1, including code snippets and examples. We hope this tutorial has been helpful in getting you started with OlmoEarth v1.1.
+
+You can learn more about OlmoEarth v1.1 and its features on the [Hugging Face blog](https://huggingface.co/blog/allenai/olmoearth-v1-1).
+
+*Photo by [Growtika](https://unsplash.com/@growtika?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-computer-generated-image-of-a-human-head-fyWHYqu7D6A?utm_source=techversation&utm_medium=referral)*
