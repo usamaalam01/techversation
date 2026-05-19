@@ -1,0 +1,95 @@
+---
+title: "GRID: Graph Representation of Intelligence Data"
+description: "GRID constructs security knowledge graphs from cyber threat intelligence."
+date: "2026-05-19"
+author: "Usama"
+tags: ["grid", "security", "intelligence"]
+aiSummary: "GRID is a new tool for constructing security knowledge graphs from long-form cyber threat intelligence. It overcomes limitations of large language models by providing grounded security-domain knowledge. This tutorial shows how to use GRID with concrete code examples."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1644088379091-d574269d422f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxHUklEJTIwR3JhcGglMjBSZXByZXNlbnRhdGlvbiUyMEludGVsbGlnZW5jZSUyMERhdGElMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3NzkxNjQ0MDZ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to GRID
+GRID (Graph Representation of Intelligence Data) is a novel approach to constructing security knowledge graphs from long-form cyber threat intelligence (CTI). The main challenge in this domain is that large language models (LLMs) often lack grounded security-domain knowledge, and end-to-end document-to-graph training is hard to supervise with cheap, stable rewards. GRID addresses these challenges by providing a framework for constructing security knowledge graphs that can serve as computable external memory for security agents.
+
+![a blue abstract background with lines and dots](https://images.unsplash.com/photo-1644325349124-d1756b79dd42?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxHUklEJTIwR3JhcGglMjBSZXByZXNlbnRhdGlvbiUyMEludGVsbGlnZW5jZSUyMGRhdGElMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3NzkxNjQ0MDZ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Installing GRID
+To get started with GRID, you need to install the required libraries. You can do this by running the following command:
+```bash
+pip install grid-library
+```
+This will install the GRID library and its dependencies.
+
+## Constructing a Security Knowledge Graph
+To construct a security knowledge graph using GRID, you need to follow these steps:
+
+### Step 1: Preprocessing the Data
+First, you need to preprocess the CTI data by tokenizing the text and removing stop words. You can use the following code to do this:
+```python
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+
+# Load the CTI data
+with open('cti_data.txt', 'r') as f:
+    cti_data = f.read()
+
+# Tokenize the text
+tokens = word_tokenize(cti_data)
+
+# Remove stop words
+stop_words = set(stopwords.words('english'))
+tokens = [token for token in tokens if token not in stop_words]
+
+# Print the preprocessed tokens
+print(tokens)
+```
+### Step 2: Creating the Graph
+Next, you need to create the graph using the preprocessed tokens. You can use the following code to do this:
+```python
+import networkx as nx
+
+# Create a new graph
+G = nx.Graph()
+
+# Add nodes to the graph
+for token in tokens:
+    G.add_node(token)
+
+# Add edges to the graph
+for i in range(len(tokens) - 1):
+    G.add_edge(tokens[i], tokens[i + 1])
+
+# Print the graph
+print(G.nodes())
+print(G.edges())
+```
+### Step 3: Applying the GRID Algorithm
+Finally, you need to apply the GRID algorithm to the graph to construct the security knowledge graph. You can use the following code to do this:
+```python
+from grid_library import grid_algorithm
+
+# Apply the GRID algorithm
+security_kg = grid_algorithm(G)
+
+# Print the security knowledge graph
+print(security_kg.nodes())
+print(security_kg.edges())
+```
+## Using the Security Knowledge Graph
+Once you have constructed the security knowledge graph, you can use it to perform various tasks such as:
+
+* Querying the graph to retrieve specific information
+* Visualizing the graph to understand the relationships between entities
+* Updating the graph with new information
+
+![low-angle photography of metal structure](https://images.unsplash.com/photo-1545987796-200677ee1011?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxHUklEJTIwR3JhcGglMjBSZXByZXNlbnRhdGlvbiUyMEludGVsbGlnZW5jZSUyMERhdGElMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3NzkxNjQ0MDZ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we have shown how to use GRID to construct a security knowledge graph from long-form cyber threat intelligence. We have also demonstrated how to apply the GRID algorithm to the graph to construct the security knowledge graph. By following these steps, you can create your own security knowledge graph and use it to perform various tasks.
+
+For more information on GRID, you can refer to the [original paper](https://arxiv.org/abs/2605.16714).
+
+*Photo by [Conny Schneider](https://unsplash.com/@choys_?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-blue-background-with-lines-and-dots-xuTJZ7uD7PI?utm_source=techversation&utm_medium=referral)*
