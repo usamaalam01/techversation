@@ -1,0 +1,89 @@
+---
+title: "Participatory AI Mapping"
+description: "Learn to map participatory AI initiatives with open repository and interactive atlas."
+date: "2026-05-19"
+author: "Usama"
+tags: ["ai", "participatory-ai", "mapping"]
+aiSummary: "Participatory AI approaches are becoming increasingly popular, but evidence about how participation is organized remains fragmented. This tutorial shows how to use an open repository and interactive atlas to map participatory AI initiatives. We will walk through the process of constructing and using the atlas, with concrete code examples."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1584582868986-db1781714c75?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxWb2ljZXMlMjBMb29wJTIwTWFwcGluZyUyMFBhcnRpY2lwYXRvcnklMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3NzkyMDU2NDN8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Participatory AI Mapping
+
+Participatory AI approaches are being used in various public, civic, and humanitarian settings. However, evidence about how participation is organized remains fragmented. To address this issue, researchers have constructed an open repository and interactive atlas of participatory AI initiatives. In this tutorial, we will explore how to use this atlas to map participatory AI initiatives.
+
+The atlas is built using records harmonized from various sources, including Maga~na. The goal of the atlas is to provide a comprehensive overview of participatory AI initiatives and to facilitate collaboration and knowledge sharing among researchers and practitioners.
+
+## Setting Up the Atlas
+
+To get started with the atlas, you need to have Python and the necessary libraries installed. You can install the required libraries using pip:
+```python
+pip install pandas matplotlib folium
+```
+Once you have the libraries installed, you can download the atlas data from the [arXiv repository](https://arxiv.org/abs/2605.16827). The data is available in CSV format, which can be easily imported into Python using the pandas library.
+
+## Importing the Data
+
+To import the data, you can use the following code:
+```python
+import pandas as pd
+
+# Load the data from the CSV file
+data = pd.read_csv('participatory_ai_initiatives.csv')
+
+# Print the first few rows of the data
+print(data.head())
+```
+This code loads the data from the CSV file and prints the first few rows of the data.
+
+## Mapping the Initiatives
+
+To map the initiatives, you can use the folium library. Folium is a Python library that allows you to create interactive maps. You can use the following code to create a map of the initiatives:
+```python
+import folium
+
+# Create a new map
+m = folium.Map(location=[40, -100], zoom_start=4)
+
+# Add markers for each initiative
+for index, row in data.iterrows():
+    folium.Marker([row['latitude'], row['longitude']], popup=row['name']).add_to(m)
+
+# Save the map as an HTML file
+m.save('participatory_ai_initiatives_map.html')
+```
+This code creates a new map and adds markers for each initiative. The markers are added using the latitude and longitude coordinates of each initiative. The map is then saved as an HTML file, which can be opened in a web browser to view the interactive map.
+
+![Abstract colorful digital art with gray background](https://images.unsplash.com/photo-1767482890860-dd8995914cf3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxWb2ljZXMlMjBMb29wJTIwTWFwcGluZyUyMFBhcnRpY2lwYXRvcnklMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3NzkyMDU2NDN8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Customizing the Map
+
+You can customize the map by adding additional layers or markers. For example, you can add a layer to show the locations of different types of initiatives. You can use the following code to add a layer:
+```python
+# Create a new layer
+layer = folium.FeatureGroup(name='Initiative Types')
+
+# Add markers for each initiative type
+for initiative_type in data['type'].unique():
+    initiatives = data[data['type'] == initiative_type]
+    for index, row in initiatives.iterrows():
+        folium.Marker([row['latitude'], row['longitude']], popup=row['name']).add_to(layer)
+
+# Add the layer to the map
+layer.add_to(m)
+```
+This code creates a new layer and adds markers for each initiative type. The layer is then added to the map.
+
+## Conclusion
+
+In this tutorial, we have shown how to use an open repository and interactive atlas to map participatory AI initiatives. We have walked through the process of constructing and using the atlas, with concrete code examples. The atlas provides a comprehensive overview of participatory AI initiatives and facilitates collaboration and knowledge sharing among researchers and practitioners.
+
+By following this tutorial, you can create your own interactive map of participatory AI initiatives and customize it to suit your needs. You can use the map to explore the different types of initiatives, their locations, and their characteristics. The map can be a useful tool for researchers, practitioners, and policymakers who are interested in participatory AI and its applications.
+
+![person in black shirt holding red and white plastic pack](https://images.unsplash.com/photo-1624259458752-a2c5922abea0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxWb2ljZXMlMjBMb29wJTIwTWFwcGluZyUyMFBhcnRpY2lwYXRvcnklMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3NzkyMDU2NDN8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+The atlas is a dynamic tool that will continue to evolve as new data becomes available. We encourage you to contribute to the atlas by sharing your own data and experiences with participatory AI initiatives. By working together, we can create a comprehensive and accurate map of participatory AI initiatives and promote the development of more effective and inclusive AI systems.
+
+*Photo by [Brian McGowan](https://unsplash.com/@sushioutlaw?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/white-printer-paper-on-red-and-white-floral-textile-ykiDoi46Xjc?utm_source=techversation&utm_medium=referral)*

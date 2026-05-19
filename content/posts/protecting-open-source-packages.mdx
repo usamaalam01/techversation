@@ -1,0 +1,85 @@
+---
+title: "Protecting Open Source Packages"
+description: "Hackers compromise popular open source packages in supply chain attack."
+date: "2026-05-19"
+author: "Usama"
+tags: ["security", "open-source", "supply-chain"]
+aiSummary: "Dozens of popular open source packages have been compromised in an ongoing supply chain attack. This tutorial will guide developers on how to identify and protect their projects from such attacks. We will explore the Mini Shai-Hulud campaign and provide concrete code examples to secure open source packages."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1618060932014-4deda4932554?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxIYWNrZXJzJTIwY29tcHJvbWlzZWQlMjBkb3plbnMlMjBwb3B1bGFyJTIwb3BlbiUyMHRlY2hub2xvZ3klMjBkaWdpdGFsJTIwaW5ub3ZhdGlvbnxlbnwxfDB8fHwxNzc5MjA1NDg5fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+The recent news of hackers compromising dozens of popular open source packages in an ongoing supply chain attack has sent shockwaves through the developer community. The attacks, part of a wider campaign known as Mini Shai-Hulud, have already affected several open source projects and, in turn, developers and companies that use them. In this tutorial, we will explore the Mini Shai-Hulud campaign, discuss how to identify vulnerable packages, and provide concrete code examples to secure open source packages.
+
+## Understanding the Mini Shai-Hulud Campaign
+
+The Mini Shai-Hulud campaign is a sophisticated supply chain attack that targets open source packages. The attackers compromise the packages by injecting malicious code, which is then distributed to users who install the packages. This type of attack is particularly dangerous because it can affect multiple projects and organizations that rely on the compromised packages.
+
+![silhouette photography of man](https://images.unsplash.com/photo-1569087682520-45253cc2e0ee?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxIYWNrZXJzJTIwY29tcHJvbWlzZWQlMjBkb3plbnMlMjBwb3B1bGFyJTIwb3BlbiUyMHRlY2hub2xvZ3klMjBkaWdpdGFsJTIwaW5ub3ZhdGlvbnxlbnwxfDB8fHwxNzc5MjA1NDg5fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Identifying Vulnerable Packages
+
+To protect your project from the Mini Shai-Hulud campaign, you need to identify vulnerable packages. You can use tools like `npm audit` or `pip audit` to scan your project's dependencies for known vulnerabilities. Here is an example of how to use `npm audit`:
+```bash
+npm audit
+```
+This command will scan your project's dependencies and report any known vulnerabilities.
+
+## Securing Open Source Packages
+
+To secure open source packages, you can use a combination of techniques, including:
+
+* **Dependency management**: Use tools like `npm` or `pip` to manage your project's dependencies. These tools can help you keep track of updates and vulnerabilities.
+* **Code reviews**: Regularly review the code of the packages you use to ensure they are secure and free of vulnerabilities.
+* **Testing**: Thoroughly test your project to ensure it is secure and functions as expected.
+
+Here is an example of how to use `npm` to manage dependencies:
+```javascript
+// package.json
+{
+  "name": "my-project",
+  "version": "1.0.0",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
+```
+In this example, we use `npm` to manage our project's dependencies. We specify the version of the `express` package we want to use, and `npm` will ensure that we get the correct version.
+
+## Implementing Security Measures
+
+To further protect your project, you can implement security measures such as:
+
+* **Input validation**: Validate user input to prevent attacks like SQL injection or cross-site scripting (XSS).
+* **Error handling**: Implement error handling to prevent attacks like denial-of-service (DoS) or information disclosure.
+* **Encryption**: Use encryption to protect sensitive data.
+
+Here is an example of how to implement input validation using `express`:
+```javascript
+const express = require('express');
+const app = express();
+
+app.use(express.json());
+
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    return res.status(400).send('Invalid username or password');
+  }
+  // Authenticate user
+});
+```
+In this example, we use `express` to implement input validation. We check if the `username` and `password` fields are present in the request body, and if not, we return an error response.
+
+## Conclusion
+
+The Mini Shai-Hulud campaign is a serious threat to the open source community, and it is essential to take steps to protect your project. By identifying vulnerable packages, securing open source packages, and implementing security measures, you can significantly reduce the risk of your project being compromised. Remember to stay vigilant and keep your dependencies up to date to ensure the security of your project.
+
+![a person with long hair playing a guitar](https://images.unsplash.com/photo-1664179209614-360755a8b21c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxIYWNrZXJzJTIwY29tcHJvbWlzZWQlMjBkb3plbnMlMjBwb3B1bGFyJTIwb3BlbiUyMHRlY2hub2xvZ3klMjBkaWdpdGFsJTIwaW5ub3ZhdGlvbnxlbnwxfDB8fHwxNzc5MjA1NDg5fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+For more information on the Mini Shai-Hulud campaign, you can visit the [TechCrunch](https://techcrunch.com/2026/05/19/hackers-have-compromised-dozens-of-popular-open-source-packages-in-an-ongoing-supply-chain-attack/) website.
+
+*Photo by [FlyD](https://unsplash.com/@flyd2069?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/red-and-black-love-lock-zAhAUSdRLJ8?utm_source=techversation&utm_medium=referral)*
