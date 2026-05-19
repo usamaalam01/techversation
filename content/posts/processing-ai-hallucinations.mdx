@@ -1,0 +1,99 @@
+---
+title: "Processing AI Hallucinations"
+description: "Neuroimaging study on human brain processing of AI-generated hallucinations."
+date: "2026-05-19"
+author: "Usama"
+tags: ["ai", "neuroimaging", "hallucinations"]
+aiSummary: "A recent study on arXiv explores how humans process AI-generated hallucinations using neuroimaging techniques. The study records EEG signals from 27 participants to characterize the brain's neural dynamics. This tutorial provides a step-by-step guide on how to work with the study's findings and implement a basic EEG signal processing pipeline."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1732454827988-95972d793f1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxIdW1hbnMlMjBQcm9jZXNzJTIwZ2VuZXJhdGVkJTIwSGFsbHVjaW5hdGlvbiUyMENvbnRlbnRzJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5MTg1MDY4fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Artificial intelligence (AI) has made significant progress in generating realistic content, including images, videos, and text. However, this has also raised concerns about the potential risks of AI-generated hallucinations. A recent study on arXiv, [How do Humans Process AI-generated Hallucination Contents: a Neuroimaging Study](https://arxiv.org/abs/2605.16953), aims to address this issue by exploring the underlying cognitive mechanisms of human brain processing of AI-generated hallucinations.
+
+The study uses electroencephalography (EEG) to record brain activity from 27 participants while they are presented with AI-generated hallucinations. The goal is to characterize the brain's neural dynamics and identify potential biomarkers for detecting hallucinations.
+
+## EEG Signal Processing
+
+To work with the study's findings, we need to understand the basics of EEG signal processing. EEG measures the electrical activity of the brain through electrodes placed on the scalp. The resulting signal is a time-series data that can be analyzed using various techniques.
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Sample EEG signal
+t = np.linspace(0, 1, 1000)
+signal = np.sin(2 * np.pi * 10 * t) + 0.5 * np.sin(2 * np.pi * 20 * t)
+
+# Plot the signal
+plt.plot(t, signal)
+plt.xlabel('Time (s)')
+plt.ylabel('Amplitude')
+plt.show()
+```
+
+This code generates a sample EEG signal with two frequency components (10 Hz and 20 Hz) and plots it.
+
+## Neural Dynamics
+
+The study uses a range of techniques to analyze the EEG signals, including time-frequency analysis, functional connectivity, and machine learning. One of the key findings is that the brain's neural dynamics change significantly when processing AI-generated hallucinations.
+
+To illustrate this, let's consider a simple example using the [EEG signal processing pipeline](https://github.com/NeuroTechX/eeg-pipeline). We can use the `mne` library to load and preprocess the EEG data.
+
+```python
+import mne
+
+# Load the EEG data
+raw = mne.io.read_raw_fif('eeg_data.fif')
+
+# Filter the data
+raw.filter(1, 40, method='fir')
+
+# Plot the filtered data
+raw.plot()
+```
+
+This code loads the EEG data, filters it to remove noise, and plots the resulting signal.
+
+![Abstract head with colorful nature elements dissolving](https://images.unsplash.com/photo-1755210888583-6e0dc16ee35b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxIdW1hbnMlMjBQcm9jZXNzJTIwZ2VuZXJhdGVkJTIwSGFsbHVjaW5hdGlvbiUyMENvbnRlbnRzJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5MTg1MDY4fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Biomarkers for Hallucinations
+
+The study identifies several biomarkers for detecting hallucinations, including changes in alpha and beta band power, as well as alterations in functional connectivity between brain regions.
+
+To detect these biomarkers, we can use machine learning algorithms such as support vector machines (SVMs) or convolutional neural networks (CNNs).
+
+```python
+from sklearn import svm
+from sklearn.model_selection import train_test_split
+
+# Load the preprocessed EEG data
+X = np.load('eeg_data.npy')
+y = np.load('labels.npy')
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train an SVM model
+svm_model = svm.SVC(kernel='linear')
+svm_model.fit(X_train, y_train)
+
+# Evaluate the model
+accuracy = svm_model.score(X_test, y_test)
+print('Accuracy:', accuracy)
+```
+
+This code trains an SVM model to classify the EEG data into hallucination and non-hallucination categories.
+
+## Conclusion
+
+The study provides valuable insights into the neural dynamics of human brain processing of AI-generated hallucinations. By using EEG signal processing techniques and machine learning algorithms, we can detect biomarkers for hallucinations and develop more effective methods for mitigating their risks.
+
+![Woman's head exploding into butterflies and glitter](https://images.unsplash.com/photo-1777877714035-57392b1c99c4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxIdW1hbnMlMjBQcm9jZXNzJTIwZ2VuZXJhdGVkJTIwSGFsbHVjaW5hdGlvbiUyMENvbnRlbnRzJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5MTg1MDY4fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+As AI-generated content becomes increasingly prevalent, it is essential to develop a deeper understanding of the cognitive mechanisms underlying human perception and processing of these contents. By exploring the neural dynamics of hallucinations, we can create more effective methods for detecting and mitigating their risks, ultimately ensuring a safer and more responsible use of AI-generated content.
+
+*Photo by [Bhautik Patel](https://unsplash.com/@bhautik_patel3?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-black-and-white-photo-of-a-brain-m-yAg03XdOk?utm_source=techversation&utm_medium=referral)*
