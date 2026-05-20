@@ -1,0 +1,77 @@
+---
+title: "Analyzing Power Imbalances in Stake-Weighted Governance"
+description: "Voting methods weighted by stakes in Proof-of-Stake blockchains can lead to power distortions."
+date: "2026-05-20"
+author: "Usama"
+tags: ["governance", "blockchain", "proof-of-stake"]
+aiSummary: "Stake-weighted governance in Proof-of-Stake blockchains can be prone to power imbalances. This tutorial will guide you through analyzing these imbalances using Python. We will implement a basic voting system and demonstrate how a few users with large stakes can control decision making."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1719450589784-c2c36ccf8e5b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxTd2ltbWluZyUyMFdoYWxlcyUyMEFuYWx5c2lzJTIwUG93ZXIlMjBJbWJhbGFuY2VzJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5MjkyMDgyfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+In Proof-of-Stake (PoS) blockchains, voting methods weighted by stakes are the fundamental governance paradigm. However, this paradigm is known to be prone to power distortions, where a few users possessing large stakes may completely control decision making. In this tutorial, we will analyze this phenomenon through the lens of computational social choice theory. We will implement a basic voting system in Python and demonstrate how power imbalances can occur.
+
+## Background
+In a stake-weighted voting system, each user's vote is weighted by their stake in the system. The user with the largest stake has the most influence over the decision-making process. This can lead to a situation where a small group of users with large stakes can control the entire system, even if they do not own the majority of the stakes.
+
+## Implementing a Basic Voting System
+We will implement a basic voting system in Python to demonstrate how power imbalances can occur. We will use a simple example where we have 10 users, each with a different stake in the system.
+
+```python
+import numpy as np
+
+# Define the stakes of each user
+stakes = np.array([10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+
+# Define the votes of each user
+votes = np.array([1, 1, 1, 1, 1, 0, 0, 0, 0, 0])
+
+# Calculate the weighted votes
+weighted_votes = stakes * votes
+
+# Calculate the total weighted votes
+total_weighted_votes = np.sum(weighted_votes)
+
+print("Weighted Votes:", weighted_votes)
+print("Total Weighted Votes:", total_weighted_votes)
+```
+
+## Analyzing Power Imbalances
+We can analyze the power imbalances in the system by calculating the percentage of the total weighted votes that each user controls. We can use the following code to calculate this:
+
+```python
+# Calculate the percentage of the total weighted votes that each user controls
+percentages = (weighted_votes / total_weighted_votes) * 100
+
+print("Percentages of Total Weighted Votes:", percentages)
+```
+
+## Visualizing the Results
+We can visualize the results using a bar chart to show the percentage of the total weighted votes that each user controls. We can use the following code to create the chart:
+
+```python
+import matplotlib.pyplot as plt
+
+# Create a bar chart
+plt.bar(range(len(stakes)), percentages)
+
+# Set the title and labels
+plt.title("Percentages of Total Weighted Votes")
+plt.xlabel("User")
+plt.ylabel("Percentage")
+
+# Show the chart
+plt.show()
+```
+
+![a humpback whale swims beneath the surface of the water](https://images.unsplash.com/photo-1698551007683-7226dc6f4e85?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxTd2ltbWluZyUyMFdoYWxlcyUyMEFuYWx5c2lzJTIwUG93ZXIlMjBJbWJhbGFuY2VzJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5MjkyMDgyfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we have analyzed the power imbalances in a stake-weighted voting system. We have implemented a basic voting system in Python and demonstrated how a few users with large stakes can control the entire system. We have also visualized the results using a bar chart to show the percentage of the total weighted votes that each user controls. This tutorial has shown how power imbalances can occur in a stake-weighted voting system and how they can be analyzed using computational social choice theory.
+
+## Further Reading
+For more information on stake-weighted voting systems and power imbalances, you can refer to the paper "Swimming with Whales: Analysis of Power Imbalances in Stake-Weighted Governance" on [arXiv](https://arxiv.org/abs/2605.19264). This paper provides a detailed analysis of power imbalances in stake-weighted voting systems and proposes methods for mitigating these imbalances.
+
+*Photo by [Jonathan Hsu](https://unsplash.com/@junnuo_?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/two-humpback-whales-swimming-in-the-ocean-PQZHHkXN18Y?utm_source=techversation&utm_medium=referral)*
