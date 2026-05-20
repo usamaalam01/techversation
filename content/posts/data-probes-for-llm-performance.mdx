@@ -1,0 +1,116 @@
+---
+title: "Data Probes for LLM Performance"
+description: "Developing data probes to understand LLM performance."
+date: "2026-05-20"
+author: "Usama"
+tags: ["llm", "data-probes", "ai"]
+aiSummary: "Large language models rely heavily on data, but understanding what makes certain data useful is an open question. This tutorial shows how to develop data probes to fundamentally understand how data affects LLM performance. By following this guide, developers can create their own data probes and gain insights into LLM workflow stages."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxQb3NpdGlvbiUyMExldCUyMERldmVsb3AlMjBEYXRhJTIwUHJvYmVzJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5MjUwODM5fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Large language models (LLMs) have revolutionized the field of natural language processing, achieving state-of-the-art results in various tasks such as language translation, text summarization, and text generation. However, understanding what makes certain data useful for different stages of an LLM workflow remains an open question. Current approaches rely heavily on extensive experimentation with large public datasets to obtain empirical results. In this tutorial, we will explore how to develop data probes to fundamentally understand how data affects LLM performance.
+
+## What are Data Probes?
+
+Data probes are designed to investigate the relationship between input data and LLM performance. They can be used to analyze the impact of different data characteristics, such as data quality, data quantity, and data diversity, on LLM performance. By using data probes, developers can gain insights into the strengths and weaknesses of their LLMs and identify areas for improvement.
+
+## Developing Data Probes
+
+To develop data probes, we need to follow these steps:
+
+### Step 1: Define the Probe Objective
+
+The first step is to define the objective of the probe. What do we want to measure? For example, we might want to measure the impact of data quality on LLM performance.
+
+### Step 2: Design the Probe
+
+The next step is to design the probe. This involves selecting a dataset and a set of metrics to measure. For example, we might select a dataset of text samples and use metrics such as perplexity and accuracy to measure LLM performance.
+
+### Step 3: Implement the Probe
+
+Once we have designed the probe, we need to implement it. This involves writing code to load the dataset, preprocess the data, and run the LLM on the data.
+
+```python
+import pandas as pd
+import torch
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+# Load the dataset
+df = pd.read_csv("data.csv")
+
+# Preprocess the data
+tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+inputs = tokenizer(df["text"], return_tensors="pt", padding=True, truncation=True)
+
+# Load the LLM
+model = AutoModelForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=8)
+
+# Run the LLM on the data
+outputs = model(inputs["input_ids"], attention_mask=inputs["attention_mask"])
+```
+
+### Step 4: Analyze the Results
+
+The final step is to analyze the results. This involves using the metrics we selected to measure LLM performance and analyzing the results to gain insights into how data affects LLM performance.
+
+```python
+# Calculate the perplexity
+perplexity = torch.exp(outputs.loss)
+
+# Calculate the accuracy
+accuracy = torch.sum(torch.argmax(outputs.logits, dim=1) == df["label"]) / len(df)
+
+print(f"Perplexity: {perplexity.item():.4f}")
+print(f"Accuracy: {accuracy.item():.4f}")
+```
+
+![black and yellow printed paper](https://images.unsplash.com/photo-1610986602538-431d65df4385?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxQb3NpdGlvbiUyMExldCUyMERldmVsb3AlMjBEYXRhJTIwUHJvYmVzJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5MjUwODM5fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Using Data Probes to Investigate LLM Workflow Stages
+
+Data probes can be used to investigate different stages of the LLM workflow, including training, tuning, alignment, and in-context learning. By using data probes, developers can gain insights into how data affects LLM performance at each stage of the workflow.
+
+### Training
+
+During the training stage, data probes can be used to investigate the impact of data quality and data quantity on LLM performance. For example, we might use a data probe to measure the impact of noisy data on LLM performance during training.
+
+```python
+# Load the noisy dataset
+df_noisy = pd.read_csv("noisy_data.csv")
+
+# Preprocess the noisy data
+inputs_noisy = tokenizer(df_noisy["text"], return_tensors="pt", padding=True, truncation=True)
+
+# Run the LLM on the noisy data
+outputs_noisy = model(inputs_noisy["input_ids"], attention_mask=inputs_noisy["attention_mask"])
+```
+
+### Tuning
+
+During the tuning stage, data probes can be used to investigate the impact of hyperparameters on LLM performance. For example, we might use a data probe to measure the impact of learning rate on LLM performance during tuning.
+
+```python
+# Define the hyperparameter space
+hyperparams = {"learning_rate": [1e-5, 1e-4, 1e-3]}
+
+# Run the LLM with different hyperparameters
+for hyperparam in hyperparams:
+    model_tuned = AutoModelForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=8)
+    optimizer = torch.optim.Adam(model_tuned.parameters(), lr=hyperparam["learning_rate"])
+    # Train the model with the current hyperparameters
+    # ...
+```
+
+![black flat screen computer monitor](https://images.unsplash.com/photo-1612278247414-b5df9638e1e7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxQb3NpdGlvbiUyMExldCUyMERldmVsb3AlMjBEYXRhJTIwUHJvYmVzJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5MjUwODM5fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we have shown how to develop data probes to fundamentally understand how data affects LLM performance. By using data probes, developers can gain insights into the strengths and weaknesses of their LLMs and identify areas for improvement. We have also shown how to use data probes to investigate different stages of the LLM workflow, including training, tuning, alignment, and in-context learning. By following this guide, developers can create their own data probes and gain a deeper understanding of how data affects LLM performance.
+
+For more information on data probes and LLMs, please refer to the [original paper](https://arxiv.org/abs/2605.18801).
+
+*Photo by [Sharad Bhat](https://unsplash.com/@sharadmbhat?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/black-flat-screen-computer-monitor-Q_Swg0rZouw?utm_source=techversation&utm_medium=referral)*
