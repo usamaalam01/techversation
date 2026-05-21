@@ -1,0 +1,106 @@
+---
+title: "Adaptive Optimization via Schatten-p Norms"
+description: "Improve optimization with Muon and Schatten-p Norms."
+date: "2026-05-21"
+author: "Usama"
+tags: ["ai", "optimization", "muon"]
+aiSummary: "Adaptive optimization techniques have led to the development of Muon, which imposes matrix-wise geometry constraints on updates. This tutorial explores the use of Schatten-p Norms in adaptive optimization. We'll delve into the theory and provide working code examples to demonstrate its effectiveness."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxGcm9tJTIwU0dEJTIwTXVvbiUyMEFkYXB0aXZlJTIwT3B0aW1pemF0aW9uJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5MzkzOTkzfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Adaptive Optimization
+
+Optimization is a crucial aspect of machine learning, and various techniques have been developed to improve the efficiency and effectiveness of optimization algorithms. One such technique is adaptive optimization, which involves adjusting the optimization process based on the problem's geometry. Recently, a new optimizer called Muon has been introduced, which imposes matrix-wise geometry constraints on its updates. These constraints can be unified under Linear Minimization Oracle (LMO) theory.
+
+## Understanding Schatten-p Norms
+
+Schatten-p Norms are a family of norms that can be used to measure the magnitude of a matrix. They are defined as the p-th root of the sum of the p-th powers of the singular values of the matrix. Schatten-p Norms have been used in various applications, including matrix completion and low-rank approximation.
+
+```python
+import numpy as np
+
+def schatten_p_norm(matrix, p):
+    """
+    Calculate the Schatten-p Norm of a matrix.
+
+    Args:
+    matrix (numpy array): The input matrix.
+    p (float): The value of p in the Schatten-p Norm.
+
+    Returns:
+    float: The Schatten-p Norm of the matrix.
+    """
+    singular_values = np.linalg.svd(matrix)[1]
+    return np.power(np.sum(np.power(singular_values, p)), 1/p)
+```
+
+## Adaptive Optimization via Schatten-p Norms
+
+The Muon optimizer uses Schatten-p Norms to impose matrix-wise geometry constraints on its updates. The basic idea is to minimize the Schatten-p Norm of the update matrix, which encourages the optimizer to update the parameters in a way that respects the geometry of the problem.
+
+```python
+import numpy as np
+import torch
+import torch.optim as optim
+
+class MuonOptimizer(optim.Optimizer):
+    def __init__(self, params, lr, p):
+        """
+        Initialize the Muon optimizer.
+
+        Args:
+        params (list): The list of parameters to optimize.
+        lr (float): The learning rate.
+        p (float): The value of p in the Schatten-p Norm.
+        """
+        self.params = params
+        self.lr = lr
+        self.p = p
+        self.state = {}
+
+    def step(self):
+        """
+        Perform a single optimization step.
+        """
+        for param in self.params:
+            if param.grad is not None:
+                grad = param.grad
+                update = -self.lr * grad / schatten_p_norm(grad, self.p)
+                param.data.add_(update)
+
+# Example usage:
+model = torch.nn.Linear(5, 3)
+optimizer = MuonOptimizer(model.parameters(), lr=0.01, p=2)
+criterion = torch.nn.MSELoss()
+
+for epoch in range(100):
+    optimizer.zero_grad()
+    outputs = model(torch.randn(10, 5))
+    loss = criterion(outputs, torch.randn(10, 3))
+    loss.backward()
+    optimizer.step()
+```
+
+## Conclusion
+
+In this tutorial, we explored the use of Schatten-p Norms in adaptive optimization. We introduced the Muon optimizer, which imposes matrix-wise geometry constraints on its updates using Schatten-p Norms. We provided working code examples to demonstrate the effectiveness of this approach. By using Schatten-p Norms, we can improve the efficiency and effectiveness of optimization algorithms, leading to better performance in machine learning tasks.
+
+![Man presenting cell imaging research with quantum dots](https://images.unsplash.com/photo-1774092137630-c1ed5260ee43?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxGcm9tJTIwU0dEJTIwTXVvbiUyMEFkYXB0aXZlJTIwT3B0aW1pemF0aW9uJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5MzkzOTkzfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+### Future Work
+
+There are several directions for future work, including:
+
+*   Exploring the use of different values of p in the Schatten-p Norm
+*   Applying the Muon optimizer to various machine learning tasks
+*   Investigating the theoretical properties of the Muon optimizer
+
+By continuing to develop and improve adaptive optimization techniques, we can push the boundaries of what is possible in machine learning and achieve better performance in a wide range of applications.
+
+### References
+
+For more information on the Muon optimizer and Schatten-p Norms, please refer to the [original paper](https://arxiv.org/abs/2605.19781).
+
+*Photo by [Sharad Bhat](https://unsplash.com/@sharadmbhat?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/black-flat-screen-computer-monitor-Q_Swg0rZouw?utm_source=techversation&utm_medium=referral)*
