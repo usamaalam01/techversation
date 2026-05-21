@@ -1,0 +1,104 @@
+---
+title: "Defending Open Source Code"
+description: "Protecting open source projects from supply chain attacks."
+date: "2026-05-21"
+author: "Usama"
+tags: ["security", "open-source", "supply-chain"]
+aiSummary: "TeamPCP, a hacker group, has been poisoning open source code at an unprecedented scale, impacting hundreds of organizations. This post provides a practical guide on how to defend open source code against supply chain attacks. We will explore the risks, tools, and best practices to secure your projects."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1763568258533-d0597f86ce62?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxIYWNrZXIlMjBHcm91cCUyMFBvaXNvbmluZyUyME9wZW4lMjBTb3VyY2UlMjB0ZWNobm9sb2d5JTIwZGlnaXRhbCUyMGlubm92YXRpb258ZW58MXwwfHx8MTc3OTM1NzU2NHww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+The recent attacks by TeamPCP on open source code have highlighted the importance of security in the software supply chain. As a developer, it is crucial to understand the risks and take measures to protect your projects. In this post, we will delve into the world of supply chain attacks, explore the tools and techniques used by attackers, and provide a practical guide on how to defend your open source code.
+
+## Understanding Supply Chain Attacks
+
+Supply chain attacks occur when an attacker compromises a component or dependency in the software supply chain, allowing them to inject malicious code into the final product. This can happen at various stages, from the initial development of a library or framework to the deployment of the final application. The attack on GitHub by TeamPCP is a prime example of a supply chain attack, where the attackers compromised popular open source projects and injected malicious code, affecting hundreds of organizations.
+
+### Risks and Consequences
+
+The risks associated with supply chain attacks are significant. If an attacker is able to inject malicious code into your project, they can gain control over the entire application, steal sensitive data, or disrupt the service. The consequences can be severe, ranging from financial losses to reputational damage.
+
+## Defending Open Source Code
+
+Defending open source code against supply chain attacks requires a multi-faceted approach. Here are some best practices to help you secure your projects:
+
+### 1. Use Secure Dependencies
+
+When using dependencies in your project, make sure to use secure and trusted sources. You can use tools like `npm audit` or `pip-compile` to identify and update vulnerable dependencies.
+
+```bash
+# Use npm audit to identify vulnerable dependencies
+npm audit
+
+# Use pip-compile to identify and update vulnerable dependencies
+pip-compile --upgrade
+```
+
+### 2. Monitor Your Project's Dependencies
+
+Regularly monitor your project's dependencies for any suspicious activity. You can use tools like `DependencyCheck` or `Snyk` to identify and alert you to potential security vulnerabilities.
+
+```python
+# Use DependencyCheck to identify security vulnerabilities
+import dependency_check
+
+# Initialize the DependencyCheck object
+check = dependency_check.DependencyCheck()
+
+# Scan the project's dependencies
+check.scan()
+
+# Print the results
+check.print_results()
+```
+
+### 3. Implement Secure Coding Practices
+
+Implementing secure coding practices is essential to preventing supply chain attacks. This includes using secure coding guidelines, validating user input, and implementing proper error handling.
+
+```python
+# Use secure coding practices to validate user input
+def validate_input(user_input):
+    if not user_input:
+        raise ValueError("Invalid input")
+    return user_input
+
+# Use try-except blocks to handle errors
+try:
+    # Code that may raise an exception
+    user_input = validate_input("example input")
+except ValueError as e:
+    # Handle the exception
+    print(f"Error: {e}")
+```
+
+### 4. Use Code Review and Testing
+
+Code review and testing are critical components of securing your open source code. Regularly review your code for any suspicious activity, and use automated testing to identify and fix vulnerabilities.
+
+```python
+# Use pytest to write unit tests
+import pytest
+
+# Define a test function
+def test_example_function():
+    # Test the function
+    assert example_function() == "expected result"
+
+# Run the tests
+pytest.main()
+```
+
+## Conclusion
+
+Defending open source code against supply chain attacks requires a comprehensive approach that includes using secure dependencies, monitoring your project's dependencies, implementing secure coding practices, and using code review and testing. By following these best practices, you can significantly reduce the risk of a supply chain attack and protect your open source projects.
+
+![Computer screen displaying code with a context menu.](https://images.unsplash.com/photo-1763568258235-f40425a94af9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxIYWNrZXIlMjBHcm91cCUyMFBvaXNvbmluZyUyME9wZW4lMjBTb3VyY2UlMjB0ZWNobm9sb2d5JTIwZGlnaXRhbCUyMGlubm92YXRpb258ZW58MXwwfHx8MTc3OTM1NzU2NHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+To learn more about supply chain attacks and how to defend against them, you can visit the [Wired website](https://www.wired.com/story/teampcp-software-supply-chain-attack-spree-github/) and read the full article on the TeamPCP attacks. Remember, security is an ongoing process, and staying informed is key to protecting your open source projects.
+
+*Photo by [Daniil Komov](https://unsplash.com/@dkomow?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/computer-screen-displaying-code-with-a-context-menu-dma_e1UKkig?utm_source=techversation&utm_medium=referral)*
