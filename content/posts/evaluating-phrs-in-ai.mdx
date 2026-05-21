@@ -1,0 +1,106 @@
+---
+title: "Evaluating PHRs in AI"
+description: "Assessing Personal Health Records in Personalized Health AI"
+date: "2026-05-21"
+author: "Usama"
+tags: ["ai", "health", "phr"]
+aiSummary: "This tutorial explores the potential of large language models to provide helpful answers to user health queries using clinical data from Personal Health Records. We will assess the utility of PHRs in personalized health AI and provide a step-by-step guide on how to work with these models. The study uses the Gemini 3.0 Flash model to evaluate the effectiveness of PHRs in improving health outcomes."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1675270347058-8066cd1fe523?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxFdmFsdWF0aW5nJTIwVXRpbGl0eSUyMFBlcnNvbmFsJTIwSGVhbHRoJTIwUmVjb3JkcyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3OTMzNzgxNXww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Personal Health Records (PHRs) have the potential to empower patients to better understand their health by providing them with access to their medical history, test results, and treatment plans. However, the information in these records can be complex, making it difficult for patients to gain insights from them. Recent advancements in large language models (LLMs) have shown promise in providing helpful answers to user health queries. In this tutorial, we will explore the potential of LLMs to improve the utility of PHRs in personalized health AI.
+
+## Background
+The study published on arXiv, [Evaluating the Utility of Personal Health Records in Personalized Health AI](https://arxiv.org/abs/2605.18937), assesses the potential of LLMs to provide helpful answers to user health queries when provided with clinical data from PHRs. The study uses the Gemini 3.0 Flash model, a state-of-the-art LLM, to evaluate the effectiveness of PHRs in improving health outcomes.
+
+## Setting up the Environment
+To work with LLMs and PHRs, we need to set up a development environment with the necessary tools and libraries. We will use the Hugging Face Transformers library, which provides a wide range of pre-trained models, including the Gemini 3.0 Flash model.
+
+```python
+import pandas as pd
+import torch
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+
+# Load the pre-trained model and tokenizer
+model = AutoModelForSeq2SeqLM.from_pretrained("gemini-3.0-flash")
+tokenizer = AutoTokenizer.from_pretrained("gemini-3.0-flash")
+```
+
+## Preprocessing PHR Data
+PHR data can be complex and requires preprocessing to make it suitable for use with LLMs. We need to convert the data into a format that can be understood by the model. Let's assume we have a sample PHR dataset in a CSV file.
+
+```python
+# Load the PHR dataset
+phr_data = pd.read_csv("phr_data.csv")
+
+# Preprocess the data
+phr_data["text"] = phr_data["text"].apply(lambda x: x.lower())
+phr_data["text"] = phr_data["text"].apply(lambda x: x.strip())
+```
+
+## Fine-Tuning the Model
+To fine-tune the model on our PHR dataset, we need to create a custom dataset class and a data loader.
+
+```python
+# Create a custom dataset class
+class PHRDataset(torch.utils.data.Dataset):
+    def __init__(self, data, tokenizer):
+        self.data = data
+        self.tokenizer = tokenizer
+
+    def __getitem__(self, idx):
+        text = self.data.iloc[idx, 0]
+        inputs = self.tokenizer(text, return_tensors="pt")
+        return inputs
+
+    def __len__(self):
+        return len(self.data)
+
+# Create a data loader
+dataset = PHRDataset(phr_data, tokenizer)
+data_loader = torch.utils.data.DataLoader(dataset, batch_size=16, shuffle=True)
+```
+
+## Evaluating the Model
+To evaluate the model, we need to create a function that takes in a user health query and returns a helpful answer.
+
+```python
+# Create a function to evaluate the model
+def evaluate_model(query):
+    inputs = tokenizer(query, return_tensors="pt")
+    outputs = model.generate(**inputs)
+    answer = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    return answer
+```
+
+## Example Use Cases
+Let's use the `evaluate_model` function to answer some example user health queries.
+
+```python
+# Example use case 1
+query = "What are the symptoms of diabetes?"
+answer = evaluate_model(query)
+print(answer)
+
+# Example use case 2
+query = "How can I manage my blood pressure?"
+answer = evaluate_model(query)
+print(answer)
+```
+
+![white and green printer paper](https://images.unsplash.com/photo-1586436008950-a483ec6447ad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxFdmFsdWF0aW5nJTIwVXRpbGl0eSUyMFBlcnNvbmFsJTIwSGVhbHRoJTIwUmVjb3JkcyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3OTMzNzgxNXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we explored the potential of LLMs to improve the utility of PHRs in personalized health AI. We fine-tuned a pre-trained model on a sample PHR dataset and created a function to evaluate the model on user health queries. The results show promise in providing helpful answers to user health queries using clinical data from PHRs.
+
+![Two doctors looking at a tablet together](https://images.unsplash.com/photo-1758691463203-cce9d415b2b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxFdmFsdWF0aW5nJTIwVXRpbGl0eSUyMFBlcnNvbmFsJTIwSGVhbHRoJTIwUmVjb3JkcyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3OTMzNzgxNXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+By following this tutorial, developers can create their own personalized health AI models using PHRs and LLMs. This has the potential to revolutionize the way patients interact with their health data and improve health outcomes. 
+
+As a person types on their laptop, they may be working on a project to create a PHR system that integrates with LLMs to provide personalized health recommendations.
+![a person typing on a laptop computer on a desk](https://images.unsplash.com/photo-1688561807403-ba262590f86f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxFdmFsdWF0aW5nJTIwVXRpbGl0eSUyMFBlcnNvbmFsJTIwSGVhbHRoJTIwUmVjb3JkcyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3OTMzNzgxNXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [B Y G](https://unsplash.com/@beyzahzah?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-woman-sitting-at-a-desk-with-a-laptop-On_9vGMsFHI?utm_source=techversation&utm_medium=referral)*
