@@ -1,0 +1,99 @@
+---
+title: "DeepWeb-Bench Tutorial"
+description: "Deep research benchmark for language models, using arXiv 2605.21482"
+date: "2026-05-22"
+author: "Usama"
+tags: ["ai", "llm", "benchmark"]
+aiSummary: "DeepWeb-Bench is a new deep research benchmark that evaluates language models' ability to search the open web, collect evidence, and derive answers through extended reasoning. This tutorial provides a step-by-step guide on how to use DeepWeb-Bench. We will cover the installation, usage, and evaluation of language models using this benchmark."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1650327034581-1711a15a5430?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxEZWVwV2ViJTIwQmVuY2glMjBEZWVwJTIwUmVzZWFyY2glMjBCZW5jaG1hcmslMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzk0NjE5Mjh8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+DeepWeb-Bench is a new deep research benchmark that evaluates language models' ability to search the open web, collect evidence, and derive answers through extended reasoning. This benchmark is designed to distinguish the capabilities of frontier language models from current evaluation data alone. In this tutorial, we will provide a step-by-step guide on how to use DeepWeb-Bench.
+
+## Installing DeepWeb-Bench
+
+To use DeepWeb-Bench, you need to install the required libraries and tools. You can install them using pip:
+```bash
+pip install deepweb-bench
+```
+Once installed, you can import the library in your Python code:
+```python
+import deepweb_bench
+```
+## Preparing the Data
+
+DeepWeb-Bench requires a dataset of questions and answers to evaluate the language models. You can use the provided dataset or create your own. The dataset should be in a JSON format, with each question and answer pair represented as a dictionary:
+```json
+[
+    {
+        "question": "What is the capital of France?",
+        "answer": "Paris"
+    },
+    {
+        "question": "What is the largest planet in our solar system?",
+        "answer": "Jupiter"
+    }
+]
+```
+You can load the dataset using the `deepweb_bench.load_dataset` function:
+```python
+dataset = deepweb_bench.load_dataset("path/to/dataset.json")
+```
+## Evaluating Language Models
+
+To evaluate a language model using DeepWeb-Bench, you need to create an instance of the `deepweb_bench.Evaluator` class:
+```python
+evaluator = deepweb_bench.Evaluator(dataset)
+```
+You can then use the `evaluator.evaluate` method to evaluate the language model:
+```python
+results = evaluator.evaluate("path/to/language/model")
+```
+The `evaluate` method returns a dictionary containing the evaluation results, including the accuracy, precision, and recall of the language model.
+
+## Example Use Case
+
+Let's say we want to evaluate a language model using DeepWeb-Bench. We can use the following code:
+```python
+import deepweb_bench
+
+# Load the dataset
+dataset = deepweb_bench.load_dataset("path/to/dataset.json")
+
+# Create an evaluator instance
+evaluator = deepweb_bench.Evaluator(dataset)
+
+# Evaluate the language model
+results = evaluator.evaluate("path/to/language/model")
+
+# Print the evaluation results
+print(results)
+```
+This code loads the dataset, creates an evaluator instance, evaluates the language model, and prints the evaluation results.
+
+![woman in white long sleeve shirt sitting on chair](https://images.unsplash.com/photo-1581093577421-f561a654a353?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxEZWVwV2ViJTIwQmVuY2glMjBEZWVwJTIwUmVzZWFyY2glMjBCZW5jaG1hcmslMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzk0NjE5Mjh8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Advanced Usage
+
+DeepWeb-Bench provides several advanced features, including the ability to customize the evaluation metrics and the ability to use multiple language models. You can use the `deepweb_bench.Evaluator` class to create a custom evaluator instance:
+```python
+evaluator = deepweb_bench.Evaluator(dataset, metrics=["accuracy", "precision", "recall"])
+```
+You can also use the `deepweb_bench.Evaluator` class to evaluate multiple language models:
+```python
+evaluator = deepweb_bench.Evaluator(dataset)
+results = evaluator.evaluate(["path/to/language/model1", "path/to/language/model2"])
+```
+## Conclusion
+
+DeepWeb-Bench is a powerful tool for evaluating language models' ability to search the open web, collect evidence, and derive answers through extended reasoning. In this tutorial, we provided a step-by-step guide on how to use DeepWeb-Bench, including the installation, usage, and evaluation of language models. We also provided example use cases and advanced usage examples.
+
+![man looking at microscope](https://images.unsplash.com/photo-1578496479914-7ef3b0193be3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxEZWVwV2ViJTIwQmVuY2glMjBEZWVwJTIwUmVzZWFyY2glMjBCZW5jaG1hcmslMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzk0NjE5Mjh8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+We hope this tutorial has provided you with a comprehensive understanding of how to use DeepWeb-Bench. If you have any questions or need further assistance, please don't hesitate to contact us.
+
+*Photo by [Adrien](https://unsplash.com/@add_rien_20?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-close-up-of-a-computer-keyboard-with-a-blurry-background-q-mH2zk9NGc?utm_source=techversation&utm_medium=referral)*
