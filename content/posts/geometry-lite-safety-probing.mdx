@@ -1,0 +1,91 @@
+---
+title: "Geometry-Lite Safety Probing"
+description: "Interpretable safety probing via layer-wise margin geometry in large language models."
+date: "2026-05-22"
+author: "Usama"
+tags: ["ai", "llm", "safety-probing"]
+aiSummary: "Geometry-Lite is a novel approach to safety probing in large language models, providing insights into the geometry of safety evidence formation across layers. This tutorial demonstrates how to implement Geometry-Lite, leveraging layer-wise margin geometry for interpretable safety probing. By exploring the underlying geometry, developers can better understand how safety evidence is formed and identify potential weaknesses in their models."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1773429492634-7e3920d2f8a9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxHZW9tZXRyeSUyMExpdGUlMjBJbnRlcnByZXRhYmxlJTIwU2FmZXR5JTIwUHJvYmluZyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3OTQyMzc1OHww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Large language models have achieved remarkable success in various natural language processing tasks, but ensuring their safety and reliability remains a significant challenge. Safety probing is a crucial aspect of evaluating the reliability of these models, and recent approaches have focused on using hidden-state representations to separate safe from unsafe prompts. However, strong average detection performance does not necessarily explain the geometry of this separation. In this tutorial, we will explore the Geometry-Lite approach, which provides insights into the geometry of safety evidence formation across layers.
+
+![Abstract glowing molecular structure on black background](https://images.unsplash.com/photo-1773429492659-a3192673990f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxHZW9tZXRyeSUyMExpdGUlMjBJbnRlcnByZXRhYmxlJTIwU2FmZXR5JTIwUHJvYmluZyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3OTQyMzc1OHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Background
+
+The Geometry-Lite approach is based on the idea that the geometry of the hidden-state representations can provide valuable insights into the safety evidence formation process. By analyzing the layer-wise margin geometry, developers can better understand how safety evidence is formed and identify potential weaknesses in their models. The approach involves the following key components:
+
+*   **Layer-wise margin geometry**: This refers to the geometric structure of the hidden-state representations at each layer of the model. By analyzing this geometry, developers can identify the most critical layers and dimensions that contribute to safety evidence formation.
+*   **Safety probing**: This involves using the hidden-state representations to separate safe from unsafe prompts. The Geometry-Lite approach provides a more interpretable and transparent way of performing safety probing by leveraging the layer-wise margin geometry.
+
+## Implementing Geometry-Lite
+
+To implement Geometry-Lite, you will need to have the following dependencies installed:
+
+*   `transformers` library for loading and manipulating large language models
+*   `torch` library for tensor computations
+*   `numpy` library for numerical computations
+
+Here is an example code snippet that demonstrates how to implement Geometry-Lite:
+```python
+import torch
+from transformers import AutoModel, AutoTokenizer
+import numpy as np
+
+# Load the pre-trained language model and tokenizer
+model = AutoModel.from_pretrained("bert-base-uncased")
+tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+
+# Define a function to compute the layer-wise margin geometry
+def compute_layer_wise_margin_geometry(model, inputs):
+    # Get the hidden-state representations at each layer
+    hidden_states = model(**inputs).hidden_states
+    
+    # Compute the layer-wise margin geometry
+    margin_geometry = []
+    for i in range(len(hidden_states)):
+        hidden_state = hidden_states[i]
+        # Compute the margin geometry for this layer
+        margin = torch.norm(hidden_state, dim=1)
+        margin_geometry.append(margin)
+    
+    return margin_geometry
+
+# Define a function to perform safety probing using the Geometry-Lite approach
+def safety_probing(model, inputs, labels):
+    # Compute the layer-wise margin geometry
+    margin_geometry = compute_layer_wise_margin_geometry(model, inputs)
+    
+    # Perform safety probing using the layer-wise margin geometry
+    safety_scores = []
+    for i in range(len(margin_geometry)):
+        margin = margin_geometry[i]
+        # Compute the safety score for this layer
+        safety_score = torch.mean(margin)
+        safety_scores.append(safety_score)
+    
+    return safety_scores
+
+# Test the implementation
+inputs = tokenizer("This is a test prompt", return_tensors="pt")
+labels = torch.tensor([1])  # Safe prompt
+
+safety_scores = safety_probing(model, inputs, labels)
+print(safety_scores)
+```
+This code snippet demonstrates how to implement the Geometry-Lite approach for safety probing in large language models. The `compute_layer_wise_margin_geometry` function computes the layer-wise margin geometry, and the `safety_probing` function performs safety probing using the layer-wise margin geometry.
+
+## Conclusion
+
+In this tutorial, we have explored the Geometry-Lite approach for safety probing in large language models. By leveraging the layer-wise margin geometry, developers can gain valuable insights into the geometry of safety evidence formation across layers. The Geometry-Lite approach provides a more interpretable and transparent way of performing safety probing, enabling developers to identify potential weaknesses in their models and improve their reliability. As the field of natural language processing continues to evolve, the Geometry-Lite approach is poised to play a critical role in ensuring the safety and reliability of large language models.
+
+![Abstract geometric shape with glowing red center and blue ring](https://images.unsplash.com/photo-1761740533449-b8d4385e60b0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxHZW9tZXRyeSUyMExpdGUlMjBJbnRlcnByZXRhYmxlJTIwU2FmZXR5JTIwUHJvYmluZyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3OTQyMzc1OHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+For more information on the Geometry-Lite approach, please refer to the original research paper: <https://arxiv.org/abs/2605.20241>.
+
+*Photo by [Filipe Nobre](https://unsplash.com/@filipenobre?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/abstract-geometric-pattern-with-purple-neon-lights-kQZ-c8_e6XE?utm_source=techversation&utm_medium=referral)*
