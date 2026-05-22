@@ -1,0 +1,131 @@
+---
+title: "Interaction Locality in Hierarchical Reasoning"
+description: "Measure information flow in hierarchical recursive reasoning tasks."
+date: "2026-05-22"
+author: "Usama"
+tags: ["ai", "reasoning", "hierarchical"]
+aiSummary: "Interaction locality is a framework for measuring information flow in hierarchical recursive reasoning tasks. It helps agents make local moves while preserving route, object, or constraint-level plans. This tutorial provides a step-by-step guide to implementing interaction locality in Python."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1639322537231-2f206e06af84?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxJbnRlcmFjdGlvbiUyMExvY2FsaXR5JTIwSGllcmFyY2hpY2FsJTIwUmVjdXJzaXZlJTIwUmVhc29uaW5nJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5NDgwMzEzfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Spatial reasoning requires both location-bound computation and location-invariant structure. Agents must make local moves while preserving route, object, or constraint-level plans. To achieve this, we propose interaction locality, a task-geometry-aware framework for measuring whether information flow stays within nearby cells or semantic segments, or crosses them. In this tutorial, we will explore how to implement interaction locality in Python.
+
+## Background
+
+Hierarchical recursive reasoning tasks involve a combination of local and global reasoning. Local reasoning involves making decisions based on nearby information, while global reasoning involves considering the overall structure of the task. Interaction locality provides a way to measure the balance between local and global reasoning.
+
+## Implementing Interaction Locality
+
+To implement interaction locality, we need to define a few key components:
+
+*   **Task geometry**: This represents the spatial structure of the task. For example, in a grid-based task, the task geometry would represent the grid cells and their connections.
+*   **Information flow**: This represents the flow of information between different parts of the task geometry. For example, in a grid-based task, information flow might represent the movement of an agent between grid cells.
+*   **Locality measure**: This represents the measure of how local or global the information flow is. For example, a locality measure might be based on the distance between grid cells.
+
+Here is an example implementation of interaction locality in Python:
+```python
+import numpy as np
+
+class TaskGeometry:
+    def __init__(self, grid_size):
+        self.grid_size = grid_size
+        self.grid = np.zeros((grid_size, grid_size))
+
+    def get_neighbors(self, cell):
+        neighbors = []
+        for i in range(-1, 2):
+            for j in range(-1, 2):
+                if i == 0 and j == 0:
+                    continue
+                neighbor_cell = (cell[0] + i, cell[1] + j)
+                if 0 <= neighbor_cell[0] < self.grid_size and 0 <= neighbor_cell[1] < self.grid_size:
+                    neighbors.append(neighbor_cell)
+        return neighbors
+
+class InformationFlow:
+    def __init__(self, task_geometry):
+        self.task_geometry = task_geometry
+        self.flow = np.zeros((task_geometry.grid_size, task_geometry.grid_size))
+
+    def update_flow(self, cell, value):
+        self.flow[cell] = value
+        for neighbor in self.task_geometry.get_neighbors(cell):
+            self.flow[neighbor] += value / len(self.task_geometry.get_neighbors(cell))
+
+class LocalityMeasure:
+    def __init__(self, information_flow):
+        self.information_flow = information_flow
+
+    def calculate_locality(self):
+        locality = 0
+        for cell in range(self.information_flow.task_geometry.grid_size):
+            for cell2 in range(self.information_flow.task_geometry.grid_size):
+                if cell != cell2:
+                    distance = np.abs(cell - cell2)
+                    locality += self.information_flow.flow[cell] * self.information_flow.flow[cell2] / distance
+        return locality
+
+# Create a task geometry
+task_geometry = TaskGeometry(10)
+
+# Create an information flow
+information_flow = InformationFlow(task_geometry)
+
+# Update the information flow
+information_flow.update_flow((5, 5), 1)
+
+# Create a locality measure
+locality_measure = LocalityMeasure(information_flow)
+
+# Calculate the locality
+locality = locality_measure.calculate_locality()
+print(locality)
+```
+This code defines a task geometry, information flow, and locality measure for a grid-based task. The `TaskGeometry` class represents the grid cells and their connections, the `InformationFlow` class represents the flow of information between grid cells, and the `LocalityMeasure` class calculates the locality of the information flow.
+
+## Using Interaction Locality
+
+Interaction locality can be used in a variety of applications, such as:
+
+*   **Robotics**: Interaction locality can be used to measure the balance between local and global reasoning in robotic navigation tasks.
+*   **Computer vision**: Interaction locality can be used to measure the balance between local and global reasoning in computer vision tasks, such as object recognition.
+*   **Natural language processing**: Interaction locality can be used to measure the balance between local and global reasoning in natural language processing tasks, such as text classification.
+
+For example, in a robotic navigation task, interaction locality can be used to measure the balance between local and global reasoning in the following way:
+```python
+# Create a task geometry
+task_geometry = TaskGeometry(10)
+
+# Create an information flow
+information_flow = InformationFlow(task_geometry)
+
+# Update the information flow based on the robot's movements
+information_flow.update_flow((5, 5), 1)
+
+# Create a locality measure
+locality_measure = LocalityMeasure(information_flow)
+
+# Calculate the locality
+locality = locality_measure.calculate_locality()
+
+# Use the locality to adjust the robot's navigation strategy
+if locality < 0.5:
+    # The robot is using too much local reasoning, adjust the strategy to use more global reasoning
+    print("Adjusting navigation strategy to use more global reasoning")
+else:
+    # The robot is using too much global reasoning, adjust the strategy to use more local reasoning
+    print("Adjusting navigation strategy to use more local reasoning")
+```
+This code uses interaction locality to measure the balance between local and global reasoning in a robotic navigation task. The locality is calculated based on the robot's movements, and the navigation strategy is adjusted accordingly.
+
+![diagram](https://images.unsplash.com/photo-1664526936886-67d4e7ff743c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxJbnRlcmFjdGlvbiUyMExvY2FsaXR5JTIwSGllcmFyY2hpY2FsJTIwUmVjdXJzaXZlJTIwUmVhc29uaW5nJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5NDgwMzEzfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+Interaction locality is a powerful tool for measuring the balance between local and global reasoning in hierarchical recursive reasoning tasks. By using interaction locality, agents can make local moves while preserving route, object, or constraint-level plans. This tutorial has provided a step-by-step guide to implementing interaction locality in Python, and has demonstrated how to use interaction locality in a variety of applications.
+
+*Photo by [Shubham Dhage](https://unsplash.com/@theshubhamdhage?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-black-and-white-photo-of-cubes-on-a-black-background-IlUq1ruyv0Q?utm_source=techversation&utm_medium=referral)*
