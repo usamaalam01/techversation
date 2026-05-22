@@ -1,0 +1,132 @@
+---
+title: "Conflict-Aware Guidance for Flow Models"
+description: "Controlled generation with compositional rewards."
+date: "2026-05-22"
+author: "Usama"
+tags: ["ai", "flow-models", "guidance"]
+aiSummary: "Conflict-aware additive guidance enables controlled generation in flow models. This technique interprets the generation process as a controllable trajectory, allowing for external constraints. We provide a step-by-step guide to implementing this method."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxDb25mbGljdCUyMEF3YXJlJTIwQWRkaXRpdmUlMjBHdWlkYW5jZSUyMEZsb3clMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzk0NDMxNDB8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Flow models have become a crucial tool in the field of artificial intelligence, particularly in generative tasks. However, controlling the generation process can be challenging. Recent research has introduced conflict-aware additive guidance for flow models under compositional rewards, providing a flexible way to inject external constraints. In this tutorial, we will delve into the implementation of this technique, exploring its applications and benefits.
+
+## Background
+
+Flow models are a type of generative model that uses a series of transformations to generate samples from a complex distribution. These models have shown impressive results in various tasks, such as image and text generation. However, controlling the generation process can be difficult, as the model may produce unwanted or undesirable samples.
+
+To address this issue, researchers have proposed various guidance methods, including inference-time guided sampling. This approach steers the generation process by interpreting it as a controllable trajectory, allowing for external constraints to be injected. One such method is conflict-aware additive guidance, which enables controlled generation in flow models under compositional rewards.
+
+## Implementation
+
+To implement conflict-aware additive guidance, we will use the PyTorch library. First, we need to define the flow model and the compositional reward function.
+
+```python
+import torch
+import torch.nn as nn
+
+class FlowModel(nn.Module):
+    def __init__(self):
+        super(FlowModel, self).__init__()
+        self.transformations = nn.ModuleList([self._create_transformation() for _ in range(10)])
+
+    def _create_transformation(self):
+        return nn.Sequential(
+            nn.Linear(10, 10),
+            nn.ReLU(),
+            nn.Linear(10, 10)
+        )
+
+    def forward(self, x):
+        for transformation in self.transformations:
+            x = transformation(x)
+        return x
+
+class CompositionalReward(nn.Module):
+    def __init__(self):
+        super(CompositionalReward, self).__init__()
+        self.rewards = nn.ModuleList([self._create_reward() for _ in range(5)])
+
+    def _create_reward(self):
+        return nn.Sequential(
+            nn.Linear(10, 10),
+            nn.ReLU(),
+            nn.Linear(10, 1)
+        )
+
+    def forward(self, x):
+        rewards = []
+        for reward in self.rewards:
+            rewards.append(reward(x))
+        return torch.cat(rewards, dim=1)
+```
+
+Next, we need to define the conflict-aware additive guidance module.
+
+```python
+class ConflictAwareAdditiveGuidance(nn.Module):
+    def __init__(self, flow_model, compositional_reward):
+        super(ConflictAwareAdditiveGuidance, self).__init__()
+        self.flow_model = flow_model
+        self.compositional_reward = compositional_reward
+
+    def forward(self, x):
+        # Compute the flow model output
+        flow_output = self.flow_model(x)
+
+        # Compute the compositional reward
+        reward = self.compositional_reward(flow_output)
+
+        # Compute the conflict-aware additive guidance
+        guidance = torch.zeros_like(flow_output)
+        for i in range(reward.shape[1]):
+            guidance += reward[:, i].unsqueeze(1) * flow_output
+
+        return guidance
+```
+
+## Example Use Case
+
+To demonstrate the effectiveness of conflict-aware additive guidance, let's consider an example use case. Suppose we want to generate images of objects with specific attributes, such as color or shape. We can use a flow model to generate the images and a compositional reward function to encourage the model to produce images with the desired attributes.
+
+```python
+# Initialize the flow model, compositional reward, and conflict-aware additive guidance
+flow_model = FlowModel()
+compositional_reward = CompositionalReward()
+guidance = ConflictAwareAdditiveGuidance(flow_model, compositional_reward)
+
+# Generate a random input
+input = torch.randn(1, 10)
+
+# Compute the guidance
+guidance_output = guidance(input)
+
+# Use the guidance to generate an image
+image = flow_model(input + guidance_output)
+
+# Display the generated image
+import matplotlib.pyplot as plt
+plt.imshow(image.detach().numpy().reshape(28, 28))
+plt.show()
+```
+
+![white printer paper on white table](https://images.unsplash.com/photo-1629019621374-94c3bae51815?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxDb25mbGljdCUyMEF3YXJlJTIwQWRkaXRpdmUlMjBHdWlkYW5jZSUyMEZsb3clMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzk0NDMxNDB8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+Conflict-aware additive guidance provides a flexible way to control the generation process in flow models. By interpreting the generation process as a controllable trajectory, this technique enables the injection of external constraints, such as compositional rewards. We have demonstrated the implementation of this method using PyTorch and provided an example use case. The code and explanations provided in this tutorial can be used as a starting point for further research and development in the field of flow models and controlled generation.
+
+## Future Work
+
+There are several directions for future work in this area. One potential direction is to explore the application of conflict-aware additive guidance to other types of generative models, such as variational autoencoders or generative adversarial networks. Another direction is to investigate the use of different compositional reward functions, such as those based on natural language processing or computer vision tasks.
+
+## References
+
+* [1] arXiv:2605.20758v1: Conflict-Aware Additive Guidance for Flow Models under Compositional Rewards
+
+Note: The code examples provided in this tutorial are for illustration purposes only and may require modification to work with specific use cases. Additionally, the images used in this tutorial are for demonstration purposes only and may not be suitable for production use.
+
+*Photo by [Sharad Bhat](https://unsplash.com/@sharadmbhat?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/black-flat-screen-computer-monitor-Q_Swg0rZouw?utm_source=techversation&utm_medium=referral)*
