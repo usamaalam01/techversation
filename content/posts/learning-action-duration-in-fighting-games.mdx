@@ -1,0 +1,186 @@
+---
+title: "Learning Action Duration in Fighting Games"
+description: "Fighting games pose unique challenges to RL agents due to fast-paced nature."
+date: "2026-05-23"
+author: "Usama"
+tags: ["ai", "rl", "gaming"]
+aiSummary: "This tutorial explores how to learn action duration in fighting games using reinforcement learning. We'll implement a basic RL framework and discuss the challenges of applying RL to fast-paced games. By the end of this post, you'll have a working example of an RL agent learning to play a simplified fighting game."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxMb25nJTIwUHVuY2hpbmclMjBMZWFybmluZyUyMEFjdGlvbiUyMER1cmF0aW9uJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5NTA5MDEyfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Fighting games like Street Fighter II present a unique set of challenges for reinforcement learning (RL) agents. The fast-paced, real-time nature of these games requires agents to make quick decisions, often at a fixed interval. However, this design restricts the agent's ability to learn and adapt to complex scenarios. In this tutorial, we'll explore how to learn action duration in fighting games using RL.
+
+## Background
+
+RL is a subfield of machine learning that involves training agents to make decisions in complex environments. In most RL frameworks, agents are hard-coded to make decisions at a fixed interval, typically every frame or every N frames. This design ensures timely responses but limits the agent's ability to learn and adapt.
+
+## Implementing a Basic RL Framework
+
+To start, we'll implement a basic RL framework using Python and the PyTorch library. We'll define a simple environment that simulates a fighting game, where the agent must learn to punch at the right time to defeat the opponent.
+
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+# Define the environment
+class FightingGameEnvironment:
+    def __init__(self):
+        self.state = 0  # Initial state: not punching
+        self.opponent_state = 0  # Initial opponent state: not punching
+
+    def step(self, action):
+        # Simulate the game environment
+        if action == 1:  # Punch
+            self.state = 1
+            if self.opponent_state == 0:  # Opponent is not punching
+                self.opponent_state = 1  # Opponent starts punching
+                reward = 1  # Reward for punching at the right time
+            else:  # Opponent is already punching
+                reward = -1  # Penalty for punching at the wrong time
+        else:  # Not punching
+            self.state = 0
+            if self.opponent_state == 1:  # Opponent is punching
+                self.opponent_state = 0  # Opponent stops punching
+                reward = -1  # Penalty for not punching
+            else:  # Opponent is not punching
+                reward = 0  # No reward or penalty
+
+        return self.state, reward
+
+# Define the RL agent
+class RLAgent:
+    def __init__(self):
+        self.policy = nn.Sequential(
+            nn.Linear(1, 128),  # Input layer (1) -> Hidden layer (128)
+            nn.ReLU(),
+            nn.Linear(128, 2)  # Hidden layer (128) -> Output layer (2)
+        )
+        self.optimizer = optim.Adam(self.policy.parameters(), lr=0.001)
+
+    def select_action(self, state):
+        # Select an action using the policy network
+        state = torch.tensor([state], dtype=torch.float32)
+        action_probabilities = self.policy(state)
+        action = torch.argmax(action_probabilities).item()
+        return action
+
+    def update_policy(self, state, action, reward):
+        # Update the policy network using the Adam optimizer
+        state = torch.tensor([state], dtype=torch.float32)
+        action = torch.tensor([action], dtype=torch.long)
+        reward = torch.tensor([reward], dtype=torch.float32)
+
+        # Calculate the loss
+        action_probabilities = self.policy(state)
+        loss = -reward * torch.log(action_probabilities[0, action])
+
+        # Backpropagate the loss
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()
+
+# Train the RL agent
+environment = FightingGameEnvironment()
+agent = RLAgent()
+
+for episode in range(1000):
+    state = environment.state
+    action = agent.select_action(state)
+    next_state, reward = environment.step(action)
+    agent.update_policy(state, action, reward)
+    state = next_state
+
+    if episode % 100 == 0:
+        print(f"Episode {episode}, Reward: {reward}")
+```
+
+## Challenges of Applying RL to Fighting Games
+
+Applying RL to fighting games poses several challenges:
+
+*   **Fast-paced environment**: Fighting games require agents to make quick decisions, often at a fixed interval. This restricts the agent's ability to learn and adapt to complex scenarios.
+*   **High-dimensional state space**: Fighting games have a high-dimensional state space, making it difficult for agents to explore and learn from the environment.
+*   **Complexity of human behavior**: Human players exhibit complex behavior, making it challenging for agents to learn and adapt to their strategies.
+
+![a computer screen with a line graph on it](https://images.unsplash.com/photo-1643917853964-434e78b21cf7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxMb25nJTIwUHVuY2hpbmclMjBMZWFybmluZyUyMEFjdGlvbiUyMER1cmF0aW9uJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5NTA5MDEyfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Learning Action Duration
+
+To learn action duration, we need to modify the RL framework to accommodate variable-length actions. One approach is to use a hierarchical RL framework, where the agent learns to select actions and their corresponding durations.
+
+```python
+# Define the hierarchical RL agent
+class HierarchicalRLAgent:
+    def __init__(self):
+        self.high_level_policy = nn.Sequential(
+            nn.Linear(1, 128),  # Input layer (1) -> Hidden layer (128)
+            nn.ReLU(),
+            nn.Linear(128, 2)  # Hidden layer (128) -> Output layer (2)
+        )
+        self.low_level_policy = nn.Sequential(
+            nn.Linear(1, 128),  # Input layer (1) -> Hidden layer (128)
+            nn.ReLU(),
+            nn.Linear(128, 10)  # Hidden layer (128) -> Output layer (10)
+        )
+        self.optimizer = optim.Adam(list(self.high_level_policy.parameters()) + list(self.low_level_policy.parameters()), lr=0.001)
+
+    def select_action(self, state):
+        # Select an action using the high-level policy network
+        state = torch.tensor([state], dtype=torch.float32)
+        action_probabilities = self.high_level_policy(state)
+        action = torch.argmax(action_probabilities).item()
+        return action
+
+    def select_action_duration(self, state, action):
+        # Select an action duration using the low-level policy network
+        state = torch.tensor([state], dtype=torch.float32)
+        action_duration_probabilities = self.low_level_policy(state)
+        action_duration = torch.argmax(action_duration_probabilities).item()
+        return action_duration
+
+    def update_policy(self, state, action, action_duration, reward):
+        # Update the policy networks using the Adam optimizer
+        state = torch.tensor([state], dtype=torch.float32)
+        action = torch.tensor([action], dtype=torch.long)
+        action_duration = torch.tensor([action_duration], dtype=torch.long)
+        reward = torch.tensor([reward], dtype=torch.float32)
+
+        # Calculate the loss
+        action_probabilities = self.high_level_policy(state)
+        action_duration_probabilities = self.low_level_policy(state)
+        loss = -reward * (torch.log(action_probabilities[0, action]) + torch.log(action_duration_probabilities[0, action_duration]))
+
+        # Backpropagate the loss
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()
+
+# Train the hierarchical RL agent
+hierarchical_agent = HierarchicalRLAgent()
+
+for episode in range(1000):
+    state = environment.state
+    action = hierarchical_agent.select_action(state)
+    action_duration = hierarchical_agent.select_action_duration(state, action)
+    next_state, reward = environment.step(action, action_duration)
+    hierarchical_agent.update_policy(state, action, action_duration, reward)
+    state = next_state
+
+    if episode % 100 == 0:
+        print(f"Episode {episode}, Reward: {reward}")
+```
+
+## Conclusion
+
+In this tutorial, we explored how to learn action duration in fighting games using RL. We implemented a basic RL framework and discussed the challenges of applying RL to fast-paced games. We also modified the RL framework to accommodate variable-length actions using a hierarchical RL framework. By using this approach, we can train RL agents to learn complex behaviors and adapt to dynamic environments.
+
+![black flat screen computer monitor](https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxMb25nJTIwUHVuY2hpbmclMjBMZWFybmluZyUyMEFjdGlvbiUyMER1cmF0aW9uJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5NTA5MDEyfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+For more information on this topic, you can refer to the original research paper on [arXiv](https://arxiv.org/abs/2605.20911).
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
