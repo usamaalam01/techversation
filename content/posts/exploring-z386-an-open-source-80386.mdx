@@ -1,0 +1,78 @@
+---
+title: "Exploring z386: An Open-Source 80386"
+description: "Discover the open-source z386, an 80386 built around original microcode."
+date: "2026-05-24"
+author: "Usama"
+tags: ["z386", "open-source", "microcode"]
+aiSummary: "The z386 is an open-source implementation of the 80386 microprocessor, built around original microcode. This tutorial will guide you through getting started with z386 and exploring its capabilities. We'll also discuss the potential applications and limitations of this innovative project."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1669023414162-8b0573b9c6b2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxPcGVuJTIwU291cmNlJTIwQnVpbHQlMjBBcm91bmQlMjBPcmlnaW5hbCUyMHRlY2hub2xvZ3klMjBzb2Z0d2FyZXxlbnwxfDB8fHwxNzc5NTk2NDEyfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to z386
+
+The z386 is an open-source implementation of the 80386 microprocessor, built around original microcode. This project has garnered significant attention in the developer community, particularly among those interested in low-level programming and computer architecture. In this tutorial, we'll delve into the world of z386, exploring its features, capabilities, and potential applications.
+
+## Getting Started with z386
+
+To get started with z386, you'll need to clone the repository from the official GitHub page: https://nand2mario.github.io/posts/2026/z386/. The repository contains the source code, documentation, and examples to help you get familiar with the project.
+
+```bash
+git clone https://github.com/nand2mario/z386.git
+```
+
+Once you've cloned the repository, you can start exploring the code and documentation. The project is written in a combination of assembly language and C, so it's essential to have a basic understanding of these programming languages.
+
+## Understanding the Microcode
+
+The z386 microcode is the core of the project, responsible for executing instructions and managing the processor's state. The microcode is written in a custom assembly language, which is then compiled into machine code.
+
+```assembly
+; Example microcode snippet
+mov eax, 0x12345678
+add eax, 0x00000001
+jmp next_instruction
+```
+
+This snippet demonstrates a simple arithmetic operation, where the value 0x00000001 is added to the value stored in the EAX register.
+
+## Running z386
+
+To run z386, you'll need to compile the source code and create an executable file. The project provides a makefile to simplify the compilation process.
+
+```bash
+make
+```
+
+Once the compilation is complete, you can run z386 using the following command:
+
+```bash
+./z386
+```
+
+This will launch the z386 emulator, allowing you to interact with the processor and execute instructions.
+
+## Potential Applications
+
+The z386 project has several potential applications, including:
+
+* **Education**: The z386 can serve as a valuable educational tool, helping students understand the inner workings of a microprocessor and the principles of computer architecture.
+* **Research**: The open-source nature of z386 makes it an attractive platform for researchers, allowing them to experiment with new ideas and innovations in the field of computer architecture.
+* **Development**: The z386 can be used as a development platform for creating custom operating systems, firmware, or other low-level software applications.
+
+![a computer screen with a program running on it](https://images.unsplash.com/photo-1675495666895-9091741bfd78?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxPcGVuJTIwU291cmNlJTIwQnVpbHQlMjBBcm91bmQlMjBPcmlnaW5hbCUyMHRlY2hub2xvZ3klMjBzb2Z0d2FyZXxlbnwxfDB8fHwxNzc5NTk2NDEyfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Limitations and Future Directions
+
+While the z386 project is an impressive achievement, it's essential to acknowledge its limitations. The current implementation is a simplified version of the original 80386 microprocessor, lacking some features and optimizations. However, the open-source nature of the project allows for community involvement and contributions, which can help address these limitations and drive future development.
+
+## Conclusion
+
+The z386 is an exciting open-source project that offers a unique opportunity for developers to explore the inner workings of a microprocessor. By following this tutorial, you've gained a basic understanding of the z386 and its capabilities. As you continue to explore the project, you'll discover more about the intricacies of computer architecture and the potential applications of this innovative technology.
+
+![a computer on a desk](https://images.unsplash.com/photo-1669023414171-56f0740e34cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxPcGVuJTIwU291cmNlJTIwQnVpbHQlMjBBcm91bmQlMjBPcmlnaW5hbCUyMHRlY2hub2xvZ3klMjBzb2Z0d2FyZXxlbnwxfDB8fHwxNzc5NTk2NDEyfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+By contributing to the z386 project or using it as a platform for your own developments, you can help push the boundaries of what's possible in the world of computer architecture and low-level programming.
+
+*Photo by [Growtika](https://unsplash.com/@growtika?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-computer-with-a-keyboard-and-mouse-9WnjxT1NCoY?utm_source=techversation&utm_medium=referral)*
