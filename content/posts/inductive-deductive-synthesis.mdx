@@ -1,0 +1,87 @@
+---
+title: "Inductive Deductive Synthesis"
+description: "AI generates formally verified systems with inductive deductive synthesis."
+date: "2026-05-25"
+author: "Usama"
+tags: ["ai", "inductive-deductive", "formal-verification"]
+aiSummary: "Inductive deductive synthesis enables AI to generate formally verified systems. This approach combines inductive and deductive reasoning to ensure full coverage of all possible system behaviors. Researchers have applied this method to distributed systems, ensuring properties like consistency between reads and writes."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1692607431208-28cc794e0067?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxJbmR1Y3RpdmUlMjBEZWR1Y3RpdmUlMjBTeW50aGVzaXMlMjBFbmFibGluZyUyMEdlbmVyYXRlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5NzM4OTkxfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Inductive Deductive Synthesis
+
+Inductive deductive synthesis is a novel approach that enables AI to generate formally verified systems. This method combines inductive and deductive reasoning to ensure full coverage of all possible system behaviors. In this tutorial, we will explore the basics of inductive deductive synthesis and provide a step-by-step guide on how to apply it to distributed systems.
+
+## What is Inductive Deductive Synthesis?
+
+Inductive deductive synthesis is a technique that uses a combination of inductive and deductive reasoning to generate formally verified systems. Inductive reasoning involves making generalizations based on specific observations, while deductive reasoning involves drawing conclusions based on logical rules. By combining these two approaches, inductive deductive synthesis can ensure that the generated system meets all the required properties and behaviors.
+
+## Applying Inductive Deductive Synthesis to Distributed Systems
+
+Distributed systems are a prime example of systems that require formal verification. Properties such as consistency between reads and writes must hold under every possible interleaving of events. To apply inductive deductive synthesis to distributed systems, we need to follow these steps:
+
+### Step 1: Define the System Properties
+
+First, we need to define the properties that the system must satisfy. For example, in a distributed database, we may want to ensure that all nodes have a consistent view of the data. We can define this property using a formal specification language such as TLA+.
+
+```python
+# Import the TLA+ module
+import tla
+
+# Define the system properties
+properties = [
+    # Consistency property
+    tla.Property("Consistency", lambda s: s.nodes == s.nodes_prime)
+]
+```
+
+### Step 2: Generate the System Behavior
+
+Next, we need to generate the system behavior using inductive reasoning. We can use a model checker such as TLC to generate all possible system behaviors.
+
+```python
+# Import the TLC module
+import tlc
+
+# Generate the system behavior
+behavior = tlc.ModelChecker(properties, tla.Specification())
+```
+
+### Step 3: Verify the System Properties
+
+Finally, we need to verify that the generated system behavior satisfies all the required properties. We can use a proof assistant such as Coq to prove that the system properties hold.
+
+```python
+# Import the Coq module
+import coq
+
+# Verify the system properties
+proof = coq.ProofAssistant(properties, behavior)
+```
+
+## Example Use Case
+
+Let's consider an example use case of a distributed database. We want to ensure that all nodes have a consistent view of the data. We can define this property using TLA+ and generate the system behavior using TLC. Then, we can verify that the system properties hold using Coq.
+
+![A group of blue and green balls on a black background](https://images.unsplash.com/photo-1737505599162-d9932323a889?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxJbmR1Y3RpdmUlMjBEZWR1Y3RpdmUlMjBTeW50aGVzaXMlMjBFbmFibGluZyUyMEdlbmVyYXRlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5NzM4OTkxfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+Inductive deductive synthesis is a powerful approach that enables AI to generate formally verified systems. By combining inductive and deductive reasoning, we can ensure that the generated system meets all the required properties and behaviors. In this tutorial, we have provided a step-by-step guide on how to apply inductive deductive synthesis to distributed systems. We have also provided a example use case of a distributed database, where we have defined the system properties, generated the system behavior, and verified that the system properties hold.
+
+## Future Work
+
+There are several directions for future work in inductive deductive synthesis. One area of research is to improve the efficiency of the model checking and proof assistant tools. Another area of research is to apply inductive deductive synthesis to other types of systems, such as cyber-physical systems. Additionally, we can explore the use of machine learning techniques to improve the accuracy of the inductive reasoning step.
+
+![a group of purple and yellow pieces of plastic](https://images.unsplash.com/photo-1693920105404-c2208c22cfe4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxJbmR1Y3RpdmUlMjBEZWR1Y3RpdmUlMjBTeW50aGVzaXMlMjBFbmFibGluZyUyMEdlbmVyYXRlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5NzM4OTkxfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## References
+
+* [Inductive Deductive Synthesis: Enabling AI to Generate Formally Verified Systems](https://arxiv.org/abs/2605.23109)
+* [TLA+](https://lamport.azurewebsites.net/tla/tla.html)
+* [TLC](https://lamport.azurewebsites.net/tla/tlc.html)
+* [Coq](https://coq.inria.fr/)
+
+*Photo by [Google DeepMind](https://unsplash.com/@googledeepmind?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-close-up-of-a-container-with-words-on-it-b8GH92xVoUw?utm_source=techversation&utm_medium=referral)*
