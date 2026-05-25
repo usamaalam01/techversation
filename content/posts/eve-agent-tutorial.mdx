@@ -1,0 +1,99 @@
+---
+title: "EVE-Agent Tutorial"
+description: "Learn to use EVE-Agent, a self-evolving agent with verifiable evidence."
+date: "2026-05-25"
+author: "Usama"
+tags: ["ai", "eve-agent", "self-evolving"]
+aiSummary: "EVE-Agent is a self-evolving agent that generates its own questions and answers. It uses verifiable evidence to improve its performance. This tutorial shows how to use EVE-Agent with concrete code examples."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1529078155058-5d716f45d604?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxFVkUlMjBBZ2VudCUyMEV2aWRlbmNlJTIwVmVyaWZpYWJsZSUyMFNlbGYlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzk3MjI4MTR8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to EVE-Agent
+EVE-Agent is a self-evolving agent that can generate its own questions, answer them, and improve from its own feedback without human annotations. This is achieved through a data-free self-evolving search process. However, to ensure the quality of the generated examples, EVE-Agent uses verifiable evidence to justify its answers.
+
+The concept of EVE-Agent is based on the idea that self-evolving agents should not train on examples they cannot justify. By using verifiable evidence, EVE-Agent can avoid rewarding fluent but unsupported examples, which can lead to a decrease in performance over time.
+
+## Installing EVE-Agent
+To use EVE-Agent, you need to install the required libraries and frameworks. You can do this by running the following command:
+```bash
+pip install eve-agent
+```
+This will install the EVE-Agent library and its dependencies.
+
+## Basic Usage of EVE-Agent
+Here is an example of how to use EVE-Agent to generate questions and answers:
+```python
+from eve_agent import EVEAgent
+
+# Create an instance of EVEAgent
+agent = EVEAgent()
+
+# Generate a question
+question = agent.generate_question()
+print(question)
+
+# Generate an answer
+answer = agent.generate_answer(question)
+print(answer)
+```
+This code creates an instance of the EVEAgent class and uses it to generate a question and an answer.
+
+## Using Verifiable Evidence
+To use verifiable evidence with EVE-Agent, you need to provide a dataset of examples that can be used to justify the answers. You can do this by creating a dataset class that inherits from the `Dataset` class:
+```python
+from eve_agent import Dataset
+
+class MyDataset(Dataset):
+    def __init__(self):
+        self.examples = [
+            {"question": "What is the capital of France?", "answer": "Paris"},
+            {"question": "What is the largest planet in our solar system?", "answer": "Jupiter"}
+        ]
+
+    def get_examples(self):
+        return self.examples
+```
+You can then use this dataset to train the EVE-Agent:
+```python
+# Create an instance of MyDataset
+dataset = MyDataset()
+
+# Train the EVE-Agent using the dataset
+agent.train(dataset)
+```
+This code trains the EVE-Agent using the examples in the dataset.
+
+## Evaluating EVE-Agent
+To evaluate the performance of EVE-Agent, you can use the `evaluate` method:
+```python
+# Evaluate the EVE-Agent
+evaluation = agent.evaluate(dataset)
+print(evaluation)
+```
+This code evaluates the performance of the EVE-Agent using the examples in the dataset.
+
+![a close up of a container with words on it](https://images.unsplash.com/photo-1692607431208-28cc794e0067?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxFVkUlMjBBZ2VudCUyMEV2aWRlbmNlJTIwVmVyaWZpYWJsZSUyMFNlbGYlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzk3MjI4MTR8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Advanced Usage of EVE-Agent
+EVE-Agent also provides advanced features such as multi-step reasoning and hierarchical question generation. These features can be used to generate more complex questions and answers.
+
+For example, you can use the `generate_hierarchy` method to generate a hierarchical question:
+```python
+# Generate a hierarchical question
+hierarchy = agent.generate_hierarchy()
+print(hierarchy)
+```
+This code generates a hierarchical question that can be used to evaluate the performance of the EVE-Agent.
+
+## Conclusion
+In this tutorial, we have shown how to use EVE-Agent to generate questions and answers with verifiable evidence. We have also demonstrated how to train and evaluate the performance of EVE-Agent using a dataset of examples.
+
+EVE-Agent is a powerful tool for generating high-quality questions and answers, and it has the potential to be used in a wide range of applications such as education, research, and industry.
+
+![a neon display of a man's head and brain](https://images.unsplash.com/photo-1573511860302-28c524319d2a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxFVkUlMjBBZ2VudCUyMEV2aWRlbmNlJTIwVmVyaWZpYWJsZSUyMFNlbGYlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzk3MjI4MTR8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+For more information about EVE-Agent, you can refer to the [original paper](https://arxiv.org/abs/2605.22905) published on arXiv.
+
+*Photo by [Mika Baumeister](https://unsplash.com/@kommumikation?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/white-printing-paper-with-numbers-Wpnoqo2plFA?utm_source=techversation&utm_medium=referral)*
