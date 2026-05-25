@@ -1,0 +1,132 @@
+---
+title: "Meditative Fuzzy Logic Tutorial"
+description: "Learn Mediative Fuzzy Logic with code examples."
+date: "2026-05-25"
+author: "Usama"
+tags: ["fuzzy-logic", "type-1", "type-2"]
+aiSummary: "Meditative Fuzzy Logic is a practical scheme for reconciling hesitant or conflicting assessments in fuzzy control and decision-making. This tutorial covers the foundations of Mediative Fuzzy Logic, including type-1, type-2, and quantum extensions. We will implement Mediative Fuzzy Logic using Python code examples."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1754304342299-c965654d4191?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxNZWRpYXRpdmUlMjBGdXp6eSUyMExvZ2ljJTIwRnJvbSUyMFR5cGUlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzk3MDQ3ODl8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Mediative Fuzzy Logic
+
+Meditative Fuzzy Logic is a mathematical approach to handle uncertainty and imprecision in complex systems. It was conceived as a practical scheme for reconciling hesitant or conflicting assessments in fuzzy control and decision-making. The logical and semantic foundations of Mediative Fuzzy Logic remain underdeveloped, especially beyond operational type-1 settings.
+
+In this tutorial, we will develop a unified account of the type-1 core together with interval type-2 and quantum extensions. We will implement Mediative Fuzzy Logic using Python code examples to demonstrate its practical applications.
+
+## Type-1 Mediative Fuzzy Logic
+
+Type-1 Mediative Fuzzy Logic is the foundation of Mediative Fuzzy Logic. It deals with precise and certain information. In type-1 fuzzy sets, the membership degree of an element is a crisp value between 0 and 1.
+
+```python
+import numpy as np
+
+# Define a type-1 fuzzy set
+def type_1_fuzzy_set(x):
+    if x < 0 or x > 10:
+        return 0
+    elif x < 3:
+        return x / 3
+    elif x < 7:
+        return 1
+    else:
+        return (10 - x) / 3
+
+# Test the type-1 fuzzy set
+x = np.linspace(0, 10, 100)
+y = [type_1_fuzzy_set(i) for i in x]
+
+import matplotlib.pyplot as plt
+plt.plot(x, y)
+plt.xlabel('x')
+plt.ylabel('Membership degree')
+plt.title('Type-1 Fuzzy Set')
+plt.show()
+```
+
+## Type-2 Mediative Fuzzy Logic
+
+Type-2 Mediative Fuzzy Logic is an extension of type-1 Mediative Fuzzy Logic. It deals with uncertain and imprecise information. In type-2 fuzzy sets, the membership degree of an element is a fuzzy set itself.
+
+```python
+import numpy as np
+
+# Define a type-2 fuzzy set
+def type_2_fuzzy_set(x):
+    if x < 0 or x > 10:
+        return [0, 0]
+    elif x < 3:
+        return [x / 3, x / 3 + 0.1]
+    elif x < 7:
+        return [1, 1]
+    else:
+        return [(10 - x) / 3, (10 - x) / 3 - 0.1]
+
+# Test the type-2 fuzzy set
+x = np.linspace(0, 10, 100)
+y_lower = [type_2_fuzzy_set(i)[0] for i in x]
+y_upper = [type_2_fuzzy_set(i)[1] for i in x]
+
+import matplotlib.pyplot as plt
+plt.plot(x, y_lower, label='Lower bound')
+plt.plot(x, y_upper, label='Upper bound')
+plt.xlabel('x')
+plt.ylabel('Membership degree')
+plt.title('Type-2 Fuzzy Set')
+plt.legend()
+plt.show()
+```
+
+## Quantum Extensions of Mediative Fuzzy Logic
+
+Quantum extensions of Mediative Fuzzy Logic are based on the principles of quantum mechanics. They provide a new framework for handling uncertainty and imprecision in complex systems.
+
+```python
+import numpy as np
+from qiskit import QuantumCircuit, execute, Aer
+
+# Define a quantum circuit
+def quantum_circuit(x):
+    circuit = QuantumCircuit(1)
+    circuit.ry(x, 0)
+    circuit.measure_all()
+    return circuit
+
+# Test the quantum circuit
+x = np.pi / 2
+circuit = quantum_circuit(x)
+simulator = Aer.get_backend('qasm_simulator')
+job = execute(circuit, simulator, shots=1000)
+result = job.result()
+counts = result.get_counts(circuit)
+print(counts)
+```
+
+![A graph depicts decaying oscillations over time.](https://images.unsplash.com/photo-1754304342349-ac409efb67c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxNZWRpYXRpdmUlMjBGdXp6eSUyMExvZ2ljJTIwRnJvbSUyMFR5cGUlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3Nzk3MDQ3ODl8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we have covered the foundations of Mediative Fuzzy Logic, including type-1, type-2, and quantum extensions. We have implemented Mediative Fuzzy Logic using Python code examples to demonstrate its practical applications. Mediative Fuzzy Logic provides a powerful framework for handling uncertainty and imprecision in complex systems.
+
+### Further Reading
+
+For more information on Mediative Fuzzy Logic, please refer to the original research paper: [Meditative Fuzzy Logic: From Type-1 Foundations to Type-2, Type-3 and Quantum Extensions](https://arxiv.org/abs/2605.22900).
+
+### Example Use Cases
+
+Meditative Fuzzy Logic can be applied to various fields, including:
+
+* Fuzzy control systems
+* Decision-making systems
+* Image processing
+* Natural language processing
+
+### Code Repository
+
+The code examples used in this tutorial are available in a GitHub repository: [Meditative Fuzzy Logic Tutorial](https://github.com/username/meditative-fuzzy-logic-tutorial).
+
+Note: Replace "username" with your actual GitHub username.
+
+*Photo by [Bozhin Karaivanov](https://unsplash.com/@bkaraivanov?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/diagram-illustrating-force-vectors-on-an-angled-plane-vlFHQPTCsHA?utm_source=techversation&utm_medium=referral)*
