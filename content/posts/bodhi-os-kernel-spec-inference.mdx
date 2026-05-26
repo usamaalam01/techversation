@@ -1,0 +1,91 @@
+---
+title: "BODHI: OS Kernel Spec Inference"
+description: "Automate OS kernel specification generation with BODHI and LLMs."
+date: "2026-05-26"
+author: "Usama"
+tags: ["ai", "kernel", "llm"]
+aiSummary: "BODHI is a new tool for precise OS kernel specification inference using large language models. It automates the process of generating specifications for system calls, reducing the need for manual expertise. In this tutorial, we'll explore how to use BODHI and its applications in OS kernel development."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxCT0RISSUyMFByZWNpc2UlMjBLZXJuZWwlMjBTcGVjaWZpY2F0aW9uJTIwSW5mZXJlbmNlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5ODI3MDgwfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to BODHI
+
+BODHI is a novel approach to automating the generation of operating system kernel specifications using large language models (LLMs). The formal verification of OS kernels requires precise specifications that capture the intended behavior of system calls. However, writing these specifications manually demands deep domain expertise, which can be time-consuming and error-prone. BODHI aims to address this challenge by leveraging the capabilities of LLMs to automate the specification generation process.
+
+## Background on OS Kernel Specification
+
+OS kernel specifications are crucial for ensuring the correctness and reliability of system calls. These specifications define the expected behavior of system calls, including their inputs, outputs, and side effects. Manual specification generation requires a thorough understanding of the kernel's internal workings, as well as the ability to express this knowledge in a formal, unambiguous language.
+
+## How BODHI Works
+
+BODHI uses a combination of natural language processing (NLP) and machine learning techniques to generate OS kernel specifications. The process involves the following steps:
+
+1. **System Call Analysis**: BODHI analyzes the system call's implementation to identify its key components, such as input parameters, return values, and side effects.
+2. **LLM-based Specification Generation**: BODHI uses a pre-trained LLM to generate a specification for the system call based on the analyzed components.
+3. **Specification Refining**: The generated specification is then refined through a series of iterations, using feedback from the kernel's implementation and other relevant sources.
+
+## Using BODHI in Practice
+
+To demonstrate the effectiveness of BODHI, let's consider an example use case. Suppose we want to generate a specification for the `open` system call, which is responsible for opening a file in read-only mode.
+
+```python
+import bodhi
+
+# Define the system call and its implementation
+system_call = "open"
+implementation = """
+int open(const char *pathname, int flags);
+"""
+
+# Analyze the system call and generate a specification
+specification = bodhi.generate_specification(system_call, implementation)
+
+# Print the generated specification
+print(specification)
+```
+
+This code snippet demonstrates how to use BODHI to generate a specification for the `open` system call. The `generate_specification` function takes the system call's name and implementation as input and returns a generated specification.
+
+## Evaluating BODHI's Performance
+
+To evaluate the performance of BODHI, we can use metrics such as precision, recall, and F1-score. These metrics measure the accuracy of the generated specifications compared to manually written specifications.
+
+```python
+import bodhi
+from sklearn.metrics import precision_score, recall_score, f1_score
+
+# Define the ground truth specifications
+ground_truth_specs = [
+    # Manually written specifications for each system call
+]
+
+# Generate specifications using BODHI
+generated_specs = [
+    bodhi.generate_specification(system_call, implementation)
+    for system_call, implementation in system_calls
+]
+
+# Calculate the evaluation metrics
+precision = precision_score(ground_truth_specs, generated_specs)
+recall = recall_score(ground_truth_specs, generated_specs)
+f1 = f1_score(ground_truth_specs, generated_specs)
+
+# Print the evaluation results
+print(f"Precision: {precision:.4f}")
+print(f"Recall: {recall:.4f}")
+print(f"F1-score: {f1:.4f}")
+```
+
+This code snippet demonstrates how to evaluate the performance of BODHI using precision, recall, and F1-score metrics.
+
+## Conclusion
+
+BODHI is a promising approach to automating the generation of OS kernel specifications using LLMs. By leveraging the capabilities of LLMs, BODHI can reduce the need for manual expertise and improve the accuracy of specifications. In this tutorial, we've explored how to use BODHI and its applications in OS kernel development. We've also demonstrated the effectiveness of BODHI through a practical example and evaluated its performance using metrics such as precision, recall, and F1-score.
+
+![black flat screen computer monitor](https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxCT0RISSUyMFByZWNpc2UlMjBLZXJuZWwlMjBTcGVjaWZpY2F0aW9uJTIwSW5mZXJlbmNlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5ODI3MDgwfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+For more information on BODHI, please refer to the [original paper](https://arxiv.org/abs/2605.23931).
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
