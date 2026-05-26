@@ -1,0 +1,128 @@
+---
+title: "Proactive Goal-Directed Intelligence"
+description: "Building Context with Composable Sandboxed Programs"
+date: "2026-05-26"
+author: "Usama"
+tags: ["ai", "context", "intelligence"]
+aiSummary: "Context is a proactive goal-directed intelligence layer that advances shared tasks without waiting for user prompts. It uses composable sandboxed programs, declarative wiring, and structured interaction. This tutorial shows how to build a Context system from scratch."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxDb250ZXh0JTIwUHJvYWN0aXZlJTIwR29hbCUyMERpcmVjdGVkJTIwSW50ZWxsaWdlbmNlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5NzY5MTg4fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+The Context system, as described in the [arXiv paper](https://arxiv.org/abs/2605.23928), is a proactive goal-directed intelligence layer that replaces reactive query-response chatbots with agents that advance shared tasks without waiting for user prompts. In this tutorial, we will explore how to build a Context system from scratch using composable sandboxed programs, declarative wiring, and structured interaction.
+
+## Composable Sandboxed Programs
+Composable sandboxed programs are the building blocks of the Context system. They are small, self-contained programs that can be composed together to achieve complex tasks. Each program has a specific input and output, and they can be wired together using declarative wiring.
+
+To demonstrate this, let's create a simple composable sandboxed program in Python:
+```python
+# program.py
+def add(x, y):
+    return x + y
+
+def multiply(x, y):
+    return x * y
+```
+This program has two functions: `add` and `multiply`. We can use these functions as building blocks to create more complex programs.
+
+## Declarative Wiring
+Declarative wiring is a way to connect composable sandboxed programs together to achieve a specific goal. It's a high-level abstraction that allows us to define what we want to achieve, rather than how to achieve it.
+
+To demonstrate declarative wiring, let's create a simple wiring configuration in JSON:
+```json
+// wiring.json
+{
+    "programs": [
+        {
+            "name": "add",
+            "input": ["x", "y"],
+            "output": "result"
+        },
+        {
+            "name": "multiply",
+            "input": ["x", "y"],
+            "output": "result"
+        }
+    ],
+    "connections": [
+        {
+            "from": "add",
+            "to": "multiply",
+            "input": "result"
+        }
+    ]
+}
+```
+This wiring configuration defines two programs: `add` and `multiply`. It also defines a connection between the two programs, where the output of the `add` program is used as the input to the `multiply` program.
+
+## Structured Interaction
+Structured interaction is a way to interact with the Context system in a structured and meaningful way. It allows us to define a set of inputs and outputs that can be used to interact with the system.
+
+To demonstrate structured interaction, let's create a simple interaction protocol in Python:
+```python
+# interaction.py
+class Interaction:
+    def __init__(self, wiring):
+        self.wiring = wiring
+
+    def interact(self, input_data):
+        # Process input data using the wiring configuration
+        output_data = self.process_input(input_data)
+        return output_data
+
+    def process_input(self, input_data):
+        # Use the wiring configuration to process the input data
+        for program in self.wiring["programs"]:
+            if program["name"] == "add":
+                # Use the add program to process the input data
+                result = add(input_data["x"], input_data["y"])
+                return result
+            elif program["name"] == "multiply":
+                # Use the multiply program to process the input data
+                result = multiply(input_data["x"], input_data["y"])
+                return result
+```
+This interaction protocol defines a class `Interaction` that takes a wiring configuration as input. It also defines a method `interact` that processes input data using the wiring configuration.
+
+## Putting it all Together
+Now that we have defined the composable sandboxed programs, declarative wiring, and structured interaction, let's put it all together to create a Context system.
+
+Here's an example of how we can use the Context system to achieve a specific goal:
+```python
+# main.py
+from program import add, multiply
+from interaction import Interaction
+import json
+
+# Load the wiring configuration
+with open("wiring.json") as f:
+    wiring = json.load(f)
+
+# Create an interaction object
+interaction = Interaction(wiring)
+
+# Define input data
+input_data = {"x": 2, "y": 3}
+
+# Interact with the Context system
+output_data = interaction.interact(input_data)
+
+# Print the output data
+print(output_data)
+```
+This example loads the wiring configuration, creates an interaction object, defines input data, interacts with the Context system, and prints the output data.
+
+![person writing on whiteboard](https://images.unsplash.com/photo-1546437593-3d0258c28037?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxDb250ZXh0JTIwUHJvYWN0aXZlJTIwR29hbCUyMERpcmVjdGVkJTIwSW50ZWxsaWdlbmNlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5NzY5MTg4fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we have explored how to build a Context system from scratch using composable sandboxed programs, declarative wiring, and structured interaction. We have also demonstrated how to use the Context system to achieve a specific goal.
+
+The Context system has the potential to revolutionize the way we interact with machines, by providing a proactive goal-directed intelligence layer that can advance shared tasks without waiting for user prompts.
+
+![People are looking at a mind map on a laptop screen.](https://images.unsplash.com/photo-1745847768382-816bfc32e1bb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxDb250ZXh0JTIwUHJvYWN0aXZlJTIwR29hbCUyMERpcmVjdGVkJTIwSW50ZWxsaWdlbmNlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5NzY5MTg4fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+Note: This is a simplified example and in real-world scenarios, the Context system would require more complex programs, wiring configurations, and interaction protocols. However, this tutorial should provide a good starting point for understanding the basics of the Context system.
+
+*Photo by [Sharad Bhat](https://unsplash.com/@sharadmbhat?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/black-flat-screen-computer-monitor-Q_Swg0rZouw?utm_source=techversation&utm_medium=referral)*
