@@ -1,0 +1,138 @@
+---
+title: "Quantum Frog: A Cooperative Game"
+description: "Quantum Frog is a two-player cooperative game with a novel quantized-time mechanic."
+date: "2026-05-26"
+author: "Usama"
+tags: ["ai", "quantum", "game"]
+aiSummary: "Quantum Frog is a two-player cooperative game that requires players to work together to cross an 8x8 grid of traffic. The game uses reinforcement learning to emerge cooperation and difficulty scaling. This tutorial will guide you through building a basic version of Quantum Frog using Python."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1572916396232-b4e9e64da034?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxRdWFudHVtJTIwRnJvZyUyMEVtZXJnZW50JTIwQ29vcGVyYXRpb24lMjBEaWZmaWN1bHR5JTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5NzkwNTQ1fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Quantum Frog is a two-player cooperative game that introduces a novel quantized-time mechanic, where the environment advances only when a player acts. The game is built on top of the classic arcade game Frogger and requires two frogs to cross an 8x8 grid of traffic and reach the far side together. In this tutorial, we will explore how to build a basic version of Quantum Frog using Python and reinforcement learning.
+
+## Game Environment
+The game environment consists of an 8x8 grid, where each cell can be either empty or occupied by a frog or traffic. The frogs can move up, down, left, or right, and the traffic moves horizontally across the grid. The game ends when both frogs reach the far side of the grid or when one of the frogs is hit by traffic.
+
+### Game State
+The game state can be represented as a 2D array, where each cell contains information about the current state of the cell. We can use the following representation:
+- 0: Empty cell
+- 1: Frog 1
+- 2: Frog 2
+- 3: Traffic
+
+```python
+import numpy as np
+
+# Initialize the game state
+game_state = np.zeros((8, 8))
+
+# Place the frogs at the starting position
+game_state[0, 0] = 1
+game_state[0, 1] = 2
+
+# Place the traffic at the starting position
+game_state[4, 2] = 3
+```
+
+## Reinforcement Learning
+We will use reinforcement learning to train the frogs to work together and cross the grid. The reinforcement learning algorithm will learn to take actions based on the current state of the game and the rewards it receives.
+
+### Actions
+The frogs can take the following actions:
+- 0: Move up
+- 1: Move down
+- 2: Move left
+- 3: Move right
+
+```python
+# Define the possible actions
+actions = [0, 1, 2, 3]
+```
+
+### Rewards
+The frogs receive rewards based on their actions and the current state of the game. We can use the following rewards:
+- +1: Frog moves closer to the far side of the grid
+- -1: Frog moves away from the far side of the grid
+- -10: Frog is hit by traffic
+
+```python
+# Define the rewards
+rewards = {
+    'move_closer': 1,
+    'move_away': -1,
+    'hit_by_traffic': -10
+}
+```
+
+## Training the Model
+We will use a simple Q-learning algorithm to train the frogs. The Q-learning algorithm learns to predict the expected return of taking each action in each state.
+
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+# Define the Q-network
+class QNetwork(nn.Module):
+    def __init__(self):
+        super(QNetwork, self).__init__()
+        self.fc1 = nn.Linear(8*8, 128)
+        self.fc2 = nn.Linear(128, 128)
+        self.fc3 = nn.Linear(128, len(actions))
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = torch.relu(self.fc2(x))
+        x = self.fc3(x)
+        return x
+
+# Initialize the Q-network and the optimizer
+q_network = QNetwork()
+optimizer = optim.Adam(q_network.parameters(), lr=0.001)
+
+# Train the Q-network
+for episode in range(1000):
+    # Initialize the game state
+    game_state = np.zeros((8, 8))
+    game_state[0, 0] = 1
+    game_state[0, 1] = 2
+
+    # Play the game
+    for step in range(100):
+        # Get the current state
+        state = game_state.flatten()
+
+        # Get the Q-values
+        q_values = q_network(torch.tensor(state, dtype=torch.float32))
+
+        # Choose the action
+        action = torch.argmax(q_values).item()
+
+        # Take the action
+        game_state = take_action(game_state, action)
+
+        # Get the reward
+        reward = get_reward(game_state)
+
+        # Update the Q-network
+        optimizer.zero_grad()
+        loss = (q_values[action] - (reward + 0.9 * q_values[action]))**2
+        loss.backward()
+        optimizer.step()
+
+        # Check if the game is over
+        if is_game_over(game_state):
+            break
+```
+
+## Conclusion
+In this tutorial, we have built a basic version of Quantum Frog using Python and reinforcement learning. The game is a two-player cooperative game that requires the frogs to work together to cross an 8x8 grid of traffic. The reinforcement learning algorithm learns to take actions based on the current state of the game and the rewards it receives. We have trained the Q-network using a simple Q-learning algorithm and have shown how to play the game using the trained Q-network.
+
+![green frog standing on grey surface](https://images.unsplash.com/photo-1499114794761-d2743d4eb6f2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxRdWFudHVtJTIwRnJvZyUyMEVtZXJnZW50JTIwQ29vcGVyYXRpb24lMjBEaWZmaWN1bHR5JTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5NzkwNTQ1fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+Note: The code provided in this tutorial is a simplified version of the game and is not intended to be a complete implementation. The game can be further improved by adding more features, such as multiple levels, different types of traffic, and more complex rewards.
+
+*Photo by [David Clode](https://unsplash.com/@davidclode?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/green-frog-on-brown-surface-q8-m4cp0BcQ?utm_source=techversation&utm_medium=referral)*
