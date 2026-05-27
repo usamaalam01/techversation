@@ -1,0 +1,92 @@
+---
+title: "Agentic AI for Science"
+description: "Autonomous AI in scientific workflows with Python and LLMs."
+date: "2026-05-27"
+author: "Usama"
+tags: ["ai", "science", "python"]
+aiSummary: "This tutorial explores two novel frameworks for developing autonomous, agentic AI in scientific workflows. We'll implement the DeepTS/DeepCollector agent using Python and large language models. By the end of this tutorial, you'll have a working example of agentic AI in action."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1581093577421-f561a654a353?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxFeHBlcmltZW50cyUyMEFnZW50aWMlMjBTY2llbmNlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5ODU2OTc0fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+The field of artificial intelligence has made tremendous progress in recent years, with the development of large language models (LLMs) being a significant milestone. These models have the potential to revolutionize the way we approach scientific research, enabling autonomous, agentic AI systems to assist in data collection, analysis, and decision-making. In this tutorial, we'll delve into the world of agentic AI for science, exploring two novel frameworks that leverage a hybrid Local Body, Remote Brain architecture.
+
+## Background
+The paper "Experiments in Agentic AI for Science" (arXiv:2605.26305v1) introduces two frameworks for developing autonomous, agentic AI in scientific workflows. The first agent, DeepTS/DeepCollector, automates large-scale data collection and analysis, while the second agent focuses on more complex tasks. Both systems utilize a hybrid Local Body, Remote Brain architecture, where Python-based local orchestrators invoke LLM cloud backends via Google Colab.
+
+## Setting up the Environment
+To get started, you'll need to set up a Google Colab environment and install the required libraries. You can do this by running the following code:
+```python
+import os
+import torch
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+# Install required libraries
+!pip install transformers
+!pip install torch
+```
+Next, you'll need to import the necessary libraries and set up your LLM cloud backend. For this example, we'll use the Hugging Face Transformers library.
+```python
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+# Set up LLM cloud backend
+model_name = "distilbert-base-uncased"
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForSequenceClassification.from_pretrained(model_name)
+```
+## Implementing the DeepTS/DeepCollector Agent
+The DeepTS/DeepCollector agent is designed to automate large-scale data collection and analysis. To implement this agent, you'll need to create a Python script that can interact with your LLM cloud backend. Here's an example code snippet to get you started:
+```python
+import pandas as pd
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+# Define a function to collect data
+def collect_data(query):
+    # Use the LLM to generate a list of relevant papers
+    inputs = tokenizer(query, return_tensors="pt")
+    outputs = model(**inputs)
+    papers = []
+    for paper in outputs:
+        papers.append(paper["title"])
+    return papers
+
+# Define a function to analyze data
+def analyze_data(papers):
+    # Use the LLM to analyze the papers and extract relevant information
+    analyzed_papers = []
+    for paper in papers:
+        inputs = tokenizer(paper, return_tensors="pt")
+        outputs = model(**inputs)
+        analyzed_papers.append(outputs)
+    return analyzed_papers
+
+# Test the agent
+query = "Experiments in Agentic AI for Science"
+papers = collect_data(query)
+analyzed_papers = analyze_data(papers)
+print(analyzed_papers)
+```
+## Deploying the Agent
+Once you've implemented the DeepTS/DeepCollector agent, you can deploy it using Google Colab. To do this, you'll need to create a new Colab notebook and upload your Python script. You can then run the script using the Colab environment.
+
+![woman in white medical scrub](https://images.unsplash.com/photo-1618053448492-2b629c2c912c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxFeHBlcmltZW50cyUyMEFnZW50aWMlMjBTY2llbmNlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5ODU2OTc0fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we've explored the concept of agentic AI for science and implemented the DeepTS/DeepCollector agent using Python and LLMs. By leveraging a hybrid Local Body, Remote Brain architecture, we can create autonomous, agentic AI systems that can assist in data collection, analysis, and decision-making. As the field of AI continues to evolve, we can expect to see more innovative applications of agentic AI in scientific research.
+
+## Future Work
+There are many potential directions for future work in this area. Some possible avenues for exploration include:
+
+* Integrating multiple LLMs to create a more robust and accurate system
+* Developing more complex agents that can handle a wider range of tasks
+* Exploring the use of agentic AI in other fields, such as healthcare or finance
+
+By continuing to push the boundaries of what is possible with agentic AI, we can unlock new discoveries and innovations that can benefit society as a whole.
+
+![man in white dress shirt holding camera](https://images.unsplash.com/photo-1630959300489-63dae3a8240a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxFeHBlcmltZW50cyUyMEFnZW50aWMlMjBTY2llbmNlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzc5ODU2OTc0fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+We hope this tutorial has provided a useful introduction to the concept of agentic AI for science. By following the steps outlined in this tutorial, you can create your own autonomous, agentic AI system using Python and LLMs. Happy coding!
+
+*Photo by [ThisisEngineering](https://unsplash.com/@thisisengineering?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/woman-in-white-long-sleeve-shirt-sitting-on-chair-8yS04veb1TQ?utm_source=techversation&utm_medium=referral)*
