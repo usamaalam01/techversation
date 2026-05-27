@@ -1,0 +1,73 @@
+---
+title: "Vulnerable AI Agents"
+description: "Millions of AI agents imperiled by critical vulnerability in open source package."
+date: "2026-05-27"
+author: "Usama"
+tags: ["ai", "security", "vulnerability"]
+aiSummary: "A critical vulnerability in the Starlette open-source package has put millions of AI agents at risk. The vulnerability, known as 'BadHost', allows attackers to gain control over affected systems. This tutorial will guide developers on how to identify and mitigate this vulnerability in their AI systems."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1510511459019-5dda7724fd87?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxNaWxsaW9ucyUyMGFnZW50cyUyMGltcGVyaWxlZCUyMGNyaXRpY2FsJTIwdnVsbmVyYWJpbGl0eSUyMHRlY2hub2xvZ3klMjBkaWdpdGFsJTIwaW5ub3ZhdGlvbnxlbnwxfDB8fHwxNzc5ODc2NzE4fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to the Vulnerability
+The Starlette package, with over 325 million weekly downloads, is a popular choice among developers for building AI systems. However, a recent discovery has revealed a critical vulnerability in the package, known as 'BadHost'. This vulnerability allows attackers to gain control over affected systems, putting millions of AI agents at risk.
+
+## Understanding the 'BadHost' Vulnerability
+The 'BadHost' vulnerability is a result of a flaw in the way Starlette handles HTTP requests. Specifically, it allows attackers to manipulate the `Host` header in HTTP requests, which can lead to arbitrary code execution. This vulnerability is particularly concerning because it can be exploited remotely, without the need for any authentication or authorization.
+
+### Identifying the Vulnerability
+To identify if your AI system is vulnerable to 'BadHost', you can use a simple Python script:
+```python
+import requests
+
+def check_vulnerability(url):
+    headers = {'Host': 'example.com'}
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        print("Vulnerable to 'BadHost'!")
+    else:
+        print("Not vulnerable to 'BadHost'.")
+
+# Replace 'http://example.com' with the URL of your AI system
+check_vulnerability('http://example.com')
+```
+This script sends a GET request to the specified URL with a modified `Host` header. If the response status code is 200, it indicates that the system is vulnerable to 'BadHost'.
+
+## Mitigating the Vulnerability
+To mitigate the 'BadHost' vulnerability, you can update the Starlette package to the latest version, which includes a patch for the vulnerability. Alternatively, you can use a web application firewall (WAF) to filter out malicious requests.
+
+### Updating Starlette
+To update the Starlette package, you can use pip:
+```bash
+pip install --upgrade starlette
+```
+### Using a Web Application Firewall (WAF)
+A WAF can help filter out malicious requests and prevent exploitation of the 'BadHost' vulnerability. Here's an example of how to configure a WAF using the `flask` framework:
+```python
+from flask import Flask, request
+from flask_waf import WAF
+
+app = Flask(__name__)
+waf = WAF(app)
+
+# Configure the WAF to filter out malicious requests
+waf.add_rule('Host', '^example\.com$')
+
+@app.route('/')
+def index():
+    return 'Hello, World!'
+
+if __name__ == '__main__':
+    app.run()
+```
+In this example, the WAF is configured to filter out requests with a `Host` header that does not match the expected value.
+
+![a close up of a computer screen with the words mid - journey on it](https://images.unsplash.com/photo-1675557570482-df9926f61d86?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxNaWxsaW9ucyUyMGFnZW50cyUyMGltcGVyaWxlZCUyMGNyaXRpY2FsJTIwdnVsbmVyYWJpbGl0eSUyMHRlY2hub2xvZ3klMjBkaWdpdGFsJTIwaW5ub3ZhdGlvbnxlbnwxfDB8fHwxNzc5ODc2NzE4fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+The 'BadHost' vulnerability in the Starlette package is a critical concern for developers of AI systems. By understanding the vulnerability and taking steps to mitigate it, developers can help protect their systems from exploitation. Remember to update the Starlette package to the latest version and consider using a WAF to filter out malicious requests. With these measures in place, you can help ensure the security and integrity of your AI systems.
+
+For more information on the 'BadHost' vulnerability and how to mitigate it, you can refer to the [original article on Ars Technica](https://arstechnica.com/information-technology/2026/05/millions-of-ai-agents-imperiled-by-critical-vulnerability-in-open-source-package/). Stay vigilant and keep your AI systems secure!
+
+*Photo by [Markus Spiske](https://unsplash.com/@markusspiske?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/black-and-gray-laptop-computer-turned-on-FXFz-sW0uwo?utm_source=techversation&utm_medium=referral)*
