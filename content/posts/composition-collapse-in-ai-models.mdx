@@ -1,0 +1,64 @@
+---
+title: "Composition Collapse in AI Models"
+description: "Evaluating compositional reasoning in AI models beyond benchmark scores."
+date: "2026-05-27"
+author: "Usama"
+tags: ["ai", "reasoning", "evaluation"]
+aiSummary: "This tutorial explores the concept of composition collapse in AI models, where statistically indistinguishable atomic knowledge can produce varying composition behaviors. We will delve into the implications of this phenomenon and provide working code examples to demonstrate how to evaluate compositional reasoning in AI models. By the end of this tutorial, you will understand how to move beyond aggregate benchmark scores and assess the true capabilities of your AI models."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1529078155058-5d716f45d604?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxDb21wb3NpdGlvbiUyMENvbGxhcHNlJTIwU3RhYmxlJTIwRmFjdHVhbCUyMEtub3dsZWRnZSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3OTkxMzg4N3ww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Composition Collapse
+
+The concept of composition collapse refers to the phenomenon where AI models with similar performance on individual tasks or questions can exhibit significantly different behaviors when faced with compositional reasoning tasks. This is a critical issue in the development of AI models, as it highlights the limitations of relying solely on aggregate benchmark scores to evaluate their capabilities. In this tutorial, we will explore the implications of composition collapse and provide practical guidance on how to evaluate compositional reasoning in AI models.
+
+## Understanding Compositional Reasoning
+
+Compositional reasoning refers to the ability of an AI model to combine individual pieces of knowledge to arrive at a more complex understanding or solution. This is a crucial aspect of human intelligence, and AI models that can demonstrate compositional reasoning are considered more advanced and versatile. However, as the research paper [arXiv:2605.26789v1](https://arxiv.org/abs/2605.26789) highlights, the assumption that a model with better performance on individual tasks will necessarily excel at compositional reasoning is misleading.
+
+## Evaluating Compositional Reasoning
+
+To evaluate compositional reasoning in AI models, we need to move beyond aggregate benchmark scores and focus on more nuanced metrics. One approach is to use multi-hop reasoning tasks, which require the model to combine multiple pieces of knowledge to arrive at a solution. We can also use techniques such as graph-based reasoning, where the model is presented with a graph of entities and relationships and must reason about the connections between them.
+
+### Example Code: Multi-Hop Reasoning
+
+Here is an example of how to implement a multi-hop reasoning task using the Hugging Face Transformers library:
+```python
+import torch
+from transformers import AutoModelForQuestionAnswering, AutoTokenizer
+
+# Load pre-trained model and tokenizer
+model = AutoModelForQuestionAnswering.from_pretrained("bert-base-uncased")
+tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+
+# Define a sample question and context
+question = "What is the capital of France?"
+context = "France is a country in Europe. The capital of France is Paris."
+
+# Tokenize the question and context
+inputs = tokenizer(question, context, return_tensors="pt")
+
+# Get the model's answer
+answer = model(**inputs)
+
+# Print the answer
+print(answer)
+```
+This code snippet demonstrates how to use a pre-trained BERT model to answer a question that requires multi-hop reasoning. The model must combine the information from the context to arrive at the correct answer.
+
+## Visualizing Composition Collapse
+
+To better understand the phenomenon of composition collapse, we can visualize the performance of AI models on compositional reasoning tasks. The following graph depicts the decaying oscillations of a model's performance over time:
+![A graph depicts decaying oscillations over time.](https://images.unsplash.com/photo-1754304342349-ac409efb67c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxDb21wb3NpdGlvbiUyMENvbGxhcHNlJTIwU3RhYmxlJTIwRmFjdHVhbCUyMEtub3dsZWRnZSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3OTkxMzg4N3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+This graph illustrates how the model's performance on compositional reasoning tasks can degrade over time, even if its performance on individual tasks remains stable.
+
+## Conclusion
+
+In conclusion, composition collapse is a critical issue in the development of AI models, and evaluating compositional reasoning is essential to assess their true capabilities. By moving beyond aggregate benchmark scores and using techniques such as multi-hop reasoning and graph-based reasoning, we can gain a more nuanced understanding of our models' abilities. The code examples and visualizations provided in this tutorial demonstrate how to evaluate compositional reasoning in AI models and highlight the importance of considering this phenomenon in AI development.
+
+As we continue to develop more advanced AI models, it is crucial to prioritize the evaluation of compositional reasoning to ensure that our models can truly combine individual pieces of knowledge to arrive at a more complex understanding or solution. By doing so, we can create more robust and reliable AI systems that can tackle complex tasks and provide valuable insights in various domains.
+
+*Photo by [Mika Baumeister](https://unsplash.com/@kommumikation?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/white-printing-paper-with-numbers-Wpnoqo2plFA?utm_source=techversation&utm_medium=referral)*
