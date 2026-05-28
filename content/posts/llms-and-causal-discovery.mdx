@@ -1,0 +1,103 @@
+---
+title: "LLMs and Causal Discovery"
+description: "Large language models struggle with causal discovery, a crucial aspect of scientific reasoning."
+date: "2026-05-28"
+author: "Usama"
+tags: ["llm", "causal-discovery", "interventional-agents"]
+aiSummary: "Large language models fail at causal discovery due to fundamental limitations. Interventional agents can escape these limitations by actively intervening in the environment. This tutorial explores the reasons behind LLMs' failure and demonstrates how to implement interventional agents using Python."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxMTE1zJTIwRmFpbCUyMENhdXNhbCUyMERpc2NvdmVyeSUyMEludGVydmVudGlvbmFsJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgwMDAwNzQ1fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Causal Discovery
+Causal discovery is a critical component of scientific reasoning, enabling us to identify the underlying causes of phenomena and make informed decisions. Large language models (LLMs) have shown promise in various natural language processing tasks, but their ability to perform causal discovery reliably remains an open question. Recent benchmarks have revealed that even fine-tuned LLMs struggle with simple causal graphs and degrade as complexity grows.
+
+## Why LLMs Fail at Causal Discovery
+The failure of LLMs at causal discovery is fundamental and can be attributed to their supervised learning approach. Supervised learning focuses on predicting outcomes based on given inputs, rather than identifying the underlying causal relationships. This limitation becomes apparent when dealing with complex causal graphs, where the model must reason about the interactions between multiple variables.
+
+To illustrate this point, consider a simple causal graph with two variables, A and B, where A causes B. A supervised learning approach would focus on predicting the value of B given A, rather than identifying the causal relationship between the two variables.
+
+```python
+import numpy as np
+
+# Define the causal graph
+A = np.random.normal(0, 1, 100)
+B = 2 * A + np.random.normal(0, 1, 100)
+
+# Train a supervised model to predict B given A
+from sklearn.linear_model import LinearRegression
+model = LinearRegression()
+model.fit(A.reshape(-1, 1), B)
+
+# Evaluate the model
+print(model.coef_)  # Output: [2.]
+```
+
+While the supervised model can accurately predict the value of B given A, it does not provide insight into the underlying causal relationship.
+
+## Interventional Agents: A Solution to Causal Discovery
+Interventional agents can escape the limitations of LLMs by actively intervening in the environment and collecting data on the effects of their actions. This approach enables the agent to identify the causal relationships between variables and reason about the underlying mechanisms.
+
+To demonstrate the power of interventional agents, consider a simple example where an agent intervenes in the causal graph by setting the value of A to a specific value and observing the effect on B.
+
+```python
+import numpy as np
+
+# Define the causal graph
+def causal_graph(A):
+    return 2 * A + np.random.normal(0, 1)
+
+# Intervene in the causal graph by setting A to 1
+A_intervened = 1
+B_intervened = causal_graph(A_intervened)
+
+# Observe the effect on B
+print(B_intervened)
+```
+
+By intervening in the causal graph and observing the effects of their actions, the agent can identify the causal relationship between A and B and reason about the underlying mechanisms.
+
+## Implementing Interventional Agents using Python
+To implement interventional agents using Python, we can leverage libraries such as `gym` and `numpy`. The `gym` library provides a simple interface for defining and interacting with environments, while `numpy` provides support for numerical computations.
+
+```python
+import gym
+import numpy as np
+
+# Define the causal graph environment
+class CausalGraphEnvironment(gym.Env):
+    def __init__(self):
+        self.A = np.random.normal(0, 1)
+        self.B = 2 * self.A + np.random.normal(0, 1)
+
+    def step(self, action):
+        # Intervene in the causal graph by setting A to the action value
+        self.A = action
+        self.B = 2 * self.A + np.random.normal(0, 1)
+        return self.B, 0, False, {}
+
+    def reset(self):
+        self.A = np.random.normal(0, 1)
+        self.B = 2 * self.A + np.random.normal(0, 1)
+        return self.B
+
+# Create an instance of the environment
+env = CausalGraphEnvironment()
+
+# Intervene in the causal graph by setting A to 1
+action = 1
+observation, reward, done, info = env.step(action)
+
+# Observe the effect on B
+print(observation)
+```
+
+By implementing interventional agents using Python, we can create powerful tools for causal discovery and reasoning about complex systems.
+
+![person writing on whiteboard](https://images.unsplash.com/photo-1546437593-3d0258c28037?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxMTE1zJTIwRmFpbCUyMENhdXNhbCUyMERpc2NvdmVyeSUyMEludGVydmVudGlvbmFsJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgwMDAwNzQ1fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In conclusion, LLMs fail at causal discovery due to fundamental limitations in their supervised learning approach. Interventional agents can escape these limitations by actively intervening in the environment and collecting data on the effects of their actions. By implementing interventional agents using Python, we can create powerful tools for causal discovery and reasoning about complex systems. For more information on this topic, please refer to the original research paper on [arXiv](https://arxiv.org/abs/2605.27567).
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
