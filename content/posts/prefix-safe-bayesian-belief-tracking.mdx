@@ -1,0 +1,94 @@
+---
+title: "Prefix-Safe Bayesian Belief Tracking"
+description: "Bayesian belief tracking for LLM reasoning reliability"
+date: "2026-05-28"
+author: "Usama"
+tags: ["ai", "llm", "bayesian"]
+aiSummary: "This post explores prefix-safe Bayesian belief tracking for LLM reasoning reliability, separating calibration from ranking. It provides a step-by-step guide to implementing Sequential Bayesian Belief Tracking (SBBT) using Python. The tutorial covers the basics of Bayesian belief tracking, prefix-safe observations, and recursive belief updates."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1529078155058-5d716f45d604?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxQcmVmaXglMjBTYWZlJTIwQmF5ZXNpYW4lMjBCZWxpZWYlMjBUcmFja2luZyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3OTk4NTM2M3ww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Long reasoning traces in Large Language Models (LLMs) require reliability estimates before final answers are known. One approach to achieving this is through prefix-conditioned eventual-success estimation, $P(y=1 \mid o_{1:t})$, using prefix-safe observations. In this tutorial, we will delve into the world of Sequential Bayesian Belief Tracking (SBBT) and explore how it can be used to calibrate observation likelihoods and recursively update a two-state belief.
+
+## Bayesian Belief Tracking Basics
+Bayesian belief tracking is a probabilistic approach to estimating the state of a system based on observations. In the context of LLMs, the state of the system is typically represented by a binary variable $y$, where $y=1$ indicates a correct answer and $y=0$ indicates an incorrect answer. The observations $o_{1:t}$ are the output of the LLM at each time step.
+
+The goal of Bayesian belief tracking is to estimate the probability of the correct answer given the observations, $P(y=1 \mid o_{1:t})$. This is achieved by recursively updating the belief state using Bayes' rule.
+
+## Prefix-Safe Observations
+Prefix-safe observations are a type of observation that is designed to be safe to use in Bayesian belief tracking. The key property of prefix-safe observations is that they do not depend on the future observations. This is important because it allows us to use the observations to update the belief state without worrying about the impact of future observations.
+
+## Sequential Bayesian Belief Tracking (SBBT)
+SBBT is a specific implementation of Bayesian belief tracking that uses prefix-safe observations to update the belief state. The SBBT algorithm consists of two main components:
+
+1.  **Observation likelihood calculation**: This involves calculating the likelihood of each observation given the current state of the system.
+2.  **Belief update**: This involves updating the belief state using the observation likelihoods and the previous belief state.
+
+The SBBT algorithm can be implemented using the following recursive formula:
+
+$$
+P(y=1 \mid o_{1:t}) = \frac{P(o_t \mid y=1) \cdot P(y=1 \mid o_{1:t-1})}{P(o_t \mid o_{1:t-1})}
+$$
+
+where $P(o_t \mid y=1)$ is the likelihood of the observation given the correct answer, $P(y=1 \mid o_{1:t-1})$ is the previous belief state, and $P(o_t \mid o_{1:t-1})$ is the likelihood of the observation given the previous observations.
+
+### Implementing SBBT in Python
+Here is an example implementation of the SBBT algorithm in Python:
+```python
+import numpy as np
+
+def calculate_observation_likelihood(observation, correct_answer):
+    # Calculate the likelihood of the observation given the correct answer
+    if observation == correct_answer:
+        return 0.9  # High likelihood if the observation matches the correct answer
+    else:
+        return 0.1  # Low likelihood if the observation does not match the correct answer
+
+def update_belief_state(previous_belief_state, observation_likelihood, observation):
+    # Update the belief state using the observation likelihood and the previous belief state
+    numerator = observation_likelihood * previous_belief_state
+    denominator = observation_likelihood * previous_belief_state + (1 - observation_likelihood) * (1 - previous_belief_state)
+    return numerator / denominator
+
+def sbbt(observations, correct_answer):
+    # Initialize the belief state
+    belief_state = 0.5  # Initial belief state is 0.5 (neutral)
+
+    # Iterate over the observations
+    for observation in observations:
+        # Calculate the observation likelihood
+        observation_likelihood = calculate_observation_likelihood(observation, correct_answer)
+
+        # Update the belief state
+        belief_state = update_belief_state(belief_state, observation_likelihood, observation)
+
+    return belief_state
+
+# Example usage
+observations = [1, 1, 0, 1, 1]
+correct_answer = 1
+belief_state = sbbt(observations, correct_answer)
+print("Final belief state:", belief_state)
+```
+This implementation assumes a simple observation likelihood calculation, where the likelihood of an observation given the correct answer is high if the observation matches the correct answer, and low otherwise. The `update_belief_state` function updates the belief state using the observation likelihood and the previous belief state.
+
+## Conclusion
+In this tutorial, we explored the concept of prefix-safe Bayesian belief tracking for LLM reasoning reliability. We implemented the SBBT algorithm in Python and demonstrated how it can be used to estimate the probability of a correct answer given a sequence of observations. The SBBT algorithm is a powerful tool for calibrating observation likelihoods and recursively updating a two-state belief, making it a useful approach for LLM reasoning reliability.
+
+![black flat screen computer monitor](https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxQcmVmaXglMjBTYWZlJTIwQmF5ZXNpYW4lMjBCZWxpZWYlMjBUcmFja2luZyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc3OTk4NTM2M3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+By following this tutorial, you should now have a good understanding of how to implement SBBT in Python and how to use it to estimate the probability of a correct answer given a sequence of observations. You can use this knowledge to improve the reliability of your LLMs and make more informed decisions based on their output.
+
+### Future Work
+There are many potential extensions to this work, including:
+
+*   **Improving the observation likelihood calculation**: The observation likelihood calculation is a critical component of the SBBT algorithm. Improving this calculation could lead to more accurate estimates of the probability of a correct answer.
+*   **Using more advanced belief update rules**: The SBBT algorithm uses a simple belief update rule. Using more advanced rules, such as those based on Bayesian inference or machine learning, could lead to more accurate estimates of the probability of a correct answer.
+*   **Applying SBBT to other domains**: The SBBT algorithm is not limited to LLMs. It could be applied to other domains, such as computer vision or natural language processing, where estimating the probability of a correct answer is important.
+
+We hope that this tutorial has provided a useful introduction to prefix-safe Bayesian belief tracking and the SBBT algorithm. We encourage you to explore these topics further and to consider how they can be applied to your own work.
+
+*Photo by [Mika Baumeister](https://unsplash.com/@kommumikation?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/white-printing-paper-with-numbers-Wpnoqo2plFA?utm_source=techversation&utm_medium=referral)*

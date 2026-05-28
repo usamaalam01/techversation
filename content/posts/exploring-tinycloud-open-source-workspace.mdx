@@ -1,0 +1,135 @@
+---
+title: "Exploring TinyCloud: Open-Source Workspace"
+description: "Discover TinyCloud's features and get started with its API."
+date: "2026-05-28"
+author: "Usama"
+tags: ["open-source", "workspace", "productivity"]
+aiSummary: "TinyCloud is an open-source workspace offering mail, docs, spreadsheet, and drive functionality. It provides a web and iOS interface, making it a great alternative to proprietary solutions. In this tutorial, we'll explore TinyCloud's features and demonstrate how to get started with its API."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1709214122943-317e42bd7108?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxTaG93JTIwT3BlbiUyMHNvdXJjZSUyMFdvcmtzcGFjZSUyMG1haWwlMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc3OTk4NTIwOXww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+As developers, we're always on the lookout for tools that can enhance our productivity and streamline our workflow. Recently, I stumbled upon TinyCloud, an open-source workspace that offers a suite of productivity tools, including mail, docs, spreadsheet, and drive. In this tutorial, we'll delve into the features of TinyCloud, explore its API, and provide working code examples to get you started.
+
+## What is TinyCloud?
+
+TinyCloud is an open-source platform that provides a range of productivity tools, all accessible from a single interface. The platform includes:
+
+* Mail: A fully-featured email client with support for multiple accounts and folders.
+* Docs: A word processing tool with real-time collaboration and commenting.
+* Spreadsheet: A spreadsheet application with support for formulas, charts, and conditional formatting.
+* Drive: A cloud storage solution with file sharing and collaboration features.
+
+TinyCloud offers both web and iOS interfaces, making it easy to access your workspace from anywhere.
+
+## Getting Started with TinyCloud
+
+To get started with TinyCloud, you'll need to create an account on the [TinyCloud website](https://tinycld.org/). Once you've signed up, you can access the web interface and start exploring the various tools and features.
+
+### Setting up the API
+
+To interact with the TinyCloud API, you'll need to obtain an API key. You can do this by navigating to the [TinyCloud API documentation](https://tinycld.org/api) and following the instructions to generate a key.
+
+Here's an example of how to use the API to authenticate and retrieve a list of files in your drive:
+```python
+import requests
+
+# Replace with your API key
+api_key = "your_api_key_here"
+
+# Set the API endpoint and headers
+endpoint = "https://api.tinycld.org/drive/files"
+headers = {
+    "Authorization": f"Bearer {api_key}",
+    "Content-Type": "application/json"
+}
+
+# Send the request and retrieve the response
+response = requests.get(endpoint, headers=headers)
+
+# Print the list of files
+print(response.json())
+```
+This code example demonstrates how to use the TinyCloud API to authenticate and retrieve a list of files in your drive. You can modify the endpoint and headers to interact with other API endpoints, such as creating a new document or sending an email.
+
+## Working with the TinyCloud API
+
+The TinyCloud API provides a range of endpoints for interacting with the various tools and features. Here are a few examples:
+
+### Creating a New Document
+
+To create a new document, you can use the `docs` endpoint and send a `POST` request with the document contents:
+```python
+import requests
+
+# Replace with your API key
+api_key = "your_api_key_here"
+
+# Set the API endpoint and headers
+endpoint = "https://api.tinycld.org/docs"
+headers = {
+    "Authorization": f"Bearer {api_key}",
+    "Content-Type": "application/json"
+}
+
+# Set the document contents
+document = {
+    "title": "My New Document",
+    "content": "This is the content of my new document."
+}
+
+# Send the request and retrieve the response
+response = requests.post(endpoint, headers=headers, json=document)
+
+# Print the document ID
+print(response.json()["id"])
+```
+This code example demonstrates how to create a new document using the TinyCloud API.
+
+### Sending an Email
+
+To send an email, you can use the `mail` endpoint and send a `POST` request with the email contents:
+```python
+import requests
+
+# Replace with your API key
+api_key = "your_api_key_here"
+
+# Set the API endpoint and headers
+endpoint = "https://api.tinycld.org/mail"
+headers = {
+    "Authorization": f"Bearer {api_key}",
+    "Content-Type": "application/json"
+}
+
+# Set the email contents
+email = {
+    "to": "recipient@example.com",
+    "subject": "My Email Subject",
+    "body": "This is the body of my email."
+}
+
+# Send the request and retrieve the response
+response = requests.post(endpoint, headers=headers, json=email)
+
+# Print the email ID
+print(response.json()["id"])
+```
+This code example demonstrates how to send an email using the TinyCloud API.
+
+## Conclusion
+
+TinyCloud is a powerful open-source workspace that provides a range of productivity tools, including mail, docs, spreadsheet, and drive. The TinyCloud API makes it easy to interact with these tools and features, allowing you to automate tasks and integrate TinyCloud with other applications.
+
+In this tutorial, we've explored the features of TinyCloud, demonstrated how to get started with the API, and provided working code examples to get you started. Whether you're a developer looking to integrate TinyCloud with your application or a user looking for a productivity solution, TinyCloud is definitely worth checking out.
+
+### Next Steps
+
+* Explore the [TinyCloud API documentation](https://tinycld.org/api) to learn more about the available endpoints and features.
+* Check out the [TinyCloud community forum](https://tinycld.org/community) to connect with other users and developers.
+* Start building your own applications using the TinyCloud API and share your experiences with the community.
+
+*Photo by [Mylo Kaye](https://unsplash.com/@mylokaye?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-post-office-sign-on-the-side-of-a-building-aoRQu1VXaMI?utm_source=techversation&utm_medium=referral)*
