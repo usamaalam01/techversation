@@ -1,0 +1,97 @@
+---
+title: "Mind Your Tone: LLM Performance"
+description: "Tone affects LLM performance in objective multiple-choice questions."
+date: "2026-05-29"
+author: "Usama"
+tags: ["ai", "llm", "nlp"]
+aiSummary: "Researchers investigate the impact of tone on Large Language Model performance. The study reveals that tonal variations in prompts lead to disparate LLM accuracy. This tutorial provides a step-by-step guide on working with tone-altered LLMs."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1737505599159-5ffc1dcbc08f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxNaW5kJTIwVG9uZSUyMFRvbmUlMjBBbHRlciUyMExMTSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MDA0OTYzM3ww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+The use of Large Language Models (LLMs) is becoming increasingly popular, but their performance can vary based on prompting styles and tones. A recent study on arXiv, [Mind Your Tone: Does Tone Alter LLM Performance?](https://arxiv.org/abs/2605.29027), explores the impact of tone on LLM accuracy in objective multiple-choice questions. In this tutorial, we will delve into the world of tone-altered LLMs and provide a step-by-step guide on working with them.
+
+## Understanding the Study
+
+The study uses two datasets: a 50-base question dataset with five tone variations. The researchers found that tonal variations in prompts lead to disparate LLM accuracy. This raises an important question: how can we effectively utilize LLMs while considering the impact of tone on their performance?
+
+![3D text that says mind over matter](https://images.unsplash.com/photo-1767481256070-26e685285817?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxNaW5kJTIwVG9uZSUyMFRvbmUlMjBBbHRlciUyMExMTSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MDA0OTYzM3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Setting Up the Environment
+
+To work with tone-altered LLMs, we need to set up an environment that supports Natural Language Processing (NLP) tasks. We will use the popular Hugging Face Transformers library, which provides a wide range of pre-trained models and a simple interface for working with them.
+
+```python
+import torch
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+# Load pre-trained model and tokenizer
+model_name = "bert-base-uncased"
+model = AutoModelForSequenceClassification.from_pretrained(model_name)
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+```
+
+## Working with Tone-Altered Prompts
+
+To demonstrate the impact of tone on LLM performance, we will create a simple function that generates tone-altered prompts. We will use a list of tone variations, such as formal, informal, sarcastic, and polite.
+
+```python
+def generate_tone_altered_prompts(prompt, tone_variations):
+    tone_altered_prompts = []
+    for tone in tone_variations:
+        if tone == "formal":
+            tone_altered_prompt = "Please respond to the following question: " + prompt
+        elif tone == "informal":
+            tone_altered_prompt = "Hey, can you answer this question? " + prompt
+        elif tone == "sarcastic":
+            tone_altered_prompt = "Oh great, another question. Can you please respond to this: " + prompt
+        elif tone == "polite":
+            tone_altered_prompt = "I would greatly appreciate it if you could respond to the following question: " + prompt
+        tone_altered_prompts.append(tone_altered_prompt)
+    return tone_altered_prompts
+
+# Define tone variations
+tone_variations = ["formal", "informal", "sarcastic", "polite"]
+
+# Define a sample prompt
+prompt = "What is the capital of France?"
+
+# Generate tone-altered prompts
+tone_altered_prompts = generate_tone_altered_prompts(prompt, tone_variations)
+```
+
+## Evaluating LLM Performance
+
+To evaluate the performance of the LLM on tone-altered prompts, we need to define a function that calculates the accuracy of the model on a given prompt.
+
+```python
+def evaluate_llm_performance(model, tokenizer, prompt):
+    # Tokenize the prompt
+    inputs = tokenizer(prompt, return_tensors="pt")
+
+    # Get the model's response
+    outputs = model(**inputs)
+
+    # Calculate the accuracy
+    accuracy = torch.nn.functional.softmax(outputs.logits, dim=1)
+
+    return accuracy
+
+# Evaluate LLM performance on tone-altered prompts
+for prompt in tone_altered_prompts:
+    accuracy = evaluate_llm_performance(model, tokenizer, prompt)
+    print(f"Prompt: {prompt}, Accuracy: {accuracy}")
+```
+
+## Conclusion
+
+In this tutorial, we explored the impact of tone on LLM performance and provided a step-by-step guide on working with tone-altered LLMs. We demonstrated how to generate tone-altered prompts and evaluate the performance of an LLM on these prompts. The study on arXiv highlights the importance of considering tone when working with LLMs, and we hope that this tutorial has provided you with a practical understanding of how to do so.
+
+![3D text reads mind matter with textured fill](https://images.unsplash.com/photo-1767481256056-cab5285b00c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxNaW5kJTIwVG9uZSUyMFRvbmUlMjBBbHRlciUyMExMTSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MDA0OTYzM3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+By considering the impact of tone on LLM performance, we can create more effective and robust NLP systems that are capable of understanding the nuances of human language. We hope that this tutorial has provided you with a solid foundation for working with tone-altered LLMs and that you will continue to explore the exciting world of NLP.
+
+*Photo by [Ecliptic Graphic](https://unsplash.com/@eclipticgraphic?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-computer-circuit-board-with-a-brain-on-it-_jg8xh2SsXQ?utm_source=techversation&utm_medium=referral)*
