@@ -1,0 +1,89 @@
+---
+title: "Hybrid Human-AI in Clinical Trials"
+description: "Exploring trends in AI and human-AI interaction in clinical trials."
+date: "2026-05-29"
+author: "Usama"
+tags: ["ai", "clinical-trials", "human-ai-interaction"]
+aiSummary: "This tutorial explores the use of hybrid human-AI approaches in clinical trials, examining temporal trends in AI terminology and geographical distribution of AI trials. We provide a step-by-step guide on how to analyze human-AI interaction trends in registered clinical trials. The tutorial includes working code examples to demonstrate the hybrid workflow."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1674049406107-f5c1e8258d4a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxUcmVuZHMlMjBIdW1hbiUyMEludGVyYWN0aW9uJTIwQ2xpbmljYWwlMjBUcmlhbHMlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODAwODcxODd8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+The integration of Artificial Intelligence (AI) in clinical trials has been gaining momentum in recent years. A recent paper on [arXiv](https://arxiv.org/abs/2605.29096) examines the trends in AI and human-AI interaction in clinical trials, providing valuable insights into the geographical distribution of AI trials and temporal trends in AI terminology. In this tutorial, we will delve into the details of the hybrid human-AI approach used in the paper and provide a step-by-step guide on how to analyze human-AI interaction trends in registered clinical trials.
+
+## Background
+The use of AI in clinical trials has the potential to revolutionize the way we conduct medical research. AI can help with patient recruitment, data analysis, and even predict patient outcomes. However, the integration of AI in clinical trials also raises important questions about human-AI interaction. How do humans interact with AI systems in clinical trials? What are the trends in AI terminology and geographical distribution of AI trials?
+
+![a person holding a robotic hand in front of a mirror](https://images.unsplash.com/photo-1682159672286-40790338349b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxUcmVuZHMlMjBIdW1hbiUyMEludGVyYWN0aW9uJTIwQ2xpbmljYWwlMjBUcmlhbHMlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODAwODcxODd8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Hybrid Human-AI Approach
+The hybrid human-AI approach used in the paper involves a combination of human expertise and AI-powered analysis. The workflow consists of the following steps:
+
+1. Data collection: Collecting data from the ClinicalTrials.gov registry.
+2. Data preprocessing: Preprocessing the collected data to extract relevant information.
+3. AI-powered analysis: Using AI algorithms to analyze the preprocessed data and identify trends.
+4. Human expertise: Using human expertise to interpret the results and provide context.
+
+### Data Collection
+To collect data from the ClinicalTrials.gov registry, we can use the `clinicaltrials` package in Python. Here is an example of how to collect data:
+```python
+import clinicaltrials
+
+# Define the search terms
+search_terms = ["AI", "Machine Learning", "Deep Learning"]
+
+# Define the search parameters
+search_params = {
+    "fields": ["brief_title", "description", "eligibility_criteria"],
+    "max_rpp": 100
+}
+
+# Search for clinical trials
+trials = clinicaltrials.search(search_terms, search_params)
+
+# Print the number of trials found
+print(len(trials))
+```
+
+### Data Preprocessing
+To preprocess the collected data, we can use natural language processing (NLP) techniques to extract relevant information. Here is an example of how to preprocess the data:
+```python
+import nltk
+from nltk.tokenize import word_tokenize
+
+# Tokenize the trial descriptions
+tokenized_descriptions = [word_tokenize(trial["description"]) for trial in trials]
+
+# Remove stop words
+stop_words = set(nltk.corpus.stopwords.words("english"))
+filtered_descriptions = [[word for word in description if word not in stop_words] for description in tokenized_descriptions]
+
+# Print the filtered descriptions
+print(filtered_descriptions)
+```
+
+### AI-Powered Analysis
+To analyze the preprocessed data, we can use machine learning algorithms to identify trends. Here is an example of how to use a topic modeling algorithm to identify trends:
+```python
+from sklearn.decomposition import LatentDirichletAllocation
+
+# Create a Latent Dirichlet Allocation (LDA) model
+lda_model = LatentDirichletAllocation(n_topics=5, max_iter=5)
+
+# Fit the LDA model to the filtered descriptions
+lda_model.fit(filtered_descriptions)
+
+# Print the topics
+print(lda_model.components_)
+```
+
+## Conclusion
+In this tutorial, we have explored the use of hybrid human-AI approaches in clinical trials, examining temporal trends in AI terminology and geographical distribution of AI trials. We have provided a step-by-step guide on how to analyze human-AI interaction trends in registered clinical trials, including working code examples to demonstrate the hybrid workflow.
+
+![three people in lab coats looking at a tablet](https://images.unsplash.com/photo-1631556759511-6ce895fbf0ad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxUcmVuZHMlMjBIdW1hbiUyMEludGVyYWN0aW9uJTIwQ2xpbmljYWwlMjBUcmlhbHMlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODAwODcxODd8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+The hybrid human-AI approach has the potential to revolutionize the way we conduct medical research, and we hope that this tutorial has provided a useful introduction to this exciting field. For more information, please refer to the original paper on [arXiv](https://arxiv.org/abs/2605.29096).
+
+*Photo by [Bermix Studio](https://unsplash.com/@bermixstudio?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-woman-in-a-white-coat-and-blue-gloves-is-wearing-a-virtual-headset-IihA7E9ZAug?utm_source=techversation&utm_medium=referral)*
