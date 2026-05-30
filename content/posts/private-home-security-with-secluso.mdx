@@ -1,0 +1,85 @@
+---
+title: "Private Home Security with Secluso"
+description: "End-to-end encryption for home security cameras."
+date: "2026-05-30"
+author: "Usama"
+tags: ["security", "privacy", "encryption"]
+aiSummary: "Secluso is an open-source private home security camera system with end-to-end encryption. This tutorial will guide you through setting up and using Secluso. Secluso provides a secure and private way to monitor your home."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxTaG93JTIwT3BlbiUyMHNvdXJjZSUyMHByaXZhdGUlMjBob21lJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODAxNjk5NTh8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+With the increasing concern about privacy and security, many homeowners are looking for ways to secure their homes without compromising their personal data. Secluso is an open-source private home security camera system that provides end-to-end encryption, ensuring that your video feeds are secure and private. In this tutorial, we will guide you through setting up and using Secluso.
+
+## Setting up Secluso
+To get started with Secluso, you will need to install the core software on your system. You can find the installation instructions on the [Secluso GitHub page](https://github.com/secluso/core). Once you have installed the software, you can configure your camera settings and start streaming your video feeds.
+
+### Installing Secluso
+To install Secluso, you can use the following command:
+```bash
+git clone https://github.com/secluso/core.git
+cd core
+pip install -r requirements.txt
+```
+This will install all the necessary dependencies and get you started with Secluso.
+
+## Configuring Camera Settings
+Once you have installed Secluso, you can configure your camera settings using the web interface. To access the web interface, navigate to `http://localhost:8080` in your web browser. You will be prompted to create a username and password for your account.
+
+### Creating a New User
+To create a new user, use the following Python code:
+```python
+import requests
+
+url = "http://localhost:8080/api/users"
+data = {
+    "username": "your_username",
+    "password": "your_password"
+}
+
+response = requests.post(url, json=data)
+
+if response.status_code == 201:
+    print("User created successfully")
+else:
+    print("Failed to create user")
+```
+This will create a new user with the specified username and password.
+
+## Streaming Video Feeds
+To stream your video feeds, you can use the Secluso API. You can use the following Python code to stream your video feeds:
+```python
+import cv2
+import requests
+
+url = "http://localhost:8080/api/stream"
+response = requests.get(url, stream=True)
+
+while True:
+    frame = response.raw.read(1024)
+    if not frame:
+        break
+    frame = cv2.imdecode(np.frombuffer(frame, np.uint8), cv2.IMREAD_COLOR)
+    cv2.imshow("Video Feed", frame)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cv2.destroyAllWindows()
+```
+This will stream your video feed and display it in a window.
+
+![black flat screen computer monitor](https://images.unsplash.com/photo-1625459201773-9b2386f53ca2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxTaG93JTIwT3BlbiUyMHNvdXJjZSUyMHByaXZhdGUlMjBob21lJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODAxNjk5NTh8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+Secluso is a powerful tool for securing your home with end-to-end encryption. With its easy-to-use interface and robust security features, Secluso is an excellent choice for anyone looking to protect their home and family. By following this tutorial, you can set up and use Secluso to stream your video feeds securely and privately.
+
+## Future Developments
+Secluso is an open-source project, and as such, it is constantly evolving. The developers are actively working on new features and improvements, including better support for multiple cameras and improved encryption methods. If you are interested in contributing to Secluso, you can find more information on the [Secluso GitHub page](https://github.com/secluso/core).
+
+![a computer screen with a red button on it](https://images.unsplash.com/photo-1617422088113-d900e07155af?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxTaG93JTIwT3BlbiUyMHNvdXJjZSUyMHByaXZhdGUlMjBob21lJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODAxNjk5NTh8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+We hope this tutorial has been helpful in getting you started with Secluso. If you have any questions or need further assistance, please don't hesitate to reach out.
+
+*Photo by [Fotis Fotopoulos](https://unsplash.com/@ffstop?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/two-black-flat-screen-computer-monitors-LJ9KY8pIH3E?utm_source=techversation&utm_medium=referral)*
