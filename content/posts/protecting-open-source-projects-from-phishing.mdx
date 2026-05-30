@@ -1,0 +1,97 @@
+---
+title: "Protecting Open Source Projects from Phishing"
+description: "Preventing malicious use of open source projects."
+date: "2026-05-30"
+author: "Usama"
+tags: ["security", "open-source", "phishing"]
+aiSummary: "A developer's open source project was used for phishing, highlighting the need for security measures. This tutorial shows how to protect open source projects from malicious use. We'll explore ways to prevent phishing attacks and secure user data."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1605379399642-870262d3d051?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxTb21lb25lJTIwdXNlZCUyMG9wZW4lMjBzb3VyY2UlMjBwcm9qZWN0JTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODAxNDk0OTZ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+As developers, we often create open source projects to share our work with the community and contribute to the growth of technology. However, this openness can also make our projects vulnerable to malicious use. A recent story on [Hacker News](https://andrej.sh/posts/phishing-through-my-open-source-project) highlights the issue of someone using an open source project to phish people. In this tutorial, we'll explore ways to protect our open source projects from phishing attacks and ensure the security of user data.
+
+## Understanding Phishing Attacks
+Phishing attacks involve tricking users into revealing sensitive information, such as passwords or credit card numbers, by disguising malicious content as legitimate. In the context of open source projects, phishing attacks can occur when an attacker uses the project's code or branding to create a fake website or application that appears to be part of the project.
+
+![Projects text on pink and orange](https://images.unsplash.com/photo-1572177812156-58036aae439c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxTb21lb25lJTIwdXNlZCUyMG9wZW4lMjBzb3VyY2UlMjBwcm9qZWN0JTIwdGVjaG5vbG9neTUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODAxNDk0OTZ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Securing User Data
+To protect user data, it's essential to implement proper security measures in our open source projects. Here are some steps to follow:
+
+### 1. Validate User Input
+Validate all user input to prevent malicious data from entering your application. This can be done using libraries such as [OWASP ESAPI](https://owasp.org/www-project-enterprise-security-api/) for Java or [Django's built-in validation](https://docs.djangoproject.com/en/4.1/ref/forms/validation/) for Python.
+
+### 2. Use Secure Communication Protocols
+Use secure communication protocols, such as HTTPS, to encrypt data transmitted between the client and server. This can be achieved using libraries like [Let's Encrypt](https://letsencrypt.org/) for SSL/TLS certificates.
+
+### 3. Implement Authentication and Authorization
+Implement proper authentication and authorization mechanisms to ensure that only authorized users can access sensitive data. This can be done using libraries like [OAuth](https://oauth.net/2/) for authentication or [Role-Based Access Control (RBAC)](https://en.wikipedia.org/wiki/Role-based_access_control) for authorization.
+
+## Preventing Phishing Attacks
+To prevent phishing attacks, it's essential to make it difficult for attackers to disguise malicious content as legitimate. Here are some steps to follow:
+
+### 1. Use a Clear and Consistent Branding
+Use a clear and consistent branding throughout your project to make it easy for users to identify legitimate content. This includes using a consistent logo, color scheme, and typography.
+
+### 2. Provide Clear Instructions
+Provide clear instructions on how to use your project, including any security precautions that users should take. This can be done through documentation, tutorials, or support channels.
+
+### 3. Monitor for Suspicious Activity
+Monitor your project for suspicious activity, such as unexpected changes to the code or unusual user behavior. This can be done using tools like [GitHub's security features](https://github.com/security) or [Google's reCAPTCHA](https://www.google.com/recaptcha).
+
+## Example Code: Securing a Python Application
+Here's an example of how to secure a Python application using the Flask framework and the OAuth library:
+```python
+from flask import Flask, request, jsonify
+from flask_oauthlib.client import OAuth
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'secret_key_here'
+
+oauth = OAuth(app)
+
+google = oauth.remote_app(
+    'google',
+    consumer_key='client_id_here',
+    consumer_secret='client_secret_here',
+    request_token_params={
+        'scope': 'email',
+        'access_type': 'offline'
+    },
+    base_url='https://accounts.google.com',
+    request_token_url=None,
+    access_token_url='/o/oauth2/token',
+    authorize_url='/o/oauth2/auth'
+)
+
+@app.route('/login')
+def login():
+    return google.authorize(callback=url_for('authorized', _external=True))
+
+@app.route('/authorized')
+def authorized():
+    resp = google.authorized_response()
+    if resp is None:
+        return 'Access denied: reason={} error={}'.format(
+            request.args['error_reason'],
+            request.args['error_description']
+        )
+    session['oauth_token'] = (resp['access_token'], '')
+    return jsonify({'token': resp['access_token']})
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+This code uses the OAuth library to authenticate users with Google and obtain an access token, which can be used to secure the application.
+
+## Conclusion
+Protecting open source projects from phishing attacks requires a combination of security measures, including validating user input, using secure communication protocols, and implementing authentication and authorization mechanisms. By following these steps and using tools like OAuth and reCAPTCHA, we can make it difficult for attackers to disguise malicious content as legitimate and ensure the security of user data. Remember to always monitor your project for suspicious activity and provide clear instructions to users on how to use your project securely.
+
+![black computer keyboard](https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxTb21lb25lJTIwdXNlZCUyMG9wZW4lMjBzb3VyY2UlMjBwcm9qZWN0JTIwdGVjaG5vbG9neTUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODAxNDk0OTZ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+As developers, we have a responsibility to protect our users and ensure the security of our open source projects. By working together and sharing our knowledge and expertise, we can create a safer and more secure community for everyone.
+
+*Photo by [Fotis Fotopoulos](https://unsplash.com/@ffstop?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/black-remote-control-on-red-table-6sAl6aQ4OWI?utm_source=techversation&utm_medium=referral)*
