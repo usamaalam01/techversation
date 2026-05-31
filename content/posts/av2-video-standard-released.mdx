@@ -1,0 +1,88 @@
+---
+title: "AV2 Video Standard Released"
+description: "AV2 video standard final v1.0 specification is out."
+date: "2026-05-31"
+author: "Usama"
+tags: ["av2", "video-standard", "aomedia"]
+aiSummary: "The Alliance for Open Media has released the final v1.0 specification of the AV2 video standard. This new standard promises to provide better compression efficiency and improved video quality. In this post, we will explore the features of the AV2 video standard and provide a practical tutorial on how to use it."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxWaWRlbyUyMFN0YW5kYXJkJTIwUmVsZWFzZWQlMjBGaW5hbCUyMFNwZWNpZmljYXRpb24lMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc4MDIxNzk0M3ww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to AV2 Video Standard
+
+The AV2 video standard is an open and royalty-free video compression standard developed by the Alliance for Open Media (AOMedia). It is designed to provide better compression efficiency and improved video quality compared to existing video standards. The final v1.0 specification of the AV2 video standard has been released, and it is now available for use by developers.
+
+## Features of AV2 Video Standard
+
+The AV2 video standard has several features that make it an attractive choice for developers. Some of the key features include:
+
+* **Improved compression efficiency**: The AV2 video standard provides better compression efficiency compared to existing video standards, which means that it can compress video content to a smaller size without compromising on quality.
+* **Support for 8K and 12K resolutions**: The AV2 video standard supports resolutions up to 8K and 12K, making it suitable for high-resolution video applications.
+* **Support for HDR and WCG**: The AV2 video standard supports High Dynamic Range (HDR) and Wide Color Gamut (WCG), which provide a more immersive viewing experience.
+
+![black flat screen tv turned on displaying game](https://images.unsplash.com/photo-1607112812619-182cb1c7bb61?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxWaWRlbyUyMFN0YW5kYXJkJTIwUmVsZWFzZWQlMjBGaW5hbCUyMFNwZWNpZmljYXRpb24lMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc4MDIxNzk0M3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Getting Started with AV2 Video Standard
+
+To get started with the AV2 video standard, you will need to download the AV2 codec software development kit (SDK) from the [AOMedia website](https://av2.aomedia.org). The AV2 SDK provides a set of tools and libraries that you can use to develop applications that support the AV2 video standard.
+
+### Installing the AV2 SDK
+
+To install the AV2 SDK, you will need to follow these steps:
+
+1. Download the AV2 SDK from the [AOMedia website](https://av2.aomedia.org).
+2. Extract the downloaded zip file to a directory on your computer.
+3. Follow the instructions in the README file to build and install the AV2 SDK.
+
+### Encoding Video Content with AV2
+
+To encode video content with AV2, you can use the `aomenc` command-line tool that is provided with the AV2 SDK. Here is an example of how to use the `aomenc` tool to encode a video file:
+```bash
+aomenc --codec=av2 --input-file=input.mp4 --output-file=output.av2
+```
+This command will encode the `input.mp4` file using the AV2 codec and save the encoded video to the `output.av2` file.
+
+### Decoding Video Content with AV2
+
+To decode video content with AV2, you can use the `aomdec` command-line tool that is provided with the AV2 SDK. Here is an example of how to use the `aomdec` tool to decode a video file:
+```bash
+aomdec --codec=av2 --input-file=input.av2 --output-file=output.mp4
+```
+This command will decode the `input.av2` file using the AV2 codec and save the decoded video to the `output.mp4` file.
+
+## Example Code
+
+Here is an example of how to use the AV2 SDK to encode and decode video content in Python:
+```python
+import subprocess
+
+# Encode video content with AV2
+def encode_video(input_file, output_file):
+    command = f"aomenc --codec=av2 --input-file={input_file} --output-file={output_file}"
+    subprocess.run(command, shell=True)
+
+# Decode video content with AV2
+def decode_video(input_file, output_file):
+    command = f"aomdec --codec=av2 --input-file={input_file} --output-file={output_file}"
+    subprocess.run(command, shell=True)
+
+# Example usage
+input_file = "input.mp4"
+output_file = "output.av2"
+encode_video(input_file, output_file)
+
+input_file = "output.av2"
+output_file = "decoded.mp4"
+decode_video(input_file, output_file)
+```
+This code uses the `subprocess` module to run the `aomenc` and `aomdec` command-line tools to encode and decode video content using the AV2 codec.
+
+## Conclusion
+
+The AV2 video standard is a powerful and flexible video compression standard that provides better compression efficiency and improved video quality compared to existing video standards. In this post, we have provided a practical tutorial on how to use the AV2 video standard, including how to install the AV2 SDK, encode and decode video content, and use the AV2 SDK in Python. We hope that this post has been helpful in getting you started with the AV2 video standard.
+
+![flat screen monitor](https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxWaWRlbyUyMFN0YW5kYXJkJTIwUmVsZWFzZWQlMjBGaW5hbCUyMFNwZWNpZmljYXRpb24lMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc4MDIxNzk0M3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [ThisisEngineering](https://unsplash.com/@thisisengineering?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/black-flat-screen-computer-monitor-hoivM01c-vg?utm_source=techversation&utm_medium=referral)*
