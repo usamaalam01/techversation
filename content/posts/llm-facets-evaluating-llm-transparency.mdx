@@ -1,0 +1,76 @@
+---
+title: "LLM-FACETS: Evaluating LLM Transparency"
+description: "Assessing LLM outputs with LLM-FACETS framework for responsible AI deployment."
+date: "2026-06-01"
+author: "Usama"
+tags: ["ai", "llm", "privacy"]
+aiSummary: "The LLM-FACETS framework provides a comprehensive approach to evaluating large language models. It assesses the factual grounding, epistemic calibration, and methodological reproducibility of LLM outputs. This framework is crucial for responsible AI deployment, ensuring transparency and accountability in AI systems."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxMTE0lMjBGQUNFVFMlMjBQcml2YWN5JTIwUHJlc2VydmluZyUyMEZyYW1ld29yayUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MDMzNjg3MXww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to LLM-FACETS
+The LLM-FACETS framework, introduced in the [arXiv paper](https://arxiv.org/abs/2605.31167), offers a novel approach to evaluating the transparency and accountability of large language models (LLMs). This framework is designed to assess whether LLM outputs are factually grounded, epistemically calibrated, and methodologically reproducible. In this tutorial, we will delve into the LLM-FACETS framework, exploring its components and demonstrating how to implement it in practice.
+
+## Understanding LLM-FACETS Components
+The LLM-FACETS framework comprises three primary components:
+
+1. **Factual Grounding**: This component evaluates the factual accuracy of LLM outputs. It assesses whether the generated text is based on verifiable evidence and facts.
+2. **Epistemic Calibration**: This component examines the confidence of LLM outputs. It evaluates whether the model's confidence in its predictions is well-calibrated, reflecting the true probability of the predicted outcome.
+3. **Methodological Reproducibility**: This component investigates the reproducibility of LLM outputs. It assesses whether the model's results can be replicated using different inputs, parameters, or environments.
+
+To illustrate the LLM-FACETS framework, let's consider a simple example using Python:
+```python
+import torch
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+# Load pre-trained LLM
+model = AutoModelForSequenceClassification.from_pretrained("bert-base-uncased")
+tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+
+# Define input text
+input_text = "The capital of France is Berlin."
+
+# Preprocess input text
+inputs = tokenizer(input_text, return_tensors="pt")
+
+# Generate output
+output = model(**inputs)
+
+# Evaluate factual grounding
+factual_grounding = evaluate_factual_grounding(output, input_text)
+
+# Evaluate epistemic calibration
+epistemic_calibration = evaluate_epistemic_calibration(output, input_text)
+
+# Evaluate methodological reproducibility
+methodological_reproducibility = evaluate_methodological_reproducibility(output, input_text)
+
+print("Factual Grounding:", factual_grounding)
+print("Epistemic Calibration:", epistemic_calibration)
+print("Methodological Reproducibility:", methodological_reproducibility)
+```
+In this example, we use the Hugging Face Transformers library to load a pre-trained BERT model and evaluate its output on a given input text. We then assess the factual grounding, epistemic calibration, and methodological reproducibility of the output using custom evaluation functions.
+
+![Linkedin data privacy settings on a smartphone screen](https://images.unsplash.com/photo-1762330465065-af76f23809db?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxMTE0lMjBGQUNFVFMlMjBQcml2YWN5JTIwUHJlc2VydmluZyUyMEZyYW1ld29yayUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MDMzNjg3MXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+### Implementing LLM-FACETS in Practice
+To implement the LLM-FACETS framework in practice, you can follow these steps:
+
+1. **Load pre-trained LLM**: Load a pre-trained LLM using a library like Hugging Face Transformers.
+2. **Define input text**: Define the input text to be evaluated.
+3. **Preprocess input text**: Preprocess the input text using a tokenizer.
+4. **Generate output**: Generate the output using the pre-trained LLM.
+5. **Evaluate factual grounding**: Evaluate the factual grounding of the output using a custom evaluation function.
+6. **Evaluate epistemic calibration**: Evaluate the epistemic calibration of the output using a custom evaluation function.
+7. **Evaluate methodological reproducibility**: Evaluate the methodological reproducibility of the output using a custom evaluation function.
+
+By following these steps, you can use the LLM-FACETS framework to evaluate the transparency and accountability of large language models.
+
+## Conclusion
+The LLM-FACETS framework provides a comprehensive approach to evaluating the transparency and accountability of large language models. By assessing the factual grounding, epistemic calibration, and methodological reproducibility of LLM outputs, this framework enables responsible AI deployment and ensures that AI systems are transparent, accountable, and trustworthy. In this tutorial, we demonstrated how to implement the LLM-FACETS framework in practice using Python and the Hugging Face Transformers library. By using this framework, developers can build more transparent and accountable AI systems that are aligned with human values and principles. 
+
+![black flat screen computer monitor](https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxMTE0lMjBGQUNFVFMlMjBQcml2YWN5JTIwUHJlc2VydmluZyUyMEZyYW1ld29yayUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MDMzNjg3MXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
