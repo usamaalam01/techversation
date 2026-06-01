@@ -1,0 +1,86 @@
+---
+title: "Reliable GenAI Evaluation with GLIDE"
+description: "GLIDE library for debiased estimates and valid uncertainty in agentic systems."
+date: "2026-06-01"
+author: "Usama"
+tags: ["ai", "llm", "evaluation"]
+aiSummary: "The GLIDE library provides a reliable method for evaluating agentic systems by combining human annotation and LLM-as-judge proxies. This tutorial demonstrates how to use GLIDE for prediction-powered inference. GLIDE offers debiased estimates with valid confidence intervals, addressing the limitations of standard practice in agentic systems evaluation."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxJbmR1c3RyaWFsaXppbmclMjBQcmVkaWN0aW9uJTIwUG93ZXJlZCUyMEluZmVyZW5jZSUyMEdMSURFJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgwMzUwMzYzfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to GLIDE and Prediction-Powered Inference
+
+The evaluation of agentic systems is a critical task that requires unbiased estimates with valid uncertainty. However, standard practice often navigates between costly human annotation and biased LLM-as-judge proxies. To address this challenge, the GLIDE library has been introduced, providing a reliable method for debiased estimates with valid confidence intervals. In this tutorial, we will explore the GLIDE library and demonstrate how to use it for prediction-powered inference.
+
+### What is Prediction-Powered Inference?
+
+Prediction-powered inference (PPI) is a technique that combines human annotation and LLM-as-judge proxies to produce debiased estimates with valid confidence intervals. PPI methods have been scattered across various papers, making it challenging to implement and compare them. The GLIDE library aims to provide a unified framework for PPI, making it easier to evaluate agentic systems.
+
+## Installing and Importing GLIDE
+
+To get started with GLIDE, you need to install the library using pip:
+```bash
+pip install glide
+```
+Once installed, you can import the library in your Python code:
+```python
+import glide
+```
+### Loading and Preprocessing Data
+
+Before using GLIDE, you need to load and preprocess your data. The library provides a simple interface for loading datasets and preprocessing them:
+```python
+from glide.datasets import load_dataset
+from glide.preprocessing import preprocess_data
+
+# Load the dataset
+dataset = load_dataset("your_dataset")
+
+# Preprocess the data
+preprocessed_data = preprocess_data(dataset)
+```
+## Using GLIDE for Prediction-Powered Inference
+
+GLIDE provides a simple interface for performing prediction-powered inference. You can use the `glide.inference` function to generate debiased estimates with valid confidence intervals:
+```python
+from glide.inference import prediction_powered_inference
+
+# Perform prediction-powered inference
+estimates, confidence_intervals = prediction_powered_inference(preprocessed_data)
+```
+### Interpreting Results
+
+The `estimates` and `confidence_intervals` returned by the `prediction_powered_inference` function provide valuable insights into the performance of your agentic system. You can use these results to evaluate the reliability of your system and identify areas for improvement:
+```python
+print("Estimates:", estimates)
+print("Confidence Intervals:", confidence_intervals)
+```
+![woman in white long sleeve shirt sitting on chair](https://images.unsplash.com/photo-1581093577421-f561a654a353?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxJbmR1c3RyaWFsaXppbmclMjBQcmVkaWN0aW9uJTIwUG93ZXJlZCUyMEluZmVyZW5jZSUyMEdMSURFJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgwMzUwMzYzfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Advanced Topics and Customization
+
+GLIDE provides several advanced features and customization options, allowing you to tailor the library to your specific needs. For example, you can use the `glide.config` module to configure the library's behavior:
+```python
+from glide.config import Config
+
+# Create a custom configuration
+config = Config()
+
+# Set custom parameters
+config.max_iter = 1000
+config.learning_rate = 0.01
+
+# Use the custom configuration
+estimates, confidence_intervals = prediction_powered_inference(preprocessed_data, config)
+```
+![a close up of a computer keyboard with a blurry background](https://images.unsplash.com/photo-1650327034581-1711a15a5430?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxJbmR1c3RyaWFsaXppbmclMjBQcmVkaWN0aW9uJTIwUG93ZXJlZCUyMEluZmVyZW5jZSUyMEdMSURFJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgwMzUwMzYzfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we have demonstrated how to use the GLIDE library for prediction-powered inference in agentic systems evaluation. GLIDE provides a reliable method for debiased estimates with valid confidence intervals, addressing the limitations of standard practice. By following the steps outlined in this tutorial, you can use GLIDE to evaluate your agentic systems and improve their reliability.
+
+For more information on the GLIDE library, please refer to the [original paper](https://arxiv.org/abs/2605.31278) and the [GLIDE documentation](https://glide.readthedocs.io/en/latest/).
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
