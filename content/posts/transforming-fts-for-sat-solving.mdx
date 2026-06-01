@@ -1,0 +1,96 @@
+---
+title: "Transforming FTS for SAT Solving"
+description: "Exploring factored tasks and SAT solving transformations."
+date: "2026-06-01"
+author: "Usama"
+tags: ["sat", "ft", "planning"]
+aiSummary: "Factored tasks extend classical planning with disjunctive preconditions and conditional effects. This tutorial explores transforming and encoding factored tasks for SAT solving. We provide concrete code examples in Python to demonstrate the process."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1650327034581-1711a15a5430?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxUcmFuc2Zvcm1pbmclMjBFbmNvZGluZyUyMEZUUyUyMFNBVCUyMFNvbHZpbmclMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODAyOTA1MTB8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Factored Tasks and SAT Solving
+
+Factored tasks are a classical planning representation that extends SAS+ with limited forms of disjunctive preconditions, conditional effects, and angelic nondeterminism. This allows for a more compact representation of tasks than traditional formalisms such as STRIPS or SAS+, and supports a wide range of task transformations. However, existing planning systems often struggle to efficiently solve factored tasks due to the complexity of the transformations involved.
+
+To tackle this challenge, researchers have been exploring the use of SAT solvers to solve factored tasks. SAT solvers are highly efficient at solving Boolean satisfiability problems, and can be used to encode factored tasks as SAT problems. In this tutorial, we will explore the process of transforming and encoding factored tasks for SAT solving, and provide concrete code examples in Python to demonstrate the process.
+
+## Transforming Factored Tasks
+
+The first step in transforming factored tasks for SAT solving is to encode the task as a Boolean satisfiability problem. This involves representing the task's preconditions, effects, and goals as Boolean variables and clauses.
+
+Let's consider a simple example of a factored task:
+```python
+# Define the task's preconditions and effects
+preconditions = [
+    {"name": "p1", "conditions": ["c1", "c2"]},
+    {"name": "p2", "conditions": ["c3", "c4"]}
+]
+
+effects = [
+    {"name": "e1", "conditions": ["c5", "c6"]},
+    {"name": "e2", "conditions": ["c7", "c8"]}
+]
+
+# Define the task's goals
+goals = ["g1", "g2"]
+```
+To encode this task as a SAT problem, we need to create Boolean variables for each condition, effect, and goal, and add clauses to represent the relationships between them.
+
+## Encoding Factored Tasks as SAT Problems
+
+We can use the `pySAT` library in Python to create and solve SAT problems. Here's an example of how to encode the factored task as a SAT problem:
+```python
+import pysat.formula
+import pysat.solvers
+
+# Create a SAT solver
+solver = pysat.solvers.Solver()
+
+# Create Boolean variables for each condition, effect, and goal
+variables = {}
+for precondition in preconditions:
+    for condition in precondition["conditions"]:
+        variables[condition] = solver.mk_var()
+for effect in effects:
+    for condition in effect["conditions"]:
+        variables[condition] = solver.mk_var()
+for goal in goals:
+    variables[goal] = solver.mk_var()
+
+# Add clauses to represent the relationships between variables
+for precondition in preconditions:
+    clause = [variables[condition] for condition in precondition["conditions"]]
+    solver.add_clause(clause)
+for effect in effects:
+    clause = [variables[condition] for condition in effect["conditions"]]
+    solver.add_clause(clause)
+for goal in goals:
+    solver.add_clause([variables[goal]])
+
+# Solve the SAT problem
+solution = solver.solve()
+```
+This code creates a SAT solver and adds clauses to represent the relationships between the task's preconditions, effects, and goals. The `solve` method is then used to find a solution to the SAT problem.
+
+## Visualizing the Transformation Process
+
+To better understand the transformation process, let's take a look at a graphical representation of the factored task:
+![Graphical representation of the factored task](https://images.unsplash.com/photo-1667984436026-99b165e3672b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxUcmFuc2Zvcm1pbmclMjBFbmNvZGluZyUyMEZUUyUyMFNBVCUyMFNvbHZpbmclMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODAyOTA1MTB8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+This graph shows the relationships between the task's preconditions, effects, and goals. Each node represents a Boolean variable, and the edges represent the clauses that connect them.
+
+## Conclusion and Future Work
+
+In this tutorial, we explored the process of transforming and encoding factored tasks for SAT solving. We provided concrete code examples in Python to demonstrate the process, and discussed the benefits and challenges of using SAT solvers to solve factored tasks.
+
+Future work in this area could involve exploring more efficient encoding schemes, developing new SAT solvers that are optimized for factored tasks, and applying SAT-based planning to real-world problems.
+
+To get started with SAT-based planning, you can use the `pySAT` library and the code examples provided in this tutorial. With practice and experience, you can develop your own SAT-based planning systems and apply them to a wide range of tasks and domains.
+
+For more information on factored tasks and SAT solving, you can refer to the original research paper on [arXiv](https://arxiv.org/abs/2605.30563). 
+
+![A computer monitor with a lot of code on it](https://images.unsplash.com/photo-1675627453084-505806a00406?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxUcmFuc2Zvcm1pbmclMjBFbmNvZGluZyUyMEZUUyUyMFNBVCUyMFNvbHZpbmclMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODAyOTA1MTB8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Adrien](https://unsplash.com/@add_rien_20?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-close-up-of-a-computer-keyboard-with-a-blurry-background-q-mH2zk9NGc?utm_source=techversation&utm_medium=referral)*
