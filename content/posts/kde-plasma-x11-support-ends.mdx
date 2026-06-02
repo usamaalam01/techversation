@@ -1,0 +1,80 @@
+---
+title: "KDE Plasma X11 Support Ends"
+description: "KDE Plasma's last X11-supported release is coming, prepare now."
+date: "2026-06-02"
+author: "Usama"
+tags: ["kde", "plasma", "x11"]
+aiSummary: "KDE Plasma is ending support for X11, the traditional display server. Developers must prepare for the change by migrating to Wayland. This tutorial guides you through the process with concrete code examples."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1669023414162-8b0573b9c6b2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxQcmVwYXJpbmclMjBLREUlMjBQbGFzbWElMjBMYXN0JTIwU3VwcG9ydGVkJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODA0MzUzMTF8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+KDE Plasma, a popular desktop environment, is approaching its last release with X11 support. As announced in [David Edmundson's blog post](https://blog.davidedmundson.co.uk/blog/596/), the time has come for developers to prepare for the transition to Wayland, the next-generation display server. In this tutorial, we will explore the reasons behind this change, the benefits of Wayland, and provide a step-by-step guide on how to migrate your applications to the new display server.
+
+## Why is X11 being deprecated?
+X11, the traditional display server, has been the backbone of Linux graphics for decades. However, it has become outdated and is no longer capable of meeting the demands of modern desktop environments. X11's limitations, such as lack of security, poor performance, and limited functionality, have led to the development of Wayland, a more secure, efficient, and feature-rich display server.
+
+## What is Wayland?
+Wayland is a display server protocol that provides a more modern and efficient way of rendering graphics on Linux systems. It offers several benefits over X11, including improved security, better performance, and enhanced functionality. Wayland is designed to be more secure than X11, with features like sandboxing and access control, which prevent malicious applications from accessing sensitive data.
+
+## Migrating to Wayland
+Migrating your applications to Wayland requires some changes to your code. The first step is to ensure that your application is using a compatible toolkit, such as Qt or GTK. These toolkits provide Wayland-specific APIs that allow you to take advantage of the new display server's features.
+
+### Example Code: Qt Wayland Application
+```cpp
+// Import necessary headers
+#include <QApplication>
+#include <QWaylandClient>
+
+int main(int argc, char *argv[]) {
+    // Create a QApplication instance
+    QApplication app(argc, argv);
+
+    // Create a QWaylandClient instance
+    QWaylandClient client;
+
+    // Set up the Wayland connection
+    client.connectToWayland();
+
+    // Create a window and show it
+    QWidget window;
+    window.show();
+
+    // Run the application
+    return app.exec();
+}
+```
+This example code demonstrates how to create a simple Qt application that connects to a Wayland display server.
+
+### Example Code: GTK Wayland Application
+```c
+// Import necessary headers
+#include <gtk/gtk.h>
+
+int main(int argc, char *argv[]) {
+    // Initialize GTK
+    gtk_init(&argc, &argv);
+
+    // Create a window and show it
+    GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_widget_show(window);
+
+    // Run the application
+    gtk_main();
+
+    return 0;
+}
+```
+This example code demonstrates how to create a simple GTK application that runs on Wayland.
+
+![Acer flat screen monitor](https://images.unsplash.com/photo-1549287786-aa03e0081950?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxQcmVwYXJpbmclMjBLREUlMjBQbGFzbWElMjBMYXN0JTIwU3VwcG9ydGVkJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODA0MzUzMTF8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+KDE Plasma's last X11-supported release is a significant milestone in the history of Linux desktop environments. As developers, it is essential to prepare for the transition to Wayland by migrating our applications to the new display server. With the benefits of improved security, better performance, and enhanced functionality, Wayland is the future of Linux graphics. By following the steps outlined in this tutorial, you can ensure a smooth transition and take advantage of the new features and capabilities offered by Wayland.
+
+## Additional Resources
+For more information on Wayland and its features, visit the [official Wayland website](https://wayland.freedesktop.org/). To learn more about KDE Plasma and its transition to Wayland, visit the [KDE Plasma website](https://www.kde.org/plasma-desktop/).
+
+*Photo by [Growtika](https://unsplash.com/@growtika?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-computer-with-a-keyboard-and-mouse-9WnjxT1NCoY?utm_source=techversation&utm_medium=referral)*
