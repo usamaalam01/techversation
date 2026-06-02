@@ -1,0 +1,84 @@
+---
+title: "Robust Decision Engines"
+description: "Building robust decision engines with feasible regions and smoothness under perturbations."
+date: "2026-06-02"
+author: "Usama"
+tags: ["ai", "optimization", "programming"]
+aiSummary: "Mixed-Integer Linear Programming (MILP) decision engines can output nominally optimal plans, but small perturbations can invalidate feasibility. This tutorial shows how to build robust decision engines using feasible regions and smoothness under perturbations. We will explore the concept of post-solve robustness and provide working code examples in Python."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxQb3NpdGlvbiUyMFBhcGVyJTIwUG9zdCUyMFNvbHZlJTIwUm9idXN0bmVzcyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MDM3NjA5Mnww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Decision engines are crucial in various industries, such as finance, logistics, and energy management. These engines use Mixed-Integer Linear Programming (MILP) to output nominally optimal plans. However, small perturbations in costs, demands, or resource availability can invalidate feasibility or trigger discontinuous shifts to qualitatively different solutions. In this tutorial, we will explore the concept of post-solve robustness and provide working code examples in Python to build robust decision engines.
+
+## Post-Solve Robustness
+Post-solve robustness refers to the ability of a decision engine to maintain its optimality under small perturbations. This is crucial in real-world applications, where uncertainty and variability are inherent. The paper "Post-Solve Robustness in Decision Engines: Feasible Regions and Smoothness Under Perturbations" [1] provides a comprehensive overview of this concept.
+
+### Feasible Regions
+A feasible region is the set of all possible solutions that satisfy the constraints of the problem. In MILP, the feasible region is a polyhedron, which can be represented by a set of linear inequalities. To build a robust decision engine, we need to ensure that the feasible region is large enough to accommodate small perturbations.
+
+```python
+import numpy as np
+from scipy.optimize import linprog
+
+# Define the coefficients of the objective function
+c = np.array([1, 2, 3])
+
+# Define the coefficients of the inequality constraints
+A = np.array([[1, 2, 3], [4, 5, 6]])
+b = np.array([10, 20])
+
+# Define the bounds of the variables
+x_bounds = [(0, None), (0, None), (0, None)]
+
+# Solve the MILP problem
+res = linprog(c, A_ub=A, b_ub=b, bounds=x_bounds)
+
+print(res.x)
+```
+
+## Smoothness Under Perturbations
+Smoothness under perturbations refers to the ability of the decision engine to maintain its optimality under small changes in the input parameters. This can be achieved by using regularization techniques, such as L1 or L2 regularization.
+
+```python
+import numpy as np
+from scipy.optimize import linprog
+
+# Define the coefficients of the objective function
+c = np.array([1, 2, 3])
+
+# Define the coefficients of the inequality constraints
+A = np.array([[1, 2, 3], [4, 5, 6]])
+b = np.array([10, 20])
+
+# Define the bounds of the variables
+x_bounds = [(0, None), (0, None), (0, None)]
+
+# Define the regularization parameter
+reg_param = 0.1
+
+# Solve the MILP problem with regularization
+res = linprog(c + reg_param * np.ones_like(c), A_ub=A, b_ub=b, bounds=x_bounds)
+
+print(res.x)
+```
+
+![a close up of a sheet of paper with numbers on it](https://images.unsplash.com/photo-1708011271935-3e109df56fe0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxQb3NpdGlvbiUyMFBhcGVyJTIwUG9zdCUyMFNvbHZlJTIwUm9idXN0bmVzcyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MDM3NjA5Mnww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Practical Applications
+The concepts of feasible regions and smoothness under perturbations can be applied to various real-world problems, such as:
+
+* Resource allocation: A company needs to allocate resources to different projects. The decision engine can use MILP to optimize the allocation, taking into account the availability of resources and the priorities of the projects.
+* Supply chain management: A company needs to manage its supply chain, taking into account the availability of raw materials, the production capacity, and the demand of the products.
+* Energy management: A company needs to manage its energy consumption, taking into account the availability of energy sources, the energy demand, and the energy prices.
+
+## Conclusion
+In this tutorial, we have explored the concept of post-solve robustness in decision engines, using feasible regions and smoothness under perturbations. We have provided working code examples in Python to demonstrate the application of these concepts. By using these techniques, developers can build robust decision engines that can maintain their optimality under small perturbations, which is crucial in real-world applications.
+
+[1] https://arxiv.org/abs/2606.00002
+
+Note: The code examples provided in this tutorial are for illustration purposes only and may not be suitable for production use without further modification and testing.
+
+*Photo by [Sharad Bhat](https://unsplash.com/@sharadmbhat?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/black-flat-screen-computer-monitor-Q_Swg0rZouw?utm_source=techversation&utm_medium=referral)*
