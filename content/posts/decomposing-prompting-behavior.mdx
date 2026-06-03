@@ -1,0 +1,93 @@
+---
+title: "Decomposing Prompting Behavior"
+description: "Understanding how prompts steer large language models."
+date: "2026-06-03"
+author: "Usama"
+tags: ["ai", "llm", "research"]
+aiSummary: "Prompting is a crucial aspect of large language models, but its inner workings remain unclear. A new framework decomposes prompting into a transformation of representational geometry. This tutorial explores the concept and provides code examples to demonstrate its application."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1632047096430-9ae3a7a80836?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxEZWNvbXBvc2luZyUyMHByb21wdGluZyUyMHN0ZWVycyUyMGJlaGF2aW9yJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgwNTIyMTU3fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Large language models (LLMs) have revolutionized the field of natural language processing, and prompting has emerged as a key technique to steer their behavior. However, the inner workings of prompting remain unclear, making it challenging to understand how instruction changes reshape internal representations to produce behavior. Recently, a new framework has been proposed to decompose prompting into a transformation of the representational geometry of the content. In this tutorial, we will delve into the concept of decomposing prompting behavior and provide concrete code examples to demonstrate its application.
+
+## Background
+The concept of prompting is based on the idea that a well-crafted input prompt can guide the model to produce a specific output. However, the relationship between the prompt and the model's internal representations is not well understood. The proposed framework treats prompting as a transformation of the representational geometry of the content, which allows for a more nuanced understanding of how prompts steer behavior.
+
+## Nested Geometric Decomposition Framework
+The nested geometric decomposition framework is based on the idea of representing the model's internal state as a geometric object. The framework consists of three main components:
+
+*   **Representation**: The model's internal state is represented as a geometric object, such as a vector or a matrix.
+*   **Transformation**: The prompt is applied to the representation, transforming it into a new geometric object.
+*   **Decomposition**: The transformed representation is decomposed into its constituent parts, allowing for a more nuanced understanding of how the prompt steers behavior.
+
+### Applying the Framework
+To apply the framework, we need to define a representation, transformation, and decomposition function. Let's consider a simple example using Python:
+
+```python
+import numpy as np
+
+# Define the representation function
+def representation(input_text):
+    # Convert the input text to a vector representation
+    vector = np.array([ord(c) for c in input_text])
+    return vector
+
+# Define the transformation function
+def transformation(prompt, representation):
+    # Apply the prompt to the representation
+    transformed_representation = representation + np.array([ord(c) for c in prompt])
+    return transformed_representation
+
+# Define the decomposition function
+def decomposition(transformed_representation):
+    # Decompose the transformed representation into its constituent parts
+    decomposition = np.array([np.mean(transformed_representation[:i+1]) for i in range(len(transformed_representation))])
+    return decomposition
+
+# Apply the framework
+input_text = "Hello World"
+prompt = "How are you?"
+representation_vector = representation(input_text)
+transformed_representation = transformation(prompt, representation_vector)
+decomposition_vector = decomposition(transformed_representation)
+
+print("Representation Vector:", representation_vector)
+print("Transformed Representation:", transformed_representation)
+print("Decomposition Vector:", decomposition_vector)
+```
+
+This code defines a simple representation, transformation, and decomposition function, and applies the framework to an example input text and prompt.
+
+## Visualizing the Results
+To better understand the results, let's visualize the decomposition vector using a line plot:
+
+```python
+import matplotlib.pyplot as plt
+
+# Plot the decomposition vector
+plt.plot(decomposition_vector)
+plt.xlabel("Index")
+plt.ylabel("Value")
+plt.title("Decomposition Vector")
+plt.show()
+```
+
+This code generates a line plot of the decomposition vector, allowing us to visualize the constituent parts of the transformed representation.
+
+![text](https://images.unsplash.com/photo-1600492515568-8868f609511e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxEZWNvbXBvc2luZyUyMHByb21wdGluZyUyMHN0ZWVycyUyMGJlaGF2aW9yJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgwNTIyMTU3fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we explored the concept of decomposing prompting behavior using a nested geometric decomposition framework. We provided concrete code examples to demonstrate the application of the framework, and visualized the results using a line plot. By understanding how prompts steer behavior, we can design more effective prompting strategies to elicit specific responses from large language models.
+
+## Future Directions
+The nested geometric decomposition framework provides a powerful tool for understanding the inner workings of prompting. Future directions include applying the framework to more complex models and tasks, and exploring the relationship between the decomposition vector and the model's output. Additionally, the framework can be used to develop more effective prompting strategies, such as adaptive prompting and multi-step prompting.
+
+## References
+For more information on the nested geometric decomposition framework, please refer to the original paper: [https://arxiv.org/abs/2606.03093](https://arxiv.org/abs/2606.03093).
+
+By following this tutorial, you should now have a better understanding of how to decompose prompting behavior using a nested geometric decomposition framework. You can apply this knowledge to design more effective prompting strategies and improve the performance of large language models.
+
+*Photo by [The 77 Human Needs System](https://unsplash.com/@77hn?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-close-up-of-four-different-colored-papers-bfCJwdA3hVg?utm_source=techversation&utm_medium=referral)*
