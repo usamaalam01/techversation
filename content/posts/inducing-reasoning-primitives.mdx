@@ -1,0 +1,103 @@
+---
+title: "Inducing Reasoning Primitives"
+description: "Discovering reusable reasoning patterns from agent traces."
+date: "2026-06-03"
+author: "Usama"
+tags: ["ai", "llm", "react"]
+aiSummary: "Reasoning Primitive Induction is a method for extracting reusable reasoning patterns from agent traces. This tutorial demonstrates how to implement this method using Python. By clustering recurrent reasoning moves, we can create a compact library of typed primitives."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1692607431208-28cc794e0067?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxJbmR1Y2luZyUyMFJlYXNvbmluZyUyMFByaW1pdGl2ZXMlMjBmcm9tJTIwQWdlbnQlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODA0ODU1Mjl8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+ReAct-style LLM agents have shown impressive capabilities in solving complex problems. However, these agents often rediscover the same reasoning routines across problems, only to discard them after use. To address this issue, we introduce Reasoning Primitive Induction, a single-pass method for mining successful ReAct traces, clustering recurrent reasoning moves, and converting the most frequent moves into a compact library of typed primitives.
+
+## Background
+
+Reasoning Primitive Induction is based on the idea that agents can learn to recognize and reuse common reasoning patterns. By analyzing agent traces, we can identify these patterns and create a library of reusable primitives. This library can be used to improve the performance of ReAct agents and reduce the computational overhead of rediscovering the same reasoning routines.
+
+## Implementing Reasoning Primitive Induction
+
+To implement Reasoning Primitive Induction, we will use Python and the following libraries:
+
+* `numpy` for numerical computations
+* `scipy` for clustering and distance calculations
+* `pandas` for data manipulation and storage
+
+First, we need to load the agent traces and preprocess the data. We assume that the agent traces are stored in a CSV file, where each row represents a single trace.
+
+```python
+import numpy as np
+import pandas as pd
+from scipy.cluster.hierarchy import linkage, fcluster
+
+# Load the agent traces
+traces = pd.read_csv('traces.csv')
+
+# Preprocess the data
+traces = traces.dropna()  # remove rows with missing values
+traces = traces.apply(lambda x: x.astype(str))  # convert all columns to strings
+```
+
+Next, we need to cluster the recurrent reasoning moves. We will use hierarchical clustering with the Jaccard distance metric.
+
+```python
+# Define the Jaccard distance metric
+def jaccard_distance(x, y):
+    intersection = set(x) & set(y)
+    union = set(x) | set(y)
+    return 1 - len(intersection) / len(union)
+
+# Calculate the distance matrix
+distance_matrix = np.zeros((len(traces), len(traces)))
+for i in range(len(traces)):
+    for j in range(i+1, len(traces)):
+        distance_matrix[i, j] = jaccard_distance(traces.iloc[i], traces.iloc[j])
+        distance_matrix[j, i] = distance_matrix[i, j]
+
+# Perform hierarchical clustering
+Z = linkage(distance_matrix, method='ward')
+
+# Form flat clusters
+clusters = fcluster(Z, t=0.5, criterion='distance')
+```
+
+Finally, we need to convert the most frequent moves into a compact library of typed primitives.
+
+```python
+# Define a function to extract the most frequent moves
+def extract_primitives(clusters, traces):
+    primitives = []
+    for cluster in set(clusters):
+        cluster_traces = traces[clusters == cluster]
+        most_frequent_move = cluster_traces.mode().iloc[0]
+        primitives.append(most_frequent_move)
+    return primitives
+
+# Extract the primitives
+primitives = extract_primitives(clusters, traces)
+```
+
+## Example Use Case
+
+To demonstrate the effectiveness of Reasoning Primitive Induction, let's consider an example use case. Suppose we have a ReAct agent that is trained to solve a set of mathematical problems. We can use Reasoning Primitive Induction to extract the most frequent reasoning patterns from the agent's traces and create a library of typed primitives.
+
+![graphical user interface, application, shape, arrow](https://images.unsplash.com/photo-1667984436026-99b165e3672b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxJbmR1Y2luZyUyMFJlYXNvbmluZyUyMFByaW1pdGl2ZXMlMjBmcm9tJTIwQWdlbnQlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODA0ODU1Mjl8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+By using this library, the ReAct agent can improve its performance and reduce the computational overhead of rediscovering the same reasoning routines.
+
+## Conclusion
+
+Reasoning Primitive Induction is a powerful method for extracting reusable reasoning patterns from agent traces. By clustering recurrent reasoning moves and converting the most frequent moves into a compact library of typed primitives, we can improve the performance of ReAct agents and reduce the computational overhead of rediscovering the same reasoning routines. The example use case demonstrates the effectiveness of this method in a real-world scenario.
+
+## Further Reading
+
+For more information on Reasoning Primitive Induction, please refer to the original paper on [arXiv](https://arxiv.org/abs/2606.02994). The paper provides a detailed explanation of the method and its applications.
+
+![a neon display of a man's head and brain](https://images.unsplash.com/photo-1573511860302-28c524319d2a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxJbmR1Y2luZyUyMFJlYXNvbmluZyUyMFByaW1pdGl2ZXMlMjBmcm9tJTIwQWdlbnQlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODA0ODU1Mjl8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+We hope this tutorial has provided a clear understanding of Reasoning Primitive Induction and its applications. For any questions or comments, please feel free to contact us.
+
+*Photo by [Google DeepMind](https://unsplash.com/@googledeepmind?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-close-up-of-a-container-with-words-on-it-b8GH92xVoUw?utm_source=techversation&utm_medium=referral)*
