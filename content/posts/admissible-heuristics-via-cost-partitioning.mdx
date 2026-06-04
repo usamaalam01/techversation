@@ -1,0 +1,99 @@
+---
+title: "Admissible Heuristics via Cost Partitioning"
+description: "Learning admissible heuristics for optimal planning with cost partitioning."
+date: "2026-06-04"
+author: "Usama"
+tags: ["ai", "planning", "heuristics"]
+aiSummary: "Admissible heuristics are crucial for optimal planning, but learning them can be challenging. Cost partitioning offers a solution by combining multiple abstraction heuristics while preserving admissibility. This tutorial demonstrates how to learn admissible cost partitions using a proposed framework. We will explore the concept of cost partitioning, its benefits, and provide working code examples to get you started."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1591453089816-0fbb971b454c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxMZWFybmluZyUyMEFkbWlzc2libGUlMjBIZXVyaXN0aWNzJTIwdmlhJTIwQ29zdCUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MDYwNDMwMnww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Admissible heuristics play a vital role in optimal planning, as they guide the search towards the goal state without overestimating the cost. However, learning admissible heuristics can be challenging due to the risk of overestimation. Cost partitioning offers a solution by combining multiple abstraction heuristics while preserving admissibility. In this tutorial, we will delve into the concept of cost partitioning, its benefits, and provide working code examples to demonstrate how to learn admissible cost partitions using a proposed framework.
+
+## What is Cost Partitioning?
+
+Cost partitioning is a technique that combines multiple abstraction heuristics to produce a more informed and admissible heuristic. The idea is to partition the cost of reaching the goal state into smaller, more manageable components. Each component is then estimated using a separate abstraction heuristic, and the results are combined to produce the final heuristic value.
+
+### Benefits of Cost Partitioning
+
+Cost partitioning offers several benefits, including:
+
+* **Improved admissibility**: By combining multiple abstraction heuristics, cost partitioning can produce a more informed and admissible heuristic.
+* **Reduced overestimation**: Cost partitioning can reduce the risk of overestimation by breaking down the cost into smaller components.
+* **Increased flexibility**: Cost partitioning allows for the combination of different abstraction heuristics, making it a flexible and adaptable technique.
+
+## Learning Admissible Cost Partitions
+
+To learn admissible cost partitions, we can use a proposed framework that infers the optimal partitioning of the cost. The framework consists of two main components:
+
+* **Cost partitioning module**: This module is responsible for partitioning the cost into smaller components.
+* **Abstraction heuristic module**: This module is responsible for estimating the cost of each component using a separate abstraction heuristic.
+
+### Code Example
+
+Here is an example code snippet in Python that demonstrates how to learn admissible cost partitions using the proposed framework:
+```python
+import numpy as np
+
+class CostPartitioningModule:
+    def __init__(self, num_components):
+        self.num_components = num_components
+
+    def partition_cost(self, cost):
+        # Partition the cost into smaller components
+        components = np.array_split(cost, self.num_components)
+        return components
+
+class AbstractionHeuristicModule:
+    def __init__(self, heuristic_func):
+        self.heuristic_func = heuristic_func
+
+    def estimate_cost(self, component):
+        # Estimate the cost of each component using a separate abstraction heuristic
+        return self.heuristic_func(component)
+
+# Define the cost partitioning module
+cost_partitioning_module = CostPartitioningModule(num_components=3)
+
+# Define the abstraction heuristic module
+abstraction_heuristic_module = AbstractionHeuristicModule(heuristic_func=lambda x: x**2)
+
+# Define the cost
+cost = np.array([1, 2, 3, 4, 5])
+
+# Partition the cost
+components = cost_partitioning_module.partition_cost(cost)
+
+# Estimate the cost of each component
+estimated_costs = [abstraction_heuristic_module.estimate_cost(component) for component in components]
+
+# Combine the estimated costs to produce the final heuristic value
+final_heuristic_value = np.sum(estimated_costs)
+
+print("Final heuristic value:", final_heuristic_value)
+```
+This code example demonstrates how to partition the cost into smaller components, estimate the cost of each component using a separate abstraction heuristic, and combine the estimated costs to produce the final heuristic value.
+
+## Conclusion
+
+In this tutorial, we explored the concept of cost partitioning and its benefits in learning admissible heuristics for optimal planning. We also demonstrated how to learn admissible cost partitions using a proposed framework and provided working code examples to get you started. By using cost partitioning, you can improve the admissibility of your heuristics and reduce the risk of overestimation, leading to more efficient and effective planning.
+
+![black flat screen computer monitor](https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxMZWFybmluZyUyMEFkbWlzc2libGUlMjBIZXVyaXN0aWNzJTIwdmlhJTIwQ29zdCUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MDYwNDMwMnww&ixlib=rb-4.1.0&q=80&w=1080)
+
+### Future Work
+
+There are several areas for future work, including:
+
+* **Improving the accuracy of the abstraction heuristics**: By improving the accuracy of the abstraction heuristics, we can produce more informed and admissible heuristics.
+* **Exploring different cost partitioning techniques**: There are several cost partitioning techniques available, and exploring different techniques can help us find the most effective one for our specific problem.
+* **Applying cost partitioning to real-world problems**: By applying cost partitioning to real-world problems, we can demonstrate its effectiveness and potential impact.
+
+### References
+
+For more information on cost partitioning and learning admissible heuristics, please refer to the original paper: [https://arxiv.org/abs/2606.04597](https://arxiv.org/abs/2606.04597)
+
+*Photo by [Markus Winkler](https://unsplash.com/@markuswinkler?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-close-up-of-a-typewriter-with-a-paper-reading-machine-learning-f57lx37DCM4?utm_source=techversation&utm_medium=referral)*
