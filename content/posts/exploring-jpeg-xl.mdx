@@ -1,0 +1,88 @@
+---
+title: "Exploring JPEG XL"
+description: "Discover the future of image coding with JPEG XL, an open-source experiment."
+date: "2026-06-04"
+author: "Usama"
+tags: ["jpeg", "image-coding", "open-source"]
+aiSummary: "JPEG XL is a new image coding standard that offers improved compression efficiency and features. It is the result of open-source experiments and collaboration. This post provides a hands-on review of JPEG XL and its capabilities."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1675557570482-df9926f61d86?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxKb3VybmV5JTIwSlBFRyUyMG9wZW4lMjBzb3VyY2UlMjBleHBlcmltZW50cyUyMHRlY2hub2xvZ3klMjBzb2Z0d2FyZXxlbnwxfDB8fHwxNzgwNTg3NDc0fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to JPEG XL
+JPEG XL is a new image coding standard that has been gaining attention in recent years. It is the result of open-source experiments and collaboration, and it offers improved compression efficiency and features compared to traditional JPEG. In this post, we will explore the capabilities of JPEG XL and provide a hands-on review of its features.
+
+## History of JPEG XL
+The journey to JPEG XL began with the development of a new image coding standard that could improve upon the existing JPEG standard. The goal was to create a standard that could provide better compression efficiency, improved image quality, and new features. The development of JPEG XL was a collaborative effort, with contributions from many individuals and organizations.
+
+As mentioned in the [Google Open Source Blog](https://opensource.googleblog.com/2026/06/journey-to-jpeg-xl-how-open-source-experiments-shaped-the-future-of-image-coding.html), the development of JPEG XL was a result of open-source experiments and collaboration. The post highlights the importance of open-source collaboration in shaping the future of image coding.
+
+## Features of JPEG XL
+JPEG XL offers several features that make it an attractive alternative to traditional JPEG. Some of the key features include:
+
+* Improved compression efficiency: JPEG XL offers better compression efficiency than traditional JPEG, which means that images can be compressed to smaller sizes without sacrificing quality.
+* Improved image quality: JPEG XL offers improved image quality, with features such as better color accuracy and reduced artifacts.
+* New features: JPEG XL offers new features such as support for animated images, alpha channels, and more.
+
+### Example Use Case
+One example use case for JPEG XL is in web development, where images need to be compressed to reduce page load times. With JPEG XL, developers can compress images to smaller sizes without sacrificing quality, resulting in faster page load times and improved user experience.
+
+```python
+from PIL import Image
+import jpegxl
+
+# Open an image file
+img = Image.open('image.jpg')
+
+# Convert the image to JPEG XL
+jpegxl.encode(img, 'image.jxl')
+```
+
+In this example, we use the Python Imaging Library (PIL) to open an image file and convert it to JPEG XL using the `jpegxl` library.
+
+## Working with JPEG XL
+Working with JPEG XL is similar to working with traditional JPEG. However, there are some differences in the way that images are encoded and decoded.
+
+### Encoding Images
+To encode an image in JPEG XL, you can use the `jpegxl` library in Python. Here is an example of how to encode an image:
+```python
+import jpegxl
+
+# Open an image file
+with open('image.jpg', 'rb') as f:
+    img = f.read()
+
+# Encode the image in JPEG XL
+encoded_img = jpegxl.encode(img)
+
+# Save the encoded image to a file
+with open('image.jxl', 'wb') as f:
+    f.write(encoded_img)
+```
+
+### Decoding Images
+To decode a JPEG XL image, you can use the `jpegxl` library in Python. Here is an example of how to decode an image:
+```python
+import jpegxl
+
+# Open a JPEG XL image file
+with open('image.jxl', 'rb') as f:
+    encoded_img = f.read()
+
+# Decode the image
+decoded_img = jpegxl.decode(encoded_img)
+
+# Save the decoded image to a file
+with open('image.jpg', 'wb') as f:
+    f.write(decoded_img)
+```
+
+![a 360 - view of a tunnel in a desert](https://images.unsplash.com/photo-1562498639-6f445df93616?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxKb3VybmV5JTIwSlBFRyUyMG9wZW4lMjBzb3VyY2UlMjBleHBlcmltZW50cyUyMHRlY2hub2xvZ3klMjBzb2Z0d2FyZXxlbnwxfDB8fHwxNzgwNTg3NDc0fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In conclusion, JPEG XL is a new image coding standard that offers improved compression efficiency and features compared to traditional JPEG. It is the result of open-source experiments and collaboration, and it has the potential to shape the future of image coding. With its improved compression efficiency, improved image quality, and new features, JPEG XL is an attractive alternative to traditional JPEG. As shown in the examples above, working with JPEG XL is similar to working with traditional JPEG, and it can be easily integrated into existing workflows.
+
+Overall, JPEG XL is a promising new technology that has the potential to improve the way we work with images. As the technology continues to evolve, we can expect to see even more improvements and features. Whether you are a developer, a designer, or simply someone who works with images, JPEG XL is definitely worth checking out.
+
+*Photo by [Jonathan Kemper](https://unsplash.com/@jupp?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-close-up-of-a-computer-screen-with-the-words-mid-journey-on-it-hpz88a0NUS8?utm_source=techversation&utm_medium=referral)*

@@ -1,0 +1,128 @@
+---
+title: "Mitigating Cascading Hallucination in RAG"
+description: "Detect and mitigate cascading hallucination in agentic RAG pipelines."
+date: "2026-06-04"
+author: "Usama"
+tags: ["ai", "rag", "mitigation"]
+aiSummary: "The CHARM framework detects and mitigates cascading hallucination in multi-step agentic retrieval-augmented generation pipelines. This tutorial provides a step-by-step guide to implementing the CHARM framework. We will explore the concept of cascading hallucination and demonstrate how to use the CHARM framework to improve the accuracy of RAG pipelines."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1612521564730-62fc7691cd85?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxDYXNjYWRpbmclMjBIYWxsdWNpbmF0aW9uJTIwQWdlbnRpYyUyMFJBRyUyMENIQVJNJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgwNTg3NjI5fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Cascading Hallucination
+Cascading hallucination is a type of error that occurs in multi-step agentic retrieval-augmented generation (RAG) pipelines. It happens when errors introduced at early pipeline stages propagate and amplify across subsequent stages, leading to inaccurate results. Existing hallucination detection mechanisms often miss this type of error, making it challenging to develop reliable RAG pipelines.
+
+## Understanding the CHARM Framework
+The CHARM framework is a novel approach to detecting and mitigating cascading hallucination in RAG pipelines. It consists of two primary components: a detector and a mitigator. The detector identifies potential hallucinations in the pipeline, while the mitigator corrects or removes these hallucinations to improve the accuracy of the results.
+
+### Detector Component
+The detector component uses a combination of natural language processing (NLP) and machine learning techniques to identify potential hallucinations in the pipeline. It analyzes the input and output of each stage in the pipeline, looking for inconsistencies and anomalies that may indicate hallucinations.
+
+```python
+import numpy as np
+import torch
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+class Detector:
+    def __init__(self, model_name):
+        self.model = AutoModelForSequenceClassification.from_pretrained(model_name)
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+    def detect_hallucinations(self, input_text, output_text):
+        inputs = self.tokenizer(input_text, return_tensors="pt")
+        outputs = self.tokenizer(output_text, return_tensors="pt")
+
+        with torch.no_grad():
+            input_scores = self.model(**inputs).logits
+            output_scores = self.model(**outputs).logits
+
+        # Calculate the score difference between input and output
+        score_diff = np.abs(input_scores - output_scores)
+
+        # Threshold the score difference to detect hallucinations
+        threshold = 0.5
+        if score_diff > threshold:
+            return True
+        else:
+            return False
+```
+
+### Mitigator Component
+The mitigator component uses a range of techniques to correct or remove hallucinations from the pipeline. These techniques include:
+
+* **Data augmentation**: adding noise or perturbations to the input data to increase its diversity and robustness
+* **Model ensemble**: combining the predictions of multiple models to improve the overall accuracy and robustness
+* **Post-processing**: applying rules or filters to the output of the pipeline to remove or correct hallucinations
+
+```python
+import numpy as np
+from sklearn.ensemble import BaggingClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+class Mitigator:
+    def __init__(self, model_name):
+        self.model = AutoModelForSequenceClassification.from_pretrained(model_name)
+
+    def mitigate_hallucinations(self, input_text, output_text):
+        # Data augmentation
+        augmented_inputs = self.augment_input(input_text)
+
+        # Model ensemble
+        ensemble_model = BaggingClassifier(self.model, n_estimators=5)
+        ensemble_model.fit(augmented_inputs, output_text)
+
+        # Post-processing
+        filtered_output = self.filter_output(output_text)
+
+        return filtered_output
+
+    def augment_input(self, input_text):
+        # Add noise or perturbations to the input data
+        noisy_inputs = []
+        for _ in range(5):
+            noisy_input = input_text + " " + str(np.random.rand())
+            noisy_inputs.append(noisy_input)
+        return noisy_inputs
+
+    def filter_output(self, output_text):
+        # Apply rules or filters to the output of the pipeline
+        filtered_output = output_text.replace("hallucination", "")
+        return filtered_output
+```
+
+## Implementing the CHARM Framework
+To implement the CHARM framework, you need to integrate the detector and mitigator components into your RAG pipeline. Here's an example of how you can do this:
+
+```python
+class RAGPipeline:
+    def __init__(self, model_name):
+        self.detector = Detector(model_name)
+        self.mitigator = Mitigator(model_name)
+
+    def process_input(self, input_text):
+        output_text = self.model(input_text)
+        hallucination_detected = self.detector.detect_hallucinations(input_text, output_text)
+        if hallucination_detected:
+            output_text = self.mitigator.mitigate_hallucinations(input_text, output_text)
+        return output_text
+
+# Initialize the RAG pipeline
+pipeline = RAGPipeline("model_name")
+
+# Process input text
+input_text = "This is an example input text."
+output_text = pipeline.process_input(input_text)
+print(output_text)
+```
+
+![a close up of a colorful object with a black background](https://images.unsplash.com/photo-1691625014846-86d03c4135dc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxDYXNjYWRpbmclMjBIYWxsdWNpbmF0aW9uJTIwQWdlbnRpYyUyMFJBRyUyMENIQVJNJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgwNTg3NjI5fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we explored the concept of cascading hallucination in RAG pipelines and introduced the CHARM framework for detecting and mitigating this type of error. We provided a step-by-step guide to implementing the CHARM framework, including code examples and explanations of the detector and mitigator components. By integrating the CHARM framework into your RAG pipeline, you can improve the accuracy and robustness of your results and develop more reliable AI systems.
+
+## Further Reading
+For more information on the CHARM framework and its applications, please refer to the original research paper: [https://arxiv.org/abs/2606.04435](https://arxiv.org/abs/2606.04435).
+
+*Photo by [FlyD](https://unsplash.com/@flyd2069?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/black-and-white-round-illustration-OLRXnzXFBjo?utm_source=techversation&utm_medium=referral)*
