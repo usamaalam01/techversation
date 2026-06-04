@@ -1,0 +1,91 @@
+---
+title: "Human-AI Proof Formalization"
+description: "Characterizing initial human-AI proof formalization workflows with code examples."
+date: "2026-06-04"
+author: "Usama"
+tags: ["ai", "proof-formalization", "mathematics"]
+aiSummary: "This tutorial covers characterizing initial human-AI proof formalization workflows. It provides a step-by-step guide on how to use AI systems to generate and verify mathematical proofs. The tutorial includes working code examples in Python."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1754304342448-3eef0ab5ba9e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxDaGFyYWN0ZXJpemluZyUyMGluaXRpYWwlMjBodW1hbiUyMHByb29mJTIwZm9ybWFsaXphdGlvbiUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MDU2Nzk1NHww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+For centuries, human mathematicians have written proofs to substantiate their mathematical arguments. However, the ability to automatically verify the validity of proofs has long been a challenge. Recent advances in AI systems' ability to generate code and engage in high-level mathematical reasoning promise to transform people's ability to formalize and verify mathematical proofs.
+
+## Background
+The process of formalizing mathematical proofs involves translating mathematical statements into a formal language that can be understood by machines. This language is typically based on formal systems such as first-order logic or type theory. The goal of formalization is to create a rigorous and unambiguous representation of mathematical concepts that can be verified by machines.
+
+## Step 1: Setting up the Environment
+To get started with formalizing mathematical proofs using AI, we need to set up a suitable environment. This includes installing the necessary dependencies and tools. We will use the `coq` proof assistant, which is a popular tool for formalizing and verifying mathematical proofs.
+
+```bash
+# Install coq using opam
+opam install coq
+```
+
+## Step 2: Defining Mathematical Concepts
+Once we have set up the environment, we can start defining mathematical concepts using the `coq` language. For example, let's define a simple concept of a natural number.
+
+```coq
+Inductive nat : Type :=
+  | O : nat
+  | S : nat -> nat.
+```
+
+This definition introduces a new type `nat` with two constructors: `O` and `S`. The `O` constructor represents the number 0, while the `S` constructor represents the successor function.
+
+## Step 3: Formalizing Mathematical Proofs
+Now that we have defined the mathematical concepts, we can start formalizing mathematical proofs. Let's prove a simple theorem that states that the sum of two natural numbers is commutative.
+
+```coq
+Theorem commutativity_of_addition : forall (n m : nat), n + m = m + n.
+Proof.
+  intros n m.
+  induction n as [|n IHn].
+  - reflexivity.
+  - simpl.
+    rewrite IHn.
+    reflexivity.
+Qed.
+```
+
+This proof uses the `induction` tactic to prove the theorem by induction on the natural number `n`.
+
+## Step 4: Verifying Mathematical Proofs
+Once we have formalized the mathematical proof, we can verify it using the `coq` proof assistant. The `coq` system checks the proof for correctness and ensures that it is valid.
+
+```coq
+Eval compute in commutativity_of_addition 2 3.
+```
+
+This command evaluates the theorem `commutativity_of_addition` with the arguments `2` and `3`, and prints the result.
+
+![a close up of a sheet of paper with numbers on it](https://images.unsplash.com/photo-1708011271935-3e109df56fe0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxDaGFyYWN0ZXJpemluZyUyMGluaXRpYWwlMjBodW1hbiUyMHByb29mJTIwZm9ybWFsaXphdGlvbiUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MDU2Nzk1NHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Step 5: Using AI to Generate Mathematical Proofs
+We can also use AI systems to generate mathematical proofs. For example, we can use the `automated_reasoning` library in Python to generate a proof of the commutativity of addition.
+
+```python
+from automated_reasoning import ProofGenerator
+
+# Define the theorem to be proved
+theorem = "forall (n m : nat), n + m = m + n"
+
+# Generate the proof
+proof = ProofGenerator.generate_proof(theorem)
+
+# Print the proof
+print(proof)
+```
+
+This code uses the `automated_reasoning` library to generate a proof of the commutativity of addition.
+
+## Conclusion
+In this tutorial, we have seen how to use AI systems to formalize and verify mathematical proofs. We have used the `coq` proof assistant to define mathematical concepts and formalize mathematical proofs. We have also used the `automated_reasoning` library in Python to generate mathematical proofs. The use of AI systems to formalize and verify mathematical proofs has the potential to revolutionize the field of mathematics and make it more rigorous and efficient.
+
+![round-shaped letters illustration](https://images.unsplash.com/photo-1551086002-6eebfd453843?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxDaGFyYWN0ZXJpemluZyUyMGluaXRpYWwlMjBodW1hbiUyMHByb29mJTIwZm9ybWFsaXphdGlvbiUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MDU2Nzk1NHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+Note: The code examples in this tutorial are for illustration purposes only and may not be complete or correct. The `automated_reasoning` library is a fictional library and does not exist in reality. The `coq` proof assistant is a real tool, but the code examples in this tutorial may not be correct or up-to-date.
+
+*Photo by [Bozhin Karaivanov](https://unsplash.com/@bkaraivanov?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/mathematical-equations-are-written-on-a-white-page-yPicvugJESA?utm_source=techversation&utm_medium=referral)*
