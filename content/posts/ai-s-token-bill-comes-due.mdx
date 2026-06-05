@@ -1,0 +1,60 @@
+---
+title: "AI's Token Bill Comes Due"
+description: "Industry scrambles to manage AI's rising costs."
+date: "2026-06-05"
+author: "Usama"
+tags: ["ai", "costs", "management"]
+aiSummary: "The AI industry is facing a crisis as the cost of training and deploying models becomes unsustainable. Companies are scrambling to find ways to manage these costs. The shift from 'go fast' to 'we need guardrails' marks a new era in AI development."
+category: "news"
+coverImage: "https://images.unsplash.com/photo-1669881336715-5a51a78d5434?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHx0b2tlbiUyMGJpbGwlMjBjb21lcyUyMGR1ZSUyMEluc2lkZSUyMHRlY2hub2xvZ3klMjBkaWdpdGFsJTIwaW5ub3ZhdGlvbnxlbnwxfDB8fHwxNzgwNjcyOTIyfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+The AI industry is at a crossroads. After years of rapid growth and innovation, the reality of rising costs is starting to sink in. A recent article by TechCrunch, [The token bill comes due: Inside the industry scramble to manage AI’s runaway costs](https://techcrunch.com/2026/06/05/the-token-bill-comes-due-inside-the-industry-scramble-to-manage-ais-runaway-costs/), highlights the challenges companies are facing in managing the costs associated with training and deploying AI models.
+
+## The Problem
+The cost of training AI models is skyrocketing, with some models requiring tens of millions of dollars to train. This has led to a situation where companies are struggling to keep up with the costs, and the industry is shifting from a "go fast" approach to a more cautious "we need guardrails" approach. As one industry expert noted, "The whole conversation shifted from tokenmaxxing and 'go fast' to 'we need guardrails, how do we control this?'"
+
+![a sign that says please buy token's first on a table](https://images.unsplash.com/photo-1572517499173-4e2cb8bef19b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHx0b2tlbiUyMGJpbGwlMjBjb21lcyUyMGR1ZSUyMEluc2lkZSUyMHRlY2hub2xvZ3klMjBkaWdpdGFsJTIwaW5ub3ZhdGlvbnxlbnwxfDB8fHwxNzgwNjcyOTIyfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Why it Matters
+The rising costs of AI development matter to developers for several reasons. Firstly, it affects the bottom line of companies, making it harder for them to invest in new projects and innovations. Secondly, it limits the accessibility of AI technology, making it harder for smaller companies and individuals to develop and deploy AI models. Finally, it raises concerns about the sustainability of the AI industry as a whole.
+
+## The Solution
+So, what can be done to manage the rising costs of AI development? One approach is to focus on efficiency and optimization. This can be achieved through techniques such as model pruning, knowledge distillation, and transfer learning. Another approach is to explore new business models, such as pay-as-you-go or subscription-based services, that can help reduce the upfront costs of AI development.
+
+```python
+import torch
+import torch.nn as nn
+
+# Example of model pruning
+class Net(nn.Module):
+    def __init__(self):
+        super(Net, self).__init__()
+        self.fc1 = nn.Linear(784, 128)
+        self.fc2 = nn.Linear(128, 10)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = self.fc2(x)
+        return x
+
+# Prune the model
+net = Net()
+parameters_to_prune = (
+    (net.fc1, 'weight'),
+)
+torch.nn.utils.prune.global_unstructured(
+    parameters_to_prune,
+    pruning_method=torch.nn.utils.prune.L1Unstructured,
+    amount=0.2,
+)
+```
+
+## Conclusion
+The rising costs of AI development are a major challenge for the industry, and companies are scrambling to find ways to manage these costs. The shift from a "go fast" approach to a more cautious "we need guardrails" approach marks a new era in AI development. By focusing on efficiency and optimization, and exploring new business models, developers can help reduce the costs of AI development and make AI technology more accessible to all. As the industry continues to evolve, it will be interesting to see how companies adapt to these new challenges and opportunities. 
+
+In the future, we can expect to see more emphasis on sustainable AI development, with companies prioritizing efficiency and cost-effectiveness over raw processing power. This may lead to the development of new technologies and techniques that can help reduce the costs of AI development, such as more efficient algorithms or specialized hardware. Ultimately, the key to managing the rising costs of AI development will be to find a balance between innovation and sustainability, and to prioritize the development of AI technology that is both powerful and responsible.
+
+*Photo by [Aakash Dhage](https://unsplash.com/@aakashdhage?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-group-of-coins-KrpOwO4AIwM?utm_source=techversation&utm_medium=referral)*
