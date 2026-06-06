@@ -1,0 +1,97 @@
+---
+title: "Zero Knowledge Verification for AI Training"
+description: "Verify AI training compute without revealing sensitive data."
+date: "2026-06-06"
+author: "Usama"
+tags: ["ai", "zero-knowledge", "verification"]
+aiSummary: "Zero knowledge verification enables the verification of AI training compute without revealing sensitive data. This technique has the potential to revolutionize AI governance frameworks. Researchers have proposed a new method for zero knowledge verification of frontier AI training."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxaZXJvJTIwa25vd2xlZGdlJTIwdmVyaWZpY2F0aW9uJTIwZnJvbnRpZXIlMjB0cmFpbmluZyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MDc1NDYwOHww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+The increasing use of artificial intelligence (AI) has led to concerns about its governance and regulation. One of the key challenges in AI governance is the verification of AI training compute. Currently, enforcement relies on self-reporting, which is not reliable. A new technique called zero knowledge verification has the potential to address this challenge. In this tutorial, we will explore how to use zero knowledge verification for AI training.
+
+## What is Zero Knowledge Verification?
+
+Zero knowledge verification is a cryptographic technique that enables one party to prove that a statement is true without revealing any underlying information. In the context of AI training, zero knowledge verification can be used to verify the compute used for training a model without revealing the model's architecture, data, or other sensitive information.
+
+## How Does Zero Knowledge Verification Work?
+
+Zero knowledge verification relies on a protocol between two parties: the prover and the verifier. The prover wants to prove that a statement is true, while the verifier wants to verify the statement without learning any underlying information. The protocol involves a series of interactions between the prover and the verifier, during which the prover provides proofs that the statement is true.
+
+### Zero Knowledge Verification Protocol
+
+The zero knowledge verification protocol for AI training compute involves the following steps:
+
+1. **Commitment**: The prover commits to a value that represents the compute used for training the model.
+2. **Challenge**: The verifier sends a challenge to the prover, which is a random value.
+3. **Response**: The prover responds to the challenge by providing a proof that the committed value is true.
+4. **Verification**: The verifier verifies the proof and checks if it is valid.
+
+## Implementing Zero Knowledge Verification
+
+To implement zero knowledge verification for AI training compute, we can use a library such as `zkay`. `zkay` is a Python library that provides a simple and efficient way to implement zero knowledge verification protocols.
+
+### Installing `zkay`
+
+To install `zkay`, we can use pip:
+```bash
+pip install zkay
+```
+### Example Code
+
+Here is an example code that demonstrates how to use `zkay` to implement zero knowledge verification for AI training compute:
+```python
+import zkay
+
+# Define the prover and verifier
+prover = zkay.Prover()
+verifier = zkay.Verifier()
+
+# Define the compute value
+compute_value = 1000
+
+# Commit to the compute value
+commitment = prover.commit(compute_value)
+
+# Send the commitment to the verifier
+verifier.receive_commitment(commitment)
+
+# Send a challenge to the prover
+challenge = verifier.challenge()
+prover.receive_challenge(challenge)
+
+# Respond to the challenge
+response = prover.respond()
+verifier.receive_response(response)
+
+# Verify the proof
+if verifier.verify():
+    print("Proof is valid")
+else:
+    print("Proof is not valid")
+```
+![graphical user interface, application, shape, arrow](https://images.unsplash.com/photo-1667984436026-99b165e3672b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxaZXJvJTIwa25vd2xlZGdlJTIwdmVyaWZpY2F0aW9uJTIwZnJvbnRpZXIlMjB0cmFpbmluZyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MDc1NDYwOHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Benefits of Zero Knowledge Verification
+
+Zero knowledge verification has several benefits, including:
+
+* **Improved security**: Zero knowledge verification enables the verification of AI training compute without revealing sensitive data.
+* **Increased trust**: Zero knowledge verification can increase trust between parties by providing a secure and reliable way to verify statements.
+* **Flexibility**: Zero knowledge verification can be used in a variety of applications, including AI governance, finance, and healthcare.
+
+## Conclusion
+
+Zero knowledge verification is a powerful technique that has the potential to revolutionize AI governance frameworks. By providing a secure and reliable way to verify AI training compute, zero knowledge verification can help to build trust between parties and improve the overall security of AI systems. In this tutorial, we have explored how to use `zkay` to implement zero knowledge verification for AI training compute. We have also discussed the benefits of zero knowledge verification and its potential applications.
+
+As AI continues to evolve and become more pervasive, the need for secure and reliable verification protocols will become increasingly important. Zero knowledge verification is an exciting development that has the potential to address this need and provide a foundation for more secure and trustworthy AI systems.
+
+![black flat screen computer monitor](https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxaZXJvJTIwa25vd2xlZGdlJTIwdmVyaWZpY2F0aW9uJTIwZnJvbnRpZXIlMjB0cmFpbmluZyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MDc1NDYwOHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+For more information on zero knowledge verification and its applications, please refer to the [original research paper](https://arxiv.org/abs/2606.05433).
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
