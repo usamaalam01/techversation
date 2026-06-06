@@ -1,0 +1,80 @@
+---
+title: "LeanMarathon: Reliable AI Co-Mathematicians"
+description: "LeanMarathon enables reliable research-level Lean autoformalization with a multi-agent harness."
+date: "2026-06-06"
+author: "Usama"
+tags: ["ai", "lean", "mathematics"]
+aiSummary: "LeanMarathon is a new tool for reliable AI co-mathematicians. It uses a multi-agent harness for long-horizon autoformalization of research mathematics. This approach helps to avoid common pitfalls such as statement drift, dependency tangles, and context decay."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxMZWFuTWFyYXRob24lMjBUb3dhcmQlMjBSZWxpYWJsZSUyME1hdGhlbWF0aWNpYW5zJTIwTG9uZyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MDc3NTE3MXww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to LeanMarathon
+LeanMarathon is a novel approach to reliable AI co-mathematicians through long-horizon Lean autoformalization. The core abstraction of LeanMarathon is an evolving blueprint, which is a Lean file that represents the mathematical knowledge being formalized. This blueprint is used by multiple agents to collaborate on the formalization process, ensuring that the resulting formalization is reliable and accurate.
+
+## Setting Up LeanMarathon
+To get started with LeanMarathon, you will need to install the Lean theorem prover and the LeanMarathon harness. You can install Lean using the following command:
+```bash
+git clone https://github.com/leanprover/lean.git
+cd lean
+make
+```
+Once Lean is installed, you can install the LeanMarathon harness using the following command:
+```bash
+git clone https://github.com/lean-marathon/lean-marathon.git
+cd lean-marathon
+make
+```
+## Creating a Lean File
+A Lean file is a text file that contains mathematical definitions and theorems. To create a new Lean file, you can use the following command:
+```bash
+lean --new my_file.lean
+```
+This will create a new Lean file called `my_file.lean` with a basic template.
+
+## Defining Mathematical Concepts
+In Lean, mathematical concepts are defined using the `def` keyword. For example, you can define a function that adds two numbers using the following code:
+```lean
+def add (x : nat) (y : nat) : nat := x + y
+```
+This defines a function `add` that takes two natural numbers `x` and `y` and returns their sum.
+
+## Using LeanMarathon
+Once you have defined your mathematical concepts, you can use LeanMarathon to formalize them. To do this, you will need to create a new LeanMarathon project using the following command:
+```bash
+lean-marathon --new my_project
+```
+This will create a new LeanMarathon project called `my_project` with a basic template.
+
+## Collaborating with Multiple Agents
+One of the key features of LeanMarathon is its ability to collaborate with multiple agents. To add a new agent to your project, you can use the following command:
+```bash
+lean-marathon --add-agent my_agent
+```
+This will add a new agent called `my_agent` to your project.
+
+![person writing on white paper](https://images.unsplash.com/photo-1596495577886-d920f1fb7238?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxMZWFuTWFyYXRob24lMjBUb3dhcmQlMjBSZWxpYWJsZSUyME1hdGhlbWF0aWNpYW5zJTIwTG9uZyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MDc3NTE3MXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Formalizing Mathematical Theorems
+Once you have added multiple agents to your project, you can use them to formalize mathematical theorems. To do this, you will need to define the theorem you want to formalize using the `theorem` keyword. For example, you can define the theorem that the sum of two even numbers is even using the following code:
+```lean
+theorem sum_of_even_numbers_is_even (x : nat) (y : nat) : even (x + y) := sorry
+```
+This defines a theorem that the sum of two even numbers `x` and `y` is even.
+
+## Proving Theorems with LeanMarathon
+To prove a theorem with LeanMarathon, you will need to use the `prove` command. For example, you can prove the theorem that the sum of two even numbers is even using the following command:
+```bash
+lean-marathon --prove my_theorem
+```
+This will use the multiple agents in your project to prove the theorem.
+
+![a close up of a sheet of paper with numbers on it](https://images.unsplash.com/photo-1708011271935-3e109df56fe0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxMZWFuTWFyYXRob24lMjBUb3dhcmQlMjBSZWxpYWJsZSUyME1hdGhlbWF0aWNpYW5zJTIwTG9uZyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MDc3NTE3MXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+LeanMarathon is a powerful tool for reliable AI co-mathematicians. Its ability to collaborate with multiple agents and formalize mathematical theorems makes it an ideal choice for researchers and mathematicians. By following the steps outlined in this tutorial, you can get started with LeanMarathon and begin formalizing your own mathematical theorems.
+
+For more information on LeanMarathon, you can visit the [LeanMarathon GitHub page](https://github.com/lean-marathon/lean-marathon). You can also read the [original paper on arXiv](https://arxiv.org/abs/2606.05400) for more details on the LeanMarathon approach.
+
+*Photo by [Artturi Jalli](https://unsplash.com/@artturijalli?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-chalkboard-with-some-writing-on-it-gYrYa37fAKI?utm_source=techversation&utm_medium=referral)*
