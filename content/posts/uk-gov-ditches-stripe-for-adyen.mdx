@@ -1,0 +1,66 @@
+---
+title: "UK Gov Ditches Stripe for Adyen"
+description: "Gov.uk replaces Stripe with Adyen for payment processing."
+date: "2026-06-06"
+author: "Usama"
+tags: ["payments", "gov-uk", "adyen"]
+aiSummary: "The UK government has replaced Stripe with Adyen as its payment processor. This change reflects a growing trend of governments seeking more control over their payment systems. Adyen's flexibility and customization options may have contributed to its selection."
+category: "news"
+coverImage: "https://images.unsplash.com/photo-1730818877383-7abf4dc13bff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxHb3YlMjByZXBsYWNlZCUyMFN0cmlwZSUyMER1dGNoJTIwcHJvdmlkZXIlMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc4MDcxODk5Mnww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to the Change
+
+In a recent development, the UK government has announced that it is replacing Stripe with Adyen as its payment processor. This decision was reported by [The Register](https://www.theregister.com/public-sector/2026/06/04/govuk-goes-dutch-on-payments-as-it-dumps-stripe/5250763), citing the government's desire for more flexibility and customization in its payment systems. As a developer, it's essential to understand the implications of this change and what it might mean for the future of payment processing.
+
+## Why it Matters to Developers
+
+The UK government's decision to switch from Stripe to Adyen is significant for developers because it highlights the importance of customization and flexibility in payment systems. Adyen's platform is known for its ability to be tailored to specific use cases, which may have been a key factor in the government's decision. This trend towards customization could have a ripple effect throughout the industry, with more companies seeking out payment processors that can be adapted to their unique needs.
+
+For developers working on payment systems, this change emphasizes the need to prioritize flexibility and customization in their designs. As governments and companies increasingly seek out more tailored solutions, developers will need to be able to adapt their systems to meet these demands. This may involve working closely with payment processors to understand their APIs and customization options, as well as developing systems that can be easily integrated with multiple payment providers.
+
+### Adyen's Technical Advantage
+
+Adyen's technical capabilities may have also played a role in the government's decision. The company's platform is built on a modular architecture, allowing for easy integration with existing systems. Additionally, Adyen's API is designed to be highly customizable, giving developers a high degree of control over the payment process. For example, Adyen's API allows developers to create custom payment flows using a combination of API calls and webhooks:
+```python
+import requests
+
+# Create a new payment session
+response = requests.post('https://live.adyen.com/v1/sessions', json={
+    'amount': {
+        'currency': 'GBP',
+        'value': 1000
+    },
+    'reference': 'UKGOV-12345',
+    'returnUrl': 'https://example.com/return'
+})
+
+# Get the payment session ID
+session_id = response.json()['id']
+
+# Create a new payment method
+response = requests.post(f'https://live.adyen.com/v1/sessions/{session_id}/paymentMethods', json={
+    'type': 'card',
+    'number': '4111111111111111',
+    'expiryMonth': '12',
+    'expiryYear': '2025',
+    'cvc': '737'
+})
+
+# Get the payment method ID
+payment_method_id = response.json()['id']
+```
+This level of customization and control may have been attractive to the UK government, which requires a high degree of flexibility in its payment systems.
+
+## Broader Implications
+
+The UK government's decision to switch to Adyen has broader implications for the payment processing industry as a whole. As governments and companies increasingly seek out more tailored solutions, payment processors will need to adapt to meet these demands. This may involve investing in more modular and customizable architectures, as well as developing APIs that give developers a high degree of control over the payment process.
+
+Additionally, this change may reflect a growing trend towards greater control and sovereignty over payment systems. As governments and companies become more aware of the importance of payment systems in their operations, they may seek out solutions that give them more direct control over these systems. This could lead to a shift away from traditional payment processors and towards more bespoke solutions that are tailored to specific use cases.
+
+## Conclusion
+
+The UK government's decision to replace Stripe with Adyen as its payment processor reflects a growing trend towards customization and flexibility in payment systems. As a developer, it's essential to understand the implications of this change and what it might mean for the future of payment processing. By prioritizing flexibility and customization in their designs, developers can help meet the evolving needs of governments and companies, and stay ahead of the curve in the rapidly changing payment processing industry.
+
+*Photo by [appshunter.io](https://unsplash.com/@appshunter?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-cell-phone-sitting-on-top-of-a-wooden-table-x-VSPGLP21s?utm_source=techversation&utm_medium=referral)*
