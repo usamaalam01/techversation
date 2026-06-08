@@ -1,0 +1,93 @@
+---
+title: "Securing Azure and AI Coding Tools"
+description: "Microsoft's open source tools were hacked to steal AI developers' passwords."
+date: "2026-06-08"
+author: "Usama"
+tags: ["ai", "security", "azure"]
+aiSummary: "Microsoft recently shut down dozens of GitHub code repositories for Azure and AI coding tools after a reported hack. This tutorial will guide developers on securing their Azure and AI coding tools. We will cover the basics of Azure security, authentication, and authorization, and provide working code examples to get started."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1662947036644-ecfde1221ac7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxNaWNyb3NvZnQlMjBvcGVuJTIwc291cmNlJTIwdG9vbHMlMjBoYWNrZWQlMjB0ZWNobm9sb2d5JTIwZGlnaXRhbCUyMGlubm92YXRpb258ZW58MXwwfHx8MTc4MDk1MDY0Nnww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Microsoft's open source tools were recently hacked to steal passwords of AI developers, as reported by [TechCrunch](https://techcrunch.com/2026/06/08/microsofts-open-source-tools-were-hacked-to-steal-passwords-of-ai-developers/). This incident highlights the importance of security in Azure and AI coding tools. In this tutorial, we will guide developers on securing their Azure and AI coding tools. We will cover the basics of Azure security, authentication, and authorization, and provide working code examples to get started.
+
+## Azure Security Basics
+
+Azure provides a comprehensive set of security features to protect your resources. To get started with Azure security, you need to understand the basics of Azure authentication and authorization. Azure uses a role-based access control (RBAC) system to manage access to resources. You can assign roles to users, groups, or service principals to control their access to resources.
+
+### Authentication
+
+Azure provides several authentication methods, including:
+
+* Azure Active Directory (AAD) authentication
+* Service principal authentication
+* Certificate-based authentication
+
+You can use the Azure CLI or Azure SDKs to authenticate with Azure. Here is an example of how to authenticate with Azure using the Azure CLI:
+```bash
+az login
+```
+This command will prompt you to enter your Azure credentials.
+
+### Authorization
+
+Once you are authenticated, you need to authorize your access to resources. Azure provides several authorization methods, including:
+
+* Role-based access control (RBAC)
+* Attribute-based access control (ABAC)
+
+You can use the Azure CLI or Azure SDKs to authorize your access to resources. Here is an example of how to assign a role to a user using the Azure CLI:
+```bash
+az role assignment create --assignee <user_email> --role <role_name>
+```
+This command will assign the specified role to the specified user.
+
+## Securing Azure and AI Coding Tools
+
+To secure your Azure and AI coding tools, you need to follow best practices for security and authentication. Here are some tips to get you started:
+
+* Use Azure Active Directory (AAD) authentication to authenticate with Azure
+* Use role-based access control (RBAC) to manage access to resources
+* Use secure protocols for communication, such as HTTPS
+* Use encryption to protect sensitive data
+
+### Example: Securing an Azure Machine Learning Workspace
+
+Here is an example of how to secure an Azure Machine Learning workspace using Azure Active Directory (AAD) authentication and role-based access control (RBAC):
+```python
+import os
+import azureml.core
+from azureml.core import Workspace
+
+# Load the Azure ML workspace
+ws = Workspace.from_config()
+
+# Create a new role assignment
+role_assignment = ws.assign_role(
+    principal_id='user_email',
+    role='contributor'
+)
+
+# Print the role assignment
+print(role_assignment)
+```
+This code creates a new role assignment for the specified user and role.
+
+## Conclusion
+
+In conclusion, securing Azure and AI coding tools is crucial to protect your resources and data. By following best practices for security and authentication, you can ensure the security and integrity of your Azure and AI coding tools. We hope this tutorial has provided you with a comprehensive guide to securing your Azure and AI coding tools.
+
+![a close up of a cell phone screen with different app icons](https://images.unsplash.com/photo-1649433391420-542fcd3835ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxNaWNyb3NvZnQlMjBvcGVuJTIwc291cmNlJTIwdG9vbHMlMjBoYWNrZWQlMjB0ZWNobm9sb2d5JTIwZGlnaXRhbCUyMGlubm92YXRpb258ZW58MXwwfHx8MTc4MDk1MDY0Nnww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Additional Resources
+
+For more information on Azure security and authentication, please refer to the following resources:
+
+* [Azure Security Documentation](https://docs.microsoft.com/en-us/azure/security/)
+* [Azure Active Directory Documentation](https://docs.microsoft.com/en-us/azure/active-directory/)
+* [Azure Machine Learning Documentation](https://docs.microsoft.com/en-us/azure/machine-learning/)
+
+*Photo by [BoliviaInteligente](https://unsplash.com/@boliviainteligente?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-glass-of-beer-wIBDrEv73xY?utm_source=techversation&utm_medium=referral)*
