@@ -1,0 +1,122 @@
+---
+title: "Evaluating LLM-Judges"
+description: "Assessing the limitations of LLM-judges in evaluating safety at scale."
+date: "2026-06-09"
+author: "Usama"
+tags: ["llm", "safety", "evaluation"]
+aiSummary: "LLM-judges are used to evaluate safety at scale, but their rigid priors can lead to biased evaluations. This post explores the limitations of LLM-judges and provides a step-by-step guide to working with them. We will investigate the susceptibility of LLM-judges to context information and their steerability."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1642873965196-bf664f721006?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxTYWZldHklMjBDb250ZXh0dWFsJTIwTExNJTIwSnVkZ2VzJTIwTm90JTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgwOTk5NDU1fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Large Language Models (LLMs) have become increasingly popular in evaluating safety at scale. However, the rigid priors of LLM-judges can lead to biased evaluations. In this post, we will explore the limitations of LLM-judges and provide a step-by-step guide to working with them.
+
+## Understanding LLM-Judges
+LLM-judges are trained on vast amounts of text data and can generate human-like responses to a given prompt. However, their evaluations are often based on rigid priors, which can lead to biased results. To understand the limitations of LLM-judges, we need to investigate their susceptibility to context information and their steerability.
+
+### Susceptibility to Context Information
+LLM-judges can be influenced by context information, which can affect their evaluations. For example, if an LLM-judge is trained on a dataset with a particular bias, it may reflect that bias in its evaluations. To demonstrate this, let's use the Hugging Face Transformers library to fine-tune an LLM on a custom dataset.
+```python
+import pandas as pd
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+# Load the dataset
+df = pd.read_csv("dataset.csv")
+
+# Create a custom dataset class
+class CustomDataset(torch.utils.data.Dataset):
+    def __init__(self, df, tokenizer):
+        self.df = df
+        self.tokenizer = tokenizer
+
+    def __getitem__(self, idx):
+        text = self.df.iloc[idx, 0]
+        labels = self.df.iloc[idx, 1]
+
+        encoding = self.tokenizer.encode_plus(
+            text,
+            max_length=512,
+            padding="max_length",
+            truncation=True,
+            return_attention_mask=True,
+            return_tensors="pt",
+        )
+
+        return {
+            "input_ids": encoding["input_ids"].flatten(),
+            "attention_mask": encoding["attention_mask"].flatten(),
+            "labels": torch.tensor(labels, dtype=torch.long),
+        }
+
+    def __len__(self):
+        return len(self.df)
+
+# Create a dataset instance
+dataset = CustomDataset(df, tokenizer)
+
+# Fine-tune the LLM
+model = AutoModelForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=8)
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model.to(device)
+
+criterion = torch.nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-5)
+
+for epoch in range(5):
+    model.train()
+    total_loss = 0
+    for batch in dataset:
+        input_ids = batch["input_ids"].to(device)
+        attention_mask = batch["attention_mask"].to(device)
+        labels = batch["labels"].to(device)
+
+        optimizer.zero_grad()
+
+        outputs = model(input_ids, attention_mask=attention_mask, labels=labels)
+        loss = criterion(outputs, labels)
+
+        loss.backward()
+        optimizer.step()
+
+        total_loss += loss.item()
+    print(f"Epoch {epoch+1}, Loss: {total_loss / len(dataset)}")
+```
+This code fine-tunes a BERT model on a custom dataset, which can be used to evaluate safety at scale. However, the model's evaluations may be influenced by the context information in the dataset.
+
+## Steerability of LLM-Judges
+LLM-judges can be steered towards a particular evaluation by providing context information. For example, if an LLM-judge is provided with a prompt that contains a particular bias, it may reflect that bias in its evaluation. To demonstrate this, let's use the following prompt:
+```python
+prompt = "Evaluate the safety of a self-driving car in a scenario where a pedestrian is crossing the road."
+```
+We can use the following code to generate an evaluation using an LLM-judge:
+```python
+from transformers import pipeline
+
+# Load the LLM-judge
+llm_judge = pipeline("text-classification", model="bert-base-uncased")
+
+# Generate an evaluation
+evaluation = llm_judge(prompt)
+
+print(evaluation)
+```
+This code generates an evaluation using an LLM-judge, which may be influenced by the context information in the prompt. To steer the LLM-judge towards a particular evaluation, we can modify the prompt to contain a particular bias. For example:
+```python
+prompt = "Evaluate the safety of a self-driving car in a scenario where a pedestrian is crossing the road, and the car is programmed to prioritize the safety of its passengers."
+```
+This prompt contains a bias towards prioritizing the safety of the car's passengers, which may influence the LLM-judge's evaluation.
+
+![a pen sitting on top of a piece of paper](https://images.unsplash.com/photo-1706517212966-43695534fe88?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxTYWZldHklMjBDb250ZXh0dWFsJTIwTExNJTIwSnVkZ2VzJTIwTm90JTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgwOTk5NDU1fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+LLM-judges are widely used to evaluate safety at scale, but their rigid priors can lead to biased evaluations. By understanding the susceptibility of LLM-judges to context information and their steerability, we can develop more effective methods for evaluating safety. This post has provided a step-by-step guide to working with LLM-judges, including fine-tuning an LLM on a custom dataset and generating evaluations using an LLM-judge.
+
+To mitigate the limitations of LLM-judges, it is essential to consider the context information and potential biases in the dataset and prompt. By doing so, we can develop more accurate and reliable methods for evaluating safety at scale. For example, we can use techniques such as data augmentation and prompt engineering to reduce the influence of context information and biases on the LLM-judge's evaluations.
+
+![a scale and a dollar sign on a black background](https://images.unsplash.com/photo-1645562249772-970ddfe33cd9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxTYWZldHklMjBDb250ZXh0dWFsJTIwTExNJTIwSnVkZ2VzJTIwTm90JTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgwOTk5NDU1fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+By acknowledging the limitations of LLM-judges and taking steps to mitigate them, we can develop more effective and reliable methods for evaluating safety at scale. This will enable us to make more informed decisions and prioritize the safety of individuals and communities. For more information on this topic, you can visit the [arXiv website](https://arxiv.org/abs/2606.07874) to read the original research paper.
+
+*Photo by [Joe Dudeck](https://unsplash.com/@joetography?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-rusted-metal-box-with-writing-on-it-Ss_cBmxlJ50?utm_source=techversation&utm_medium=referral)*

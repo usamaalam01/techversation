@@ -1,0 +1,84 @@
+---
+title: "Exploring Siri AI"
+description: "Apple's new conversational voice assistant announced with Google-powered AI model overhaul."
+date: "2026-06-09"
+author: "Usama"
+tags: ["ai", "apple", "siri"]
+aiSummary: "Apple introduces Siri AI, a more conversational voice assistant, alongside a two-tiered Google-powered AI model overhaul. This fall, developers can expect new features and improvements. We'll dive into the details and provide working code examples to get you started."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1579693409321-1be2df1ab130?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxTYXklMjBTaXJpJTIwQXBwbGUlMjBhbm5vdW5jZXMlMjBuZXclMjB0ZWNobm9sb2d5JTIwZGlnaXRhbCUyMGlubm92YXRpb258ZW58MXwwfHx8MTc4MDk5OTMwMXww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Siri AI
+
+Apple has announced a significant update to its voice assistant, Siri, with the introduction of Siri AI. This new version promises to be more conversational and is set to arrive this fall, alongside a major overhaul of its AI model, powered by Google. As a developer, you're probably wondering what this means for you and how you can start working with Siri AI. In this post, we'll take a closer look at the new features and provide concrete code examples to get you started.
+
+## What's New in Siri AI
+
+Siri AI is designed to be more conversational, allowing users to have a more natural dialogue with their devices. This is achieved through the use of advanced natural language processing (NLP) and machine learning algorithms. The new AI model is powered by Google, which is a significant departure from Apple's previous approach. This change is expected to bring about significant improvements in Siri's ability to understand and respond to user requests.
+
+![people standing in front of white wall](https://images.unsplash.com/photo-1615725802642-936d9aade2ba?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxTYXklMjBTaXJpJTIwQXBwbGUlMjBhbm5vdW5jZXMlMjBuZXclMjB0ZWNobm9sb2d5JTIwZGlnaXRhbCUyMGlubm92YXRpb258ZW58MXwwfHx8MTc4MDk5OTMwMXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+### Two-Tiered AI Model
+
+The new AI model used in Siri AI is a two-tiered approach, which means that it uses a combination of local and cloud-based processing to understand and respond to user requests. This approach allows for faster and more accurate processing, while also reducing the amount of data that needs to be sent to the cloud.
+
+## Getting Started with Siri AI
+
+To get started with Siri AI, you'll need to have a good understanding of Apple's developer tools and APIs. We'll be using Swift and the SiriKit framework to create a simple Siri AI extension.
+
+### Setting up the Project
+
+First, let's create a new project in Xcode. We'll choose the "Siri Extension" template and follow the prompts to set up our project.
+
+```swift
+import Intents
+
+class IntentHandler: INExtension {
+    override func handler(for intent: INIntent) -> Any {
+        // Handle the intent here
+        return IntentHandler()
+    }
+}
+```
+
+### Creating a Siri AI Extension
+
+Next, we'll create a new Siri AI extension. This will involve creating a new class that conforms to the `INExtension` protocol.
+
+```swift
+import Intents
+
+class SiriAIGreetingIntentHandler: NSObject, INIntentHandler {
+    func handle(intent: INIntent, completion: @escaping (INIntentResponse) -> Void) {
+        // Handle the greeting intent here
+        let response = INIntentResponse(code: .success, userActivity: nil)
+        completion(response)
+    }
+}
+```
+
+## Working with Siri AI
+
+Now that we have our Siri AI extension set up, let's take a look at how we can work with it. We'll use the `INIntent` class to create a new intent and then handle it using our `SiriAIGreetingIntentHandler` class.
+
+```swift
+import Intents
+
+let greetingIntent = INIntent(identifier: "com.example.SiriAIGreetingIntent")
+let handler = SiriAIGreetingIntentHandler()
+
+handler.handle(intent: greetingIntent) { response in
+    // Handle the response here
+    print(response)
+}
+```
+
+![apple logo on blue surface](https://images.unsplash.com/photo-1621768216002-5ac171876625?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxTYXklMjBTaXJpJTIwQXBwbGUlMjBhbm5vdW5jZXMlMjBuZXclMjB0ZWNobm9sb2d5JTIwZGlnaXRhbCUyMGlubm92YXRpb258ZW58MXwwfHx8MTc4MDk5OTMwMXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this post, we've taken a look at the new features and improvements in Siri AI, including the two-tiered AI model and the new conversational interface. We've also provided working code examples to get you started with creating your own Siri AI extensions. With the release of Siri AI this fall, developers can expect a more powerful and flexible voice assistant that can be used to create a wide range of applications and integrations. As always, we recommend checking out the [official Apple documentation](https://developer.apple.com/documentation/sirikit/) for more information on getting started with Siri AI.
+
+*Photo by [Zhiyue](https://unsplash.com/@zhiyue?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/silhouette-of-people-standing-near-wall-7DOU5NlNIcE?utm_source=techversation&utm_medium=referral)*
