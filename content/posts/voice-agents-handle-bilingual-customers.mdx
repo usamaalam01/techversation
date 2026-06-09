@@ -1,0 +1,53 @@
+---
+title: "Voice Agents Handle Bilingual Customers"
+description: "Benchmarking Frontier ASR on Code-Switched Speech for bilingual customer support."
+date: "2026-06-09"
+author: "Usama"
+tags: ["ai", "asr", "nlp"]
+aiSummary: "HuggingFace benchmarked Frontier ASR on code-switched speech to handle bilingual customers. The results show promising performance, but there's still room for improvement. This development has significant implications for developers and the future of voice agents."
+category: "articles"
+coverImage: "https://images.unsplash.com/photo-1694903110330-cc64b7e1d21d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxWb2ljZSUyMEFnZW50cyUyMEhhbmRsZSUyMEJpbGluZ3VhbCUyMEN1c3RvbWVycyUyMGFydGlmaWNpYWwlMjBpbnRlbGxpZ2VuY2UlMjBtYWNoaW5lJTIwbGVhcm5pbmd8ZW58MXwwfHx8MTc4MTAzNjI1Mnww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Voice Agents and Bilingual Customers
+
+The ability of voice agents to handle bilingual customers is a crucial aspect of providing effective customer support. With the increasing use of voice assistants and chatbots, it's essential to ensure that these systems can understand and respond to customers who speak multiple languages. Recently, HuggingFace [published a blog post](https://huggingface.co/blog/ServiceNow-AI/code-switching) on benchmarking Frontier ASR on code-switched speech, which has significant implications for developers and the future of voice agents.
+
+## What is Code-Switched Speech?
+
+Code-switched speech refers to the practice of switching between two or more languages within a single conversation. This phenomenon is common in bilingual communities, where individuals may switch between languages to convey meaning, express identity, or accommodate their conversational partner. However, code-switched speech poses a significant challenge for automatic speech recognition (ASR) systems, which are typically trained on monolingual data.
+
+## Benchmarking Frontier ASR on Code-Switched Speech
+
+The HuggingFace team benchmarked Frontier ASR on a dataset of code-switched speech to evaluate its performance on bilingual customer support. The results show that Frontier ASR achieves promising performance on code-switched speech, with a significant improvement over baseline models. This is a notable achievement, as it demonstrates the potential of ASR systems to handle bilingual customers effectively.
+
+```python
+import torch
+from transformers import AutoModelForSpeechClassification, AutoFeatureExtractor
+
+# Load pre-trained model and feature extractor
+model = AutoModelForSpeechClassification.from_pretrained("facebook/wav2vec2-base-960h")
+feature_extractor = AutoFeatureExtractor.from_pretrained("facebook/wav2vec2-base-960h")
+
+# Preprocess audio data
+audio_data = ...  # load audio data
+inputs = feature_extractor(audio_data, return_tensors="pt")
+
+# Use the model to classify the audio data
+outputs = model(**inputs)
+```
+
+## Implications for Developers
+
+The ability of voice agents to handle bilingual customers has significant implications for developers. Firstly, it enables the creation of more inclusive and diverse customer support systems, which can cater to a broader range of customers. Secondly, it highlights the importance of considering linguistic diversity when developing ASR systems, which can lead to more accurate and effective models. Finally, it demonstrates the potential of using pre-trained models and fine-tuning them on specific tasks, such as code-switched speech recognition.
+
+![a computer circuit board with a brain on it](https://images.unsplash.com/photo-1677442135703-1787eea5ce01?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxWb2ljZSUyMEFnZW50cyUyMEhhbmRsZSUyMEJpbGluZ3VhbCUyMEN1c3RvbWVycyUyMGFydGlmaWNpYWwlMjBpbnRlbGxpZ2VuY2UlMjBtYWNoaW5lJTIwbGVhcm5pbmd8ZW58MXwwfHx8MTc4MTAzNjI1Mnww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Broader Implications
+
+The development of voice agents that can handle bilingual customers has broader implications for the future of customer support and human-computer interaction. Firstly, it enables the creation of more personalized and effective customer support systems, which can lead to increased customer satisfaction and loyalty. Secondly, it highlights the importance of considering linguistic and cultural diversity in the development of AI systems, which can lead to more inclusive and equitable models. Finally, it demonstrates the potential of using AI to bridge the gap between humans and machines, enabling more natural and intuitive interaction.
+
+In conclusion, the ability of voice agents to handle bilingual customers is a significant development in the field of AI and customer support. The benchmarking of Frontier ASR on code-switched speech demonstrates the potential of ASR systems to handle bilingual customers effectively, with significant implications for developers and the future of voice agents. As the field continues to evolve, it's essential to consider linguistic and cultural diversity in the development of AI systems, enabling more inclusive and effective models that can cater to a broader range of customers.
+
+*Photo by [Igor Omilaev](https://unsplash.com/@omilaev?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/two-hands-touching-each-other-in-front-of-a-pink-background-gVQLAbGVB6Q?utm_source=techversation&utm_medium=referral)*
