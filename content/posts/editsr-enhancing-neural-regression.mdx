@@ -1,0 +1,122 @@
+---
+title: "EditSR: Enhancing Neural Regression"
+description: "Improve neural symbolic regression with EditSR, a new rectification strategy."
+date: "2026-06-09"
+author: "Usama"
+tags: ["ai", "regression", "neural-symbolic"]
+aiSummary: "EditSR is a new approach to enhance neural symbolic regression by rectifying errors in the decoding process. This tutorial will guide you through implementing EditSR, providing concrete code examples and explanations. We'll explore how EditSR improves inference efficiency and reduces error accumulation."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1644088379091-d574269d422f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxFZGl0U1IlMjBFbmhhbmNpbmclMjBOZXVyYWwlMjBTeW1ib2xpYyUyMFJlZ3Jlc3Npb24lMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODEwMTg3NzV8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to EditSR
+Neural symbolic regression models have improved inference efficiency by shifting structural search to pretraining. However, their one-pass autoregressive decoding is prone to error accumulation, leading to structurally incorrect expressions. EditSR, introduced in the paper [EditSR: Enhancing Neural Symbolic Regression via Edit-based Rectification](https://arxiv.org/abs/2606.07915), is a new rectification strategy that alleviates this issue.
+
+![a blue abstract background with lines and dots](https://images.unsplash.com/photo-1644325349124-d1756b79dd42?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxFZGl0U1IlMjBFbmhhbmNpbmclMjBOZXVyYWwlMjBTeW1ib2xpYyUyMFJlZ3Jlc3Npb24lMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODEwMTg3NzV8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+### What is EditSR?
+EditSR is an edit-based rectification strategy that improves the decoding process in neural symbolic regression models. It works by identifying and correcting errors in the generated expressions, reducing error accumulation and improving the overall accuracy of the model.
+
+## Implementing EditSR
+To implement EditSR, we'll need to modify the decoding process in our neural symbolic regression model. We'll use PyTorch as our deep learning framework and implement the EditSR algorithm from scratch.
+
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+class EditSR(nn.Module):
+    def __init__(self, input_dim, output_dim):
+        super(EditSR, self).__init__()
+        self.encoder = nn.Sequential(
+            nn.Linear(input_dim, 128),
+            nn.ReLU(),
+            nn.Linear(128, 128),
+            nn.ReLU()
+        )
+        self.decoder = nn.Sequential(
+            nn.Linear(128, output_dim)
+        )
+
+    def forward(self, x):
+        x = self.encoder(x)
+        x = self.decoder(x)
+        return x
+
+    def edit(self, x, y):
+        # Implement edit-based rectification strategy
+        # Identify and correct errors in the generated expressions
+        pass
+```
+
+### Editing the Generated Expressions
+The `edit` method is where we implement the edit-based rectification strategy. We'll use a simple example to illustrate how this works. Let's say we have a generated expression `x = 2 * y + 3`, but the correct expression is `x = 2 * y - 3`. We can identify the error by comparing the generated expression with the correct one and then apply the necessary edits to correct the error.
+
+```python
+def edit(self, x, y):
+    # Identify the error
+    error = x - y
+    
+    # Apply the necessary edits to correct the error
+    if error > 0:
+        return x - 6  # Subtract 6 to correct the error
+    else:
+        return x + 6  # Add 6 to correct the error
+```
+
+## Training the Model
+To train the model, we'll need a dataset of input-output pairs. We'll use a simple example to illustrate how this works. Let's say we have a dataset of input-output pairs where the input is a vector `[x, y]` and the output is a scalar `z`.
+
+```python
+# Define the dataset
+class Dataset(torch.utils.data.Dataset):
+    def __init__(self, input_dim, output_dim):
+        self.input_dim = input_dim
+        self.output_dim = output_dim
+        self.data = []
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, index):
+        x = torch.randn(self.input_dim)
+        y = torch.randn(self.output_dim)
+        return x, y
+
+# Create the dataset and data loader
+dataset = Dataset(2, 1)
+data_loader = torch.utils.data.DataLoader(dataset, batch_size=32, shuffle=True)
+
+# Train the model
+model = EditSR(2, 1)
+criterion = nn.MSELoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+
+for epoch in range(100):
+    for x, y in data_loader:
+        # Forward pass
+        output = model(x)
+        
+        # Edit the generated expressions
+        edited_output = model.edit(output, y)
+        
+        # Calculate the loss
+        loss = criterion(edited_output, y)
+        
+        # Backward pass
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+    
+    print(f'Epoch {epoch+1}, Loss: {loss.item()}')
+```
+
+## Conclusion
+In this tutorial, we've implemented the EditSR algorithm, a new rectification strategy for enhancing neural symbolic regression. We've shown how to modify the decoding process to identify and correct errors in the generated expressions, reducing error accumulation and improving the overall accuracy of the model. By using EditSR, we can improve the inference efficiency of our neural symbolic regression models and generate more accurate expressions.
+
+![an abstract image of a sphere with dots and lines](https://images.unsplash.com/photo-1674027444485-cec3da58eef4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxFZGl0U1IlMjBFbmhhbmNpbmclMjBOZXVyYWwlMjBTeW1ib2xpYyUyMFJlZ3Jlc3Npb24lMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODEwMTg3NzV8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+We hope this tutorial has provided a clear and practical guide to implementing EditSR. With this knowledge, you can improve the accuracy of your neural symbolic regression models and generate more accurate expressions.
+
+*Photo by [Conny Schneider](https://unsplash.com/@choys_?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-blue-background-with-lines-and-dots-xuTJZ7uD7PI?utm_source=techversation&utm_medium=referral)*

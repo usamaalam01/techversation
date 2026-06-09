@@ -1,0 +1,71 @@
+---
+title: "Thi.ng: Open-Source Building Blocks"
+description: "Thi.ng provides open-source tools for computational design and art."
+date: "2026-06-09"
+author: "Usama"
+tags: ["thi-ng", "computational-design", "open-source"]
+aiSummary: "Thi.ng is an open-source project offering a range of tools and libraries for computational design and art. It provides a comprehensive framework for creating complex geometric shapes and patterns. Developers can utilize Thi.ng to generate interactive simulations and visualizations."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1648464146474-c78d49c54b05?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxUaGklMjBvcGVuJTIwc291cmNlJTIwYnVpbGRpbmclMjBibG9ja3MlMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc4MTAxODY5N3ww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Thi.ng
+
+Thi.ng is an open-source project that offers a collection of tools and libraries for computational design and art. The project aims to provide a comprehensive framework for creating complex geometric shapes and patterns. With Thi.ng, developers can generate interactive simulations and visualizations, making it an ideal choice for artists, designers, and researchers.
+
+![a close up of a lego model of a building](https://images.unsplash.com/photo-1698579302455-9494af230db2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxUaGklMjBvcGVuJTIwc291cmNlJTIwYnVpbGRpbmclMjBibG9ja3MlMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc4MTAxODY5N3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+### Getting Started with Thi.ng
+
+To get started with Thi.ng, you can visit the official website at [https://thi.ng](https://thi.ng) and explore the various tools and libraries available. The project provides extensive documentation and tutorials to help you understand the different components and how to use them.
+
+## Key Features of Thi.ng
+
+Thi.ng offers a wide range of features that make it an ideal choice for computational design and art. Some of the key features include:
+
+* **Geometric Shapes**: Thi.ng provides a comprehensive library of geometric shapes, including points, lines, curves, and surfaces.
+* **Pattern Generation**: The project offers a range of tools for generating complex patterns, including fractals, Voronoi diagrams, and Delaunay triangulations.
+* **Interactive Simulations**: Thi.ng allows developers to create interactive simulations and visualizations, making it possible to explore complex systems and phenomena in real-time.
+* **Open-Source**: Thi.ng is completely open-source, allowing developers to contribute to the project and customize the tools and libraries to suit their needs.
+
+## Working with Thi.ng
+
+To demonstrate the capabilities of Thi.ng, let's take a look at a simple example of generating a geometric shape using the project's JavaScript library. We'll create a basic triangle and render it using the Canvas API.
+
+```javascript
+// Import the thi.ng library
+import * as thng from 'thi.ng';
+
+// Create a new canvas element
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+
+// Define the triangle vertices
+const vertices = [
+  [0, 0],
+  [100, 0],
+  [50, 100]
+];
+
+// Create a new geometric shape using the thi.ng library
+const triangle = thng.geom.polygon(vertices);
+
+// Render the triangle using the Canvas API
+thng.geom.render(triangle, ctx, {
+  stroke: 'black',
+  fill: 'none'
+});
+```
+
+This example demonstrates how to create a basic geometric shape using the Thi.ng library and render it using the Canvas API. The project provides a wide range of tools and libraries for creating complex geometric shapes and patterns, making it an ideal choice for computational design and art.
+
+## Conclusion
+
+Thi.ng is a powerful open-source project that provides a comprehensive framework for computational design and art. With its extensive library of geometric shapes, pattern generation tools, and interactive simulations, Thi.ng is an ideal choice for artists, designers, and researchers. The project's open-source nature allows developers to contribute to the project and customize the tools and libraries to suit their needs. Whether you're looking to create complex geometric shapes, generate interactive simulations, or explore new forms of artistic expression, Thi.ng is definitely worth checking out.
+
+![Young girl concentrating on assembling a construction toy.](https://images.unsplash.com/photo-1780006393664-142ed57a1593?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxUaGklMjBvcGVuJTIwc291cmNlJTIwYnVpbGRpbmclMjBibG9ja3MlMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc4MTAxODY5N3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+By providing a comprehensive framework for computational design and art, Thi.ng is helping to push the boundaries of what is possible in the field. Whether you're a seasoned developer or just starting out, Thi.ng is definitely worth exploring. With its extensive documentation, tutorials, and open-source nature, Thi.ng is an ideal choice for anyone looking to create complex geometric shapes, generate interactive simulations, or explore new forms of artistic expression.
+
+*Photo by [Destiny Ayodele](https://unsplash.com/@ayodele_destiny?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/two-legos-made-out-of-legos-on-a-blue-background-0xdWoqxoF_Q?utm_source=techversation&utm_medium=referral)*

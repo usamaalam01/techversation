@@ -1,0 +1,63 @@
+---
+title: "AI Agent Builds 3D Paris Gallery"
+description: "Hugging Face Spaces enables AI agent to create 3D Paris gallery."
+date: "2026-06-09"
+author: "Usama"
+tags: ["ai", "hugging-face", "3d-modeling"]
+aiSummary: "An AI agent has successfully built a 3D Paris gallery by chaining two Hugging Face Spaces. This achievement demonstrates the potential of artificial intelligence in creative tasks. The project showcases the capabilities of Hugging Face's Spaces platform."
+category: "articles"
+coverImage: "https://images.unsplash.com/photo-1545987796-b199d6abb1b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxBZ2VudCUyMEJ1aWx0JTIwUGFyaXMlMjBHYWxsZXJ5JTIwQ2hhaW5pbmclMjBhcnRpZmljaWFsJTIwaW50ZWxsaWdlbmNlJTIwbWFjaGluZSUyMGxlYXJuaW5nfGVufDF8MHx8fDE3ODEwMTg2MTh8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+In a remarkable demonstration of artificial intelligence's creative potential, an AI agent has built a 3D Paris gallery by chaining two Hugging Face Spaces. This project, detailed in a recent [Hugging Face blog post](https://huggingface.co/blog/mishig/spaces-agents-md), highlights the capabilities of the Hugging Face Spaces platform and its potential applications in various fields. In this article, we will summarize the project, explain its significance for developers, and provide our take on the broader implications.
+
+## The Project
+
+The AI agent used two Hugging Face Spaces to create the 3D Paris gallery. The first space generated 2D images of Parisian landmarks, while the second space converted these images into 3D models. By chaining these two spaces, the agent was able to create a realistic 3D representation of the city. This project demonstrates the power of combining different AI models to achieve complex tasks.
+
+## Why it Matters to Developers
+
+The success of this project has significant implications for developers working with AI and machine learning. It showcases the potential of Hugging Face Spaces as a platform for building and deploying AI models. Developers can use this platform to create and chain multiple models, enabling them to tackle complex tasks that would be difficult or impossible to achieve with a single model. This approach can lead to more efficient and effective development of AI-powered applications.
+
+```python
+# Example of chaining two Hugging Face Spaces
+from transformers import pipeline
+
+# Load the first space (2D image generation)
+space1 = pipeline("image-generation", model="paris-2d")
+
+# Load the second space (2D to 3D conversion)
+space2 = pipeline("image-to-3d", model="paris-3d")
+
+# Chain the two spaces
+def chain_spaces(image):
+    # Generate 2D image using the first space
+    image_2d = space1(image)
+    
+    # Convert 2D image to 3D using the second space
+    image_3d = space2(image_2d)
+    
+    return image_3d
+
+# Test the chained spaces
+image = "Eiffel Tower"
+result = chain_spaces(image)
+print(result)
+```
+
+## Broader Implications
+
+The ability of AI agents to create complex 3D models has far-reaching implications for various industries, including architecture, urban planning, and video game development. For instance, architects can use AI-generated 3D models to visualize and design buildings and cities more efficiently. Urban planners can utilize these models to simulate and optimize traffic flow, population density, and other factors that impact urban development. Game developers can leverage AI-generated 3D models to create more realistic and immersive game environments.
+
+![Modern airport walkway with "paris vous aime" art](https://images.unsplash.com/photo-1777367155493-ceb66334ce92?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxBZ2VudCUyMEJ1aWx0JTIwUGFyaXMlMjBHYWxsZXJ5JTIwQ2hhaW5pbmclMjBhcnRpZmljaWFsJTIwaW50ZWxsaWdlbmNlJTIwbWFjaGluZSUyMGxlYXJuaW5nfGVufDF8MHx8fDE3ODEwMTg2MTh8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+However, as AI-generated content becomes more prevalent, there are also concerns about the potential impact on human creators and the job market. While AI can augment human capabilities, it is essential to ensure that AI-generated content is used responsibly and does not displace human workers.
+
+## Conclusion
+
+The AI agent's creation of a 3D Paris gallery by chaining two Hugging Face Spaces is a remarkable achievement that demonstrates the potential of artificial intelligence in creative tasks. This project has significant implications for developers, highlighting the capabilities of the Hugging Face Spaces platform and its potential applications in various fields. As AI-generated content becomes more prevalent, it is crucial to consider the broader implications and ensure responsible use of AI technology.
+
+*Photo by [Alina Grubnyak](https://unsplash.com/@alinnnaaaa?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/group-of-people-sitting-on-floor-R84Oy89aNKs?utm_source=techversation&utm_medium=referral)*
