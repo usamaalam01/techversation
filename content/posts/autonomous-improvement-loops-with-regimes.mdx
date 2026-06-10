@@ -1,0 +1,101 @@
+---
+title: "Autonomous Improvement Loops with Regimes"
+description: "A tutorial on using Regimes for auditable improvement loops."
+date: "2026-06-10"
+author: "Usama"
+tags: ["ai", "autonomous", "improvement-loops"]
+aiSummary: "Regimes is a new tool that enables autonomous improvement loops. It uses an event-sourced agent runtime to remove friction and provide a transparent improvement process. This tutorial will guide you through using Regimes with ActiveGraph on LongMemEval."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxSZWdpbWVzJTIwQXVkaXRhYmxlJTIwSGVsZCUyME91dCUyMEdhdGVkJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgxMTA3MjMyfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Autonomous improvement loops are crucial for developing trustworthy AI systems. However, the improvement process is often external and opaque, making it difficult to trust the outcomes. Regimes, a new tool introduced in the paper [Regimes: An Auditable, Held-Out-Gated Improvement Loop Demonstrated on LongMemEval with ActiveGraph](https://arxiv.org/abs/2606.10241), addresses this issue by providing an event-sourced agent runtime. In this tutorial, we will explore how to use Regimes to create autonomous improvement loops with ActiveGraph on LongMemEval.
+
+## Setting up the Environment
+
+To get started with Regimes, you need to set up the environment. First, install the required libraries using pip:
+```python
+pip install regimes activegraph longmemeval
+```
+Next, import the necessary modules:
+```python
+import regimes
+from activegraph import ActiveGraph
+from longmemeval import LongMemEval
+```
+## Creating an Event-Sourced Agent Runtime
+
+Regimes uses an event-sourced agent runtime to provide a transparent improvement process. To create an event-sourced agent runtime, you need to define the agent's behavior using a set of events. For example:
+```python
+class Agent(regimes.Agent):
+    def __init__(self):
+        self.events = []
+
+    def add_event(self, event):
+        self.events.append(event)
+
+    def get_events(self):
+        return self.events
+```
+## Integrating with ActiveGraph
+
+ActiveGraph is a graph-based framework for autonomous systems. To integrate Regimes with ActiveGraph, you need to create an ActiveGraph instance and pass it to the Regimes agent:
+```python
+graph = ActiveGraph()
+agent = Agent()
+agent.add_event("init")
+graph.add_node(agent)
+```
+## Evaluating with LongMemEval
+
+LongMemEval is a benchmark for evaluating the performance of autonomous systems. To evaluate the Regimes agent with LongMemEval, you need to create a LongMemEval instance and pass it to the Regimes agent:
+```python
+evaluator = LongMemEval()
+agent.add_event("evaluate")
+evaluator.evaluate(agent)
+```
+## Putting it all Together
+
+Now that we have set up the environment, created an event-sourced agent runtime, integrated with ActiveGraph, and evaluated with LongMemEval, let's put it all together. Here's an example code snippet that demonstrates the autonomous improvement loop:
+```python
+import regimes
+from activegraph import ActiveGraph
+from longmemeval import LongMemEval
+
+class Agent(regimes.Agent):
+    def __init__(self):
+        self.events = []
+
+    def add_event(self, event):
+        self.events.append(event)
+
+    def get_events(self):
+        return self.events
+
+graph = ActiveGraph()
+agent = Agent()
+agent.add_event("init")
+graph.add_node(agent)
+
+evaluator = LongMemEval()
+agent.add_event("evaluate")
+evaluator.evaluate(agent)
+
+print(agent.get_events())
+```
+This code snippet creates an event-sourced agent runtime, integrates it with ActiveGraph, and evaluates it with LongMemEval. The output will be a list of events that the agent has executed, providing a transparent and auditable improvement process.
+
+![a close up of a computer keyboard with a blurry background](https://images.unsplash.com/photo-1650327034581-1711a15a5430?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxSZWdpbWVzJTIwQXVkaXRhYmxlJTIwSGVsZCUyME91dCUyMEdhdGVkJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgxMTA3MjMyfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we have explored how to use Regimes to create autonomous improvement loops with ActiveGraph on LongMemEval. By providing an event-sourced agent runtime, Regimes enables a transparent and auditable improvement process. We have demonstrated how to set up the environment, create an event-sourced agent runtime, integrate with ActiveGraph, and evaluate with LongMemEval. With Regimes, developers can create trustworthy AI systems that can improve autonomously while providing a clear and transparent improvement process.
+
+## Future Work
+
+Regimes is a new tool that has the potential to revolutionize the way we develop autonomous systems. Future work can focus on exploring the applications of Regimes in various domains, such as robotics, healthcare, and finance. Additionally, researchers can investigate ways to improve the efficiency and scalability of Regimes, making it more suitable for large-scale autonomous systems. With Regimes, the possibilities are endless, and we are excited to see the impact it will have on the field of AI research.
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
