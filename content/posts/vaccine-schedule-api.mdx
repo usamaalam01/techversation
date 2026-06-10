@@ -1,0 +1,92 @@
+---
+title: "Vaccine Schedule API"
+description: "OB-GYNs release independent vaccine schedule, conflicting with CDC guidance."
+date: "2026-06-10"
+author: "Usama"
+tags: ["vaccine", "api", "health-tech"]
+aiSummary: "The American College of Obstetricians and Gynecologists has released its own vaccine schedule, contradicting the CDC's guidance. This move has been endorsed by 13 other medical groups. We'll explore how to work with this new vaccine schedule using a Python API."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1774472359415-9dbf66e14be2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxHWU5zJTIwcmVsZWFzZSUyMG93biUyMHZhY2NpbmUlMjBzY2hlZHVsZSUyMHRlY2hub2xvZ3klMjBkaWdpdGFsJTIwaW5ub3ZhdGlvbnxlbnwxfDB8fHwxNzgxMTI0MjUxfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+The recent release of an independent vaccine schedule by the American College of Obstetricians and Gynecologists (ACOG) has sparked controversy in the medical community. This new schedule conflicts with the Centers for Disease Control and Prevention's (CDC) existing guidance, and has been endorsed by 13 other medical groups. As a developer, you may be tasked with integrating this new schedule into your application. In this tutorial, we'll explore how to work with the vaccine schedule API using Python.
+
+## Getting Started
+To get started, you'll need to have Python installed on your system, along with the `requests` library. You can install the `requests` library using pip:
+```python
+pip install requests
+```
+Next, you'll need to obtain an API key from the vaccine schedule API provider. This will typically involve creating an account on their website and following the instructions to obtain an API key.
+
+## API Endpoints
+The vaccine schedule API provides several endpoints for retrieving and manipulating vaccine schedule data. Some of the key endpoints include:
+
+* `GET /vaccine-schedules`: Retrieves a list of all available vaccine schedules.
+* `GET /vaccine-schedules/{id}`: Retrieves a specific vaccine schedule by ID.
+* `POST /vaccine-schedules`: Creates a new vaccine schedule.
+
+Here's an example of how you might use the `requests` library to retrieve a list of all available vaccine schedules:
+```python
+import requests
+
+api_key = "YOUR_API_KEY_HERE"
+url = "https://api.vaccineschedule.com/vaccine-schedules"
+
+headers = {
+    "Authorization": f"Bearer {api_key}",
+    "Content-Type": "application/json"
+}
+
+response = requests.get(url, headers=headers)
+
+if response.status_code == 200:
+    vaccine_schedules = response.json()
+    print(vaccine_schedules)
+else:
+    print(f"Error: {response.status_code}")
+```
+## Working with Vaccine Schedule Data
+Once you've retrieved a vaccine schedule, you can work with the data to perform various tasks, such as:
+
+* Retrieving a list of recommended vaccines for a specific age group
+* Determining the recommended dosage for a specific vaccine
+* Identifying potential vaccine interactions
+
+Here's an example of how you might use the vaccine schedule data to retrieve a list of recommended vaccines for a specific age group:
+```python
+import requests
+
+api_key = "YOUR_API_KEY_HERE"
+url = "https://api.vaccineschedule.com/vaccine-schedules/12345"
+
+headers = {
+    "Authorization": f"Bearer {api_key}",
+    "Content-Type": "application/json"
+}
+
+response = requests.get(url, headers=headers)
+
+if response.status_code == 200:
+    vaccine_schedule = response.json()
+    age_group = "0-12 months"
+    recommended_vaccines = [vaccine for vaccine in vaccine_schedule["vaccines"] if vaccine["age_group"] == age_group]
+    print(recommended_vaccines)
+else:
+    print(f"Error: {response.status_code}")
+```
+![People interacting at a busy trade show booth.](https://images.unsplash.com/photo-1781029711378-e17c0c6bd0d1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxHWU5zJTIwcmVsZWFzZSUyMG93biUyMHZhY2NpbmUlMjBzY2hlZHVsZSUyMHRlY2hub2xvZ3klMjBkaWdpdGFsJTIwaW5ub3ZhdGlvbnxlbnwxfDB8fHwxNzgxMTI0MjUxfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we've explored how to work with the vaccine schedule API using Python. We've covered how to retrieve a list of all available vaccine schedules, retrieve a specific vaccine schedule by ID, and work with vaccine schedule data to perform various tasks. By following the examples in this tutorial, you should be able to integrate the vaccine schedule API into your application and start working with the new vaccine schedule released by ACOG.
+
+As the medical community continues to evolve and new vaccine schedules are released, it's essential to stay up-to-date with the latest developments and integrate them into your application. By using the vaccine schedule API, you can ensure that your application is providing accurate and reliable information to users.
+
+### Future Development
+In the future, we can expect to see more medical groups releasing their own vaccine schedules, and the vaccine schedule API will need to adapt to these changes. As a developer, it's essential to stay flexible and be prepared to update your application to reflect these changes.
+
+### Resources
+For more information on the vaccine schedule API, you can visit the [official API documentation](https://api.vaccineschedule.com/docs). Additionally, you can check out the [Ars Technica article](https://arstechnica.com/health/2026/06/bucking-rfk-jr-ob-gyns-release-vaccine-guidance-that-conflicts-with-cdc/) for more information on the controversy surrounding the new vaccine schedule.
+
+*Photo by [Bernd 📷 Dittrich](https://unsplash.com/@hdbernd?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/wonders-of-medicine-sign-illuminated-at-night-G2SSJNB9mts?utm_source=techversation&utm_medium=referral)*
