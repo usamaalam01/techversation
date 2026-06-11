@@ -1,0 +1,87 @@
+---
+title: "Infer Capability in Data-Driven Systems"
+description: "Exploring the capability to infer in AI systems under the European AI Act."
+date: "2026-06-11"
+author: "Usama"
+tags: ["ai", "data-driven", "regulation"]
+aiSummary: "The European AI Act sets out obligations for high-risk and general-purpose AI systems, with a key feature being the capability to infer. This tutorial explores what inference means in AI systems and provides concrete code examples to demonstrate this capability. We will build a simple data-driven system to illustrate the concept of inference."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxEYXRhJTIwRHJpdmVuJTIwU3lzdGVtcyUyMEV4aGliaXQlMjBDYXBhYmlsaXR5JTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgxMTk1MDMyfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+The European AI Act is a comprehensive regulation of artificial intelligence, setting out extensive obligations for AI systems, particularly those considered high-risk or general-purpose. A key distinguishing feature of AI systems under this act is the capability to infer. However, the act does not clearly define what inference is, leaving many developers and researchers wondering how to implement and demonstrate this capability in their systems. In this tutorial, we will delve into the concept of inference in AI systems, explore its significance under the European AI Act, and provide working code examples to illustrate how to build a data-driven system that exhibits the capability to infer.
+
+## Understanding Inference in AI Systems
+Inference in AI systems refers to the ability of a model or system to draw conclusions or make predictions based on the data it has been trained on or is currently processing. This capability is fundamental to many AI applications, including predictive modeling, decision-making systems, and recommendation engines. In the context of the European AI Act, the capability to infer is a critical aspect of high-risk and general-purpose AI systems, as it directly impacts their ability to make decisions that may have significant consequences.
+
+### Types of Inference
+There are several types of inference that AI systems can exhibit, including:
+
+* **Deductive inference**: The system uses logical rules to derive conclusions from premises.
+* **Inductive inference**: The system uses patterns and relationships in the data to make predictions or generalizations.
+* **Abductive inference**: The system uses a combination of logical rules and patterns in the data to make hypotheses or explanations.
+
+## Building a Simple Data-Driven System
+To illustrate the concept of inference, let's build a simple data-driven system using Python and the scikit-learn library. Our system will be a basic recommender system that suggests products to users based on their past purchases.
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+
+# Load the data
+data = pd.read_csv('user_purchases.csv')
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(data.drop('product', axis=1), data['product'], test_size=0.2, random_state=42)
+
+# Train a logistic regression model on the training data
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+# Use the model to make predictions on the testing data
+predictions = model.predict(X_test)
+```
+
+## Demonstrating the Capability to Infer
+Our simple recommender system exhibits the capability to infer by making predictions about which products a user is likely to purchase based on their past purchases. This is an example of inductive inference, as the system is using patterns and relationships in the data to make predictions.
+
+To further demonstrate the capability to infer, let's modify our system to use abductive inference. We can do this by incorporating additional data sources, such as user demographics or product features, and using a more complex model, such as a decision tree or random forest.
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+
+# Load the additional data sources
+user_data = pd.read_csv('user_demographics.csv')
+product_data = pd.read_csv('product_features.csv')
+
+# Merge the data sources
+data = pd.merge(data, user_data, on='user_id')
+data = pd.merge(data, product_data, on='product_id')
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(data.drop('product', axis=1), data['product'], test_size=0.2, random_state=42)
+
+# Train a random forest classifier on the training data
+model = RandomForestClassifier()
+model.fit(X_train, y_train)
+
+# Use the model to make predictions on the testing data
+predictions = model.predict(X_test)
+```
+
+![a computer screen with a bunch of data on it](https://images.unsplash.com/photo-1686061593213-98dad7c599b9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxEYXRhJTIwRHJpdmVuJTIwU3lzdGVtcyUyMEV4aGliaXQlMjBDYXBhYmlsaXR5JTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgxMTk1MDMyfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we explored the concept of inference in AI systems and its significance under the European AI Act. We built a simple data-driven system using Python and the scikit-learn library to illustrate the capability to infer, and demonstrated how to modify the system to use abductive inference. By understanding and demonstrating the capability to infer, developers can build more effective and compliant AI systems that meet the requirements of the European AI Act.
+
+## Further Reading
+For more information on the European AI Act and its implications for AI systems, visit the [official website](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A52021PC0206). To learn more about inference in AI systems, check out the [scikit-learn documentation](https://scikit-learn.org/stable/modules/cross_validation.html).
+
+![a close up of a computer keyboard with a blurry background](https://images.unsplash.com/photo-1650327034581-1711a15a5430?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxEYXRhJTIwRHJpdmVuJTIwU3lzdGVtcyUyMEV4aGliaXQlMjBDYXBhYmlsaXR5JTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgxMTk1MDMyfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
