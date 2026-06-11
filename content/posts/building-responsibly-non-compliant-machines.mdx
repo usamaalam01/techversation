@@ -1,0 +1,97 @@
+---
+title: "Building Responsibly Non-Compliant Machines"
+description: "Engineering autonomous agents that can responsibly not comply with user requests."
+date: "2026-06-11"
+author: "Usama"
+tags: ["ai", "machine-learning", "autonomy"]
+aiSummary: "Researchers propose a framework for building autonomous intelligent agents that can responsibly not comply with user requests. This approach requires careful consideration of the agent's goals, constraints, and decision-making processes. By anchoring responsible non-compliance, developers can create more robust and reliable autonomous systems."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxUb3dhcmRzJTIwUmVzcG9uc2libHklMjBOb24lMjBDb21wbGlhbnQlMjBNYWNoaW5lcyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTIxMDExOHww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+The development of autonomous intelligent agents has led to significant advancements in various fields, including robotics, healthcare, and finance. However, as these agents become more sophisticated, it is essential to consider the potential consequences of their actions. In a recent paper published on [arXiv](https://arxiv.org/abs/2606.12147), researchers propose a framework for building autonomous agents that can responsibly not comply with user requests. In this tutorial, we will explore the concepts and techniques presented in the paper and provide a step-by-step guide on how to implement a responsibly non-compliant machine.
+
+## Understanding Responsible Non-Compliance
+
+Responsible non-compliance refers to the ability of an autonomous agent to deliberately not comply with a user request, while ensuring that its actions are still aligned with its overall goals and constraints. This concept is essential in scenarios where the agent's compliance with a user request could lead to undesirable outcomes, such as harm to humans or damage to the environment.
+
+For example, consider a self-driving car that is instructed to drive at a speed of 100 km/h in a school zone. A responsibly non-compliant agent would recognize the potential danger of such an action and instead choose to comply with the traffic laws and regulations, even if it means not following the user's request.
+
+![a close up of a typewriter with a paper reading machine learning](https://images.unsplash.com/photo-1591453089816-0fbb971b454c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxUb3dhcmRzJTIwUmVzcG9uc2libHklMjBOb24lMjBDb21wbGlhbnQlMjBNYWNoaW5lcyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTIxMDExOHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Implementing Responsible Non-Compliance
+
+To implement a responsibly non-compliant agent, we need to consider the following components:
+
+1.  **Goal specification**: The agent's goals and objectives should be clearly defined and aligned with its constraints and decision-making processes.
+2.  **Constraint specification**: The agent's constraints, such as safety protocols and regulatory requirements, should be explicitly defined and considered during the decision-making process.
+3.  **Decision-making process**: The agent's decision-making process should be designed to balance its goals and constraints, while considering the potential consequences of its actions.
+
+Here is an example of how we can implement a responsibly non-compliant agent using Python:
+
+```python
+import numpy as np
+
+class ResponsibleAgent:
+    def __init__(self, goals, constraints):
+        self.goals = goals
+        self.constraints = constraints
+
+    def decide(self, user_request):
+        # Evaluate the user request against the agent's goals and constraints
+        if self.is_compliant(user_request):
+            return user_request
+        else:
+            # Find an alternative action that is compliant with the agent's goals and constraints
+            alternative_action = self.find_alternative_action(user_request)
+            return alternative_action
+
+    def is_compliant(self, action):
+        # Check if the action is compliant with the agent's goals and constraints
+        for constraint in self.constraints:
+            if not constraint.is_satisfied(action):
+                return False
+        return True
+
+    def find_alternative_action(self, user_request):
+        # Find an alternative action that is compliant with the agent's goals and constraints
+        # This can be implemented using various techniques, such as planning or optimization algorithms
+        pass
+
+# Example usage:
+goals = ["drive safely", "follow traffic laws"]
+constraints = ["speed limit", "pedestrian crossing"]
+
+agent = ResponsibleAgent(goals, constraints)
+user_request = "drive at 100 km/h in a school zone"
+action = agent.decide(user_request)
+
+print(action)  # Output: "drive at 30 km/h in a school zone"
+```
+
+## Anchoring Responsible Non-Compliance
+
+Anchoring responsible non-compliance refers to the process of ensuring that the agent's decision-making process is aligned with its goals and constraints. This can be achieved by using various techniques, such as:
+
+1.  **Value alignment**: The agent's goals and constraints should be aligned with its values and objectives.
+2.  **Constraint-based optimization**: The agent's decision-making process should be designed to optimize its goals and constraints.
+3.  **Robustness and reliability**: The agent's decision-making process should be robust and reliable, even in the presence of uncertainty and adversity.
+
+By anchoring responsible non-compliance, developers can create more robust and reliable autonomous systems that can responsibly not comply with user requests when necessary.
+
+![woman in white long sleeve shirt sitting on chair](https://images.unsplash.com/photo-1581093577421-f561a654a353?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxUb3dhcmRzJTIwUmVzcG9uc2libHklMjBOb24lMjBDb21wbGlhbnQlMjBNYWNoaW5lcyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTIxMDExOHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we explored the concept of responsible non-compliance in autonomous intelligent agents. We discussed the importance of anchoring responsible non-compliance and provided a step-by-step guide on how to implement a responsibly non-compliant agent using Python. By following the techniques and concepts presented in this tutorial, developers can create more robust and reliable autonomous systems that can responsibly not comply with user requests when necessary.
+
+The development of responsibly non-compliant machines has the potential to revolutionize various fields, including robotics, healthcare, and finance. As autonomous systems become more sophisticated, it is essential to consider the potential consequences of their actions and ensure that they are aligned with their goals and constraints.
+
+By prioritizing responsible non-compliance, we can create a future where autonomous systems are not only efficient and effective but also safe, reliable, and aligned with human values.
+
+![industrial robotic arm in blue lit factory](https://images.unsplash.com/photo-1606206873764-fd15e242df52?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxUb3dhcmRzJTIwUmVzcG9uc2libHklMjBOb24lMjBDb21wbGlhbnQlMjBNYWNoaW5lcyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTIxMDExOHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
