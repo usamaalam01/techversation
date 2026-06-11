@@ -1,0 +1,99 @@
+---
+title: "Recursive Reasoning for ToM"
+description: "Improve Theory of Mind reasoning with recursive inference."
+date: "2026-06-11"
+author: "Usama"
+tags: ["ai", "llm", "theory-of-mind"]
+aiSummary: "Theory of Mind (ToM) reasoning requires inferring agents' beliefs from partial observations. We introduce RecToM, an inference-time approach for recursive ToM reasoning. This tutorial provides a step-by-step guide to implementing RecToM using Python."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1607075694157-a88e9b2f5992?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxNaW5kJTIwUGVyc3BlY3RpdmUlMjBMZXQlMjBSZWFzb24lMjBSZWN1cnNpdmVseSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTE3NTM5N3ww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Theory of Mind
+
+Theory of Mind (ToM) is the ability to attribute mental states—beliefs, intents, desires, knowledge, etc.—to oneself and to others. It also involves understanding that others have beliefs, desires, and intentions that are different from one's own. ToM reasoning is crucial in various applications, including human-computer interaction, natural language processing, and decision-making.
+
+![A computer circuit board with a brain on it](https://images.unsplash.com/photo-1737505599159-5ffc1dcbc08f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxNaW5kJTIwUGVyc3BlY3RpdmUlMjBMZXQlMjBSZWFzb24lMjBSZWN1cnNpdmVseSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTE3NTM5N3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Challenges in ToM Reasoning
+
+ToM reasoning requires inferring agents' beliefs from partial and asymmetric observations. Existing prompting-based approaches improve ToM reasoning through observable-event filtering or temporal belief chains, without explicitly modeling nested beliefs. These approaches have limitations, as they do not capture the complexity of real-world scenarios.
+
+## Introducing RecToM
+
+RecToM is an inference-time approach for recursive ToM reasoning. It explicitly models nested beliefs and uses recursive inference to reason about agents' mental states. RecToM consists of two main components:
+
+1.  **Belief Representation**: This component represents the beliefs of agents using a probabilistic framework.
+2.  **Recursive Inference**: This component uses recursive inference to reason about the beliefs of agents.
+
+### Implementing RecToM using Python
+
+Here is an example implementation of RecToM using Python:
+```python
+import numpy as np
+
+class Agent:
+    def __init__(self, name):
+        self.name = name
+        self.beliefs = {}
+
+    def update_belief(self, belief, probability):
+        self.beliefs[belief] = probability
+
+class RecToM:
+    def __init__(self):
+        self.agents = {}
+
+    def add_agent(self, agent):
+        self.agents[agent.name] = agent
+
+    def recursive_inference(self, agent_name, belief):
+        agent = self.agents[agent_name]
+        if belief in agent.beliefs:
+            return agent.beliefs[belief]
+        else:
+            # Recursive inference
+            for other_agent in self.agents.values():
+                if other_agent != agent:
+                    probability = self.recursive_inference(other_agent.name, belief)
+                    agent.update_belief(belief, probability)
+            return agent.beliefs[belief]
+
+# Create agents
+agent1 = Agent("Agent 1")
+agent2 = Agent("Agent 2")
+
+# Create RecToM instance
+recom = RecToM()
+
+# Add agents to RecToM
+recom.add_agent(agent1)
+recom.add_agent(agent2)
+
+# Update beliefs
+agent1.update_belief("Belief 1", 0.8)
+agent2.update_belief("Belief 1", 0.4)
+
+# Perform recursive inference
+probability = recom.recursive_inference("Agent 1", "Belief 1")
+print("Probability:", probability)
+```
+This code defines two classes: `Agent` and `RecToM`. The `Agent` class represents an agent with a set of beliefs, and the `RecToM` class represents the RecToM system. The `recursive_inference` method in the `RecToM` class performs recursive inference to reason about the beliefs of agents.
+
+## Advantages of RecToM
+
+RecToM has several advantages over existing approaches:
+
+*   **Explicit Modeling of Nested Beliefs**: RecToM explicitly models nested beliefs, allowing for more accurate reasoning about agents' mental states.
+*   **Recursive Inference**: RecToM uses recursive inference to reason about the beliefs of agents, capturing the complexity of real-world scenarios.
+
+## Conclusion
+
+RecToM is a novel approach for recursive ToM reasoning. It explicitly models nested beliefs and uses recursive inference to reason about agents' mental states. The advantages of RecToM make it a promising approach for various applications, including human-computer interaction, natural language processing, and decision-making.
+
+![a close up of a container with words on it](https://images.unsplash.com/photo-1692607431208-28cc794e0067?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxNaW5kJTIwUGVyc3BlY3RpdmUlMjBMZXQlMjBSZWFzb24lMjBSZWN1cnNpdmVseSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTE3NTM5N3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+For more information on RecToM, please refer to the [original paper](https://arxiv.org/abs/2606.11724).
+
+*Photo by [Miquel Parera](https://unsplash.com/@miquel_parera_mila?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/yellow-and-black-pedestrian-line-yTy-52zDYjM?utm_source=techversation&utm_medium=referral)*

@@ -1,0 +1,124 @@
+---
+title: "Extend UI Kit Tutorial"
+description: "Get started with Extend UI, an open-source UI kit for modern document apps."
+date: "2026-06-11"
+author: "Usama"
+tags: ["ui-kit", "open-source", "document-apps"]
+aiSummary: "Extend UI is an open-source UI kit designed for modern document applications. It provides a set of pre-built UI components and tools to help developers create consistent and intuitive user interfaces. In this tutorial, we will explore how to get started with Extend UI and build a sample document app. Extend UI offers a range of features, including customizable components, responsive design, and accessibility support."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxTaG93JTIwRXh0ZW5kJTIwb3BlbiUyMHNvdXJjZSUyMGtpdCUyMHRlY2hub2xvZ3klMjBzb2Z0d2FyZXxlbnwxfDB8fHwxNzgxMTc1MjQxfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Building a modern document application requires a lot of effort and resources, especially when it comes to designing and implementing the user interface. To simplify this process, the team at Extend AI has released an open-source UI kit called Extend UI. In this tutorial, we will take a closer look at Extend UI and explore how to use it to build a sample document application.
+
+## What is Extend UI?
+
+Extend UI is a comprehensive UI kit that provides a set of pre-built UI components, including buttons, inputs, navigation menus, and more. It is designed to help developers create consistent and intuitive user interfaces for their document applications. Extend UI is built using modern web technologies, including HTML, CSS, and JavaScript, and is fully customizable to fit the needs of your application.
+
+## Getting Started with Extend UI
+
+To get started with Extend UI, you can visit the official website at [https://www.extend.ai/ui](https://www.extend.ai/ui) and download the UI kit. The kit includes a range of pre-built components, as well as a set of tools and resources to help you get started.
+
+### Installing Extend UI
+
+To install Extend UI, you can use npm or yarn by running the following command:
+```bash
+npm install @extend-ui/core
+```
+or
+```bash
+yarn add @extend-ui/core
+```
+This will install the core Extend UI package and its dependencies.
+
+### Importing Extend UI Components
+
+To use Extend UI components in your application, you need to import them into your JavaScript file. For example:
+```javascript
+import { Button, Input } from '@extend-ui/core';
+```
+This imports the `Button` and `Input` components from the `@extend-ui/core` package.
+
+## Building a Sample Document App
+
+To demonstrate how to use Extend UI, let's build a sample document application. Our application will have a simple layout with a navigation menu, a document editor, and a toolbar.
+
+### Creating the Navigation Menu
+
+To create the navigation menu, we can use the `Navigation` component from Extend UI. Here's an example:
+```javascript
+import { Navigation } from '@extend-ui/core';
+
+const navigation = (
+  <Navigation>
+    <Navigation.Item>File</Navigation.Item>
+    <Navigation.Item>Edit</Navigation.Item>
+    <Navigation.Item>View</Navigation.Item>
+  </Navigation>
+);
+```
+This creates a basic navigation menu with three items: File, Edit, and View.
+
+### Creating the Document Editor
+
+To create the document editor, we can use a simple `textarea` element. Here's an example:
+```javascript
+import { Input } from '@extend-ui/core';
+
+const editor = (
+  <Input
+    type="textarea"
+    placeholder="Enter your text here..."
+    rows={10}
+    cols={50}
+  />
+);
+```
+This creates a basic text area with a placeholder text and a fixed size.
+
+### Creating the Toolbar
+
+To create the toolbar, we can use a combination of `Button` and `Input` components from Extend UI. Here's an example:
+```javascript
+import { Button, Input } from '@extend-ui/core';
+
+const toolbar = (
+  <div>
+    <Button>Save</Button>
+    <Button>Print</Button>
+    <Input type="search" placeholder="Search..." />
+  </div>
+);
+```
+This creates a basic toolbar with two buttons (Save and Print) and a search input field.
+
+### Putting it all Together
+
+To put all the components together, we can create a simple layout using HTML and CSS. Here's an example:
+```html
+<div className="app-container">
+  <div className="navigation-menu">{navigation}</div>
+  <div className="document-editor">{editor}</div>
+  <div className="toolbar">{toolbar}</div>
+</div>
+```
+This creates a basic layout with a navigation menu, a document editor, and a toolbar.
+
+![two black flat screen computer monitors](https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxTaG93JTIwRXh0ZW5kJTIwb3BlbiUyMHNvdXJjZSUyMGtpdCUyMHRlY2hub2xvZ3klMjBzb2Z0d2FyZXxlbnwxfDB8fHwxNzgxMTc1MjQxfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we have explored how to use Extend UI to build a sample document application. We have covered the basics of getting started with Extend UI, including installing and importing components, and creating a simple layout with a navigation menu, a document editor, and a toolbar. With Extend UI, you can create consistent and intuitive user interfaces for your document applications, and customize the components to fit your needs.
+
+As you can see, building a document application with Extend UI is relatively straightforward. With its pre-built components and customizable design, Extend UI can help you save time and resources, and focus on building the features that matter most to your users.
+
+If you're interested in learning more about Extend UI, I recommend checking out the official documentation and exploring the various components and tools available. You can also join the Extend UI community to connect with other developers and get support.
+
+![a computer with a keyboard and mouse](https://images.unsplash.com/photo-1669023414162-8b0573b9c6b2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxTaG93JTIwRXh0ZW5kJTIwb3BlbiUyMHNvdXJjZSUyMGtpdCUyMHRlY2hub2xvZ3klMjBzb2Z0d2FyZXxlbnwxfDB8fHwxNzgxMTc1MjQxfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+I hope this tutorial has been helpful in getting you started with Extend UI. Happy coding!
+
+*Photo by [Fotis Fotopoulos](https://unsplash.com/@ffstop?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/black-computer-keyboard-DuHKoV44prg?utm_source=techversation&utm_medium=referral)*
