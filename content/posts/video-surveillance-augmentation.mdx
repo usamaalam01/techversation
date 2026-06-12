@@ -1,0 +1,98 @@
+---
+title: "Video Surveillance Augmentation"
+description: "Enhance video surveillance with thermal and visible spectral range techniques."
+date: "2026-06-12"
+author: "Usama"
+tags: ["ai", "computer-vision", "thermal-imaging"]
+aiSummary: "This tutorial explores augmentation techniques for video surveillance in the visible and thermal spectral range. We will discuss the benefits of combining long-wave infrared and visible spectral range cameras. Code examples will demonstrate how to preprocess and fuse images from both cameras."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1762281429414-5ee5f2dbb243?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxBdWdtZW50YXRpb24lMjB0ZWNobmlxdWVzJTIwdmlkZW8lMjBzdXJ2ZWlsbGFuY2UlMjB2aXNpYmxlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgxMjk1OTE5fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Video Surveillance Augmentation
+
+Video surveillance is a crucial aspect of modern security systems. Cameras recording image sequences during day and night can provide valuable insights into potential security threats. However, different lighting conditions often require different sensors, which can be expensive and inefficient. To achieve better performance, it is common to combine cameras that record in the visible spectral range with those that record in the thermal spectral range.
+
+In this tutorial, we will focus on the case where a long-wave infrared camera records continuously, and an additional camera records in the visible spectral range. We will explore the benefits of combining these cameras and provide code examples to demonstrate how to preprocess and fuse images from both cameras.
+
+## Benefits of Combining Visible and Thermal Spectral Range Cameras
+
+Combining cameras that record in the visible and thermal spectral ranges can provide several benefits, including:
+
+* Improved object detection: Thermal cameras can detect objects based on their heat signatures, while visible cameras can detect objects based on their visual appearance.
+* Enhanced low-light performance: Thermal cameras can operate in low-light conditions, while visible cameras may struggle to capture images in these conditions.
+* Increased situational awareness: By combining images from both cameras, we can gain a better understanding of the environment and potential security threats.
+
+![Multiple views of planet earth against a black background.](https://images.unsplash.com/photo-1770723965518-72363e66a999?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxBdWdtZW50YXRpb24lMjB0ZWNobmlxdWVzJTIwdmlkZW8lMjBzdXJ2ZWlsbGFuY2UlMjB2aXNpYmxlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgxMjk1OTE5fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+### Preprocessing Images from Visible and Thermal Cameras
+
+Before fusing images from both cameras, we need to preprocess them to ensure they are in a suitable format. This includes resizing the images to the same size, converting them to the same color space, and applying any necessary filters to enhance image quality.
+
+```python
+import cv2
+import numpy as np
+
+# Load images from visible and thermal cameras
+visible_image = cv2.imread('visible_image.jpg')
+thermal_image = cv2.imread('thermal_image.jpg')
+
+# Resize images to the same size
+visible_image = cv2.resize(visible_image, (640, 480))
+thermal_image = cv2.resize(thermal_image, (640, 480))
+
+# Convert images to grayscale
+visible_image_gray = cv2.cvtColor(visible_image, cv2.COLOR_BGR2GRAY)
+thermal_image_gray = cv2.cvtColor(thermal_image, cv2.COLOR_BGR2GRAY)
+
+# Apply Gaussian filter to enhance image quality
+visible_image_blur = cv2.GaussianBlur(visible_image_gray, (5, 5), 0)
+thermal_image_blur = cv2.GaussianBlur(thermal_image_gray, (5, 5), 0)
+```
+
+## Fusing Images from Visible and Thermal Cameras
+
+Once the images have been preprocessed, we can fuse them to create a single image that combines the benefits of both cameras. There are several techniques for fusing images, including:
+
+* Weighted averaging: This involves calculating a weighted average of the pixel values from both images.
+* Histogram matching: This involves matching the histogram of one image to the histogram of the other image.
+
+```python
+# Fuse images using weighted averaging
+fused_image = cv2.addWeighted(visible_image_blur, 0.5, thermal_image_blur, 0.5, 0)
+
+# Fuse images using histogram matching
+def histogram_match(source, template):
+    source_hist = cv2.calcHist([source], [0], None, [256], [0, 256])
+    template_hist = cv2.calcHist([template], [0], None, [256], [0, 256])
+    source_cdf = source_hist.cumsum()
+    template_cdf = template_hist.cumsum()
+    source_cdf = source_cdf / source_cdf.max()
+    template_cdf = template_cdf / template_cdf.max()
+    matched_image = np.interp(source, [0, 255], [0, 255])
+    return matched_image
+
+fused_image_hist = histogram_match(thermal_image_blur, visible_image_blur)
+```
+
+### Evaluating the Performance of Fused Images
+
+To evaluate the performance of the fused images, we can use metrics such as peak signal-to-noise ratio (PSNR) and structural similarity index measure (SSIM).
+
+```python
+from skimage.metrics import peak_signal_noise_ratio, structural_similarity
+
+# Calculate PSNR and SSIM
+psnr = peak_signal_noise_ratio(visible_image, fused_image)
+ssim = structural_similarity(visible_image, fused_image, multichannel=True)
+
+print(f'PSNR: {psnr}')
+print(f'SSIM: {ssim}')
+```
+
+## Conclusion
+
+In this tutorial, we explored the benefits of combining cameras that record in the visible and thermal spectral ranges. We provided code examples to demonstrate how to preprocess and fuse images from both cameras. By combining these cameras, we can improve object detection, enhance low-light performance, and increase situational awareness. The techniques presented in this tutorial can be applied to a wide range of applications, including video surveillance, industrial inspection, and environmental monitoring.
+
+*Photo by [Logan Voss](https://unsplash.com/@loganvoss?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/abstract-blue-and-black-wavy-pattern-9cj7QSZY62U?utm_source=techversation&utm_medium=referral)*
