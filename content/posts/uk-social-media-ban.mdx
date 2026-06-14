@@ -1,0 +1,114 @@
+---
+title: "UK Social Media Ban"
+description: "UK to ban social media for under-16s, exploring tech solutions."
+date: "2026-06-14"
+author: "Usama"
+tags: ["social-media", "ban", "tech-solutions"]
+aiSummary: "The UK is set to announce a social media ban for under-16s, prompting developers to explore technical solutions to enforce age restrictions. This tutorial will guide developers through creating a simple age verification system using Python. The system will utilize machine learning models to predict user age based on their online behavior."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1683721003111-070bcc053d8b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxzZXQlMjBhbm5vdW5jZSUyMHNvY2lhbCUyMG1lZGlhJTIwYmFuJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODE0NjY1ODV8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+The UK government's plan to ban social media for under-16s has sparked a heated debate about the role of technology in enforcing age restrictions. As developers, we can contribute to this discussion by exploring technical solutions that can help implement such bans effectively. In this tutorial, we will create a simple age verification system using Python, leveraging machine learning models to predict user age based on their online behavior.
+
+## Understanding the Problem
+Before diving into the technical aspects, it's essential to understand the challenges associated with implementing a social media ban for under-16s. One of the primary concerns is verifying the age of users, as current systems rely on self-reported data, which can be easily falsified. To address this issue, we can utilize machine learning models that analyze user behavior, such as their engagement patterns, language usage, and interests.
+
+![blue red and green letters illustration](https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxzZXQlMjBhbm5vdW5jZSUyMHNvY2lhbCUyMG1lZGlhJTIwYmFuJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODE0NjY1ODV8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Creating a Simple Age Verification System
+To create a simple age verification system, we will use the following components:
+* A user database to store information about registered users
+* A machine learning model to predict user age based on their online behavior
+* A Python script to integrate the user database and machine learning model
+
+### User Database
+We will use a simple SQLite database to store user information. The database will contain the following columns:
+* `id`: a unique identifier for each user
+* `username`: the username chosen by the user
+* `age`: the self-reported age of the user
+* `behavior_data`: a JSON object containing data about the user's online behavior
+
+```python
+import sqlite3
+
+# Connect to the SQLite database
+conn = sqlite3.connect('user_database.db')
+cursor = conn.cursor()
+
+# Create the user table
+cursor.execute('''
+    CREATE TABLE users (
+        id INTEGER PRIMARY KEY,
+        username TEXT NOT NULL,
+        age INTEGER NOT NULL,
+        behavior_data TEXT NOT NULL
+    )
+''')
+
+# Commit the changes and close the connection
+conn.commit()
+conn.close()
+```
+
+### Machine Learning Model
+We will use a simple random forest classifier to predict user age based on their online behavior. The model will be trained on a dataset containing user behavior data and corresponding age labels.
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+
+# Load the user behavior dataset
+behavior_data = pd.read_csv('behavior_data.csv')
+
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(behavior_data.drop('age', axis=1), behavior_data['age'], test_size=0.2, random_state=42)
+
+# Train the random forest classifier
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# Evaluate the model on the testing set
+accuracy = model.score(X_test, y_test)
+print(f'Model accuracy: {accuracy:.3f}')
+```
+
+### Integrating the User Database and Machine Learning Model
+We will create a Python script to integrate the user database and machine learning model. The script will retrieve user behavior data from the database, use the machine learning model to predict the user's age, and update the user's age in the database if the predicted age is different from the self-reported age.
+
+```python
+import sqlite3
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+
+# Connect to the SQLite database
+conn = sqlite3.connect('user_database.db')
+cursor = conn.cursor()
+
+# Retrieve user behavior data from the database
+cursor.execute('SELECT behavior_data FROM users WHERE id = 1')
+behavior_data = cursor.fetchone()[0]
+
+# Use the machine learning model to predict the user's age
+predicted_age = model.predict(pd.DataFrame([behavior_data]))[0]
+
+# Update the user's age in the database if the predicted age is different
+if predicted_age != user['age']:
+    cursor.execute('UPDATE users SET age = ? WHERE id = 1', (predicted_age,))
+    conn.commit()
+
+# Close the connection
+conn.close()
+```
+
+## Conclusion
+In this tutorial, we created a simple age verification system using Python, leveraging machine learning models to predict user age based on their online behavior. While this system is not foolproof, it demonstrates the potential of technology in enforcing age restrictions on social media platforms. As developers, we can continue to explore and improve technical solutions to address the challenges associated with implementing a social media ban for under-16s.
+
+![white and pink digital device](https://images.unsplash.com/photo-1611926653458-09294b3142bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxzZXQlMjBhbm5vdW5jZSUyMHNvY2lhbCUyMG1lZGlhJTIwYmFuJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODE0NjY1ODV8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+To learn more about the UK's plan to ban social media for under-16s, you can visit the [Manchester Evening News website](https://www.manchestereveningnews.co.uk/news/uk-news/uk-set-announce-social-media-34119132) for the latest updates.
+
+*Photo by [Mariia Shalabaieva](https://unsplash.com/@maria_shalabaieva?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-group-of-different-social-media-logos-HBkpnDVc_Ic?utm_source=techversation&utm_medium=referral)*
