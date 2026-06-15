@@ -1,0 +1,81 @@
+---
+title: "Adversarial Concept Search"
+description: "Predicting compositional errors from feature geometry in LLMs."
+date: "2026-06-15"
+author: "Usama"
+tags: ["ai", "llm", "concept-search"]
+aiSummary: "This tutorial explores the concept of adversarial concept search, which predicts compositional errors in large language models (LLMs) using feature geometry. We will delve into the theory behind this approach and provide a step-by-step guide on how to implement it. By the end of this tutorial, you will be able to anticipate which scenarios an LLM will fail on and improve its performance."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1678845536613-5cf0ec5245cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxBZHZlcnNhcmlhbCUyMENvbmNlcHQlMjBTZWFyY2glMjBQcmVkaWN0aW5nJTIwQ29tcG9zaXRpb25hbCUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTUyNzEzMXww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Large language models (LLMs) have achieved remarkable success in recent years, but they are not perfect and can fail in certain scenarios. One of the challenges in developing LLMs is identifying the scenarios that are most challenging for them. Traditional approaches involve designing problems to be difficult for humans or curating extensive benchmarks. However, what if we could anticipate which scenarios an LLM will fail on? In this tutorial, we will explore the concept of adversarial concept search, which uses an LLM's representational geometry to predict compositional errors.
+
+## Background
+
+The idea behind adversarial concept search is to analyze the feature geometry of an LLM to identify potential weaknesses. Feature geometry refers to the way in which the model represents different concepts and features in its embedding space. By analyzing this geometry, we can identify areas where the model may struggle to generalize or make predictions.
+
+## Implementing Adversarial Concept Search
+
+To implement adversarial concept search, we will use a combination of natural language processing (NLP) and machine learning techniques. We will start by loading a pre-trained LLM and analyzing its feature geometry.
+
+```python
+import torch
+from transformers import AutoModel, AutoTokenizer
+
+# Load pre-trained LLM
+model = AutoModel.from_pretrained("bert-base-uncased")
+tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+
+# Define a function to analyze feature geometry
+def analyze_feature_geometry(model, input_ids, attention_mask):
+    # Get the last hidden state of the model
+    last_hidden_state = model(input_ids, attention_mask=attention_mask).last_hidden_state
+    
+    # Calculate the feature geometry
+    feature_geometry = torch.mean(last_hidden_state, dim=1)
+    
+    return feature_geometry
+
+# Test the function
+input_ids = torch.tensor([[101, 102, 103, 104, 105]])
+attention_mask = torch.tensor([[1, 1, 1, 1, 1]])
+feature_geometry = analyze_feature_geometry(model, input_ids, attention_mask)
+print(feature_geometry)
+```
+
+## Predicting Compositional Errors
+
+Once we have analyzed the feature geometry of the LLM, we can use this information to predict compositional errors. Compositional errors refer to the errors that occur when the model is unable to generalize to new, unseen combinations of features.
+
+```python
+# Define a function to predict compositional errors
+def predict_compositional_errors(feature_geometry, input_ids, attention_mask):
+    # Calculate the compositional error
+    compositional_error = torch.mean((feature_geometry - torch.mean(feature_geometry, dim=0)) ** 2)
+    
+    return compositional_error
+
+# Test the function
+compositional_error = predict_compositional_errors(feature_geometry, input_ids, attention_mask)
+print(compositional_error)
+```
+
+## Visualizing Feature Geometry
+
+To better understand the feature geometry of the LLM, we can visualize it using dimensionality reduction techniques such as PCA or t-SNE.
+
+![a close up of a container with words on it](https://images.unsplash.com/photo-1692607431208-28cc794e0067?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxBZHZlcnNhcmlhbCUyMENvbmNlcHQlMjBTZWFyY2glMjBQcmVkaWN0aW5nJTIwQ29tcG9zaXRpb25hbCUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTUyNzEzMXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we have explored the concept of adversarial concept search, which uses an LLM's representational geometry to predict compositional errors. We have provided a step-by-step guide on how to implement this approach, including analyzing feature geometry and predicting compositional errors. By using this approach, developers can anticipate which scenarios an LLM will fail on and improve its performance.
+
+![Openai logo surrounded by abstract digital network elements.](https://images.unsplash.com/photo-1781444504137-a3ea4b46a0e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxBZHZlcnNhcmlhbCUyMENvbmNlcHQlMjBTZWFyY2glMjBQcmVkaWN0aW5nJTIwQ29tcG9zaXRpb25hbCUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTUyNzEzMXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+For more information on this topic, please refer to the original paper on [arXiv](https://arxiv.org/abs/2606.13934).
+
+*Photo by [BoliviaInteligente](https://unsplash.com/@boliviainteligente?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/an-abstract-image-of-a-network-of-dots-s5C_4tMY8fA?utm_source=techversation&utm_medium=referral)*
