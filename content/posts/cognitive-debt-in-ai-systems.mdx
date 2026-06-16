@@ -1,0 +1,77 @@
+---
+title: "Cognitive Debt in AI Systems"
+description: "Understanding cognitive debt and its implications on AI systems."
+date: "2026-06-16"
+author: "Usama"
+tags: ["ai", "cognitive-debt", "systemic-fragility"]
+aiSummary: "Cognitive debt refers to the accumulation of unverified reasoning obligations in AI systems. This concept is crucial in understanding the dynamics of systemic fragility in AI. We will explore the formal theory of cognitive debt and its implications on AI systems. The model features two state variables per agent, cognitive capital and cognitive debt, and a multiplicative production technology."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxDb2duaXRpdmUlMjBEZWJ0JTIwSW50ZWxsZWN0dWFsJTIwTGV2ZXJhZ2UlMjBEeW5hbWljcyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTU4NzMxOXww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+The increasing reliance on Artificial Intelligence (AI) in various aspects of our lives has led to a new concept: cognitive debt. Cognitive debt refers to the stock of unverified reasoning obligations that accumulates when individuals use AI as a substitute rather than a complement for first-principles cognition. In this tutorial, we will delve into the formal theory of cognitive debt and its implications on AI systems.
+
+## Understanding Cognitive Debt
+Cognitive debt is a result of the trade-off between cognitive capital and cognitive debt. Cognitive capital represents the knowledge and skills that an individual or an AI system possesses, while cognitive debt represents the unverified reasoning obligations that accumulate over time. The model features a multiplicative production technology, where the output is a function of both cognitive capital and cognitive debt.
+
+```python
+import numpy as np
+
+# Define the cognitive capital and cognitive debt
+cognitive_capital = 100
+cognitive_debt = 50
+
+# Define the multiplicative production technology
+def production_technology(cognitive_capital, cognitive_debt):
+    return cognitive_capital * (1 - cognitive_debt / 100)
+
+# Calculate the output
+output = production_technology(cognitive_capital, cognitive_debt)
+print("Output:", output)
+```
+
+## Dynamics of Systemic Fragility
+The dynamics of systemic fragility in AI systems are closely related to cognitive debt. As cognitive debt accumulates, the system becomes more fragile and prone to errors. This is because the unverified reasoning obligations can lead to a cascade of failures, making the system more vulnerable to external shocks.
+
+![A computer circuit board with a brain on it](https://images.unsplash.com/photo-1737505599159-5ffc1dcbc08f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxDb2duaXRpdmUlMjBEZWJ0JTIwSW50ZWxsZWN0dWFsJTIwTGV2ZXJhZ2UlMjBEeW5hbWljcyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTU4NzMxOXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+### Modeling Systemic Fragility
+To model systemic fragility, we can use a simple simulation. The simulation will consist of a network of agents, each with its own cognitive capital and cognitive debt. The agents will interact with each other, and the cognitive debt will accumulate over time.
+
+```python
+import networkx as nx
+import matplotlib.pyplot as plt
+
+# Create a network of agents
+G = nx.random_graphs.barabasi_albert_graph(100, 2)
+
+# Initialize the cognitive capital and cognitive debt for each agent
+cognitive_capital = {node: 100 for node in G.nodes()}
+cognitive_debt = {node: 50 for node in G.nodes()}
+
+# Define the interaction between agents
+def interaction(agent1, agent2):
+    cognitive_debt[agent1] += 10
+    cognitive_debt[agent2] += 10
+
+# Simulate the interactions between agents
+for edge in G.edges():
+    interaction(edge[0], edge[1])
+
+# Print the final cognitive debt for each agent
+for node in G.nodes():
+    print("Agent:", node, "Cognitive Debt:", cognitive_debt[node])
+```
+
+## Conclusion
+Cognitive debt is a crucial concept in understanding the dynamics of systemic fragility in AI systems. The formal theory of cognitive debt provides a framework for analyzing the trade-off between cognitive capital and cognitive debt. By modeling systemic fragility, we can better understand the implications of cognitive debt on AI systems and develop strategies to mitigate its effects.
+
+As AI continues to evolve, it is essential to consider the concept of cognitive debt and its implications on AI systems. By doing so, we can develop more robust and reliable AI systems that can withstand the challenges of an increasingly complex world.
+
+![a computer chip in the shape of a human head](https://images.unsplash.com/photo-1677442135131-4d7c123aef1c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxDb2duaXRpdmUlMjBEZWJ0JTIwSW50ZWxsZWN0dWFsJTIwTGV2ZXJhZ2UlMjBEeW5hbWljcyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTU4NzMxOXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+For more information on cognitive debt and its implications on AI systems, please refer to the original paper on [arXiv](https://arxiv.org/abs/2606.15078).
+
+*Photo by [Steve A Johnson](https://unsplash.com/@steve_j?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-computer-circuit-board-with-a-brain-on-it-_0iV9LmPDn0?utm_source=techversation&utm_medium=referral)*
