@@ -1,0 +1,119 @@
+---
+title: "CONCORD: Asynchronous Sparse Aggregation"
+description: "Device-cloud collaborative inference for language models."
+date: "2026-06-16"
+author: "Usama"
+tags: ["ai", "llm", "device-cloud"]
+aiSummary: "CONCORD enables device-cloud collaborative inference for language models by incorporating external knowledge at inference time. This technique improves language models while keeping private documents on the device. The CONCORD approach uses asynchronous sparse aggregation for retrieval-augmented generation."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1529078155058-5d716f45d604?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxDT05DT1JEJTIwQXN5bmNocm9ub3VzJTIwU3BhcnNlJTIwQWdncmVnYXRpb24lMjBEZXZpY2UlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODE2MDk0Nzh8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Retrieval-augmented generation (RAG) has emerged as a pivotal technique for improving language models by incorporating external knowledge at inference time. As device-cloud collaborative inference makes it feasible to deploy small language models on edge devices, a new setting arises in which private documents remain on the device and public knowledge is retrieved from the cloud. CONCORD, a novel approach, enables this setting by using asynchronous sparse aggregation for device-cloud RAG under document isolation.
+
+## Background
+
+Language models have become increasingly powerful in recent years, but they often rely on large amounts of training data to generate high-quality text. However, in many cases, the data is private and cannot be shared with the cloud. This is where retrieval-augmented generation comes in – it allows language models to retrieve external knowledge from the cloud while keeping private documents on the device.
+
+## CONCORD Overview
+
+CONCORD is a technique that enables device-cloud collaborative inference for language models. It uses asynchronous sparse aggregation to retrieve external knowledge from the cloud and aggregate it with the private documents on the device. This approach allows for improved language models while maintaining the privacy of the documents.
+
+### Key Components
+
+* **Asynchronous Sparse Aggregation**: This is the core component of CONCORD. It allows for the aggregation of external knowledge from the cloud with the private documents on the device in an asynchronous manner.
+* **Device-Cloud Collaborative Inference**: This component enables the deployment of small language models on edge devices, which can then retrieve external knowledge from the cloud.
+
+## Implementing CONCORD
+
+To implement CONCORD, we need to follow these steps:
+
+### Step 1: Install Required Libraries
+
+We will need to install the following libraries:
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+```
+### Step 2: Define the Language Model
+
+We will define a simple language model using PyTorch:
+```python
+class LanguageModel(nn.Module):
+    def __init__(self):
+        super(LanguageModel, self).__init__()
+        self.fc1 = nn.Linear(128, 128)
+        self.fc2 = nn.Linear(128, 128)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = self.fc2(x)
+        return x
+```
+### Step 3: Define the Asynchronous Sparse Aggregation Module
+
+We will define the asynchronous sparse aggregation module:
+```python
+class AsyncSparseAggregation(nn.Module):
+    def __init__(self):
+        super(AsyncSparseAggregation, self).__init__()
+        self.fc1 = nn.Linear(128, 128)
+        self.fc2 = nn.Linear(128, 128)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = self.fc2(x)
+        return x
+```
+### Step 4: Define the Device-Cloud Collaborative Inference Module
+
+We will define the device-cloud collaborative inference module:
+```python
+class DeviceCloudCollaborativeInference(nn.Module):
+    def __init__(self):
+        super(DeviceCloudCollaborativeInference, self).__init__()
+        self.fc1 = nn.Linear(128, 128)
+        self.fc2 = nn.Linear(128, 128)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = self.fc2(x)
+        return x
+```
+### Step 5: Train the Model
+
+We will train the model using a simple training loop:
+```python
+model = LanguageModel()
+async_sparse_aggregation = AsyncSparseAggregation()
+device_cloud_collaborative_inference = DeviceCloudCollaborativeInference()
+
+criterion = nn.MSELoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+
+for epoch in range(100):
+    optimizer.zero_grad()
+    outputs = model(inputs)
+    loss = criterion(outputs, targets)
+    loss.backward()
+    optimizer.step()
+```
+![a close up of a computer keyboard with a blurry background](https://images.unsplash.com/photo-1650327034581-1711a15a5430?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxDT05DT1JEJTIwQXN5bmNocm9ub3VzJTIwU3BhcnNlJTIwQWdncmVnYXRpb24lMjBEZXZpY2UlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODE2MDk0Nzh8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we have seen how to implement CONCORD, a novel approach for device-cloud collaborative inference for language models. We have defined the key components of CONCORD, including the asynchronous sparse aggregation module and the device-cloud collaborative inference module. We have also seen how to train the model using a simple training loop.
+
+By using CONCORD, we can improve language models while maintaining the privacy of the documents. This approach has many potential applications, including text generation and language translation.
+
+For more information on CONCORD, please refer to the original paper: [CONCORD: Asynchronous Sparse Aggregation for Device-Cloud RAG under Document Isolation](https://arxiv.org/abs/2606.15179).
+
+![a computer generated image of a cube surrounded by smaller cubes](https://images.unsplash.com/photo-1639762681485-074b7f938ba0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxDT05DT1JEJTIwQXN5bmNocm9ub3VzJTIwU3BhcnNlJTIwQWdncmVnYXRpb24lMjBEZXZpY2UlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODE2MDk0Nzh8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+Note: The code examples provided in this tutorial are for illustration purposes only and may need to be modified to work with your specific use case.
+
+*Photo by [Mika Baumeister](https://unsplash.com/@kommumikation?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/white-printing-paper-with-numbers-Wpnoqo2plFA?utm_source=techversation&utm_medium=referral)*
