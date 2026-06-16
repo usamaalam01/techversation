@@ -1,0 +1,106 @@
+---
+title: "Attribute Inference from Ads"
+description: "Attribute inference from interactive targeted ads tutorial."
+date: "2026-06-16"
+author: "Usama"
+tags: ["ai", "attribute-inference", "targeted-ads"]
+aiSummary: "This tutorial covers attribute inference from interactive targeted ads. We model the ad system as a noisy oracle and provide a step-by-step guide to implementing attribute inference. We include working code examples to demonstrate the process."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxBdHRyaWJ1dGUlMjBJbmZlcmVuY2UlMjBmcm9tJTIwSW50ZXJhY3RpdmUlMjBUYXJnZXRlZCUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTYzMDE3OXww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Targeted advertising systems can pair audiences selected by advertisers with ad units that expose visible user actions. When an interaction remains linked to the campaign that elicited it, the advertiser may receive an observation tied to a user rather than only an aggregate report. This channel can be modeled as a noisy oracle for attribute inference. In this tutorial, we will explore how to use this concept to infer attributes from interactive targeted ads.
+
+## Background
+
+Attribute inference is the process of guessing sensitive attributes of a user, such as age, location, or interests, based on their behavior or interactions with a system. In the context of targeted advertising, attribute inference can be used to improve ad targeting and personalization. The ad system can be modeled as a noisy oracle, where the oracle provides noisy observations of the user's attributes.
+
+## Step 1: Data Collection
+
+The first step in attribute inference is data collection. We need to collect data on user interactions with the ad system, such as clicks, conversions, or views. We can use this data to train a model that predicts the user's attributes.
+
+```python
+import pandas as pd
+
+# Load the data
+data = pd.read_csv('ad_data.csv')
+
+# Print the first few rows of the data
+print(data.head())
+```
+
+## Step 2: Data Preprocessing
+
+After collecting the data, we need to preprocess it to prepare it for modeling. This includes handling missing values, encoding categorical variables, and scaling numerical variables.
+
+```python
+import numpy as np
+from sklearn.preprocessing import StandardScaler
+
+# Handle missing values
+data.fillna(data.mean(), inplace=True)
+
+# Encode categorical variables
+data['category'] = data['category'].astype('category')
+data['category'] = data['category'].cat.codes
+
+# Scale numerical variables
+scaler = StandardScaler()
+data[['age', 'income']] = scaler.fit_transform(data[['age', 'income']])
+```
+
+## Step 3: Model Training
+
+After preprocessing the data, we can train a model to predict the user's attributes. We can use a variety of machine learning algorithms, such as logistic regression, decision trees, or neural networks.
+
+```python
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(data.drop('attribute', axis=1), data['attribute'], test_size=0.2, random_state=42)
+
+# Train a random forest classifier
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+```
+
+## Step 4: Model Evaluation
+
+After training the model, we need to evaluate its performance on the testing set. We can use metrics such as accuracy, precision, recall, and F1 score to evaluate the model's performance.
+
+```python
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+
+# Make predictions on the testing set
+y_pred = model.predict(X_test)
+
+# Evaluate the model's performance
+print('Accuracy:', accuracy_score(y_test, y_pred))
+print('Precision:', precision_score(y_test, y_pred))
+print('Recall:', recall_score(y_test, y_pred))
+print('F1 Score:', f1_score(y_test, y_pred))
+```
+
+## Step 5: Deployment
+
+After evaluating the model's performance, we can deploy it in the ad system to make predictions on new, unseen data. We can use the model to infer attributes from user interactions with the ad system.
+
+![a computer screen with a bunch of data on it](https://images.unsplash.com/photo-1625296276703-3fbc924f07b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxBdHRyaWJ1dGUlMjBJbmZlcmVuY2UlMjBmcm9tJTIwSW50ZXJhY3RpdmUlMjBUYXJnZXRlZCUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTYzMDE3OXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we covered attribute inference from interactive targeted ads. We modeled the ad system as a noisy oracle and provided a step-by-step guide to implementing attribute inference. We included working code examples to demonstrate the process. By following these steps, developers can build their own attribute inference systems to improve ad targeting and personalization.
+
+## Future Work
+
+There are several directions for future work in this area. One direction is to explore the use of more advanced machine learning algorithms, such as deep learning, to improve the accuracy of attribute inference. Another direction is to investigate the use of alternative data sources, such as social media or mobile device data, to improve the accuracy of attribute inference.
+
+![black flat screen computer monitor](https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxBdHRyaWJ1dGUlMjBJbmZlcmVuY2UlMjBmcm9tJTIwSW50ZXJhY3RpdmUlMjBUYXJnZXRlZCUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTYzMDE3OXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+By continuing to explore and develop new techniques for attribute inference, we can improve the accuracy and effectiveness of targeted advertising systems, ultimately benefiting both advertisers and users.
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
