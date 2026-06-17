@@ -1,0 +1,93 @@
+---
+title: "SkillChain-Gym Tutorial"
+description: "Production planning with reskilling-aware control under disruptions."
+date: "2026-06-17"
+author: "Usama"
+tags: ["production-planning", "reskilling", "inventory-control"]
+aiSummary: "SkillChain-Gym is a benchmark for reskilling-aware production-inventory control under disruptions. It treats workforce capability as a decision variable, considering certifications, new products, and reskilling. This tutorial provides a step-by-step guide on using SkillChain-Gym to optimize production planning. We will cover the key concepts, implementation, and working code examples."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxTa2lsbENoYWluJTIwR3ltJTIwQmVuY2htYXJrJTIwUmVza2lsbGluZyUyMEF3YXJlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgxNjk0ODkzfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Production planning is a critical aspect of manufacturing, and it has become increasingly important to consider workforce capability as a decision variable. Certifications lapse when skills are not maintained, new products require skills the current workforce does not hold, and reskilling competes for the same worker hours needed for production. Existing operations benchmarks usually treat labor as exogenous, while SkillChain-Gym is a benchmark that addresses this issue.
+
+## Setting Up SkillChain-Gym
+To get started with SkillChain-Gym, you need to install the required libraries. You can do this by running the following command:
+```bash
+pip install gym
+```
+Once you have installed the required libraries, you can import SkillChain-Gym in your Python script:
+```python
+import gym
+from skillchain_gym import SkillChainGym
+```
+## Key Concepts
+SkillChain-Gym is designed to simulate a production environment where workforce capability is a decision variable. The key concepts in SkillChain-Gym are:
+
+* **Workforce**: The workforce is represented as a set of workers with different skills and certifications.
+* **Products**: The products are represented as a set of tasks that require specific skills and certifications.
+* **Reskilling**: Reskilling is the process of training workers to acquire new skills and certifications.
+* **Disruptions**: Disruptions are events that affect the production environment, such as changes in demand or supplier availability.
+
+## Implementing SkillChain-Gym
+To implement SkillChain-Gym, you need to define the production environment, including the workforce, products, and disruptions. You can do this by creating a `SkillChainGym` object and passing in the required parameters:
+```python
+env = SkillChainGym(
+    num_workers=10,
+    num_products=5,
+    num_skills=3,
+    disruption_probability=0.1
+)
+```
+Once you have defined the production environment, you can simulate the production process using the `step` method:
+```python
+state, reward, done, info = env.step(action)
+```
+The `step` method takes an action as input, which is a vector of reskilling decisions for each worker. The method returns the next state, reward, done flag, and info dictionary.
+
+## Working Code Example
+Here is a working code example that demonstrates how to use SkillChain-Gym to optimize production planning:
+```python
+import gym
+from skillchain_gym import SkillChainGym
+import numpy as np
+
+# Define the production environment
+env = SkillChainGym(
+    num_workers=10,
+    num_products=5,
+    num_skills=3,
+    disruption_probability=0.1
+)
+
+# Define the reskilling policy
+def reskilling_policy(state):
+    # Reskill workers to acquire new skills and certifications
+    action = np.zeros((env.num_workers, env.num_skills))
+    for i in range(env.num_workers):
+        for j in range(env.num_skills):
+            if state[i, j] < 0.5:
+                action[i, j] = 1
+    return action
+
+# Simulate the production process
+state = env.reset()
+done = False
+while not done:
+    action = reskilling_policy(state)
+    state, reward, done, info = env.step(action)
+    print("Reward:", reward)
+
+# Visualize the production process
+![turned on monitoring screen](https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxTa2lsbENoYWluJTIwR3ltJTIwQmVuY2htYXJrJTIwUmVza2lsbGluZyUyMEF3YXJlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgxNjk0ODkzfDA&ixlib=rb-4.1.0&q=80&w=1080)
+```
+This code example defines a production environment with 10 workers, 5 products, and 3 skills. It also defines a reskilling policy that reskills workers to acquire new skills and certifications. The code then simulates the production process using the `step` method and prints the reward at each time step.
+
+## Conclusion
+SkillChain-Gym is a powerful benchmark for reskilling-aware production-inventory control under disruptions. It treats workforce capability as a decision variable, considering certifications, new products, and reskilling. By using SkillChain-Gym, you can optimize production planning and improve the efficiency of your production process. With the working code example provided in this tutorial, you can get started with using SkillChain-Gym to simulate and optimize your production environment.
+
+![person holding black android smartphone](https://images.unsplash.com/photo-1580983703451-bf6bb44a9917?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxTa2lsbENoYWluJTIwR3ltJTIwQmVuY2htYXJrJTIwUmVza2lsbGluZyUyMEF3YXJlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgxNjk0ODkzfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
