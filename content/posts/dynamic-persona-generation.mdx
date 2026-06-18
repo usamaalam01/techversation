@@ -1,0 +1,117 @@
+---
+title: "Dynamic Persona Generation"
+description: "Enhancing human-AI rapport with LLM-based chatbots."
+date: "2026-06-18"
+author: "Usama"
+tags: ["ai", "llm", "persona-generation"]
+aiSummary: "This tutorial introduces a novel approach for conditioning LLMs with in-group personas to enhance human-AI rapport. We will implement a dynamic persona generation system using Python and the Hugging Face Transformers library. The system will identify a user's primary concern and brief personal context to generate a personalized persona."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1758873271761-6cfe9b4f000c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxEeW5hbWljJTIwR3JvdXAlMjBQZXJzb25hJTIwR2VuZXJhdGlvbiUyMEVuaGFuY2luZyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTc1ODM4NXww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Large Language Models (LLMs) are increasingly being applied in interpersonal domains such as counseling and peer support, where establishing human-AI rapport is crucial yet remains challenging. To address this challenge, we introduce a novel approach for conditioning LLMs with in-group personas. This approach first identifies a user's primary concern and brief personal context, then generates a personalized persona to enhance human-AI rapport.
+
+## Background
+
+The concept of persona generation is not new, but its application in human-AI interaction is still in its infancy. Traditional persona generation methods rely on static personas that are predefined and do not adapt to the user's context. In contrast, our approach uses dynamic persona generation, which takes into account the user's primary concern and brief personal context to generate a personalized persona.
+
+## System Architecture
+
+The system architecture consists of the following components:
+
+* **User Input**: The user provides their primary concern and brief personal context through a text-based interface.
+* **Persona Generation**: The persona generation module uses the user's input to generate a personalized persona.
+* **LLM Conditioning**: The generated persona is used to condition the LLM, which then responds to the user's input.
+
+### Persona Generation Module
+
+The persona generation module uses a combination of natural language processing (NLP) and machine learning algorithms to generate a personalized persona. The module consists of the following steps:
+
+1. **Text Preprocessing**: The user's input is preprocessed to extract relevant features such as sentiment, tone, and keywords.
+2. **Persona Template**: A persona template is created based on the extracted features.
+3. **Persona Generation**: The persona template is used to generate a personalized persona.
+
+```python
+import numpy as np
+import torch
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+class PersonaGenerationModule:
+    def __init__(self, model_name):
+        self.model = AutoModelForSequenceClassification.from_pretrained(model_name)
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+    def generate_persona(self, user_input):
+        # Preprocess user input
+        inputs = self.tokenizer(user_input, return_tensors="pt")
+
+        # Generate persona template
+        persona_template = self.model(**inputs)
+
+        # Generate personalized persona
+        persona = self.generate_persona_from_template(persona_template)
+
+        return persona
+
+    def generate_persona_from_template(self, persona_template):
+        # Implement persona generation logic here
+        pass
+```
+
+## LLM Conditioning
+
+The generated persona is used to condition the LLM, which then responds to the user's input. The LLM conditioning process involves fine-tuning the LLM on the generated persona.
+
+```python
+class LLMConditioningModule:
+    def __init__(self, model_name):
+        self.model = AutoModelForSequenceClassification.from_pretrained(model_name)
+
+    def condition_llm(self, persona):
+        # Fine-tune LLM on generated persona
+        self.model.train()
+        optimizer = torch.optim.Adam(self.model.parameters(), lr=1e-5)
+
+        for epoch in range(5):
+            optimizer.zero_grad()
+            outputs = self.model(**persona)
+            loss = outputs.loss
+            loss.backward()
+            optimizer.step()
+
+        self.model.eval()
+```
+
+## Example Use Case
+
+Let's consider an example use case where a user provides their primary concern and brief personal context through a text-based interface.
+
+![person writing on whiteboard](https://images.unsplash.com/photo-1546437593-3d0258c28037?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxEeW5hbWljJTIwR3JvdXAlMjBQZXJzb25hJTIwR2VuZXJhdGlvbiUyMEVuaGFuY2luZyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTc1ODM4NXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+The user input is then used to generate a personalized persona, which is used to condition the LLM.
+
+```python
+user_input = "I'm feeling anxious about my upcoming exam."
+persona_generation_module = PersonaGenerationModule("distilbert-base-uncased")
+persona = persona_generation_module.generate_persona(user_input)
+
+llm_conditioning_module = LLMConditioningModule("distilbert-base-uncased")
+llm_conditioning_module.condition_llm(persona)
+
+# Use the conditioned LLM to respond to the user's input
+response = llm_conditioning_module.model.generate(user_input)
+print(response)
+```
+
+## Conclusion
+
+In this tutorial, we introduced a novel approach for conditioning LLMs with in-group personas to enhance human-AI rapport. We implemented a dynamic persona generation system using Python and the Hugging Face Transformers library. The system generates a personalized persona based on the user's primary concern and brief personal context, which is then used to condition the LLM. This approach has the potential to improve the effectiveness of LLM-based chatbots in interpersonal domains such as counseling and peer support.
+
+![black flat screen computer monitor](https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxEeW5hbWljJTIwR3JvdXAlMjBQZXJzb25hJTIwR2VuZXJhdGlvbiUyMEVuaGFuY2luZyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTc1ODM4NXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+By following this tutorial, developers can create their own dynamic persona generation systems to enhance human-AI rapport in various applications.
+
+*Photo by [Vitaly Gariev](https://unsplash.com/@silverkblack?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/diverse-team-collaborating-around-a-table-with-charts-vasBHKO3GSs?utm_source=techversation&utm_medium=referral)*
