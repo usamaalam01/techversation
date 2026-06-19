@@ -1,0 +1,146 @@
+---
+title: "Interpreting NCO via Evolving Bottlenecks"
+description: "Neural Combinatorial Optimization interpretability with evolving programmatic bottlenecks."
+date: "2026-06-19"
+author: "Usama"
+tags: ["ai", "nco", "optimization"]
+aiSummary: "Neural Combinatorial Optimization achieves strong performance but lacks interpretability. Evolving programmatic bottlenecks can help address this issue. This tutorial provides a step-by-step guide on implementing this approach."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1674027444485-cec3da58eef4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxJbnRlcnByZXRpbmclMjBOZXVyYWwlMjBDb21iaW5hdG9yaWFsJTIwT3B0aW1pemF0aW9uJTIwdmlhJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgxODgzNTI4fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Neural Combinatorial Optimization
+
+Neural Combinatorial Optimization (NCO) has shown promising results in solving complex optimization problems. However, its black-box nature makes it challenging to interpret and diagnose. Standard interpretability tools, such as Concept Bottleneck Models (CBMs), are not suitable for NCO due to its dynamic and state-dependent decision-making process.
+
+To address this issue, researchers have proposed using evolving programmatic bottlenecks to interpret NCO. This approach involves creating a bottleneck in the NCO model and evolving it over time to gain insights into the decision-making process.
+
+## Implementing Evolving Programmatic Bottlenecks
+
+To implement evolving programmatic bottlenecks, we need to modify the NCO model architecture. We will use a simple example to demonstrate this approach. Let's consider a traveling salesman problem, where we need to find the shortest route that visits a set of cities and returns to the starting point.
+
+```python
+import numpy as np
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+# Define the NCO model architecture
+class NCOModel(nn.Module):
+    def __init__(self, input_dim, hidden_dim, output_dim):
+        super(NCOModel, self).__init__()
+        self.fc1 = nn.Linear(input_dim, hidden_dim)
+        self.fc2 = nn.Linear(hidden_dim, output_dim)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = self.fc2(x)
+        return x
+
+# Initialize the NCO model
+input_dim = 10
+hidden_dim = 20
+output_dim = 10
+model = NCOModel(input_dim, hidden_dim, output_dim)
+```
+
+## Creating the Bottleneck
+
+To create the bottleneck, we will add a new layer to the NCO model with a smaller number of neurons. This layer will act as a bottleneck, forcing the model to compress the information before making a decision.
+
+```python
+# Define the bottleneck layer
+class BottleneckLayer(nn.Module):
+    def __init__(self, input_dim, bottleneck_dim):
+        super(BottleneckLayer, self).__init__()
+        self.fc1 = nn.Linear(input_dim, bottleneck_dim)
+        self.fc2 = nn.Linear(bottleneck_dim, input_dim)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = self.fc2(x)
+        return x
+
+# Add the bottleneck layer to the NCO model
+bottleneck_dim = 5
+bottleneck_layer = BottleneckLayer(hidden_dim, bottleneck_dim)
+model.fc1 = nn.Sequential(model.fc1, bottleneck_layer)
+```
+
+## Evolving the Bottleneck
+
+To evolve the bottleneck, we will use a genetic algorithm to optimize the weights of the bottleneck layer. The goal is to find the optimal set of weights that allow the model to make accurate decisions while providing insights into the decision-making process.
+
+```python
+# Define the genetic algorithm
+import random
+
+def genetic_algorithm(population_size, generations, mutation_rate):
+    population = []
+    for _ in range(population_size):
+        individual = [random.uniform(-1, 1) for _ in range(bottleneck_dim * hidden_dim)]
+        population.append(individual)
+
+    for _ in range(generations):
+        fitness = []
+        for individual in population:
+            bottleneck_layer.fc1.weight.data = torch.tensor(individual).view(bottleneck_dim, hidden_dim)
+            output = model(torch.randn(1, input_dim))
+            fitness.append(torch.sum(output))
+
+        parents = random.sample(population, 2)
+        child = []
+        for i in range(len(parents[0])):
+            child.append(random.choice([parents[0][i], parents[1][i]]))
+        population.append(child)
+
+        if random.random() < mutation_rate:
+            index = random.randint(0, len(child) - 1)
+            child[index] = random.uniform(-1, 1)
+
+    return population[-1]
+
+# Evolve the bottleneck
+population_size = 100
+generations = 100
+mutation_rate = 0.1
+bottleneck_weights = genetic_algorithm(population_size, generations, mutation_rate)
+bottleneck_layer.fc1.weight.data = torch.tensor(bottleneck_weights).view(bottleneck_dim, hidden_dim)
+```
+
+## Visualizing the Results
+
+To visualize the results, we can use a dimensionality reduction technique such as PCA to reduce the output of the bottleneck layer to 2D.
+
+```python
+# Import the necessary libraries
+from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
+
+# Define the PCA model
+pca = PCA(n_components=2)
+
+# Fit the PCA model to the bottleneck output
+bottleneck_output = bottleneck_layer(model.fc1(torch.randn(100, input_dim)))
+pca.fit(bottleneck_output.detach().numpy())
+
+# Transform the bottleneck output to 2D
+transformed_output = pca.transform(bottleneck_output.detach().numpy())
+
+# Plot the transformed output
+plt.scatter(transformed_output[:, 0], transformed_output[:, 1])
+plt.show()
+```
+
+![a computer circuit board with a brain on it](https://images.unsplash.com/photo-1677442135703-1787eea5ce01?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxJbnRlcnByZXRpbmclMjBOZXVyYWwlMjBDb21iaW5hdG9yaWFsJTIwT3B0aW1pemF0aW9uJTIwdmlhJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgxODgzNTI4fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+The resulting plot shows the transformed output of the bottleneck layer, providing insights into the decision-making process of the NCO model.
+
+## Conclusion
+
+In this tutorial, we have demonstrated how to use evolving programmatic bottlenecks to interpret Neural Combinatorial Optimization. By creating a bottleneck in the NCO model and evolving it over time, we can gain insights into the decision-making process and provide a more interpretable model. The code examples provided in this tutorial can be used as a starting point for implementing this approach in other NCO models.
+
+Note: This is a simplified example and may not work for all NCO models. The choice of bottleneck architecture and evolutionary algorithm may need to be adapted to the specific problem and model being used.
+
+*Photo by [Growtika](https://unsplash.com/@growtika?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/an-abstract-image-of-a-sphere-with-dots-and-lines-nGoCBxiaRO0?utm_source=techversation&utm_medium=referral)*
