@@ -1,0 +1,69 @@
+---
+title: "Benchmarking Open Models"
+description: "HuggingFace evaluates open models on tooling for agentic capabilities."
+date: "2026-06-19"
+author: "Usama"
+tags: ["ai", "llm", "benchmarking"]
+aiSummary: "HuggingFace recently published a blog post discussing the importance of benchmarking open models for agentic capabilities. The post highlights the need for developers to evaluate these models using their own tooling. This approach allows for a more accurate assessment of a model's abilities and limitations. By doing so, developers can make informed decisions when choosing a model for their specific use case."
+category: "articles"
+coverImage: "https://images.unsplash.com/photo-1674027444485-cec3da58eef4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxhZ2VudGljJTIwZW5vdWdoJTIwQmVuY2htYXJraW5nJTIwb3BlbiUyMG1vZGVscyUyMGFydGlmaWNpYWwlMjBpbnRlbGxpZ2VuY2UlMjBtYWNoaW5lJTIwbGVhcm5pbmd8ZW58MXwwfHx8MTc4MTg0NTgyN3ww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+The concept of agentic capabilities in artificial intelligence (AI) refers to a model's ability to take actions and make decisions autonomously. As AI models become increasingly complex and powerful, it's essential to evaluate their agentic capabilities to ensure they align with our expectations and values. Recently, HuggingFace published a blog post titled "Is it agentic enough? Benchmarking open models on your own tooling," which highlights the importance of benchmarking open models using custom tooling. In this post, we'll summarize the key points from HuggingFace's article, explain why it matters to developers, and provide our take on the broader implications.
+
+## What Happened
+
+HuggingFace's blog post emphasizes the need for developers to evaluate open models using their own tooling, rather than relying solely on pre-defined benchmarks. This approach allows developers to assess a model's agentic capabilities in a more realistic and relevant context. By using custom tooling, developers can create benchmarks that are tailored to their specific use case, which can help identify potential issues or limitations in the model. The post also provides examples of how to create custom benchmarks using popular libraries and frameworks.
+
+## Why it Matters to Developers
+
+Benchmarking open models using custom tooling is crucial for developers because it enables them to evaluate a model's performance and capabilities in a more accurate and relevant way. Pre-defined benchmarks may not always reflect the specific requirements and constraints of a developer's project, which can lead to incorrect assumptions about a model's abilities. By creating custom benchmarks, developers can ensure that the model they choose is well-suited for their specific use case and can perform as expected.
+
+```python
+import torch
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+# Load pre-trained model and tokenizer
+model = AutoModelForSequenceClassification.from_pretrained("distilbert-base-uncased")
+tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
+
+# Create custom benchmark using a specific dataset and evaluation metric
+def custom_benchmark(model, dataset, metric):
+    # Tokenize the dataset and create a data loader
+    tokenized_dataset = tokenizer(dataset, return_tensors="pt", padding=True, truncation=True)
+    data_loader = torch.utils.data.DataLoader(tokenized_dataset, batch_size=32, shuffle=True)
+
+    # Evaluate the model on the custom dataset and metric
+    model.eval()
+    total_correct = 0
+    with torch.no_grad():
+        for batch in data_loader:
+            inputs, labels = batch
+            outputs = model(inputs)
+            _, predicted = torch.max(outputs.logits, dim=1)
+            total_correct += (predicted == labels).sum().item()
+
+    accuracy = total_correct / len(dataset)
+    return accuracy
+
+# Evaluate the model using the custom benchmark
+accuracy = custom_benchmark(model, dataset, "accuracy")
+print(f"Model accuracy on custom dataset: {accuracy:.4f}")
+```
+
+## Broader Implications
+
+The emphasis on benchmarking open models using custom tooling has significant implications for the development and deployment of AI models. As AI models become increasingly prevalent in various industries and applications, it's essential to ensure that they are thoroughly evaluated and tested to prevent potential issues or biases. By creating custom benchmarks, developers can identify potential limitations or flaws in a model and take corrective action to address them.
+
+![a computer circuit board with a brain on it](https://images.unsplash.com/photo-1677442135703-1787eea5ce01?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxhZ2VudGljJTIwZW5vdWdoJTIwQmVuY2htYXJraW5nJTIwb3BlbiUyMG1vZGVscyUyMGFydGlmaWNpYWwlMjBpbnRlbGxpZ2VuY2UlMjBtYWNoaW5lJTIwbGVhcm5pbmd8ZW58MXwwfHx8MTc4MTg0NTgyN3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+Furthermore, the use of custom benchmarks can also facilitate the development of more specialized and domain-specific AI models. By creating benchmarks that are tailored to a specific industry or application, developers can create models that are better suited to the unique requirements and challenges of that domain.
+
+## Conclusion
+
+In conclusion, the emphasis on benchmarking open models using custom tooling is a crucial aspect of AI development and deployment. By creating custom benchmarks, developers can evaluate a model's agentic capabilities in a more accurate and relevant way, identify potential limitations or biases, and take corrective action to address them. As AI models become increasingly prevalent in various industries and applications, it's essential to prioritize thorough evaluation and testing to ensure that they align with our expectations and values. By doing so, we can create more reliable, efficient, and effective AI systems that can drive innovation and progress in various fields.
+
+*Photo by [Growtika](https://unsplash.com/@growtika?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/an-abstract-image-of-a-sphere-with-dots-and-lines-nGoCBxiaRO0?utm_source=techversation&utm_medium=referral)*
