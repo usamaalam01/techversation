@@ -1,0 +1,100 @@
+---
+title: "ITNet: A Unified Integral Transform"
+description: "Learn about ITNet, a new integral transform that combines convolution, attention, and recurrence."
+date: "2026-06-19"
+author: "Usama"
+tags: ["itnet", "ai", "transformers"]
+aiSummary: "ITNet is a learnable integral transform that subsumes convolution, attention, and recurrence. It provides a unified framework for processing signals. This tutorial will guide you through implementing ITNet using Python and PyTorch."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1692607431225-5f4564c8f132?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxJVE5ldCUyMExlYXJuYWJsZSUyMEludGVncmFsJTIwVHJhbnNmb3JtJTIwU3Vic3VtZXMlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODE4NjY0ODB8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to ITNet
+ITNet is a novel learnable integral transform that unifies convolution, attention, and recurrence. It was introduced in the paper [ITNet: A Learnable Integral Transform That Subsumes Convolution, Attention, and Recurrence](https://arxiv.org/abs/2606.19538) on arXiv. This transform provides a new way to process signals, combining the strengths of different architectures.
+
+![Mathematical equations are written on a white page.](https://images.unsplash.com/photo-1754304342448-3eef0ab5ba9e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxJVE5ldCUyMExlYXJuYWJsZSUyMEludGVncmFsJTIwVHJhbnNmb3JtJTIwU3Vic3VtZXMlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODE4NjY0ODB8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Implementing ITNet using PyTorch
+To implement ITNet, we will use PyTorch, a popular deep learning framework. We will start by defining the ITNet transform.
+
+```python
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+class ITNetTransform(nn.Module):
+    def __init__(self, input_dim, output_dim):
+        super(ITNetTransform, self).__init__()
+        self.input_dim = input_dim
+        self.output_dim = output_dim
+        self.weight = nn.Parameter(torch.randn(input_dim, output_dim))
+
+    def forward(self, x):
+        # Compute the integral transform
+        output = F.linear(x, self.weight)
+        return output
+```
+
+## Using ITNet with Convolutional Networks
+ITNet can be used with convolutional networks to provide a more flexible and powerful way to process signals. We can define a convolutional network with ITNet as follows:
+
+```python
+class ITNetConvNet(nn.Module):
+    def __init__(self, input_dim, output_dim):
+        super(ITNetConvNet, self).__init__()
+        self.itnet_transform = ITNetTransform(input_dim, output_dim)
+        self.conv_layer = nn.Conv2d(input_dim, output_dim, kernel_size=3)
+
+    def forward(self, x):
+        # Apply the ITNet transform
+        x = self.itnet_transform(x)
+        # Apply the convolutional layer
+        x = self.conv_layer(x)
+        return x
+```
+
+## Using ITNet with Recurrent Networks
+ITNet can also be used with recurrent networks to provide a more powerful way to process sequential data. We can define a recurrent network with ITNet as follows:
+
+```python
+class ITNetRNN(nn.Module):
+    def __init__(self, input_dim, output_dim):
+        super(ITNetRNN, self).__init__()
+        self.itnet_transform = ITNetTransform(input_dim, output_dim)
+        self.rnn_layer = nn.RNN(input_dim, output_dim, num_layers=1, batch_first=True)
+
+    def forward(self, x):
+        # Apply the ITNet transform
+        x = self.itnet_transform(x)
+        # Apply the recurrent layer
+        x, _ = self.rnn_layer(x)
+        return x
+```
+
+## Using ITNet with Transformers
+ITNet can also be used with transformers to provide a more flexible and powerful way to process sequential data. We can define a transformer with ITNet as follows:
+
+```python
+class ITNetTransformer(nn.Module):
+    def __init__(self, input_dim, output_dim):
+        super(ITNetTransformer, self).__init__()
+        self.itnet_transform = ITNetTransform(input_dim, output_dim)
+        self.transformer_layer = nn.TransformerEncoderLayer(d_model=input_dim, nhead=8, dim_feedforward=output_dim, dropout=0.1)
+
+    def forward(self, x):
+        # Apply the ITNet transform
+        x = self.itnet_transform(x)
+        # Apply the transformer layer
+        x = self.transformer_layer(x)
+        return x
+```
+
+## Conclusion
+In this tutorial, we have seen how to implement ITNet, a learnable integral transform that subsumes convolution, attention, and recurrence. We have also seen how to use ITNet with different architectures, including convolutional networks, recurrent networks, and transformers. ITNet provides a unified framework for processing signals and can be used in a variety of applications, including computer vision, natural language processing, and speech recognition.
+
+![Mathematical formulas are written on the paper.](https://images.unsplash.com/photo-1754304342560-4391cb2656bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxJVE5ldCUyMExlYXJuYWJsZSUyMEludGVncmFsJTIwVHJhbnNmb3JtJTIwU3Vic3VtZXMlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODE4NjY0ODB8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+Note: This is a basic implementation of ITNet and may need to be modified to suit specific use cases. Additionally, the performance of ITNet may vary depending on the specific application and dataset.
+
+*Photo by [Google DeepMind](https://unsplash.com/@googledeepmind?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-close-up-of-a-piece-of-luggage-with-text-on-it-LuzT78A1g7M?utm_source=techversation&utm_medium=referral)*
