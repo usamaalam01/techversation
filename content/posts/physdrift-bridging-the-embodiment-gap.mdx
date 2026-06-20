@@ -1,0 +1,123 @@
+---
+title: "PhysDrift: Bridging the Embodiment Gap"
+description: "PhysDrift generates co-speech motions for humanoid robots."
+date: "2026-06-20"
+author: "Usama"
+tags: ["ai", "robotics", "humanoid"]
+aiSummary: "PhysDrift is a new tool for generating co-speech motions for humanoid robots. It bridges the embodiment gap by considering physical constraints. This tutorial shows how to use PhysDrift with code examples."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1657035228053-79c169cb5922?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxQaHlzRHJpZnQlMjBCcmlkZ2luZyUyMEVtYm9kaW1lbnQlMjBHYXAlMjBIdW1hbm9pZCUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTk2NTQ1NHww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Humanoid robots require co-speech motions that are not only expressive and speech-aligned but also physically executable under embodiment constraints. Existing co-speech generation pipelines are predominantly human-centric, which can lead to motions that are not suitable for humanoid robots. PhysDrift is a new tool that addresses this issue by generating co-speech motions that consider the physical constraints of humanoid robots.
+
+## What is PhysDrift?
+PhysDrift is a deep learning-based approach that generates co-speech motions for humanoid robots. It uses a combination of speech and motion data to learn the patterns and relationships between speech and motion. PhysDrift then uses this learned knowledge to generate co-speech motions that are physically executable by humanoid robots.
+
+## Installing PhysDrift
+To use PhysDrift, you need to install the required libraries and software. You can install PhysDrift using pip:
+```bash
+pip install physdrift
+```
+You also need to install the required dependencies, including PyTorch and NumPy:
+```bash
+pip install torch numpy
+```
+## Loading Data
+To use PhysDrift, you need to load the speech and motion data. You can use the following code to load the data:
+```python
+import numpy as np
+import torch
+
+# Load speech data
+speech_data = np.load('speech_data.npy')
+
+# Load motion data
+motion_data = np.load('motion_data.npy')
+```
+## Training PhysDrift
+To train PhysDrift, you need to create a dataset class that loads the speech and motion data. You can use the following code to create the dataset class:
+```python
+class PhysDriftDataset(torch.utils.data.Dataset):
+    def __init__(self, speech_data, motion_data):
+        self.speech_data = speech_data
+        self.motion_data = motion_data
+
+    def __getitem__(self, index):
+        speech = self.speech_data[index]
+        motion = self.motion_data[index]
+        return speech, motion
+
+    def __len__(self):
+        return len(self.speech_data)
+```
+You can then use the dataset class to create a data loader:
+```python
+dataset = PhysDriftDataset(speech_data, motion_data)
+data_loader = torch.utils.data.DataLoader(dataset, batch_size=32, shuffle=True)
+```
+You can then train PhysDrift using the following code:
+```python
+import physdrift
+
+# Create a PhysDrift model
+model = physdrift.PhysDrift()
+
+# Train the model
+for epoch in range(10):
+    for speech, motion in data_loader:
+        # Zero the gradients
+        model.zero_grad()
+
+        # Forward pass
+        output = model(speech)
+
+        # Calculate the loss
+        loss = torch.mean((output - motion) ** 2)
+
+        # Backward pass
+        loss.backward()
+
+        # Update the model parameters
+        model.step()
+```
+## Generating Co-Speech Motions
+To generate co-speech motions using PhysDrift, you can use the following code:
+```python
+# Load the trained model
+model = physdrift.PhysDrift()
+
+# Load the speech data
+speech_data = np.load('speech_data.npy')
+
+# Generate co-speech motions
+motions = model(speech_data)
+```
+The generated motions can be used to animate a humanoid robot. For example, you can use the following code to animate a robot using the generated motions:
+```python
+import pybullet as p
+
+# Create a robot
+robot = p.loadURDF('robot.urdf')
+
+# Set the initial pose of the robot
+p.resetBasePositionAndOrientation(robot, [0, 0, 0], [0, 0, 0, 1])
+
+# Animate the robot using the generated motions
+for motion in motions:
+    # Set the pose of the robot
+    p.resetBasePositionAndOrientation(robot, motion[:3], motion[3:])
+
+    # Step the simulation
+    p.stepSimulation()
+```
+![a robot that is standing in the air](https://images.unsplash.com/photo-1634909924531-4daae117dbc1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxQaHlzRHJpZnQlMjBCcmlkZ2luZyUyMEVtYm9kaW1lbnQlMjBHYXAlMjBIdW1hbm9pZCUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTk2NTQ1NHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+PhysDrift is a powerful tool for generating co-speech motions for humanoid robots. It bridges the embodiment gap by considering physical constraints, allowing for more realistic and natural-looking motions. By following this tutorial, you can use PhysDrift to generate co-speech motions for your own humanoid robot projects.
+
+Note: The code examples provided in this tutorial are for illustration purposes only and may need to be modified to work with your specific use case. Additionally, the PhysDrift library and dependencies may need to be installed and configured correctly for the code to work as expected.
+
+*Photo by [Steve A Johnson](https://unsplash.com/@steve_j?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/background-pattern-m6_i_r1lDE8?utm_source=techversation&utm_medium=referral)*
