@@ -1,0 +1,99 @@
+---
+title: "Detecting Epistemic Blind Spots in LLMs"
+description: "Large language models may not recognize their knowledge limits on clinical data tasks."
+date: "2026-06-20"
+author: "Usama"
+tags: ["llm", "ai", "clinical-data"]
+aiSummary: "Large language models are increasingly applied to structured clinical data, but may not recognize the limits of their own knowledge. This post explores detecting epistemic blind spots via cross-model attribution divergence. We provide a step-by-step guide to implementing this technique using Python and popular libraries."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1692598578454-570cb62ecf2f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxMTE0lMjBEb2VzbiUyMEtub3clMjBEb2VzbiUyMEtub3clMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODE5NDgwMTJ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Large language models (LLMs) have shown remarkable performance on various natural language processing tasks, including those involving structured clinical data. However, it is crucial to assess whether these models can recognize the limits of their own knowledge on such tasks. In this post, we will delve into the concept of epistemic blind spots in LLMs and explore a technique for detecting them using cross-model attribution divergence.
+
+## Understanding Epistemic Blind Spots
+
+Epistemic blind spots refer to the limitations or gaps in a model's knowledge that it is not aware of. In the context of LLMs, this means that the model may not recognize when it is uncertain or lacks knowledge on a particular task or dataset. This can lead to overconfident predictions and poor performance on unseen data.
+
+## Cross-Model Attribution Divergence
+
+To detect epistemic blind spots, we can use a technique called cross-model attribution divergence. This involves comparing the attributions (or feature importance) of two different models on the same task. The idea is that if the two models have similar attributions, they are likely to have similar knowledge and limitations. However, if the attributions diverge, it may indicate that one model has knowledge that the other lacks, or vice versa.
+
+### Implementing Cross-Model Attribution Divergence
+
+To implement cross-model attribution divergence, we will use the following steps:
+
+1. **Load the dataset**: Load the clinical dataset that we want to analyze.
+2. **Train two models**: Train two different LLMs on the dataset. We will use the `transformers` library to load pre-trained models and fine-tune them on our dataset.
+3. **Compute attributions**: Compute the attributions of each model on the dataset using a technique such as SHAP (SHapley Additive exPlanations).
+4. **Compare attributions**: Compare the attributions of the two models using a metric such as cosine similarity.
+
+### Code Example
+
+```python
+import pandas as pd
+import torch
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+from shap import Explainer, summary_plot
+
+# Load the dataset
+df = pd.read_csv("clinical_data.csv")
+
+# Train two models
+model1 = AutoModelForSequenceClassification.from_pretrained("bert-base-uncased")
+model2 = AutoModelForSequenceClassification.from_pretrained("roberta-base")
+
+# Fine-tune the models on the dataset
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model1.to(device)
+model2.to(device)
+
+# Compute attributions
+tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+explainer = Explainer(model1)
+shap_values = explainer.shap_values(df["text"])
+
+# Compare attributions
+cosine_sim = torch.nn.CosineSimilarity(dim=1)
+attributions1 = torch.tensor(shap_values)
+attributions2 = torch.tensor(explainer.shap_values(model2, df["text"]))
+similarity = cosine_sim(attributions1, attributions2)
+
+print("Cosine similarity between attributions:", similarity.item())
+```
+
+## Visualizing Attribution Divergence
+
+To visualize the attribution divergence, we can use a heatmap to show the similarity between the attributions of the two models.
+
+```python
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Compute the similarity matrix
+similarity_matrix = torch.cosine_similarity(attributions1, attributions2, dim=1)
+
+# Plot the heatmap
+sns.heatmap(similarity_matrix, annot=True, cmap="coolwarm")
+plt.title("Attribution Divergence Heatmap")
+plt.show()
+```
+
+![text](https://images.unsplash.com/photo-1588333489536-0ec90908a41f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxMTE0lMjBEb2VzbiUyMEtub3clMjBEb2VzbiUyMEtub3clMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODE5NDgwMTJ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this post, we explored the concept of epistemic blind spots in LLMs and demonstrated a technique for detecting them using cross-model attribution divergence. By comparing the attributions of two different models, we can identify areas where one model may have knowledge that the other lacks, or vice versa. This technique can be used to improve the performance and reliability of LLMs on clinical data tasks.
+
+### Future Work
+
+There are several directions for future work in this area, including:
+
+* **Exploring other attribution methods**: We used SHAP to compute attributions in this example, but there are other methods available, such as LIME (Local Interpretable Model-agnostic Explanations) and TreeExplainer.
+* **Investigating other datasets**: We demonstrated this technique on a clinical dataset, but it can be applied to other domains and datasets.
+* **Developing more robust models**: By identifying epistemic blind spots, we can develop more robust models that are aware of their own limitations and can adapt to new data and tasks.
+
+*Photo by [Bernd 📷 Dittrich](https://unsplash.com/@hdbernd?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-white-board-with-writing-written-on-it-1xE5QnNXJH0?utm_source=techversation&utm_medium=referral)*
