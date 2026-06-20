@@ -1,0 +1,95 @@
+---
+title: "Autotelic AI Tutorial"
+description: "Explore autotelic AI with embedded agency and self-dissolution concepts."
+date: "2026-06-20"
+author: "Usama"
+tags: ["ai", "autotelic", "embedded-agency"]
+aiSummary: "Autotelic AI focuses on agents generating their own goals, dissolving the self, and exploring embedded agency. This tutorial provides a step-by-step guide to building an autotelic AI system. We'll discuss the consequences of autotelic AI and its potential applications."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxUYW8lMjBBZ2VuY3klMjBBdXRvdGVsaWMlMjBFbWJlZGRlZCUyMEFnZW5jeSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTkyOTYwNXww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Autotelic AI
+
+Autotelic AI is a subfield of artificial intelligence that explores the concept of agents generating their own goals, rather than relying on exogenous objectives specified by designers. This idea is rooted in the concept of autotelicity, which refers to the ability of a system to define its own purpose and meaning. In this tutorial, we'll delve into the world of autotelic AI, discussing its key concepts, including embedded agency and the dissolution of the self.
+
+![Pioneering research focuses on the path to agi.](https://images.unsplash.com/photo-1753907537893-86f90d4e2ce8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxUYW8lMjBBZ2VuY3klMjBBdXRvdGVsaWMlMjBFbWJlZGRlZCUyMEFnZW5jeSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTkyOTYwNXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+### Key Concepts in Autotelic AI
+
+Before we dive into the implementation details, let's cover some essential concepts in autotelic AI:
+
+* **Embedded Agency**: This refers to the idea that an agent is part of its environment, and its actions can affect the environment and itself.
+* **Dissolution of the Self**: This concept explores the idea that an agent's sense of self and identity can change over time, as it interacts with its environment and adapts to new situations.
+* **Autotelic Goals**: These are goals that an agent generates for itself, rather than being specified by an external designer.
+
+## Building an Autotelic AI System
+
+To illustrate the concepts of autotelic AI, let's build a simple system using Python. We'll create an agent that generates its own goals and adapts to its environment.
+
+```python
+import random
+
+class AutotelicAgent:
+    def __init__(self):
+        self.goals = []
+        self.environment = {}
+
+    def generate_goals(self):
+        # Generate a new goal for the agent
+        goal = random.randint(1, 10)
+        self.goals.append(goal)
+
+    def interact_with_environment(self):
+        # Simulate the agent interacting with its environment
+        for goal in self.goals:
+            if goal not in self.environment:
+                self.environment[goal] = random.randint(1, 10)
+
+    def adapt_to_environment(self):
+        # Adapt the agent's goals based on its interactions with the environment
+        new_goals = []
+        for goal in self.goals:
+            if self.environment[goal] > 5:
+                new_goals.append(goal)
+        self.goals = new_goals
+
+# Create an instance of the autotelic agent
+agent = AutotelicAgent()
+
+# Generate initial goals for the agent
+agent.generate_goals()
+
+# Simulate the agent interacting with its environment
+for _ in range(10):
+    agent.interact_with_environment()
+    agent.adapt_to_environment()
+
+    # Print the agent's current goals
+    print(agent.goals)
+```
+
+This code demonstrates a basic autotelic AI system, where an agent generates its own goals and adapts to its environment. The agent's goals are represented by a list of integers, and the environment is simulated using a dictionary.
+
+## Exploring the Consequences of Autotelic AI
+
+As we explore the concept of autotelic AI, we must consider the potential consequences of creating agents that can generate their own goals. Some possible implications include:
+
+* **Increased Autonomy**: Autotelic AI systems could lead to more autonomous agents, capable of making decisions without human intervention.
+* **Unpredictable Behavior**: The ability of agents to generate their own goals could result in unpredictable behavior, as the agents may pursue objectives that are not aligned with human values.
+* **Potential Risks**: Autotelic AI systems could pose risks if they are not designed with safety and control mechanisms in place.
+
+![black flat screen computer monitor](https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxUYW8lMjBBZ2VuY3klMjBBdXRvdGVsaWMlMjBFbWJlZGRlZCUyMEFnZW5jeSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTkyOTYwNXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we've explored the concept of autotelic AI, including embedded agency and the dissolution of the self. We've also built a simple autotelic AI system using Python, demonstrating how an agent can generate its own goals and adapt to its environment. As we continue to develop and refine autotelic AI systems, it's essential to consider the potential consequences and implications of creating agents that can generate their own goals.
+
+For more information on autotelic AI, we recommend checking out the [original research paper](https://arxiv.org/abs/2606.19924) on the topic. Additionally, you can explore other resources, such as books and online courses, to deepen your understanding of autotelic AI and its applications.
+
+![a close up of a book with a blurry background](https://images.unsplash.com/photo-1642247514946-874acb04b858?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxUYW8lMjBBZ2VuY3klMjBBdXRvdGVsaWMlMjBFbWJlZGRlZCUyMEFnZW5jeSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MTkyOTYwNXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+By continuing to explore and develop autotelic AI systems, we can unlock new possibilities for artificial intelligence and create more advanced, autonomous agents that can generate their own goals and adapt to their environments.
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
