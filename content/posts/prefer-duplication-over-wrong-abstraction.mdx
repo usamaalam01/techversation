@@ -1,0 +1,56 @@
+---
+title: "Prefer Duplication Over Wrong Abstraction"
+description: "Sandi Metz advises preferring code duplication over wrong abstractions in software development."
+date: "2026-06-21"
+author: "Usama"
+tags: ["software", "development", "abstraction"]
+aiSummary: "Sandi Metz's 2016 blog post emphasizes the importance of preferring code duplication over wrong abstractions in software development. This approach prioritizes code readability and maintainability. Metz's advice has significant implications for developers and the broader software development community."
+category: "news"
+coverImage: "https://images.unsplash.com/photo-1618044619888-009e412ff12a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxQcmVmZXIlMjBkdXBsaWNhdGlvbiUyMG92ZXIlMjB3cm9uZyUyMGFic3RyYWN0aW9uJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODIwNzE3MTd8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+In 2016, Sandi Metz published a blog post titled "The Wrong Abstraction" on her website, which was later discussed on [Hacker News](https://sandimetz.com/blog/2016/1/20/the-wrong-abstraction). The post highlights the trade-offs between code duplication and abstraction, arguing that duplication is often preferable to incorrect abstractions. This idea has far-reaching implications for software developers and the broader development community.
+
+## The Problem with Wrong Abstractions
+Metz's central argument is that wrong abstractions can lead to more harm than good. When we create abstractions, we're trying to simplify complex systems by extracting common patterns and behaviors. However, if these abstractions are incorrect or incomplete, they can introduce bugs, make the code harder to understand, and limit its flexibility. 
+![Computer screen displaying code and text](https://images.unsplash.com/photo-1775994121020-86426451f8bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxQcmVmZXIlMjBkdXBsaWNhdGlvbiUyMG92ZXIlMjB3cm9uZyUyMGFic3RyYWN0aW9uJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODIwNzE3MTd8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Why Duplication is Preferable
+So, why is duplication preferable to wrong abstractions? The answer lies in the fact that duplicated code is often easier to understand and maintain. When we duplicate code, we're creating multiple copies of the same logic, which can make it more straightforward to comprehend and modify. In contrast, incorrect abstractions can lead to a situation where the code is difficult to understand, and changes become risky and error-prone.
+
+### Code Readability and Maintainability
+To illustrate this point, consider the following example in Python:
+```python
+# Duplicated code
+def calculate_area_rectangle(length, width):
+    return length * width
+
+def calculate_area_square(side):
+    return side * side
+```
+In this example, we have two separate functions for calculating the area of a rectangle and a square. While this code is duplicated, it's easy to understand and maintain. Now, let's consider an example with an incorrect abstraction:
+```python
+# Incorrect abstraction
+class Shape:
+    def __init__(self, dimensions):
+        self.dimensions = dimensions
+
+    def calculate_area(self):
+        # Incorrect assumption: all shapes are rectangles
+        return self.dimensions[0] * self.dimensions[1]
+
+# Usage
+rectangle = Shape([4, 5])
+square = Shape([3, 3])  # Incorrect assumption: square is not a rectangle
+```
+In this example, the `Shape` class is an incorrect abstraction because it assumes all shapes are rectangles. This leads to a situation where the code is difficult to understand and maintain.
+
+## Broader Implications
+Metz's advice has significant implications for the software development community. It emphasizes the importance of prioritizing code readability and maintainability over the pursuit of abstract, reusable code. By preferring duplication over wrong abstractions, developers can create more robust, flexible, and maintainable software systems.
+
+## Conclusion
+In conclusion, Sandi Metz's blog post highlights the importance of preferring code duplication over wrong abstractions in software development. By understanding the trade-offs between these two approaches, developers can create more maintainable, readable, and flexible software systems. As the software development community continues to evolve, it's essential to prioritize these values and create systems that are easy to understand, modify, and maintain.
+
+*Photo by [Markus Spiske](https://unsplash.com/@markusspiske?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/text-6pflEeSzGUo?utm_source=techversation&utm_medium=referral)*
