@@ -1,0 +1,66 @@
+---
+title: "Vibe Coding Risks Exposed"
+description: "Vibe coding poses security risks to apps and websites, a recent case reveals."
+date: "2026-06-22"
+author: "Usama"
+tags: ["ai", "security", "vibe-coding"]
+aiSummary: "A recent case highlights the security risks of vibe coding, a trend where developers quickly build apps without thorough testing. The risks include hidden SQL injection vulnerabilities that can compromise user data. This poses a significant threat to the security of apps and websites built using vibe coding."
+category: "news"
+coverImage: "https://images.unsplash.com/photo-1775994121052-e66d295832a0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxSZWFkJTIwYmVmb3JlJTIweW91JTIwdmliZSUyMGNvZGUlMjB0ZWNobm9sb2d5JTIwZGlnaXRhbCUyMGlubm92YXRpb258ZW58MXwwfHx8MTc4MjEzMDgzOXww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Vibe Coding
+
+Vibe coding, a trend where developers quickly build and deploy apps without thorough testing, has been gaining popularity in recent years. The idea behind vibe coding is to rapidly create a minimum viable product (MVP) and then iterate based on user feedback. However, a recent case reported by [The Verge](https://www.theverge.com/ai-artificial-intelligence/950844/vibe-coding-security-risks-apps) highlights the security risks associated with this approach.
+
+## The Case of Bob Starr
+
+Bob Starr, a developer, built a website called "Boomberg" using vibe coding. The website aimed to show how much US tax money is going to tech companies. Starr launched the site immediately after building it, without thoroughly testing it. It wasn't until months later that he realized there was a problem - a hidden SQL injection risk that could have compromised the site's security.
+
+### What is SQL Injection?
+
+SQL injection is a type of security vulnerability that occurs when an attacker is able to inject malicious SQL code into a website's database. This can allow the attacker to access sensitive data, modify data, or even take control of the database. SQL injection is a serious security risk that can have devastating consequences, including data breaches and financial losses.
+
+## Why Vibe Coding Poses Security Risks
+
+Vibe coding poses security risks because it prioritizes speed over security. When developers quickly build and deploy apps without thorough testing, they may overlook potential security vulnerabilities. This can lead to serious security risks, including SQL injection vulnerabilities, cross-site scripting (XSS), and cross-site request forgery (CSRF).
+
+![Digital art with text "claude code" and "vibe coding"](https://images.unsplash.com/photo-1775994121052-7e653711f72c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxSZWFkJTIwYmVmb3JlJTIweW91JTIwdmliZSUyMGNvZGUlMjB0ZWNobm9sb2d5JTIwZGlnaXRhbCUyMGlubm92YXRpb258ZW58MXwwfHx8MTc4MjEzMDgzOXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Broader Implications
+
+The case of Bob Starr highlights the importance of prioritizing security when building apps and websites. Vibe coding may be a quick way to get an MVP up and running, but it is not a substitute for thorough testing and security audits. Developers must take the time to identify and address potential security vulnerabilities before deploying their apps.
+
+### Best Practices for Secure Development
+
+To avoid the security risks associated with vibe coding, developers should follow best practices for secure development. These include:
+
+* Conducting thorough security audits and testing
+* Using secure coding practices, such as input validation and sanitization
+* Implementing security measures, such as encryption and access controls
+* Keeping software up to date with the latest security patches
+
+By following these best practices, developers can build secure apps and websites that protect user data and prevent security breaches.
+
+## Conclusion
+
+Vibe coding may be a trendy way to quickly build and deploy apps, but it poses significant security risks. The case of Bob Starr highlights the importance of prioritizing security when building apps and websites. Developers must take the time to identify and address potential security vulnerabilities before deploying their apps. By following best practices for secure development, developers can build secure apps and websites that protect user data and prevent security breaches. 
+
+To get started with secure development, consider the following example in Python:
+```python
+import sqlite3
+
+# Connect to the database
+conn = sqlite3.connect('example.db')
+cursor = conn.cursor()
+
+# Use parameterized queries to prevent SQL injection
+cursor.execute('SELECT * FROM users WHERE username = ?', ('username',))
+
+# Close the connection
+conn.close()
+```
+This example demonstrates how to use parameterized queries to prevent SQL injection attacks. By following this approach, developers can build secure apps and websites that protect user data.
+
+*Photo by [Bernd 📷 Dittrich](https://unsplash.com/@hdbernd?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/claude-code-vibe-coding-diagram-with-text-waSHO8ZEa1c?utm_source=techversation&utm_medium=referral)*
