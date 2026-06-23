@@ -1,0 +1,65 @@
+---
+title: "Building Shared AI Standards"
+description: "OpenAI supports evaluation frameworks and safety practices."
+date: "2026-06-23"
+author: "Usama"
+tags: ["ai", "standards", "open-source"]
+aiSummary: "OpenAI is helping build shared standards for advanced AI through the Appia Foundation. This initiative supports evaluation frameworks, safety practices, and global cooperation. Developers can contribute to these efforts by using open-source tools and frameworks."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1674027444485-cec3da58eef4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxIZWxwaW5nJTIwYnVpbGQlMjBzaGFyZWQlMjBzdGFuZGFyZHMlMjBhZHZhbmNlZCUyMGFydGlmaWNpYWwlMjBpbnRlbGxpZ2VuY2UlMjBtYWNoaW5lJTIwbGVhcm5pbmd8ZW58MXwwfHx8MTc4MjI0NjAzN3ww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Shared AI Standards
+The development of advanced AI systems requires careful consideration of their potential impact on society. To ensure that these systems are developed and deployed responsibly, it's essential to establish shared standards for their evaluation and safety. OpenAI is contributing to this effort through the Appia Foundation, which aims to promote global cooperation and collaboration in the development of AI standards.
+
+## The Importance of Evaluation Frameworks
+Evaluation frameworks are crucial for assessing the performance and safety of AI systems. These frameworks provide a set of guidelines and metrics for evaluating AI models, allowing developers to identify potential biases and flaws. By using standardized evaluation frameworks, developers can ensure that their AI systems are fair, transparent, and reliable.
+
+## Implementing Evaluation Frameworks with Open-Source Tools
+One way to implement evaluation frameworks is by using open-source tools and frameworks. For example, the [Hugging Face Transformers library](https://huggingface.co/transformers/) provides a set of pre-trained models and evaluation metrics for natural language processing tasks. Developers can use these tools to evaluate the performance of their AI models and identify areas for improvement.
+
+```python
+import torch
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+# Load pre-trained model and tokenizer
+model = AutoModelForSequenceClassification.from_pretrained("bert-base-uncased")
+tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+
+# Define evaluation metric
+def evaluate_model(model, tokenizer, dataset):
+    # Tokenize dataset
+    inputs = tokenizer(dataset["text"], return_tensors="pt")
+
+    # Evaluate model
+    outputs = model(**inputs)
+    predictions = torch.argmax(outputs.logits, dim=1)
+
+    # Calculate accuracy
+    accuracy = (predictions == dataset["label"]).sum().item() / len(dataset)
+
+    return accuracy
+
+# Example usage
+dataset = {"text": ["This is a positive review.", "This is a negative review."], "label": [1, 0]}
+accuracy = evaluate_model(model, tokenizer, dataset)
+print(f"Model accuracy: {accuracy:.4f}")
+```
+
+## Safety Practices for AI Development
+In addition to evaluation frameworks, safety practices are essential for ensuring that AI systems are developed and deployed responsibly. This includes practices such as data anonymization, model interpretability, and human oversight. By following these safety practices, developers can minimize the risks associated with AI systems and ensure that they are used for the benefit of society.
+
+![Robot and human hands reaching toward AI text](https://images.unsplash.com/photo-1694903089438-bf28d4697d9a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxIZWxwaW5nJTIwYnVpbGQlMjBzaGFyZWQlMjBzdGFuZGFyZHMlMjBhZHZhbmNlZCUyMGFydGlmaWNpYWwlMjBpbnRlbGxpZ2VuY2UlMjBtYWNoaW5lJTIwbGVhcm5pbmd8ZW58MXwwfHx8MTc4MjI0NjAzN3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Global Cooperation and the Appia Foundation
+The development of shared AI standards requires global cooperation and collaboration. The Appia Foundation is a non-profit organization that aims to promote cooperation and collaboration in the development of AI standards. By working together, developers, researchers, and policymakers can establish common standards and guidelines for the development and deployment of AI systems.
+
+## Conclusion
+In conclusion, building shared standards for advanced AI is crucial for ensuring that these systems are developed and deployed responsibly. By using open-source tools and frameworks, implementing evaluation frameworks, and following safety practices, developers can contribute to these efforts. The Appia Foundation is a key initiative in this area, promoting global cooperation and collaboration in the development of AI standards. By working together, we can establish common standards and guidelines for the development and deployment of AI systems, ensuring that they are used for the benefit of society.
+
+![Two hands touching each other in front of a pink background](https://images.unsplash.com/photo-1694903110330-cc64b7e1d21d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxIZWxwaW5nJTIwYnVpbGQlMjBzaGFyZWQlMjBzdGFuZGFyZHMlMjBhZHZhbmNlZCUyMGFydGlmaWNpYWwlMjBpbnRlbGxpZ2VuY2UlMjBtYWNoaW5lJTIwbGVhcm5pbmd8ZW58MXwwfHx8MTc4MjI0NjAzN3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+To learn more about the Appia Foundation and its efforts to promote shared AI standards, visit the [OpenAI website](https://openai.com/index/helping-build-shared-standards-for-advanced-ai).
+
+*Photo by [Growtika](https://unsplash.com/@growtika?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/an-abstract-image-of-a-sphere-with-dots-and-lines-nGoCBxiaRO0?utm_source=techversation&utm_medium=referral)*
