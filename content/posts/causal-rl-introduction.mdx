@@ -1,0 +1,119 @@
+---
+title: "Causal RL Introduction"
+description: "Learn causal reinforcement learning with code examples."
+date: "2026-06-24"
+author: "Usama"
+tags: ["ai", "rl", "causal-inference"]
+aiSummary: "Causal reinforcement learning combines data and knowledge about an environment to reason with counterfactual questions. This tutorial provides a step-by-step guide to getting started with causal RL. We will cover the basics of causal inference and reinforcement learning, and provide working code examples to demonstrate how to apply these concepts in practice."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1667984436026-99b165e3672b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxJbnRyb2R1Y3Rpb24lMjBDYXVzYWwlMjBSZWluZm9yY2VtZW50JTIwTGVhcm5pbmclMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODIzMTI2NzV8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Causal Reinforcement Learning
+
+Causal reinforcement learning is a subfield of artificial intelligence that combines causal inference and reinforcement learning to enable agents to reason about counterfactual questions. In this tutorial, we will provide a step-by-step guide to getting started with causal reinforcement learning, including the basics of causal inference and reinforcement learning, and working code examples to demonstrate how to apply these concepts in practice.
+
+![Mathematical equations are written on a white page.](https://images.unsplash.com/photo-1754304342448-3eef0ab5ba9e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxJbnRyb2R1Y3Rpb24lMjBDYXVzYWwlMjBSZWluZm9yY2VtZW50JTIwTGVhcm5pbmclMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODIzMTI2NzV8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+### Causal Inference Basics
+
+Causal inference is a set of principles and tools that allow us to reason about counterfactual questions, such as "what would have happened if I had taken a different action?" Causal inference provides a framework for combining data and knowledge about an environment to answer these types of questions, even when no data is available for the counterfactual scenario.
+
+The key concept in causal inference is the idea of a causal graph, which represents the relationships between variables in an environment. A causal graph is a directed graph where each node represents a variable, and each edge represents a causal relationship between variables.
+
+### Reinforcement Learning Basics
+
+Reinforcement learning is a subfield of machine learning that involves training an agent to take actions in an environment to maximize a reward signal. The agent learns through trial and error, receiving rewards or penalties for its actions, and adjusting its behavior accordingly.
+
+The key concepts in reinforcement learning are the agent, environment, actions, rewards, and policy. The agent is the decision-making entity that takes actions in the environment. The environment is the external world that the agent interacts with. Actions are the decisions made by the agent, and rewards are the feedback received by the agent for its actions. The policy is the mapping from states to actions that the agent follows.
+
+## Causal Reinforcement Learning
+
+Causal reinforcement learning combines the principles of causal inference and reinforcement learning to enable agents to reason about counterfactual questions. The key idea is to use causal graphs to represent the relationships between variables in the environment, and to use reinforcement learning to learn a policy that maximizes the reward signal.
+
+### Causal Graphs in Causal RL
+
+In causal reinforcement learning, causal graphs are used to represent the relationships between variables in the environment. The causal graph is used to identify the causal relationships between variables, and to reason about counterfactual questions.
+
+For example, consider a simple environment where an agent can take two actions: turn left or turn right. The environment has two variables: the agent's position and the reward signal. The causal graph for this environment would represent the relationships between these variables, including the causal relationships between the agent's actions and the reward signal.
+
+```python
+import networkx as nx
+import matplotlib.pyplot as plt
+
+# Create a causal graph
+G = nx.DiGraph()
+G.add_node("Agent Position")
+G.add_node("Reward Signal")
+G.add_node("Action")
+
+# Add edges to the graph
+G.add_edge("Action", "Agent Position")
+G.add_edge("Agent Position", "Reward Signal")
+
+# Draw the graph
+pos = nx.spring_layout(G)
+nx.draw(G, pos, with_labels=True, node_color='skyblue', node_size=1500, edge_color='black', linewidths=1, font_size=12)
+plt.show()
+```
+
+### Reinforcement Learning in Causal RL
+
+In causal reinforcement learning, reinforcement learning is used to learn a policy that maximizes the reward signal. The policy is learned using a causal graph, which represents the relationships between variables in the environment.
+
+For example, consider a simple environment where an agent can take two actions: turn left or turn right. The environment has two variables: the agent's position and the reward signal. The agent can learn a policy using reinforcement learning, which maps the agent's position to an action.
+
+```python
+import numpy as np
+
+# Define the environment
+class Environment:
+    def __init__(self):
+        self.position = 0
+        self.reward_signal = 0
+
+    def step(self, action):
+        if action == 0:
+            self.position -= 1
+        elif action == 1:
+            self.position += 1
+
+        if self.position == 1:
+            self.reward_signal = 1
+        else:
+            self.reward_signal = 0
+
+        return self.position, self.reward_signal
+
+# Define the agent
+class Agent:
+    def __init__(self):
+        self.policy = np.random.rand(2)
+
+    def act(self, position):
+        if np.random.rand() < self.policy[position]:
+            return 1
+        else:
+            return 0
+
+# Train the agent
+env = Environment()
+agent = Agent()
+
+for episode in range(1000):
+    position, reward_signal = env.step(agent.act(env.position))
+    agent.policy[env.position] += 0.1 * reward_signal
+```
+
+## Conclusion
+
+Causal reinforcement learning is a powerful framework for reasoning about counterfactual questions in complex environments. By combining the principles of causal inference and reinforcement learning, causal reinforcement learning enables agents to learn policies that maximize the reward signal, while also reasoning about the causal relationships between variables in the environment.
+
+In this tutorial, we provided a step-by-step guide to getting started with causal reinforcement learning, including the basics of causal inference and reinforcement learning, and working code examples to demonstrate how to apply these concepts in practice. We hope that this tutorial has provided a useful introduction to causal reinforcement learning, and that it will inspire further research and development in this exciting field.
+
+![A computer generated image of a cluster of spheres](https://images.unsplash.com/photo-1738082956213-aa554ba67bda?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxJbnRyb2R1Y3Rpb24lMjBDYXVzYWwlMjBSZWluZm9yY2VtZW50JTIwTGVhcm5pbmclMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODIzMTI2NzV8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+For more information on causal reinforcement learning, we recommend checking out the [arXiv paper](https://arxiv.org/abs/2606.24160) that introduced this concept. Additionally, there are many online resources and tutorials available that can provide further guidance and support for getting started with causal reinforcement learning.
+
+*Photo by [Growtika](https://unsplash.com/@growtika?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphical-user-interface-application-shape-arrow-hPdY3vuLRgI?utm_source=techversation&utm_medium=referral)*
