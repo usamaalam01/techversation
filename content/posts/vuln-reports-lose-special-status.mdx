@@ -1,0 +1,63 @@
+---
+title: "Vuln Reports Lose Special Status"
+description: "Vulnerability reports are no longer special, what does it mean for developers."
+date: "2026-06-24"
+author: "Usama"
+tags: ["vulnerability", "security", "software"]
+aiSummary: "A recent article highlights the shift in perception of vulnerability reports, from being special to being just another bug report. This change has significant implications for developers and the software industry as a whole. The article argues that the de-emphasis on vulnerability reports is a result of the increasing maturity of the software development process."
+category: "trending"
+coverImage: "https://images.unsplash.com/photo-1678811326980-ea1b88cd9e8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxWdWxuZXJhYmlsaXR5JTIwcmVwb3J0cyUyMG5vdCUyMHNwZWNpYWwlMjBhbnltb3JlJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODIyOTQ0MDZ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+The way we approach vulnerability reports is changing. A recent article on [Hacker News](https://words.filippo.io/vuln-reports/) suggests that vulnerability reports are no longer viewed as special, but rather as just another type of bug report. This shift in perception has significant implications for developers and the software industry.
+
+## What's Changing
+In the past, vulnerability reports were treated with a high level of urgency and sensitivity. They were often handled by special teams, and the process of reporting and fixing vulnerabilities was typically shrouded in secrecy. However, as the software development process has matured, the way we approach vulnerability reports has changed. With the advent of modern development practices such as continuous integration and continuous deployment (CI/CD), and the increased use of open-source software, the process of reporting and fixing vulnerabilities has become more transparent and streamlined.
+
+![A security and privacy dashboard with its status.](https://images.unsplash.com/photo-1751448555253-f39c06e29d82?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxWdWxuZXJhYmlisaXR5JTIwcmVwb3J0cyUyMG5vdCUyMHNwZWNpYWwlMjBhbnltb3JlJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODIyOTQ0MDZ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Why it Matters to Developers
+The de-emphasis on vulnerability reports has significant implications for developers. On the one hand, it means that developers can focus on fixing vulnerabilities as part of their regular workflow, rather than having to follow a separate and often cumbersome process. On the other hand, it also means that developers need to be more proactive in identifying and reporting vulnerabilities, as the process is no longer handled by a separate team.
+
+```python
+# Example of a simple vulnerability reporting process
+def report_vulnerability(vulnerability):
+    # Create a new issue in the project's issue tracker
+    issue = create_issue(vulnerability)
+    # Assign the issue to the relevant developer
+    assign_issue(issue)
+    # Notify the development team of the new issue
+    notify_team(issue)
+```
+
+## Broader Implications
+The shift in perception of vulnerability reports is also reflective of a broader trend in the software industry. As software development becomes more agile and iterative, the distinction between different types of bug reports is becoming less relevant. Instead, developers are focusing on fixing all types of bugs, including vulnerabilities, as part of their regular workflow.
+
+```typescript
+// Example of a CI/CD pipeline that includes vulnerability scanning
+const pipeline = {
+  // Build and test the code
+  build: {
+    // Run the unit tests
+    tests: 'npm run test',
+    // Run the vulnerability scan
+    scan: 'npm run scan',
+  },
+  // Deploy the code to production
+  deploy: {
+    // Deploy the code to the production environment
+    deploy: 'npm run deploy',
+  },
+};
+```
+
+## Conclusion
+The de-emphasis on vulnerability reports is a reflection of the increasing maturity of the software development process. As developers, we need to be aware of this shift and adapt our workflows accordingly. By focusing on fixing all types of bugs, including vulnerabilities, as part of our regular workflow, we can create more secure and reliable software.
+
+![Colorful software or web code on a computer monitor](https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxWdWxuZXJhYmlisaXR5JTIwcmVwb3J0cyUyMG5vdCUyMHNwZWNpYWwlMjBhbnltb3JlJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODIyOTQ0MDZ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+Overall, the shift in perception of vulnerability reports is a positive development for the software industry. By treating vulnerability reports as just another type of bug report, we can create a more streamlined and efficient development process, and ultimately, more secure and reliable software.
+
+*Photo by [Xavier Cee](https://unsplash.com/@stevecameup?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-close-up-of-a-computer-screen-with-code-code-on-it-genkxag3nY4?utm_source=techversation&utm_medium=referral)*
