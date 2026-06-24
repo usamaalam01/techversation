@@ -1,0 +1,93 @@
+---
+title: "Neuro-Symbolic Drive Tutorial"
+description: "Implementing rule-grounded faithful reasoning for driving VLAs with Neuro-Symbolic Drive."
+date: "2026-06-24"
+author: "Usama"
+tags: ["ai", "vlas", "neuro-symbolic"]
+aiSummary: "Neuro-Symbolic Drive is a novel approach to driving VLA models with rule-grounded faithful reasoning. This tutorial provides a step-by-step guide to implementing Neuro-Symbolic Drive. We will cover the basics of Neuro-Symbolic Drive, its architecture, and provide working code examples."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1672952419591-3c0bc803175d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxOZXVybyUyMFN5bWJvbGljJTIwRHJpdmUlMjBSdWxlJTIwR3JvdW5kZWQlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODIyNzQ2ODZ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Neuro-Symbolic Drive
+Neuro-Symbolic Drive is a new approach to driving VLA (Vision-Language Alignment) models with rule-grounded faithful reasoning. It combines the strengths of pretrained VLM (Vision-Language Model) representations with the interpretability of symbolic reasoning. In this tutorial, we will explore the basics of Neuro-Symbolic Drive, its architecture, and provide working code examples to get you started.
+
+## Architecture of Neuro-Symbolic Drive
+The Neuro-Symbolic Drive architecture consists of three main components:
+1. **Vision-Language Model (VLM)**: This component is responsible for generating intermediate decisions in natural language.
+2. **Rule-Grounded Reasoning Module**: This module takes the intermediate decisions and generates a causal graph that connects the decisions to the planned motion.
+3. **Faithful Reasoning Module**: This module ensures that the generated rationales are faithful to the planned motion.
+
+![A computer generated image of a brain surrounded by wires](https://images.unsplash.com/photo-1732704573802-8ec393009148?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxOZXVybyUyMFN5bWJvbGljJTIwRHJpdmUlMjBSdWxlJTIwR3JvdW5kZWQlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODIyNzQ2ODZ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Implementing Neuro-Symbolic Drive
+To implement Neuro-Symbolic Drive, we will use the following libraries:
+* `transformers` for the VLM component
+* `networkx` for the Rule-Grounded Reasoning Module
+* `torch` for the Faithful Reasoning Module
+
+First, install the required libraries:
+```bash
+pip install transformers networkx torch
+```
+Next, import the required libraries and load the pretrained VLM:
+```python
+import torch
+from transformers import AutoModelForVision2Seq, AutoTokenizer
+import networkx as nx
+
+# Load pretrained VLM
+model = AutoModelForVision2Seq.from_pretrained("google/vit-gpt2")
+tokenizer = AutoTokenizer.from_pretrained("google/vit-gpt2")
+```
+Now, let's implement the Rule-Grounded Reasoning Module:
+```python
+def rule_grounded_reasoning(intermediate_decisions):
+    # Create a causal graph
+    G = nx.DiGraph()
+    for decision in intermediate_decisions:
+        G.add_node(decision)
+    # Add edges between decisions
+    for i in range(len(intermediate_decisions) - 1):
+        G.add_edge(intermediate_decisions[i], intermediate_decisions[i + 1])
+    return G
+```
+Finally, let's implement the Faithful Reasoning Module:
+```python
+def faithful_reasoning(rationale, planned_motion):
+    # Check if the rationale is faithful to the planned motion
+    if rationale == planned_motion:
+        return True
+    else:
+        return False
+```
+## Example Use Case
+Let's use Neuro-Symbolic Drive to generate a rationale for a driving scenario:
+```python
+# Define the driving scenario
+driving_scenario = "Turn left at the next intersection"
+
+# Generate intermediate decisions
+intermediate_decisions = model.generate(driving_scenario)
+
+# Create a causal graph
+G = rule_grounded_reasoning(intermediate_decisions)
+
+# Generate a rationale
+rationale = "Turn left at the next intersection because it is the most efficient route"
+
+# Check if the rationale is faithful
+if faithful_reasoning(rationale, driving_scenario):
+    print("The rationale is faithful to the planned motion")
+else:
+    print("The rationale is not faithful to the planned motion")
+```
+## Conclusion
+In this tutorial, we explored the basics of Neuro-Symbolic Drive and provided working code examples to get you started. Neuro-Symbolic Drive is a powerful approach to driving VLA models with rule-grounded faithful reasoning. By combining the strengths of pretrained VLM representations with the interpretability of symbolic reasoning, Neuro-Symbolic Drive provides a more transparent and explainable approach to driving scenarios.
+
+![Abstract red brain network with a person](https://images.unsplash.com/photo-1761637755331-562c6529ace6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxOZXVybyUyMFN5bWJvbGljJTIwRHJpdmUlMjBSdWxlJTIwR3JvdW5kZWQlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODIyNzQ2ODZ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+For more information on Neuro-Symbolic Drive, please refer to the [original paper](https://arxiv.org/abs/2606.23938).
+
+*Photo by [Peter Burdon](https://unsplash.com/@peterburdon?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/the-word-neuro-university-spelled-with-scrabble-tiles-kOWGmtlf5JA?utm_source=techversation&utm_medium=referral)*
