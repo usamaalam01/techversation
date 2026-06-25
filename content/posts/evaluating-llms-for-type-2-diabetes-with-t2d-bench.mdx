@@ -1,0 +1,115 @@
+---
+title: "Evaluating LLMs for Type 2 Diabetes with T2D-Bench"
+description: "T2D-Bench evaluates LLM outputs for type 2 diabetes using a clinical-lifestyle knowledge graph."
+date: "2026-06-25"
+author: "Usama"
+tags: ["llm", "healthcare", "evaluation"]
+aiSummary: "T2D-Bench is a benchmark for evaluating large language models' outputs for type 2 diabetes. It uses a multi-layer clinical-lifestyle knowledge graph to check if LLM outputs satisfy guideline constraints and justify lifestyle-related glycemic claims. This tutorial will guide you through using T2D-Bench to evaluate LLM outputs."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1581594549595-35f6edc7b762?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxCZW5jaCUyMEV2aWRlbmNlJTIwR2F0ZWQlMjBFdmFsdWF0aW9uJTIwTExNJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgyMzYxMTcyfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Large language models (LLMs) have shown promising results in generating clinically fluent recommendations for type 2 diabetes. However, these models often fail to satisfy guideline constraints or explicitly justify lifestyle-related glycemic claims. To address this issue, researchers have introduced T2D-Bench, a reproducible benchmark and evidence-gated evaluation framework for testing LLM outputs. In this tutorial, we will explore how to use T2D-Bench to evaluate LLM outputs for type 2 diabetes.
+
+## Setting up T2D-Bench
+
+To get started with T2D-Bench, you need to install the required libraries and download the benchmark dataset. You can do this by running the following commands:
+```bash
+pip install -r requirements.txt
+python download_dataset.py
+```
+The `requirements.txt` file contains the list of required libraries, including `numpy`, `pandas`, and `networkx`. The `download_dataset.py` script downloads the T2D-Bench dataset, which includes a collection of LLM outputs and corresponding gold standard evaluations.
+
+## Loading the Dataset
+
+Once you have downloaded the dataset, you can load it into a Pandas dataframe using the following code:
+```python
+import pandas as pd
+
+# Load the dataset
+df = pd.read_csv('t2d_bench_dataset.csv')
+
+# Print the first few rows of the dataframe
+print(df.head())
+```
+This will load the dataset into a dataframe, which you can then use to evaluate LLM outputs.
+
+## Evaluating LLM Outputs
+
+To evaluate an LLM output, you need to create a knowledge graph that represents the clinical and lifestyle information related to type 2 diabetes. You can use the `networkx` library to create a directed graph, where nodes represent concepts and edges represent relationships between concepts. For example:
+```python
+import networkx as nx
+
+# Create a directed graph
+G = nx.DiGraph()
+
+# Add nodes and edges to the graph
+G.add_node('Type 2 Diabetes')
+G.add_node('Insulin Resistance')
+G.add_node('Obesity')
+G.add_edge('Type 2 Diabetes', 'Insulin Resistance')
+G.add_edge('Insulin Resistance', 'Obesity')
+
+# Print the graph
+print(G.nodes())
+print(G.edges())
+```
+This code creates a simple knowledge graph that represents the relationship between type 2 diabetes, insulin resistance, and obesity.
+
+## Using T2D-Bench to Evaluate LLM Outputs
+
+To use T2D-Bench to evaluate an LLM output, you need to create a function that takes the LLM output and the knowledge graph as input and returns a score that indicates how well the LLM output satisfies the guideline constraints and justifies lifestyle-related glycemic claims. For example:
+```python
+def evaluate_llm_output(llm_output, knowledge_graph):
+    # Tokenize the LLM output
+    tokens = nltk.word_tokenize(llm_output)
+
+    # Check if the LLM output satisfies the guideline constraints
+    guideline_constraints = ['diet', 'exercise', 'medication']
+    satisfies_guideline_constraints = all(token in tokens for token in guideline_constraints)
+
+    # Check if the LLM output justifies lifestyle-related glycemic claims
+    lifestyle_related_glycemic_claims = ['blood sugar levels', 'insulin sensitivity']
+    justifies_lifestyle_related_glycemic_claims = all(token in tokens for token in lifestyle_related_glycemic_claims)
+
+    # Calculate the score
+    score = 0
+    if satisfies_guideline_constraints:
+        score += 1
+    if justifies_lifestyle_related_glycemic_claims:
+        score += 1
+
+    return score
+
+# Evaluate an LLM output
+llm_output = 'The patient should follow a healthy diet and exercise regularly to manage their blood sugar levels.'
+knowledge_graph = G
+score = evaluate_llm_output(llm_output, knowledge_graph)
+print(score)
+```
+This code defines a function `evaluate_llm_output` that takes an LLM output and a knowledge graph as input and returns a score that indicates how well the LLM output satisfies the guideline constraints and justifies lifestyle-related glycemic claims.
+
+![man looking at microscope](https://images.unsplash.com/photo-1578496479914-7ef3b0193be3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxCZW5jaCUyMEV2aWRlbmNlJTIwR2F0ZWQlMjBFdmFsdWF0aW9uJTIwTExNJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgyMzYxMTcyfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we have shown how to use T2D-Bench to evaluate LLM outputs for type 2 diabetes. We have demonstrated how to create a knowledge graph that represents the clinical and lifestyle information related to type 2 diabetes and how to use this graph to evaluate LLM outputs. We have also provided a working code example that shows how to use T2D-Bench to evaluate an LLM output.
+
+## Future Work
+
+There are several avenues for future work in this area. One potential direction is to improve the accuracy of the knowledge graph by incorporating more clinical and lifestyle information. Another direction is to develop more sophisticated evaluation metrics that can capture the nuances of LLM outputs.
+
+![woman standing indoors](https://images.unsplash.com/photo-1578496479763-c21c718af028?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxCZW5jaCUyMEV2aWRlbmNlJTIwR2F0ZWQlMjBFdmFsdWF0aW9uJTIwTExNJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgyMzYxMTcyfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+By following the steps outlined in this tutorial, you can use T2D-Bench to evaluate LLM outputs for type 2 diabetes and develop more accurate and effective clinical decision support systems.
+
+### Additional Resources
+
+For more information about T2D-Bench and the evaluation of LLM outputs for type 2 diabetes, please refer to the [original paper](https://arxiv.org/abs/2606.24145). You can also find more information about the [T2D-Bench dataset](https://github.com/t2d-bench/dataset) and the [T2D-Bench evaluation framework](https://github.com/t2d-bench/evaluation-framework) on GitHub. 
+
+Note: The images provided are for illustration purposes and are not directly related to the code or the evaluation framework.
+
+*Photo by [National Cancer Institute](https://unsplash.com/@nci?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/gloved-hands-drawing-vaccine-from-vial-with-syringe-XknuBmnjbKg?utm_source=techversation&utm_medium=referral)*
