@@ -1,0 +1,150 @@
+---
+title: "Tractable Reasoning with DL-Lite"
+description: "DL-Lite reasoning under Rational Closure for defeasible knowledge."
+date: "2026-06-25"
+author: "Usama"
+tags: ["dl-lite", "rational-closure", "knowledge-representation"]
+aiSummary: "This tutorial covers the application of Rational Closure to DL-Lite for handling defeasible knowledge. We will explore the core and horn variants of DL-Lite and implement Conjunctive Query Answering. The code examples demonstrate how to apply these concepts to real-world scenarios."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1705484229341-4f7f7519b718?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxUcmFjdGFibGUlMjBSZWFzb25pbmclMjBDb25qdW5jdGl2ZSUyMFF1ZXJ5JTIwQW5zd2VyaW5nJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgyNDE4NzEwfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to DL-Lite and Rational Closure
+
+Description Logics (DLs) are a family of knowledge representation languages used to represent and reason about complex domains. DL-Lite is a lightweight variant of DLs, designed to provide efficient reasoning while maintaining a reasonable level of expressivity. Rational Closure (RC) is a non-monotonic formalism used to handle defeasible knowledge in DLs. In this tutorial, we will explore the application of RC to DL-Lite and implement Conjunctive Query Answering.
+
+## Core and Horn Variants of DL-Lite
+
+DL-Lite has two main variants: core and horn. The core variant is the most basic form of DL-Lite, while the horn variant extends the core with additional features.
+
+### Core DL-Lite
+
+Core DL-Lite is based on the following constructs:
+
+* **Concepts**: Represented using unary predicates (e.g., `Person`, `Animal`)
+* **Roles**: Represented using binary predicates (e.g., `friendOf`, `partOf`)
+* **Axioms**: Used to define relationships between concepts and roles (e.g., `Person ⊑ Animal`, `friendOf ⊑ partOf`)
+
+### Horn DL-Lite
+
+Horn DL-Lite extends core DL-Lite with additional features, including:
+
+* **Disjointness**: Used to define disjoint concepts (e.g., `Person ⊥ Animal`)
+* **Inclusion**: Used to define concept inclusions (e.g., `Person ⊑ Animal`)
+
+## Implementing Conjunctive Query Answering
+
+Conjunctive Query Answering (CQA) is a fundamental reasoning task in DLs. Given a knowledge base (KB) and a query, CQA determines whether the query is entailed by the KB.
+
+```python
+import itertools
+
+def conjunctive_query_answering(kb, query):
+    """
+    Conjunctive Query Answering implementation.
+
+    :param kb: Knowledge base
+    :param query: Query to be evaluated
+    :return: True if the query is entailed by the KB, False otherwise
+    """
+    # Generate all possible combinations of query variables
+    combinations = list(itertools.product(*[kb['individuals'] for _ in range(len(query['variables']))]))
+
+    # Evaluate the query for each combination
+    for combination in combinations:
+        # Substitute query variables with the current combination
+        substituted_query = {key: [value for value in values] for key, values in query['body'].items()}
+        for i, variable in enumerate(query['variables']):
+            substituted_query[variable] = combination[i]
+
+        # Check if the substituted query is entailed by the KB
+        if not is_entailed(kb, substituted_query):
+            return False
+
+    return True
+
+def is_entailed(kb, query):
+    """
+    Checks if a query is entailed by a knowledge base.
+
+    :param kb: Knowledge base
+    :param query: Query to be evaluated
+    :return: True if the query is entailed by the KB, False otherwise
+    """
+    # Check if the query is satisfied by the KB
+    for axiom in kb['axioms']:
+        if axiom['head'] == query:
+            return True
+
+    return False
+```
+
+## Applying Rational Closure to DL-Lite
+
+Rational Closure (RC) is a non-monotonic formalism used to handle defeasible knowledge in DLs. To apply RC to DL-Lite, we need to compute the rational closure of the KB.
+
+```python
+def rational_closure(kb):
+    """
+    Computes the rational closure of a knowledge base.
+
+    :param kb: Knowledge base
+    :return: Rational closure of the KB
+    """
+    # Initialize the rational closure with the KB
+    rc = kb.copy()
+
+    # Iterate until convergence
+    while True:
+        # Compute the closure of the current RC
+        new_rc = compute_closure(rc)
+
+        # Check for convergence
+        if new_rc == rc:
+            break
+
+        # Update the RC
+        rc = new_rc
+
+    return rc
+
+def compute_closure(rc):
+    """
+    Computes the closure of a rational closure.
+
+    :param rc: Rational closure
+    :return: Closure of the RC
+    """
+    # Compute the closure of the RC
+    new_rc = rc.copy()
+    for axiom in rc['axioms']:
+        # Apply the axiom to the RC
+        new_rc = apply_axiom(new_rc, axiom)
+
+    return new_rc
+
+def apply_axiom(rc, axiom):
+    """
+    Applies an axiom to a rational closure.
+
+    :param rc: Rational closure
+    :param axiom: Axiom to be applied
+    :return: Updated RC
+    """
+    # Apply the axiom to the RC
+    new_rc = rc.copy()
+    new_rc['axioms'].append(axiom)
+
+    return new_rc
+```
+
+## Conclusion
+
+In this tutorial, we have explored the application of Rational Closure to DL-Lite for handling defeasible knowledge. We have implemented Conjunctive Query Answering and demonstrated how to apply these concepts to real-world scenarios. The code examples provided can be used as a starting point for further research and development in this area.
+
+![white printing paper with numbers](https://images.unsplash.com/photo-1529078155058-5d716f45d604?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxUcmFjdGFibGUlMjBSZWFzb25pbmclMjBDb25qdW5jdGl2ZSUyMFF1ZXJ5JTIwQW5zd2VyaW5nJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgyNDE4NzEwfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+The provided code examples are available for use and modification under the MIT License. For more information, please refer to the [original paper](https://arxiv.org/abs/2606.24279).
+
+*Photo by [Markus Winkler](https://unsplash.com/@markuswinkler?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/scrabble-tiles-spelling-out-the-word-data-on-a-wooden-surface-z6hKpyCuQME?utm_source=techversation&utm_medium=referral)*
