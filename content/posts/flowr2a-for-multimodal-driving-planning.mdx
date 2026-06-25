@@ -1,0 +1,118 @@
+---
+title: "FlowR2A for Multimodal Driving Planning"
+description: "Learn to use FlowR2A for multimodal driving planning with code examples."
+date: "2026-06-25"
+author: "Usama"
+tags: ["ai", "planning", "multimodal"]
+aiSummary: "FlowR2A is a new tool for learning reward-to-action distribution in multimodal driving planning. It combines the benefits of scoring-based and anchor-based methods. This tutorial will guide you through implementing FlowR2A with concrete code examples."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1766853042063-e7fbaccb42c2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxMZWFybmluZyUyMFJld2FyZCUyMEFjdGlvbiUyMERpc3RyaWJ1dGlvbiUyME11bHRpbW9kYWwlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODIzOTkwNDJ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to FlowR2A
+
+FlowR2A is a novel approach to multimodal driving planning, addressing the long-standing tension between scoring-based and anchor-based methods. Scoring-based methods benefit from dense reward supervision but are limited to a fixed action vocabulary. On the other hand, anchor-based methods generate proposals dynamically but suffer from sparse supervision constrained to a single ground-truth trajectory. FlowR2A proposes to learn the reward-to-action distribution, combining the strengths of both paradigms.
+
+To understand the concept of FlowR2A, let's consider a scenario where an autonomous vehicle needs to navigate through a complex environment. The vehicle must balance competing objectives, such as reaching the destination quickly while avoiding obstacles and following traffic rules. FlowR2A can help the vehicle learn a distribution over possible actions, given the current state and reward function.
+
+![black flat screen computer monitor](https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxMZWFybmluZyUyMFJld2FyZCUyMEFjdGlvbiUyMERpc3RyaWJ1dGlvbiUyME11bHRpbW9kYWwlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODIzOTkwNDJ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Implementing FlowR2A
+
+To implement FlowR2A, we need to define the reward function, action space, and the distribution over actions. Let's use Python and the PyTorch library to implement a simple example.
+
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+# Define the reward function
+def reward_function(state, action):
+    # Reward function that encourages the vehicle to reach the destination quickly
+    # while avoiding obstacles
+    reward = -0.1 * (state[0] - action[0])**2 - 0.1 * (state[1] - action[1])**2
+    return reward
+
+# Define the action space
+action_space = torch.tensor([[0, 0], [1, 0], [0, 1], [1, 1]])
+
+# Define the distribution over actions
+class ActionDistribution(nn.Module):
+    def __init__(self):
+        super(ActionDistribution, self).__init__()
+        self.fc1 = nn.Linear(2, 128)  # input layer (2) -> hidden layer (128)
+        self.fc2 = nn.Linear(128, 128)  # hidden layer (128) -> hidden layer (128)
+        self.fc3 = nn.Linear(128, 4)  # hidden layer (128) -> output layer (4)
+
+    def forward(self, state):
+        x = torch.relu(self.fc1(state))
+        x = torch.relu(self.fc2(x))
+        x = self.fc3(x)
+        return x
+
+# Initialize the action distribution model and optimizer
+action_distribution = ActionDistribution()
+optimizer = optim.Adam(action_distribution.parameters(), lr=0.001)
+
+# Train the action distribution model
+for epoch in range(100):
+    for state in torch.tensor([[0, 0], [1, 0], [0, 1], [1, 1]]):
+        # Sample actions from the action space
+        actions = action_space
+
+        # Compute the rewards for each action
+        rewards = torch.tensor([reward_function(state, action) for action in actions])
+
+        # Compute the log probabilities of each action
+        log_probs = torch.log_softmax(action_distribution(state), dim=0)
+
+        # Compute the loss
+        loss = -torch.sum(rewards * log_probs)
+
+        # Backpropagate the loss and update the model parameters
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+    print(f'Epoch {epoch+1}, Loss: {loss.item()}')
+```
+
+## Using FlowR2A for Multimodal Driving Planning
+
+Once we have trained the action distribution model, we can use it to generate actions for a given state. We can sample actions from the action space and compute the rewards for each action using the reward function. Then, we can use the action distribution model to compute the log probabilities of each action and select the action with the highest log probability.
+
+```python
+# Define a function to select an action using the action distribution model
+def select_action(state):
+    # Sample actions from the action space
+    actions = action_space
+
+    # Compute the rewards for each action
+    rewards = torch.tensor([reward_function(state, action) for action in actions])
+
+    # Compute the log probabilities of each action
+    log_probs = torch.log_softmax(action_distribution(state), dim=0)
+
+    # Select the action with the highest log probability
+    selected_action = actions[torch.argmax(log_probs)]
+
+    return selected_action
+
+# Test the select_action function
+state = torch.tensor([0.5, 0.5])
+selected_action = select_action(state)
+print(f'Selected action: {selected_action}')
+```
+
+## Conclusion
+
+In this tutorial, we have learned how to use FlowR2A for multimodal driving planning. We have implemented a simple example using PyTorch and demonstrated how to train an action distribution model and use it to select actions for a given state. FlowR2A has the potential to improve the performance of autonomous vehicles in complex environments by providing a flexible and efficient way to generate actions.
+
+![boy in white long sleeve shirt and blue pants standing in front of wall with painting](https://images.unsplash.com/photo-1618800520158-c1f1c275f78e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxMZWFybmluZyUyMFJld2FyZCUyMEFjdGlvbiUyMERpc3RyaWJ1dGlvbiUyME11bHRpbW9kYWwlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODIzOTkwNDJ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+For further reading, please refer to the original paper on [arXiv](https://arxiv.org/abs/2606.24231). The paper provides a detailed explanation of the FlowR2A algorithm and its applications in multimodal driving planning.
+
+Note: This tutorial is based on the paper "FlowR2A: Learning Reward-to-Action Distribution for Multimodal Driving Planning" and is intended for educational purposes only. The code examples provided are simplified and may not be suitable for production use.
+
+*Photo by [Giorgio Tomassetti](https://unsplash.com/@gtomassetti?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/two-women-analyze-a-line-graph-on-a-screen-71pmZ9rN-hA?utm_source=techversation&utm_medium=referral)*
