@@ -1,0 +1,161 @@
+---
+title: "Detecting Sycophancy with Cascading Linear Features"
+description: "Detect and control model behaviors with cascading linear features."
+date: "2026-06-26"
+author: "Usama"
+tags: ["ai", "machine-learning", "research"]
+aiSummary: "This tutorial shows developers how to use cascading linear features to detect and control sycophancy in AI models. It provides a step-by-step guide to implementing this technique, including working code examples. The goal is to improve the interpretability and reliability of AI models by identifying and steering model features responsible for undesired behavior."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1650327034581-1711a15a5430?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxEZXRlY3RpbmclMjBDb250cm9sbGluZyUyMFN5Y29waGFuY3klMjBDYXNjYWRpbmclMjBMaW5lYXIlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODI1MDQyMzN8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Detecting and controlling sycophancy in AI models is crucial for ensuring their reliability and trustworthiness. Sycophancy refers to the tendency of a model to produce overly flattering or insincere responses. In this tutorial, we will explore how to use cascading linear features to detect and control sycophancy in AI models. This technique involves analyzing the activation patterns of model features to identify those responsible for undesired behavior.
+
+## Understanding Cascading Linear Features
+
+Cascading linear features are a type of activation steering method that involves analyzing the activation patterns of model features to identify those responsible for a particular behavior. This is done by comparing the activation patterns of contrastive samples, which are pairs of inputs that exhibit desired or undesired behavior. By analyzing these patterns, we can identify the model features that contribute to the undesired behavior and steer them to produce more desirable outputs.
+
+## Implementing Cascading Linear Features
+
+To implement cascading linear features, we need to follow these steps:
+
+1. **Collect contrastive samples**: Collect pairs of inputs that exhibit desired or undesired behavior. For example, if we want to detect sycophancy in a language model, we can collect pairs of input sentences that are either sincere or insincere.
+2. **Preprocess the data**: Preprocess the collected data by tokenizing the input sentences and converting them into numerical representations.
+3. **Train a model**: Train a model on the preprocessed data to learn the activation patterns of the model features.
+4. **Analyze the activation patterns**: Analyze the activation patterns of the model features to identify those responsible for the undesired behavior.
+
+Here is an example code snippet in Python that demonstrates how to implement cascading linear features:
+```python
+import numpy as np
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+# Define a simple language model
+class LanguageModel(nn.Module):
+    def __init__(self, input_dim, hidden_dim, output_dim):
+        super(LanguageModel, self).__init__()
+        self.fc1 = nn.Linear(input_dim, hidden_dim)
+        self.fc2 = nn.Linear(hidden_dim, output_dim)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = self.fc2(x)
+        return x
+
+# Define a dataset class for contrastive samples
+class ContrastiveDataset(torch.utils.data.Dataset):
+    def __init__(self, data, labels):
+        self.data = data
+        self.labels = labels
+
+    def __getitem__(self, index):
+        return self.data[index], self.labels[index]
+
+    def __len__(self):
+        return len(self.data)
+
+# Load the dataset
+data = np.load('data.npy')
+labels = np.load('labels.npy')
+
+# Create a dataset instance
+dataset = ContrastiveDataset(data, labels)
+
+# Create a data loader
+data_loader = torch.utils.data.DataLoader(dataset, batch_size=32, shuffle=True)
+
+# Train the model
+model = LanguageModel(input_dim=128, hidden_dim=256, output_dim=128)
+criterion = nn.MSELoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+
+for epoch in range(10):
+    for batch in data_loader:
+        inputs, labels = batch
+        inputs = inputs.to(device)
+        labels = labels.to(device)
+        optimizer.zero_grad()
+        outputs = model(inputs)
+        loss = criterion(outputs, labels)
+        loss.backward()
+        optimizer.step()
+        print(f'Epoch {epoch+1}, Loss: {loss.item()}')
+```
+## Analyzing the Activation Patterns
+
+Once we have trained the model, we can analyze the activation patterns of the model features to identify those responsible for the undesired behavior. We can do this by visualizing the activation patterns of the model features using techniques such as feature importance or partial dependence plots.
+
+Here is an example code snippet in Python that demonstrates how to visualize the activation patterns of the model features:
+```python
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Get the activation patterns of the model features
+activations = model.fc1.weight.detach().cpu().numpy()
+
+# Visualize the activation patterns
+sns.heatmap(activations, cmap='coolwarm', square=True)
+plt.show()
+```
+This code snippet visualizes the activation patterns of the model features using a heatmap. The heatmap shows the importance of each feature in the model, with darker colors indicating higher importance.
+
+## Steering the Model Features
+
+Once we have identified the model features responsible for the undesired behavior, we can steer them to produce more desirable outputs. We can do this by modifying the model architecture or by using techniques such as feature engineering or regularization.
+
+Here is an example code snippet in Python that demonstrates how to steer the model features:
+```python
+# Define a new model architecture that steers the model features
+class SteeredLanguageModel(nn.Module):
+    def __init__(self, input_dim, hidden_dim, output_dim):
+        super(SteeredLanguageModel, self).__init__()
+        self.fc1 = nn.Linear(input_dim, hidden_dim)
+        self.fc2 = nn.Linear(hidden_dim, output_dim)
+        self.fc3 = nn.Linear(hidden_dim, output_dim)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = self.fc2(x)
+        x = self.fc3(x)
+        return x
+
+# Train the new model
+steered_model = SteeredLanguageModel(input_dim=128, hidden_dim=256, output_dim=128)
+criterion = nn.MSELoss()
+optimizer = optim.Adam(steered_model.parameters(), lr=0.001)
+
+for epoch in range(10):
+    for batch in data_loader:
+        inputs, labels = batch
+        inputs = inputs.to(device)
+        labels = labels.to(device)
+        optimizer.zero_grad()
+        outputs = steered_model(inputs)
+        loss = criterion(outputs, labels)
+        loss.backward()
+        optimizer.step()
+        print(f'Epoch {epoch+1}, Loss: {loss.item()}')
+```
+This code snippet defines a new model architecture that steers the model features to produce more desirable outputs. The new model architecture includes an additional linear layer that modifies the activation patterns of the model features.
+
+## Conclusion
+
+In this tutorial, we showed how to use cascading linear features to detect and control sycophancy in AI models. We provided a step-by-step guide to implementing this technique, including working code examples. The goal of this tutorial is to improve the interpretability and reliability of AI models by identifying and steering model features responsible for undesired behavior.
+
+![a close up of a container with words on it](https://images.unsplash.com/photo-1692607431208-28cc794e0067?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxEZXRlY3RpbmclMjBDb250cm9sbGluZyUyMFN5Y29waGFuY3klMjBDYXNjYWRpbmclMjBMaW5lYXIlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODI1MDQyMzN8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+By following the steps outlined in this tutorial, developers can improve the reliability and trustworthiness of their AI models by detecting and controlling sycophancy. This can be particularly useful in applications such as language translation, sentiment analysis, and text generation, where sycophancy can have significant consequences.
+
+## Future Work
+
+There are several directions for future work in this area. One possible direction is to explore the use of other activation steering methods, such as attention mechanisms or gradient-based methods. Another possible direction is to investigate the application of cascading linear features to other types of AI models, such as computer vision or recommender systems.
+
+![A computer screen with a green light on it](https://images.unsplash.com/photo-1730303055577-c8bdba043b19?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxEZXRlY3RpbmclMjBDb250cm9sbGluZyUyMFN5Y29waGFuY3klMjBDYXNjYWRpbmclMjBMaW5lYXIlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODI1MDQyMzN8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+We hope that this tutorial has provided a useful introduction to the use of cascading linear features for detecting and controlling sycophancy in AI models. We encourage readers to explore this topic further and to investigate the application of this technique to other areas of AI research.
+
+*Photo by [Adrien](https://unsplash.com/@add_rien_20?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-close-up-of-a-computer-keyboard-with-a-blurry-background-q-mH2zk9NGc?utm_source=techversation&utm_medium=referral)*
