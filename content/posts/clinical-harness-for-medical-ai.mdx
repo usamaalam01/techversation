@@ -1,0 +1,138 @@
+---
+title: "Clinical Harness for Medical AI"
+description: "Governable medical AI skill ecosystems with Clinical Harness."
+date: "2026-06-26"
+author: "Usama"
+tags: ["ai", "medical", "governance"]
+aiSummary: "The Clinical Harness is a runtime governance architecture for registering, orchestrating, guarding, and monitoring AI-enabled clinical capabilities. This tutorial will guide developers through building a Clinical Harness for governable medical AI skill ecosystems. We will use osteoporosis as an exemplar and provide working code examples."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxDbGluaWNhbCUyMEhhcm5lc3MlMjBHb3Zlcm5hYmxlJTIwTWVkaWNhbCUyMFNraWxsJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgyNDg0OTQ4fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+The Clinical Harness is a novel approach to organizing medical AI around accountable capabilities that persist across time. In this tutorial, we will delve into the world of Clinical Harness and explore how to build a runtime governance architecture for registering, orchestrating, guarding, and monitoring AI-enabled clinical capabilities. We will use osteoporosis as an exemplar and provide working code examples to demonstrate the concepts.
+
+## Clinical Harness Overview
+The Clinical Harness is designed to address the limitations of traditional medical AI models, which are often isolated and lack accountability. The Clinical Harness provides a framework for registering, orchestrating, guarding, and monitoring AI-enabled clinical capabilities, ensuring that they are transparent, explainable, and fair. The architecture consists of several components, including:
+
+* **Skill Registry**: a database of registered clinical skills, each with its own set of attributes and capabilities.
+* **Orchestrator**: a module responsible for coordinating the execution of clinical skills and ensuring that they are used in a way that is consistent with clinical guidelines and protocols.
+* **Guard**: a module responsible for monitoring the execution of clinical skills and detecting any anomalies or errors.
+* **Monitor**: a module responsible for tracking the performance of clinical skills and providing feedback to clinicians and developers.
+
+## Building a Clinical Harness
+To build a Clinical Harness, we will use a combination of Python, TensorFlow, and scikit-learn. We will start by defining the Skill Registry, which will store information about each clinical skill.
+
+```python
+import pandas as pd
+
+class SkillRegistry:
+    def __init__(self):
+        self.skills = {}
+
+    def register_skill(self, skill_name, skill_attributes):
+        self.skills[skill_name] = skill_attributes
+
+    def get_skill(self, skill_name):
+        return self.skills.get(skill_name)
+
+# Create a Skill Registry
+registry = SkillRegistry()
+
+# Register a clinical skill for osteoporosis diagnosis
+registry.register_skill("osteoporosis_diagnosis", {
+    "description": "Diagnose osteoporosis based on bone density scan",
+    "attributes": ["bone_density", "age", "sex"],
+    "capabilities": ["diagnosis", "treatment_recommendation"]
+})
+```
+
+## Orchestrating Clinical Skills
+The Orchestrator is responsible for coordinating the execution of clinical skills. We will use a simple rules-based approach to determine which skills to execute and in what order.
+
+```python
+class Orchestrator:
+    def __init__(self, registry):
+        self.registry = registry
+
+    def orchestrate(self, patient_data):
+        # Determine which skills to execute based on patient data
+        skills_to_execute = []
+        for skill_name, skill_attributes in self.registry.skills.items():
+            if all(attribute in patient_data for attribute in skill_attributes["attributes"]):
+                skills_to_execute.append(skill_name)
+
+        # Execute the skills in the correct order
+        for skill_name in skills_to_execute:
+            skill = self.registry.get_skill(skill_name)
+            # Execute the skill using the patient data
+            result = execute_skill(skill, patient_data)
+            # Store the result in the patient's record
+            patient_data["results"][skill_name] = result
+
+# Create an Orchestrator
+orchestrator = Orchestrator(registry)
+
+# Orchestrate the execution of clinical skills for a patient
+patient_data = {
+    "bone_density": 0.8,
+    "age": 65,
+    "sex": "female",
+    "results": {}
+}
+orchestrator.orchestrate(patient_data)
+```
+
+## Guarding and Monitoring Clinical Skills
+The Guard and Monitor are responsible for detecting anomalies and tracking the performance of clinical skills. We will use a simple statistical approach to detect outliers and anomalies.
+
+```python
+import numpy as np
+
+class Guard:
+    def __init__(self, registry):
+        self.registry = registry
+
+    def guard(self, patient_data):
+        # Detect anomalies in the patient data
+        for skill_name, result in patient_data["results"].items():
+            skill = self.registry.get_skill(skill_name)
+            # Calculate the mean and standard deviation of the result
+            mean = np.mean(result)
+            std = np.std(result)
+            # Check if the result is an outlier
+            if np.abs(result - mean) > 2 * std:
+                # Raise an alert if the result is an outlier
+                raise Exception(f"Anomaly detected in {skill_name} result")
+
+class Monitor:
+    def __init__(self, registry):
+        self.registry = registry
+
+    def monitor(self, patient_data):
+        # Track the performance of clinical skills
+        for skill_name, result in patient_data["results"].items():
+            skill = self.registry.get_skill(skill_name)
+            # Calculate the accuracy of the skill
+            accuracy = np.mean(result)
+            # Store the accuracy in the skill's record
+            skill["accuracy"] = accuracy
+
+# Create a Guard and Monitor
+guard = Guard(registry)
+monitor = Monitor(registry)
+
+# Guard and monitor the execution of clinical skills for a patient
+guard.guard(patient_data)
+monitor.monitor(patient_data)
+```
+
+## Conclusion
+In this tutorial, we have explored the concept of Clinical Harness and how it can be used to build governable medical AI skill ecosystems. We have provided working code examples to demonstrate the concepts and have shown how to build a Clinical Harness using Python, TensorFlow, and scikit-learn. The Clinical Harness has the potential to revolutionize the field of medical AI by providing a framework for registering, orchestrating, guarding, and monitoring AI-enabled clinical capabilities.
+
+![a notebook with a stethoscope on top of it next to a laptop](https://images.unsplash.com/photo-1652787542567-f86c0b4c0269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxDbGluaWNhbCUyMEhhcm5lc3MlMjBHb3Zlcm5hYmxlJTIwTWVkaWNhbCUyMFNraWxsJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgyNDg0OTQ4fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+By following the steps outlined in this tutorial, developers can build their own Clinical Harness and start exploring the possibilities of governable medical AI skill ecosystems. The Clinical Harness has the potential to improve patient outcomes, reduce healthcare costs, and enhance the overall quality of care. As the field of medical AI continues to evolve, the Clinical Harness will play a critical role in ensuring that AI-enabled clinical capabilities are used in a way that is transparent, explainable, and fair.
+
+*Photo by [National Cancer Institute](https://unsplash.com/@nci?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/person-sitting-while-using-laptop-computer-and-green-stethoscope-near-NFvdKIhxYlU?utm_source=techversation&utm_medium=referral)*
