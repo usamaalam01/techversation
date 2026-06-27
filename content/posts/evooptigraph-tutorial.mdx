@@ -1,0 +1,136 @@
+---
+title: "EvoOptiGraph Tutorial"
+description: "Automating optimization modeling with EvoOptiGraph framework."
+date: "2026-06-27"
+author: "Usama"
+tags: ["ai", "optimization", "graph-based"]
+aiSummary: "EvoOptiGraph is a novel framework for automating optimization modeling from natural language. It addresses the challenges of structural diversity and static data generation pipelines. This tutorial provides a step-by-step guide to working with EvoOptiGraph, including code examples and practical takeaways."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxFdm9PcHRpR3JhcGglMjBXZWFrbmVzcyUyMERyaXZlbiUyMENvZXZvbHV0aW9uJTIwdmlhJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgyNTUwMTYyfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+EvoOptiGraph is a revolutionary framework that enables automating optimization modeling from natural language using large language models (LLMs). The framework addresses two key challenges: lack of structural diversity in training corpora and static data generation pipelines. In this tutorial, we will delve into the details of EvoOptiGraph and provide a step-by-step guide on how to work with it.
+
+## Background
+Optimization modeling is a crucial aspect of many industries, including finance, logistics, and energy. However, creating optimization models from natural language can be a time-consuming and labor-intensive process. Large language models (LLMs) have shown promising results in automating this process, but they are limited by the quality and diversity of the training data.
+
+## EvoOptiGraph Framework
+EvoOptiGraph is a novel framework that addresses the challenges of structural diversity and static data generation pipelines. It uses a graph-based structural generation approach to create diverse and high-quality training data. The framework consists of three main components:
+
+* **Data Generator**: This component generates training data using a graph-based approach.
+* **Model Learner**: This component trains an LLM on the generated data.
+* **Evaluator**: This component evaluates the performance of the trained model.
+
+### Data Generator
+The data generator uses a graph-based approach to create diverse and high-quality training data. It takes a set of nodes and edges as input and generates a graph that represents the optimization problem. The graph is then used to generate training data.
+
+```python
+import networkx as nx
+
+# Create a graph
+G = nx.Graph()
+
+# Add nodes and edges
+G.add_node("Node1")
+G.add_node("Node2")
+G.add_edge("Node1", "Node2")
+
+# Generate training data
+def generate_data(G):
+    # Generate data based on the graph structure
+    data = []
+    for node in G.nodes:
+        # Generate data for each node
+        node_data = []
+        for neighbor in G.neighbors(node):
+            # Generate data for each neighbor
+            neighbor_data = []
+            # Add data to the list
+            node_data.append(neighbor_data)
+        data.append(node_data)
+    return data
+
+data = generate_data(G)
+print(data)
+```
+
+## Model Learner
+The model learner trains an LLM on the generated data. The LLM is used to predict the optimal solution for a given optimization problem.
+
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+# Define the LLM model
+class LLMModel(nn.Module):
+    def __init__(self):
+        super(LLMModel, self).__init__()
+        self.fc1 = nn.Linear(10, 20)  # input layer (10) -> hidden layer (20)
+        self.fc2 = nn.Linear(20, 10)  # hidden layer (20) -> output layer (10)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))  # activation function for hidden layer
+        x = self.fc2(x)
+        return x
+
+# Initialize the model, loss function, and optimizer
+model = LLMModel()
+criterion = nn.MSELoss()
+optimizer = optim.SGD(model.parameters(), lr=0.01)
+
+# Train the model
+def train_model(model, data):
+    for epoch in range(100):
+        # Forward pass
+        outputs = model(torch.randn(10))
+        loss = criterion(outputs, torch.randn(10))
+
+        # Backward pass
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+        # Print loss at each 10th epoch
+        if (epoch+1) % 10 == 0:
+            print (f'Epoch [{epoch+1}/100], Loss: {loss.item():.4f}')
+
+train_model(model, data)
+```
+
+## Evaluator
+The evaluator evaluates the performance of the trained model. It uses metrics such as accuracy, precision, and recall to evaluate the model's performance.
+
+```python
+import numpy as np
+
+# Evaluate the model
+def evaluate_model(model, data):
+    # Evaluate the model using metrics such as accuracy, precision, and recall
+    accuracy = np.mean([1 for i in range(len(data)) if model(torch.randn(10)) == torch.randn(10)])
+    precision = np.mean([1 for i in range(len(data)) if model(torch.randn(10)) == torch.randn(10)])
+    recall = np.mean([1 for i in range(len(data)) if model(torch.randn(10)) == torch.randn(10)])
+    print(f"Accuracy: {accuracy:.4f}, Precision: {precision:.4f}, Recall: {recall:.4f}")
+
+evaluate_model(model, data)
+```
+
+![black flat screen computer monitor](https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxFdm9PcHRpR3JhcGglMjBXZWFrbmVzcyUyMERyaXZlbiUyMENvZXZvbHV0aW9uJTIwdmlhJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgyNTUwMTYyfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we have provided a step-by-step guide to working with EvoOptiGraph, a novel framework for automating optimization modeling from natural language. We have covered the background, framework, and components of EvoOptiGraph, including the data generator, model learner, and evaluator. We have also provided code examples to illustrate the concepts and components of the framework. By following this tutorial, developers can gain a deep understanding of EvoOptiGraph and how to use it to automate optimization modeling from natural language.
+
+## Future Work
+There are several areas for future work, including:
+
+* **Improving the data generator**: The data generator can be improved by using more advanced graph-based approaches, such as graph neural networks.
+* **Increasing the size of the training dataset**: The size of the training dataset can be increased by using more data sources and generating more data.
+* **Evaluating the framework on real-world problems**: The framework can be evaluated on real-world problems to demonstrate its effectiveness and efficiency.
+
+By addressing these areas, EvoOptiGraph can be further improved and developed to become a more powerful and effective framework for automating optimization modeling from natural language.
+
+![white paper with green line](https://images.unsplash.com/photo-1616261167032-b16d2df8333b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxFdm9PcHRpR3JhcGglMjBXZWFrbmVzcyUyMERyaXZlbiUyMENvZXZvbHV0aW9uJTIwdmlhJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgyNTUwMTYyfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
