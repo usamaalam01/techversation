@@ -1,0 +1,108 @@
+---
+title: "Radical AI Interpretability"
+description: "Interpreting AI systems as agents for safety and understanding."
+date: "2026-06-27"
+author: "Usama"
+tags: ["ai", "interpretability", "safety"]
+aiSummary: "Radical AI interpretability is a framework for understanding AI systems as agents, focusing on their beliefs, desires, and meanings. This approach is crucial for ensuring safety in AI applications. By using mechanistic interpretability tools, developers can solve for these factors and create more transparent AI systems."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxSYWRpY2FsJTIwSW50ZXJwcmV0YWJpbGl0eSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MjUzMzQwNHww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+As AI systems become increasingly complex and pervasive, the need for interpretability has grown exponentially. Radical AI interpretability, as introduced in the arXiv paper [2606.26523](https://arxiv.org/abs/2606.26523), offers a novel framework for understanding AI systems as agents. This approach draws on philosophical traditions and mechanistic interpretability tools to uncover the beliefs, desires, and meanings of AI systems. In this tutorial, we will delve into the practical applications of radical AI interpretability, providing step-by-step guidance and working code examples.
+
+## Understanding Radical Interpretability
+
+Radical interpretability is rooted in the philosophical tradition of radical interpretation, which seeks to understand the meaning and content of mental states, such as beliefs and desires. In the context of AI systems, this means analyzing the computational facts about a system to infer its underlying beliefs, desires, and meanings. This approach is essential for ensuring safety in AI applications, as it allows developers to identify potential biases, flaws, or unintended consequences.
+
+![silhouette on person writing](https://images.unsplash.com/photo-1533709475520-a0745bba78bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxSYWRpY2FsJTIwSW50ZXJwcmV0YWJpbGl0eSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MjUzMzQwNHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Mechanistic Interpretability Tools
+
+Mechanistic interpretability tools are used to analyze the internal workings of AI systems and uncover their computational facts. These tools can include techniques such as:
+
+* **Model explainability**: Methods for explaining the decisions made by AI models, such as feature importance or partial dependence plots.
+* **Model transparency**: Techniques for understanding the internal workings of AI models, such as visualizing neural network architectures or analyzing model weights.
+
+### Example: Model Explainability with SHAP
+
+One popular tool for model explainability is SHAP (SHapley Additive exPlanations). SHAP is a technique for assigning a value to each feature for a specific prediction, indicating its contribution to the outcome.
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+import shap
+
+# Load dataset
+df = pd.read_csv('data.csv')
+
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(df.drop('target', axis=1), df['target'], test_size=0.2, random_state=42)
+
+# Train random forest classifier
+rf = RandomForestClassifier(n_estimators=100, random_state=42)
+rf.fit(X_train, y_train)
+
+# Create SHAP explainer
+explainer = shap.TreeExplainer(rf)
+
+# Get SHAP values for test data
+shap_values = explainer.shap_values(X_test)
+
+# Plot SHAP values for a specific instance
+shap.force_plot(explainer.expected_value, shap_values[0,:], X_test.iloc[0,:], matplotlib=True)
+```
+
+## Implementing Radical Interpretability
+
+To implement radical interpretability, developers can follow these steps:
+
+1. **Define the AI system's goals and objectives**: Clearly articulate the purpose and desired outcomes of the AI system.
+2. **Analyze the computational facts**: Use mechanistic interpretability tools to analyze the internal workings of the AI system and uncover its computational facts.
+3. **Infer beliefs, desires, and meanings**: Use the computational facts to infer the AI system's beliefs, desires, and meanings.
+4. **Evaluate and refine**: Evaluate the results and refine the AI system as needed to ensure safety and alignment with its goals and objectives.
+
+### Example: Inferring Beliefs and Desires
+
+Suppose we have an AI system designed to optimize a recommender system. We can use mechanistic interpretability tools to analyze the system's internal workings and infer its beliefs and desires.
+
+```python
+import numpy as np
+
+# Define the AI system's goals and objectives
+goals = ['maximize user engagement', 'minimize user frustration']
+
+# Analyze the computational facts
+computational_facts = {
+    'user engagement': 0.8,
+    'user frustration': 0.2
+}
+
+# Infer beliefs and desires
+beliefs = {
+    'user preferences': ['action movies', 'comedy shows']
+}
+desires = {
+    'recommended items': ['movie1', 'show1']
+}
+
+# Evaluate and refine
+if computational_facts['user engagement'] < 0.7:
+    # Refine the AI system to improve user engagement
+    desires['recommended items'] = ['movie2', 'show2']
+```
+
+## Conclusion
+
+Radical AI interpretability offers a powerful framework for understanding AI systems as agents. By using mechanistic interpretability tools and analyzing computational facts, developers can infer the beliefs, desires, and meanings of AI systems. This approach is crucial for ensuring safety and transparency in AI applications. As AI systems continue to evolve and become more complex, the need for radical interpretability will only grow. By prioritizing interpretability and transparency, developers can create more trustworthy and effective AI systems.
+
+![a close up of a container with words on it](https://images.unsplash.com/photo-1692607431208-28cc794e0067?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxSYWRpY2FsJTIwSW50ZXJwcmV0YWJpbGl0eSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MjUzMzQwNHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+By following the steps outlined in this tutorial and using the provided code examples, developers can begin to implement radical AI interpretability in their own projects. Remember to prioritize transparency, safety, and interpretability when working with AI systems, and always strive to create more trustworthy and effective AI applications.
+
+*Photo by [Sharad Bhat](https://unsplash.com/@sharadmbhat?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/black-flat-screen-computer-monitor-Q_Swg0rZouw?utm_source=techversation&utm_medium=referral)*
