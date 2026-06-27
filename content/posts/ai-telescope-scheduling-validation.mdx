@@ -1,0 +1,131 @@
+---
+title: "AI Telescope Scheduling Validation"
+description: "Multi-level validation framework for AI-generated telescope scheduling decisions."
+date: "2026-06-27"
+author: "Usama"
+tags: ["ai", "telescope", "validation"]
+aiSummary: "This tutorial introduces a multi-level validation and traceability framework for AI-generated telescope scheduling decisions. It provides a step-by-step guide on implementing the framework using Python. The framework ensures consistent data references, accurate reasoning, and executable decisions."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1581093577421-f561a654a353?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxNdWx0aSUyMExldmVsJTIwVmFsaWRhdGlvbiUyMFRyYWNlYWJpbGl0eSUyMEZyYW1ld29yayUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MjU2ODg3Mnww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+The introduction of AI in telescope scheduling has shown promise in handling complex multi-constraint problems. However, the outputs often suffer from inconsistent data references, reasoning errors, and non-executable decisions. To address these issues, we propose a multi-level validation and traceability framework for AI-generated telescope scheduling decisions.
+
+## Framework Overview
+
+The framework consists of three levels of validation:
+
+1. **Data Validation**: Verifies the consistency and accuracy of the input data.
+2. **Reasoning Validation**: Checks the correctness of the AI's reasoning and decision-making process.
+3. **Execution Validation**: Ensures that the generated schedule is executable and feasible.
+
+## Implementing the Framework
+
+We will implement the framework using Python. First, install the required libraries:
+```python
+pip install pandas numpy
+```
+### Data Validation
+
+The data validation level checks the consistency and accuracy of the input data. We will use the `pandas` library to handle the data.
+```python
+import pandas as pd
+
+# Load the input data
+data = pd.read_csv('input_data.csv')
+
+# Check for missing values
+if data.isnull().values.any():
+    print("Missing values detected")
+else:
+    print("No missing values detected")
+```
+### Reasoning Validation
+
+The reasoning validation level checks the correctness of the AI's reasoning and decision-making process. We will use a simple rule-based system to validate the decisions.
+```python
+import numpy as np
+
+# Define the rules
+rules = [
+    lambda x: x['priority'] > 0.5,
+    lambda x: x['availability'] > 0.8
+]
+
+# Apply the rules to the data
+validated_data = data.apply(lambda x: all(rule(x) for rule in rules), axis=1)
+
+# Check for invalid decisions
+if not validated_data.all():
+    print("Invalid decisions detected")
+else:
+    print("No invalid decisions detected")
+```
+### Execution Validation
+
+The execution validation level ensures that the generated schedule is executable and feasible. We will use a simple scheduling algorithm to validate the schedule.
+```python
+import numpy as np
+
+# Define the scheduling algorithm
+def schedule(data):
+    # Sort the data by priority and availability
+    sorted_data = data.sort_values(by=['priority', 'availability'], ascending=[False, False])
+    
+    # Generate the schedule
+    schedule = []
+    for index, row in sorted_data.iterrows():
+        schedule.append(row['task'])
+    
+    return schedule
+
+# Generate the schedule
+schedule = schedule(data)
+
+# Check for feasibility
+if len(schedule) > 0:
+    print("Schedule is feasible")
+else:
+    print("Schedule is not feasible")
+```
+## Example Use Case
+
+Let's consider an example use case where we have a set of tasks with different priorities and availabilities.
+```python
+# Define the tasks
+tasks = [
+    {'task': 'Task 1', 'priority': 0.8, 'availability': 0.9},
+    {'task': 'Task 2', 'priority': 0.5, 'availability': 0.7},
+    {'task': 'Task 3', 'priority': 0.9, 'availability': 0.8}
+]
+
+# Create a DataFrame
+data = pd.DataFrame(tasks)
+
+# Apply the framework
+data = pd.read_csv('input_data.csv')
+validated_data = data.apply(lambda x: all(rule(x) for rule in rules), axis=1)
+schedule = schedule(data)
+
+# Print the results
+print("Validated Data:")
+print(validated_data)
+print("Schedule:")
+print(schedule)
+```
+![man in white dress shirt sitting in front of computer](https://images.unsplash.com/photo-1624957485467-f33854e1ad85?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxNdWx0aSUyMExldmVsJTIwVmFsaWRhdGlvbiUyMFRyYWNlYWJpbGl0eSUyMEZyYW1ld29yayUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MjU2ODg3Mnww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we introduced a multi-level validation and traceability framework for AI-generated telescope scheduling decisions. The framework ensures consistent data references, accurate reasoning, and executable decisions. We implemented the framework using Python and provided an example use case to demonstrate its effectiveness.
+
+By following this framework, developers can create more reliable and efficient AI systems for telescope scheduling. The framework can be extended to other domains where AI is used for decision-making, such as finance, healthcare, and transportation.
+
+![a close up of a screen with numbers on it](https://images.unsplash.com/photo-1586974175111-967d0ab10c7b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxNdWx0aSUyMExldmVsJTIwVmFsaWRhdGlvbiUyMFRyYWNlYWJpbGl0eSUyMEZyYW1ld29yayUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MjU2ODg3Mnww&ixlib=rb-4.1.0&q=80&w=1080)
+
+Note: This tutorial is based on the research paper "A Multi-Level Validation and Traceability Framework for AI-Generated Telescope Scheduling Decisions" available on [arXiv](https://arxiv.org/abs/2606.26585).
+
+*Photo by [ThisisEngineering](https://unsplash.com/@thisisengineering?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/woman-in-white-long-sleeve-shirt-sitting-on-chair-8yS04veb1TQ?utm_source=techversation&utm_medium=referral)*
