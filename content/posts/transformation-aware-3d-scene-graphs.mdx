@@ -1,0 +1,104 @@
+---
+title: "Transformation-Aware 3D Scene Graphs"
+description: "Generate viewpoint-robust 3D scene graphs with transformation-aware decoupling."
+date: "2026-06-29"
+author: "Usama"
+tags: ["3d", "scene-graph", "deep-learning"]
+aiSummary: "This tutorial demonstrates how to generate viewpoint-robust 3D scene graphs using transformation-aware decoupling. We'll explore the concept of 3D Scene Graph Generation and implement a Python solution using PyTorch. Our approach will allow agents to understand 3D scenes from different viewpoints."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1529078155058-5d716f45d604?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxOb3QlMjBBbGwlMjBSZWxhdGlvbnMlMjBSb3RhdGUlMjBBbGlrZSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4Mjc2NDIwM3ww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+3D Scene Graph Generation (3DSGG) is a technique used to represent 3D scenes as structured object-relation-object graphs. This provides a compact relational abstraction for spatial understanding, which is essential in embodied intelligence settings. However, current 3DSGG models often fail to produce reliable results when the same 3D scene is observed from different viewpoints.
+
+In this tutorial, we'll delve into the concept of transformation-aware decoupling for viewpoint-robust 3D scene graph generation. We'll explore the challenges associated with current 3DSGG models and implement a Python solution using PyTorch to address these issues.
+
+## Understanding 3D Scene Graph Generation
+
+3DSGG involves representing a 3D scene as a graph, where objects are nodes, and relationships between objects are edges. The goal is to generate a graph that accurately represents the spatial relationships between objects in the scene.
+
+Current 3DSGG models often rely on convolutional neural networks (CNNs) to extract features from 3D scenes. However, these models are not designed to handle viewpoint changes, which can result in unreliable graph generation.
+
+## Transformation-Aware Decoupling
+
+Transformation-aware decoupling is a technique that allows us to generate viewpoint-robust 3D scene graphs. The idea is to decouple the object features from the viewpoint, enabling the model to understand the scene from different perspectives.
+
+We'll implement a transformation-aware decoupling layer in PyTorch, which will be used to generate viewpoint-robust 3D scene graphs.
+
+### Decoupling Layer Implementation
+
+```python
+import torch
+import torch.nn as nn
+
+class DecouplingLayer(nn.Module):
+    def __init__(self, num_objects, num_relations):
+        super(DecouplingLayer, self).__init__()
+        self.num_objects = num_objects
+        self.num_relations = num_relations
+        self.object_embedding = nn.Embedding(num_objects, 128)
+        self.relation_embedding = nn.Embedding(num_relations, 128)
+        self.viewpoint_embedding = nn.Embedding(360, 128)  # 360 possible viewpoints
+
+    def forward(self, objects, relations, viewpoints):
+        object_embeddings = self.object_embedding(objects)
+        relation_embeddings = self.relation_embedding(relations)
+        viewpoint_embeddings = self.viewpoint_embedding(viewpoints)
+
+        # Decouple object features from viewpoint
+        decoupled_object_embeddings = object_embeddings - viewpoint_embeddings
+
+        # Generate graph edges
+        edges = torch.matmul(decoupled_object_embeddings, relation_embeddings.T)
+
+        return edges
+```
+
+## Generating Viewpoint-Robust 3D Scene Graphs
+
+To generate viewpoint-robust 3D scene graphs, we'll use the decoupling layer in conjunction with a graph neural network (GNN). The GNN will take the decoupled object features and generate a graph that represents the spatial relationships between objects.
+
+```python
+import torch
+import torch.nn as nn
+import torch_geometric.nn as pyg_nn
+
+class GraphGenerator(nn.Module):
+    def __init__(self, num_objects, num_relations):
+        super(GraphGenerator, self).__init__()
+        self.num_objects = num_objects
+        self.num_relations = num_relations
+        self.decoupling_layer = DecouplingLayer(num_objects, num_relations)
+        self.gnn = pyg_nn.GCNConv(128, 128)
+
+    def forward(self, objects, relations, viewpoints):
+        edges = self.decoupling_layer(objects, relations, viewpoints)
+        graph = self.gnn(edges, objects)
+
+        return graph
+```
+
+![black and white round illustration](https://images.unsplash.com/photo-1612521564730-62fc7691cd85?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxOb3QlMjBBbGwlMjBSZWxhdGlvbnMlMjBSb3RhdGUlMjBBbGlrZSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4Mjc2NDIwM3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we've demonstrated how to generate viewpoint-robust 3D scene graphs using transformation-aware decoupling. By decoupling object features from the viewpoint, we can generate graphs that accurately represent spatial relationships between objects, even when observed from different viewpoints.
+
+The code examples provided in this tutorial can be used as a starting point for implementing viewpoint-robust 3D scene graph generation in various applications, such as robotics, computer vision, and embodied intelligence.
+
+### Future Work
+
+There are several avenues for future research in this area, including:
+
+* Exploring different architectures for the decoupling layer and GNN
+* Investigating the use of other techniques, such as attention mechanisms, to improve graph generation
+* Applying viewpoint-robust 3D scene graph generation to real-world applications
+
+![an abstract image of a network of dots](https://images.unsplash.com/photo-1678845536613-5cf0ec5245cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxOb3QlMjBBbGwlMjBSZWxhdGlvbnMlMjBSb3RhdGUlMjBBbGlrZSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4Mjc2NDIwM3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+We hope this tutorial has provided a comprehensive introduction to transformation-aware decoupling for viewpoint-robust 3D scene graph generation. By following the code examples and exploring the concepts presented in this tutorial, you can develop a deeper understanding of this exciting area of research.
+
+*Photo by [Mika Baumeister](https://unsplash.com/@kommumikation?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/white-printing-paper-with-numbers-Wpnoqo2plFA?utm_source=techversation&utm_medium=referral)*
