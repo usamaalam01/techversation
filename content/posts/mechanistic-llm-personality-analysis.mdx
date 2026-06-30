@@ -1,0 +1,102 @@
+---
+title: "Mechanistic LLM Personality Analysis"
+description: "Analyzing LLM personality using latent feature interventions."
+date: "2026-06-30"
+author: "Usama"
+tags: ["ai", "llm", "personality-analysis"]
+aiSummary: "This tutorial demonstrates a mechanistic approach to analyzing Large Language Models' (LLMs) personality traits. We will intervene on the model's latent features to shape its personality. The method involves understanding the underlying mechanics of LLMs and using this knowledge to steer their personality."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1692607431208-28cc794e0067?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxNZWNoYW5pc3RpYyUyMFBlcnNvbmFsaXR5JTIwQW5hbHlzaXMlMjBMTE1zJTIwU3RlZXJpbmclMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODI4NTA0MzB8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Large Language Models (LLMs) have shown impressive capabilities in simulating human-like personality traits in generated text. Previous efforts have focused on prompt engineering or fine-tuning to shape LLM personality. However, these approaches have limitations, such as requiring extensive data and computational resources. In this tutorial, we will explore a mechanistic interpretability approach that directly intervenes on the model's latent features to analyze and shape its personality.
+
+The concept of mechanistic personality analysis involves understanding the underlying mechanics of LLMs and using this knowledge to steer their personality. This approach has the potential to provide more fine-grained control over the model's personality traits and can be used to analyze and improve the model's performance.
+
+## Understanding Latent Features
+
+Latent features are the underlying variables that the model uses to represent the input data. In the context of LLMs, latent features can capture various aspects of the input text, such as syntax, semantics, and style. To intervene on the model's latent features, we need to understand how they are represented and how they contribute to the model's output.
+
+```python
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+# Define a simple LLM model
+class LLM(nn.Module):
+    def __init__(self, input_dim, hidden_dim, output_dim):
+        super(LLM, self).__init__()
+        self.fc1 = nn.Linear(input_dim, hidden_dim)
+        self.fc2 = nn.Linear(hidden_dim, output_dim)
+
+    def forward(self, x):
+        x = F.relu(self.fc1(x))
+        x = self.fc2(x)
+        return x
+
+# Initialize the model and input data
+model = LLM(input_dim=100, hidden_dim=200, output_dim=100)
+input_data = torch.randn(1, 100)
+
+# Get the latent features
+latent_features = model.fc1(input_data)
+```
+
+## Intervening on Latent Features
+
+Once we have access to the latent features, we can intervene on them to shape the model's personality. This can be done by adding or removing specific features, or by modifying their values. For example, we can add a feature that represents a certain personality trait, such as extraversion or conscientiousness.
+
+```python
+# Define a function to intervene on the latent features
+def intervene_on_latent_features(latent_features, intervention):
+    # Apply the intervention to the latent features
+    intervened_latent_features = latent_features + intervention
+    return intervened_latent_features
+
+# Define an intervention that represents a certain personality trait
+intervention = torch.randn(1, 200)
+
+# Apply the intervention to the latent features
+intervened_latent_features = intervene_on_latent_features(latent_features, intervention)
+```
+
+## Analyzing the Model's Personality
+
+After intervening on the latent features, we can analyze the model's personality by generating text and evaluating its personality traits. This can be done using various metrics, such as the Big Five personality traits (openness, conscientiousness, extraversion, agreeableness, and neuroticism).
+
+```python
+# Define a function to generate text from the intervened latent features
+def generate_text(intervened_latent_features):
+    # Use the intervened latent features to generate text
+    text = model.fc2(intervened_latent_features)
+    return text
+
+# Generate text from the intervened latent features
+generated_text = generate_text(intervened_latent_features)
+
+# Evaluate the personality traits of the generated text
+personality_traits = evaluate_personality_traits(generated_text)
+```
+
+![A statue of a person with a broken head](https://images.unsplash.com/photo-1726752918281-a10b3be66e46?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxNZWNoYW5pc3RpYyUyMFBlcnNvbmFsaXR5JTIwQW5hbHlzaXMlMjBMTE1zJTIwU3RlZXJpbmclMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODI4NTA0MzB8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we have demonstrated a mechanistic approach to analyzing LLM personality traits. By intervening on the model's latent features, we can shape its personality and analyze its personality traits. This approach has the potential to provide more fine-grained control over the model's personality and can be used to improve its performance.
+
+## Future Work
+
+There are several directions for future work, including:
+
+* Exploring different interventions and their effects on the model's personality
+* Developing more sophisticated methods for evaluating personality traits
+* Applying this approach to other types of language models and tasks
+
+![Artificial intelligence concept within a human head](https://images.unsplash.com/photo-1770233621425-5d9ee7a0a700?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxNZWNoYW5pc3RpYyUyMFBlcnNvbmFsaXR5JTIwQW5hbHlzaXMlMjBMTE1zJTIwU3RlZXJpbmclMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODI4NTA0MzB8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+Note: The code examples provided in this tutorial are simplified and are intended to illustrate the concepts and methods discussed. In practice, you may need to modify and extend the code to suit your specific use case. Additionally, the images used in this tutorial are for illustrative purposes only and are not intended to be used in production.
+
+*Photo by [Google DeepMind](https://unsplash.com/@googledeepmind?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-close-up-of-a-container-with-words-on-it-b8GH92xVoUw?utm_source=techversation&utm_medium=referral)*
