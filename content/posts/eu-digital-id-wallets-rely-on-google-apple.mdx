@@ -1,0 +1,94 @@
+---
+title: "EU Digital ID Wallets Rely on Google, Apple"
+description: "European digital ID wallets use Google and Apple safety services."
+date: "2026-06-30"
+author: "Usama"
+tags: ["eu", "digital-id", "security"]
+aiSummary: "The European Union's digital ID wallets are relying on safety services provided by Google and Apple. This move has sparked concerns among developers and privacy advocates. The use of these services could have significant implications for the future of digital identity in the EU."
+category: "trending"
+coverImage: "https://images.unsplash.com/photo-1762340915700-356b34475448?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxFdXJvcGVhbiUyMGRpZ2l0YWwlMjB3YWxsZXRzJTIwcmVseSUyMHNhZmV0eSUyMHRlY2hub2xvZ3klMjBzb2Z0d2FyZXxlbnwxfDB8fHwxNzgyODMwMjQ5fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+The European Union's (EU) efforts to create a unified digital identity system have taken a significant step forward with the introduction of digital ID wallets. However, a recent report has revealed that these wallets are relying on safety services provided by tech giants Google and Apple. This move has sparked intense debate among developers, privacy advocates, and the broader tech community. In this post, we'll delve into the details of this story, explain why it matters to developers, and provide our take on the broader implications.
+
+## What's Happening
+
+According to a report by Waag, a Dutch organization that focuses on the intersection of technology and society, the EU's digital ID wallets are using Google's and Apple's safety services to facilitate secure authentication and verification processes. This means that when EU citizens use their digital ID wallets to access online services, their personal data will be processed and stored on servers operated by these tech giants.
+
+The use of Google's and Apple's safety services is intended to provide an additional layer of security and convenience for users. However, it also raises concerns about data privacy and the potential for these companies to exert undue influence over the EU's digital identity system.
+
+## Why it Matters to Developers
+
+For developers, this story is significant because it highlights the complex trade-offs involved in building secure and user-friendly digital identity systems. On one hand, using established safety services like those provided by Google and Apple can simplify the development process and provide a high level of security. On the other hand, it also means that developers are relying on third-party services that may not be entirely transparent or accountable.
+
+Developers who are building applications that interact with the EU's digital ID wallets will need to consider the implications of this decision. They will need to ensure that their applications are compatible with Google's and Apple's safety services, while also complying with the EU's data protection regulations.
+
+### Security and Privacy Concerns
+
+One of the primary concerns among developers and privacy advocates is the potential for Google and Apple to access and exploit personal data stored on their servers. While both companies have pledged to protect user data, their track records on this issue are not entirely spotless.
+
+For example, Google has faced numerous criticisms over its data collection practices, including the use of location data and browsing history to target advertisements. Apple, on the other hand, has been praised for its commitment to user privacy, but it has also faced scrutiny over its handling of user data in the past.
+
+To mitigate these risks, developers can use secure authentication protocols like OAuth and OpenID Connect, which allow users to authenticate with their digital ID wallets without revealing sensitive information to third-party services. Here's an example of how this can be implemented in Python:
+```python
+import requests
+from oauthlib.oauth2 import WebApplicationClient
+
+# Register your application with the digital ID wallet provider
+client_id = "your_client_id"
+client_secret = "your_client_secret"
+authorization_url = "https://example.com/authorize"
+
+# Redirect the user to the authorization URL
+response = requests.get(authorization_url, params={
+    "client_id": client_id,
+    "redirect_uri": "https://example.com/callback",
+    "response_type": "code",
+    "scope": "openid profile"
+})
+
+# Handle the authorization code and exchange it for an access token
+client = WebApplicationClient(client_id)
+token_url = "https://example.com/token"
+response = requests.post(token_url, headers={
+    "Content-Type": "application/x-www-form-urlencoded"
+}, data={
+    "grant_type": "authorization_code",
+    "code": "authorization_code",
+    "redirect_uri": "https://example.com/callback",
+    "client_id": client_id,
+    "client_secret": client_secret
+})
+
+# Use the access token to authenticate the user
+access_token = response.json()["access_token"]
+user_info_url = "https://example.com/userinfo"
+response = requests.get(user_info_url, headers={
+    "Authorization": f"Bearer {access_token}"
+})
+
+# Verify the user's identity and authenticate them
+user_info = response.json()
+if user_info["sub"] == "expected_user_id":
+    # Authenticate the user
+    print("User authenticated successfully")
+else:
+    # Handle authentication failure
+    print("Authentication failed")
+```
+This example demonstrates how developers can use secure authentication protocols to protect user data and ensure that the EU's digital ID wallets are used in a secure and private manner.
+
+## Broader Implications
+
+The EU's decision to rely on Google's and Apple's safety services has significant implications for the future of digital identity in the region. On one hand, it could accelerate the adoption of digital ID wallets and provide a high level of security and convenience for users. On the other hand, it could also create a dependency on these tech giants and undermine the EU's ability to control its own digital identity system.
+
+As the EU continues to develop its digital identity system, it will be essential to strike a balance between security, convenience, and privacy. This may involve investing in alternative safety services that are more transparent and accountable, or developing new technologies that can provide a higher level of security and privacy.
+
+Ultimately, the success of the EU's digital ID wallets will depend on the ability of developers, policymakers, and industry leaders to work together to create a system that is secure, convenient, and respectful of user privacy. As the tech community continues to debate the implications of this decision, one thing is clear: the future of digital identity in the EU will be shaped by the choices we make today.
+
+In conclusion, the EU's reliance on Google's and Apple's safety services is a complex issue that raises important questions about data privacy, security, and the future of digital identity. While it may provide a high level of security and convenience for users, it also creates risks and uncertainties that must be carefully managed. As developers, policymakers, and industry leaders, we must work together to create a system that is secure, convenient, and respectful of user privacy.
+
+*Photo by [Zulfugar Karimov](https://unsplash.com/@zulfugarkarimov?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/quick-scan-button-on-a-blue-background-Tol3g-7rmXc?utm_source=techversation&utm_medium=referral)*
