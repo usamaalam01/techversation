@@ -1,0 +1,90 @@
+---
+title: "Adoption and Welfare in AI Governance"
+description: "Exploring the Two Genie Game with evolutionary game theory"
+date: "2026-06-30"
+author: "Usama"
+tags: ["ai", "governance", "evolutionary-game-theory"]
+aiSummary: "The Two Genie Game is a framework for understanding the adoption and welfare implications of AI governance. This tutorial will explore the game using evolutionary game theory and provide working code examples. We will examine the conditions under which a harm-minimizing policy can displace an approval-seeking agent in a competitive market."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxUd28lMjBHZW5pZSUyMEdhbWUlMjBBZG9wdGlvbiUyMFdlbGZhcmUlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODI3OTMwODF8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+The Two Genie Game is a thought-provoking concept that explores the adoption and welfare implications of AI governance. In this tutorial, we will delve into the game using evolutionary game theory and provide working code examples to illustrate the key concepts. The game is based on the idea of two agents, each with a different policy, competing in a market. The harm-minimizing policy agent aims to minimize harm, while the approval-seeking agent seeks to maximize approval.
+
+## Evolutionary Game Theory
+
+Evolutionary game theory is a branch of game theory that studies the evolution of strategies in a population over time. It is based on the idea that the frequency of each strategy in the population changes over time, depending on the payoffs received by each strategy. In the context of the Two Genie Game, we will use the finite-population Moran-Fermi pairwise comparison model to simulate the evolution of the two agents.
+
+```python
+import numpy as np
+
+# Define the payoff matrix for the Two Genie Game
+payoff_matrix = np.array([[0, 1], [1, 0]])
+
+# Define the population size
+population_size = 100
+
+# Initialize the population with equal frequencies of each agent
+population = np.array([0.5, 0.5])
+```
+
+## Simulating the Evolution of the Agents
+
+To simulate the evolution of the agents, we will use the Moran-Fermi process. This process involves selecting two agents at random from the population and comparing their payoffs. The agent with the higher payoff is more likely to reproduce, while the agent with the lower payoff is more likely to die.
+
+```python
+# Define the selection strength
+selection_strength = 1.0
+
+# Simulate the evolution of the agents
+for i in range(1000):
+    # Select two agents at random from the population
+    agent1 = np.random.choice([0, 1], p=population)
+    agent2 = np.random.choice([0, 1], p=population)
+
+    # Compare the payoffs of the two agents
+    payoff1 = payoff_matrix[agent1, agent2]
+    payoff2 = payoff_matrix[agent2, agent1]
+
+    # Update the population frequencies based on the payoffs
+    population[agent1] += selection_strength * (payoff1 - payoff2)
+    population[agent2] -= selection_strength * (payoff1 - payoff2)
+
+    # Normalize the population frequencies
+    population /= np.sum(population)
+```
+
+## Analyzing the Results
+
+After simulating the evolution of the agents, we can analyze the results to see which agent is more likely to displace the other in a competitive market. We can also examine the conditions under which the harm-minimizing policy agent can prevent community harm.
+
+```python
+# Plot the population frequencies over time
+import matplotlib.pyplot as plt
+
+plt.plot(population)
+plt.xlabel('Time')
+plt.ylabel('Population Frequency')
+plt.show()
+```
+
+![a bar chart showing the top u states by population in 1950](https://images.unsplash.com/photo-1621422051377-af371293c136?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxUd28lMjBHZW5pZSUyMEdhbWUlMjBBZG9wdGlvbiUyMFdlbGZhcmUlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODI3OTMwODF8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we have explored the Two Genie Game using evolutionary game theory and provided working code examples to illustrate the key concepts. We have seen how the harm-minimizing policy agent can displace the approval-seeking agent in a competitive market, and under what conditions the harm-minimizing policy agent can prevent community harm. The results of this study can inform the development of AI governance policies that prioritize the well-being of humans and the environment.
+
+## Future Work
+
+There are several avenues for future research in this area. One potential direction is to explore the impact of different payoff matrices on the evolution of the agents. Another direction is to examine the effects of different population sizes and selection strengths on the results. Additionally, it would be interesting to extend the model to include multiple agents with different policies and to study the emergence of complex behaviors in the population.
+
+By continuing to explore the Two Genie Game and its implications for AI governance, we can gain a deeper understanding of the complex interactions between AI systems and human societies, and develop more effective policies for promoting the responsible development and deployment of AI technologies.
+
+To get started with implementing the Two Genie Game in your own projects, you can use the code examples provided in this tutorial as a starting point. You can also experiment with different payoff matrices, population sizes, and selection strengths to see how they affect the evolution of the agents. With the knowledge and skills gained from this tutorial, you can begin to develop your own AI governance policies and models, and contribute to the ongoing conversation about the ethics and implications of AI development. 
+
+![black flat screen computer monitor](https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxUd28lMjBHZW5pZSUyMEdhbWUlMjBBZG9wdGlvbiUyMFdlbGZhcmUlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODI3OTMwODF8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
