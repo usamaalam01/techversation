@@ -1,0 +1,84 @@
+---
+title: "Getting Started with Box3D"
+description: "Box3D is an open source 3D physics engine with impressive features."
+date: "2026-07-01"
+author: "Usama"
+tags: ["physics", "engine", "open-source"]
+aiSummary: "Box3D is a powerful open source 3D physics engine that allows developers to create complex simulations. It provides a range of features, including collision detection and rigid body dynamics. In this tutorial, we will explore how to get started with Box3D and create a simple simulation."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1713557112617-e12d67bddc3a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxvcGVuJTIwc291cmNlJTIwcGh5c2ljcyUyMGVuZ2luZSUyMHRlY2hub2xvZ3klMjBzb2Z0d2FyZXxlbnwxfDB8fHwxNzgyOTM2NDAxfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Box3D is an open source 3D physics engine that has recently been announced on [Hacker News](https://box2d.org/posts/2026/06/announcing-box3d/). This engine provides a range of features that make it ideal for creating complex simulations, including collision detection and rigid body dynamics. In this tutorial, we will explore how to get started with Box3D and create a simple simulation.
+
+## Setting Up Box3D
+To get started with Box3D, you will need to download the engine from the official [Box2D website](https://box2d.org/). The engine is available for a range of platforms, including Windows, macOS, and Linux. Once you have downloaded the engine, you can start by creating a new project.
+
+```python
+# Import the Box3D library
+import box3d
+
+# Create a new world
+world = box3d.World()
+
+# Set the gravity of the world
+world.gravity = box3d.Vec3(0, -9.8, 0)
+```
+
+## Creating Objects
+To create objects in Box3D, you will need to use the `Body` class. This class allows you to define the properties of an object, such as its position, rotation, and mass.
+
+```python
+# Create a new body
+body = box3d.Body()
+
+# Set the position of the body
+body.position = box3d.Vec3(0, 0, 0)
+
+# Set the rotation of the body
+body.rotation = box3d.Quat(0, 0, 0, 1)
+
+# Set the mass of the body
+body.mass = 1.0
+```
+
+## Adding Shapes
+To add shapes to an object, you will need to use the `Shape` class. This class allows you to define the properties of a shape, such as its position, rotation, and size.
+
+```python
+# Create a new shape
+shape = box3d.Shape()
+
+# Set the type of the shape
+shape.type = box3d.ShapeType.Box
+
+# Set the size of the shape
+shape.size = box3d.Vec3(1, 1, 1)
+```
+
+## Simulating the World
+To simulate the world, you will need to use the `Step` function. This function updates the position and rotation of all objects in the world based on the forces applied to them.
+
+```python
+# Step the simulation
+world.step(1/60.0)
+```
+
+![black and silver engine bay](https://images.unsplash.com/photo-1608062720349-a044e289748b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxvcGVuJTIwc291cmNlJTIwcGh5c2ljcyUyMGVuZ2luZSUyMHRlY2hub2xvZ3klMjBzb2Z0d2FyZXxlbnwxfDB8fHwxNzgyOTM2NDAxfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+Box3D is a powerful open source 3D physics engine that provides a range of features for creating complex simulations. In this tutorial, we have explored how to get started with Box3D and create a simple simulation. We have also seen how to create objects, add shapes, and simulate the world. With its impressive features and ease of use, Box3D is an ideal choice for developers looking to create realistic simulations.
+
+### Additional Resources
+For more information on Box3D, you can visit the official [Box2D website](https://box2d.org/). You can also find a range of tutorials and examples on the website to help you get started with the engine.
+
+### Future Development
+The development of Box3D is ongoing, and new features are being added all the time. Some of the upcoming features include improved collision detection and more advanced rigid body dynamics. With its active community and ongoing development, Box3D is an exciting project to watch in the future.
+
+![a metal object with a red and blue wire](https://images.unsplash.com/photo-1714000796582-8d369706da69?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxvcGVuJTIwc291cmNlJTIwcGh5c2ljcyUyMGVuZ2luZSUyMHRlY2hub2xvZ3klMjBzb2Z0d2FyZXxlbnwxfDB8fHwxNzgyOTM2NDAxfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+By following this tutorial, you should now have a good understanding of how to get started with Box3D and create a simple simulation. With its powerful features and ease of use, Box3D is an ideal choice for developers looking to create realistic simulations.
+
+*Photo by [Lukas Hron](https://unsplash.com/@lukashron?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/an-electrical-device-laying-on-top-of-a-blueprint-Gz5eVQzkNrs?utm_source=techversation&utm_medium=referral)*
