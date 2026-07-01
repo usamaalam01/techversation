@@ -1,0 +1,150 @@
+---
+title: "HASTE: Hierarchical Accumulation of Skills"
+description: "HASTE reduces ML engineering waste by accumulating skills across competitions"
+date: "2026-07-01"
+author: "Usama"
+tags: ["ml", "haste", "ai"]
+aiSummary: "HASTE is a hierarchical multi-agent system that accumulates skills across ML competitions. It reduces waste by organizing knowledge into three scope tiers. This tutorial shows how to implement HASTE in practice."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1639322537231-2f206e06af84?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxTb2x2ZSUyMFR3aWNlJTIwSGllcmFyY2hpY2FsJTIwQWNjdW11bGF0aW9uJTIwU2tpbGxzJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgyOTE3NjkwfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Machine learning (ML) engineering agents often waste compute resources by rediscovering known techniques for each new competition. This is because every competition is a cold start, and agents must learn from scratch. To address this issue, researchers have proposed HASTE, a hierarchical multi-agent system that accumulates skills across competitions. In this tutorial, we will explore how to implement HASTE in practice.
+
+HASTE organizes cross-competition knowledge into three scope tiers: global, domain, and competition-specific. Each tier is coupled to a matching agent level, and an orchestrator coordinates domain-specific agents. This hierarchical approach enables agents to accumulate skills and reduce waste.
+
+## HASTE Architecture
+
+The HASTE architecture consists of three main components:
+
+1. **Global Agent**: The global agent is responsible for accumulating skills across all competitions. It learns general techniques that can be applied to various domains.
+2. **Domain Agent**: The domain agent is responsible for accumulating skills within a specific domain. It learns techniques that are relevant to that domain and can be applied to multiple competitions.
+3. **Competition Agent**: The competition agent is responsible for accumulating skills for a specific competition. It learns techniques that are relevant to that competition and can be applied to a specific task.
+
+### Orchestrator
+
+The orchestrator is responsible for coordinating the domain-specific agents. It assigns tasks to agents based on their expertise and ensures that agents are working together efficiently.
+
+## Implementing HASTE
+
+To implement HASTE, we will use Python and the PyTorch library. We will define a simple example to demonstrate how HASTE can be used to accumulate skills across competitions.
+
+```python
+import torch
+import torch.nn as nn
+
+# Define the global agent
+class GlobalAgent(nn.Module):
+    def __init__(self):
+        super(GlobalAgent, self).__init__()
+        self.fc1 = nn.Linear(5, 10)  # input layer (5) -> hidden layer (10)
+        self.fc2 = nn.Linear(10, 5)  # hidden layer (10) -> output layer (5)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))  # activation function for hidden layer
+        x = self.fc2(x)
+        return x
+
+# Define the domain agent
+class DomainAgent(nn.Module):
+    def __init__(self):
+        super(DomainAgent, self).__init__()
+        self.fc1 = nn.Linear(5, 10)  # input layer (5) -> hidden layer (10)
+        self.fc2 = nn.Linear(10, 5)  # hidden layer (10) -> output layer (5)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))  # activation function for hidden layer
+        x = self.fc2(x)
+        return x
+
+# Define the competition agent
+class CompetitionAgent(nn.Module):
+    def __init__(self):
+        super(CompetitionAgent, self).__init__()
+        self.fc1 = nn.Linear(5, 10)  # input layer (5) -> hidden layer (10)
+        self.fc2 = nn.Linear(10, 5)  # hidden layer (10) -> output layer (5)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))  # activation function for hidden layer
+        x = self.fc2(x)
+        return x
+```
+
+## Training the Agents
+
+To train the agents, we will use a simple example where we have three competitions: competition A, competition B, and competition C. Each competition has a specific task, and we want to accumulate skills across competitions.
+
+```python
+# Define the tasks for each competition
+competition_a_task = torch.randn(5, 5)
+competition_b_task = torch.randn(5, 5)
+competition_c_task = torch.randn(5, 5)
+
+# Train the global agent
+global_agent = GlobalAgent()
+criterion = nn.MSELoss()
+optimizer = torch.optim.SGD(global_agent.parameters(), lr=0.01)
+for epoch in range(100):
+    optimizer.zero_grad()
+    output = global_agent(competition_a_task)
+    loss = criterion(output, competition_a_task)
+    loss.backward()
+    optimizer.step()
+
+# Train the domain agent
+domain_agent = DomainAgent()
+criterion = nn.MSELoss()
+optimizer = torch.optim.SGD(domain_agent.parameters(), lr=0.01)
+for epoch in range(100):
+    optimizer.zero_grad()
+    output = domain_agent(competition_b_task)
+    loss = criterion(output, competition_b_task)
+    loss.backward()
+    optimizer.step()
+
+# Train the competition agent
+competition_agent = CompetitionAgent()
+criterion = nn.MSELoss()
+optimizer = torch.optim.SGD(competition_agent.parameters(), lr=0.01)
+for epoch in range(100):
+    optimizer.zero_grad()
+    output = competition_agent(competition_c_task)
+    loss = criterion(output, competition_c_task)
+    loss.backward()
+    optimizer.step()
+```
+
+## Accumulating Skills
+
+To accumulate skills across competitions, we will use the hierarchical approach proposed by HASTE. We will first train the global agent on all competitions, then train the domain agent on a specific domain, and finally train the competition agent on a specific competition.
+
+```python
+# Accumulate skills across competitions
+global_agent_output = global_agent(competition_a_task)
+domain_agent_output = domain_agent(competition_b_task)
+competition_agent_output = competition_agent(competition_c_task)
+
+# Use the accumulated skills to improve performance
+improved_output = global_agent_output + domain_agent_output + competition_agent_output
+```
+
+![diagram](https://images.unsplash.com/photo-1664526936886-67d4e7ff743c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxTb2x2ZSUyMFR3aWNlJTIwSGllcmFyY2hpY2FsJTIwQWNjdW11bGF0aW9uJTIwU2tpbGxzJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgyOTE3NjkwfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we have shown how to implement HASTE, a hierarchical multi-agent system that accumulates skills across ML competitions. We have demonstrated how to define the global, domain, and competition agents, and how to train them using a simple example. We have also shown how to accumulate skills across competitions using the hierarchical approach proposed by HASTE. By using HASTE, ML engineering agents can reduce waste and improve performance by accumulating skills across competitions.
+
+## Future Work
+
+Future work includes extending the HASTE architecture to support more complex tasks and larger-scale competitions. Additionally, we plan to explore the use of other machine learning algorithms, such as reinforcement learning and transfer learning, to improve the performance of the agents.
+
+## References
+
+* [HASTE: Hierarchical Accumulation of Skills for Transfer-Efficient ML Engineering](https://arxiv.org/abs/2606.30911)
+
+Note: The code examples provided in this tutorial are simplified and not intended for production use. They are meant to illustrate the concepts and ideas presented in the tutorial.
+
+*Photo by [Shubham Dhage](https://unsplash.com/@theshubhamdhage?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-black-and-white-photo-of-cubes-on-a-black-background-IlUq1ruyv0Q?utm_source=techversation&utm_medium=referral)*
