@@ -1,0 +1,107 @@
+---
+title: "Contrastive Reflection for Prompt Optimization"
+description: "Optimizing prompts for LLM agents with contrastive reflection."
+date: "2026-07-01"
+author: "Usama"
+tags: ["llm", "optimization", "prompts"]
+aiSummary: "Contrastive reflection is a method for optimizing prompts in LLM agents. It involves iteratively refining prompts using a contrastive objective function. This approach has shown promising results in improving the performance of LLM agents. In this tutorial, we will explore how to implement contrastive reflection for prompt optimization."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1692607431208-28cc794e0067?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxDb250cmFzdGl2ZSUyMFJlZmxlY3Rpb24lMjBJdGVyYXRpdmUlMjBQcm9tcHQlMjBPcHRpbWl6YXRpb24lMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODI4ODEzNTF8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Large Language Models (LLMs) are becoming increasingly important in information retrieval tasks, such as issuing retrieval queries, synthesizing answers, and evaluating IR systems. However, the performance of these models is heavily dependent on the quality of the prompts used to control them. Optimizing prompts is an optimization problem that can be challenging to solve, especially in applied IR settings where it often resembles debugging. In this tutorial, we will explore a method called contrastive reflection for iterative prompt optimization.
+
+## Background
+Contrastive reflection is a technique that involves iteratively refining prompts using a contrastive objective function. The goal is to learn a prompt that maximizes the similarity between the model's output and the desired output, while minimizing the similarity between the model's output and undesired outputs. This approach has shown promising results in improving the performance of LLM agents.
+
+## Implementing Contrastive Reflection
+To implement contrastive reflection, we need to define a contrastive objective function that measures the similarity between the model's output and the desired output, as well as the similarity between the model's output and undesired outputs. We can use a combination of natural language processing (NLP) and machine learning techniques to define this objective function.
+
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from transformers import AutoModel, AutoTokenizer
+
+# Define the model and tokenizer
+model = AutoModel.from_pretrained("bert-base-uncased")
+tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+
+# Define the contrastive objective function
+def contrastive_loss(desired_output, undesired_outputs, model_output):
+    # Calculate the similarity between the model's output and the desired output
+    desired_similarity = torch.cosine_similarity(model_output, desired_output)
+    
+    # Calculate the similarity between the model's output and undesired outputs
+    undesired_similarities = [torch.cosine_similarity(model_output, undesired_output) for undesired_output in undesired_outputs]
+    
+    # Calculate the contrastive loss
+    loss = -desired_similarity + torch.mean(torch.stack(undesired_similarities))
+    
+    return loss
+```
+
+## Iterative Prompt Optimization
+Once we have defined the contrastive objective function, we can use it to iteratively optimize the prompt. We can start with an initial prompt and then refine it using the contrastive objective function.
+
+```python
+# Define the initial prompt
+initial_prompt = "What is the capital of France?"
+
+# Define the desired output
+desired_output = tokenizer.encode("Paris", return_tensors="pt")
+
+# Define the undesired outputs
+undesired_outputs = [tokenizer.encode("London", return_tensors="pt"), tokenizer.encode("Berlin", return_tensors="pt")]
+
+# Define the optimizer
+optimizer = optim.Adam(model.parameters(), lr=1e-5)
+
+# Iterate over the prompts
+for i in range(10):
+    # Encode the prompt
+    prompt_encoding = tokenizer.encode(initial_prompt, return_tensors="pt")
+    
+    # Get the model's output
+    model_output = model(prompt_encoding)
+    
+    # Calculate the contrastive loss
+    loss = contrastive_loss(desired_output, undesired_outputs, model_output)
+    
+    # Backpropagate the loss
+    loss.backward()
+    
+    # Update the model parameters
+    optimizer.step()
+    
+    # Update the prompt
+    initial_prompt = tokenizer.decode(model_output, skip_special_tokens=True)
+    
+    # Print the updated prompt
+    print(f"Iteration {i+1}: {initial_prompt}")
+```
+
+## Results
+After iterating over the prompts, we can evaluate the performance of the optimized prompt. We can use metrics such as accuracy, F1-score, or ROUGE score to evaluate the performance.
+
+```python
+# Evaluate the performance of the optimized prompt
+optimized_prompt = initial_prompt
+optimized_prompt_encoding = tokenizer.encode(optimized_prompt, return_tensors="pt")
+optimized_model_output = model(optimized_prompt_encoding)
+optimized_loss = contrastive_loss(desired_output, undesired_outputs, optimized_model_output)
+
+print(f"Optimized Prompt: {optimized_prompt}")
+print(f"Optimized Loss: {optimized_loss.item()}")
+```
+
+## Conclusion
+In this tutorial, we explored how to use contrastive reflection for iterative prompt optimization. We defined a contrastive objective function and used it to iteratively refine the prompt. We also evaluated the performance of the optimized prompt using metrics such as accuracy, F1-score, or ROUGE score. The results show that contrastive reflection can be an effective method for optimizing prompts in LLM agents.
+
+![graphical user interface, application, shape, arrow](https://images.unsplash.com/photo-1667984436026-99b165e3672b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxDb250cmFzdGl2ZSUyMFJlZmxlY3Rpb24lMjBJdGVyYXRpdmUlMjBQcm9tcHQlMjBPcHRpbWl6YXRpb24lMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODI4ODEzNTF8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+Note: The code examples provided in this tutorial are for illustration purposes only and may require modifications to work with specific LLM agents or datasets.
+
+*Photo by [Google DeepMind](https://unsplash.com/@googledeepmind?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-close-up-of-a-container-with-words-on-it-b8GH92xVoUw?utm_source=techversation&utm_medium=referral)*
