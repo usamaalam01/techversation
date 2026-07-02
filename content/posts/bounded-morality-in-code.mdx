@@ -1,0 +1,84 @@
+---
+title: "Bounded Morality in Code"
+description: "Implementing moral computation with bounded morality framework."
+date: "2026-07-02"
+author: "Usama"
+tags: ["ai", "morality", "computation"]
+aiSummary: "Bounded Morality is a formal framework for analyzing moral problems faced by finite agents. This tutorial provides a step-by-step guide to implementing Bounded Morality in code. We will explore the basics of moral computation and provide working code examples to demonstrate the framework's application."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1565292793248-f5c13612c48e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxCb3VuZGVkJTIwTW9yYWxpdHklMjBEZWZpbmluZyUyMFNwYWNlJTIwTW9yYWwlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODI5ODQ2NTd8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Bounded Morality
+Bounded Morality is a novel approach to modeling moral cognition, extending Herbert Simon's notion of bounded rationality. This framework recognizes that moral decision-making is a complex, computationally demanding task, especially for finite agents. By acknowledging these limitations, Bounded Morality provides a more realistic and nuanced understanding of moral computation.
+
+The framework is based on the idea that moral problems can be analyzed in terms of their computational demands, rather than adhering to fixed ethical theories. This allows for a more flexible and context-dependent approach to moral decision-making.
+
+## Defining the Space of Moral Computation
+To implement Bounded Morality, we need to define the space of moral computation. This involves identifying the key components of moral problems, such as:
+
+* **Moral goals**: The objectives that the agent is trying to achieve.
+* **Moral constraints**: The limitations and restrictions that the agent must adhere to.
+* **Moral trade-offs**: The compromises that the agent must make between competing moral goals.
+
+We can represent these components using a simple data structure, such as a dictionary or a graph.
+
+```python
+import networkx as nx
+
+# Define a simple moral problem
+moral_problem = {
+    "goals": ["maximize happiness", "minimize harm"],
+    "constraints": ["respect autonomy", "avoid deception"],
+    "trade-offs": ["balance individual freedom with collective well-being"]
+}
+
+# Create a graph to represent the moral problem
+G = nx.Graph()
+G.add_nodes_from(moral_problem["goals"])
+G.add_nodes_from(moral_problem["constraints"])
+G.add_edges_from([(goal, constraint) for goal in moral_problem["goals"] for constraint in moral_problem["constraints"]])
+```
+
+## Computing Moral Solutions
+Once we have defined the space of moral computation, we can use algorithms to compute moral solutions. These algorithms can be based on various techniques, such as:
+
+* **Optimization**: Finding the optimal solution that maximizes moral goals while satisfying moral constraints.
+* **Satisfiability**: Finding a solution that satisfies all moral constraints, even if it is not optimal.
+
+We can use libraries like `scipy` to implement optimization algorithms, such as linear programming or dynamic programming.
+
+```python
+from scipy.optimize import linprog
+
+# Define the optimization problem
+c = [-1, -1]  # coefficients for the objective function
+A_ub = [[1, 1], [1, -1]]  # coefficients for the constraints
+b_ub = [1, 0]  # right-hand side of the constraints
+
+# Solve the optimization problem
+res = linprog(c, A_ub=A_ub, b_ub=b_ub)
+
+# Print the solution
+print(res.x)
+```
+
+![a close up of an open book with text](https://images.unsplash.com/photo-1642775421580-1a859d8bbab6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxCb3VuZGVkJTIwTW9yYWxpdHklMjBEZWZpbmluZyUyMFNwYWNlJTIwTW9yYWwlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODI5ODQ2NTd8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion and Future Work
+Bounded Morality provides a novel framework for analyzing moral problems and computing moral solutions. By acknowledging the computational demands of moral decision-making, we can develop more realistic and nuanced models of moral cognition.
+
+In this tutorial, we provided a step-by-step guide to implementing Bounded Morality in code, using simple data structures and algorithms to represent and solve moral problems.
+
+Future work can focus on extending the framework to more complex moral problems, incorporating additional components such as emotional and social factors. We can also explore the application of Bounded Morality to real-world scenarios, such as autonomous vehicles or healthcare decision-making.
+
+For more information on Bounded Morality, please refer to the original paper on [arXiv](https://arxiv.org/abs/2607.00002).
+
+### Additional Resources
+* [arXiv:2607.00002v1](https://arxiv.org/abs/2607.00002)
+* [Herbert Simon's notion of bounded rationality](https://en.wikipedia.org/wiki/Bounded_rationality)
+
+Note: The code examples provided in this tutorial are for illustrative purposes only and may not be suitable for production use.
+
+*Photo by [Enayet Raheem](https://unsplash.com/@raheemsphoto?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/chapter-6-regression-models-for-overdispersed-countresponse-book-page-3RQnQyyzA9c?utm_source=techversation&utm_medium=referral)*
