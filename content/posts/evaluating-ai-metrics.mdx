@@ -1,0 +1,81 @@
+---
+title: "Evaluating AI Metrics"
+description: "Assessing AI model capabilities with two key metrics."
+date: "2026-07-02"
+author: "Usama"
+tags: ["ai", "metrics", "evaluation"]
+aiSummary: "The capabilities of frontier AI models can outstrip what is accessible to developers on a small fixed budget. Two key metrics can help evaluate AI model capabilities. We will explore these metrics and provide code examples."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxUd28lMjBNZXRyaWNzJTIwRGl2ZXJnZWQlMjBNYWtlJTIwQWxsJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgzMDIxNjM5fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+The rapid development of AI models has led to an exponential increase in compute scaling. This raises an important question: will the capabilities of frontier AI models outstrip what is accessible to developers on a small fixed budget? To answer this question, we need to evaluate AI model capabilities using relevant metrics. In this post, we will explore two key metrics and provide code examples to demonstrate their usage.
+
+## Understanding the Metrics
+The two metrics we will focus on are:
+1. **Computational Complexity**: This metric measures the computational resources required to train and deploy an AI model.
+2. **Performance**: This metric measures the accuracy and effectiveness of an AI model in performing a specific task.
+
+These metrics are crucial in evaluating the capabilities of AI models, especially when considering the trade-offs between computational complexity and performance.
+
+## Evaluating Computational Complexity
+To evaluate the computational complexity of an AI model, we can use the following formula:
+```python
+computational_complexity = (number_of_parameters * number_of_operations) / batch_size
+```
+Where:
+- `number_of_parameters` is the total number of parameters in the model
+- `number_of_operations` is the total number of operations performed by the model
+- `batch_size` is the size of the input batch
+
+Here is an example code snippet in Python that calculates the computational complexity of a simple neural network:
+```python
+import numpy as np
+
+# Define the model architecture
+number_of_parameters = 1000
+number_of_operations = 10000
+batch_size = 32
+
+# Calculate computational complexity
+computational_complexity = (number_of_parameters * number_of_operations) / batch_size
+
+print("Computational Complexity:", computational_complexity)
+```
+![A wooden block spelling the word metric ton on a table](https://images.unsplash.com/photo-1740560051539-0381d21e489c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxUd28lMjBNZXRyaWNzJTIwRGl2ZXJnZWQlMjBNYWtlJTIwQWxsJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgzMDIxNjM5fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Evaluating Performance
+To evaluate the performance of an AI model, we can use metrics such as accuracy, precision, recall, and F1-score. Here is an example code snippet in Python that calculates the performance metrics of a simple classification model:
+```python
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+
+# Define the true labels and predicted labels
+true_labels = [0, 1, 1, 0, 1, 0, 0, 1]
+predicted_labels = [0, 1, 0, 0, 1, 0, 1, 1]
+
+# Calculate performance metrics
+accuracy = accuracy_score(true_labels, predicted_labels)
+precision = precision_score(true_labels, predicted_labels)
+recall = recall_score(true_labels, predicted_labels)
+f1 = f1_score(true_labels, predicted_labels)
+
+print("Accuracy:", accuracy)
+print("Precision:", precision)
+print("Recall:", recall)
+print("F1-score:", f1)
+```
+![black flat screen computer monitor](https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxUd28lMjBNZXRyaWNzJTIwRGl2ZXJnZWQlMjBNYWtlJTIwQWxsJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgzMDIxNjM5fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In conclusion, evaluating AI model capabilities requires considering both computational complexity and performance metrics. By using these metrics, developers can make informed decisions about the trade-offs between model complexity and performance. For more information, refer to the [original paper](https://arxiv.org/abs/2607.00913) on arXiv.
+
+### Further Reading
+For a deeper dive into AI metrics and evaluation, we recommend exploring the following resources:
+- [Gundlach et al. (2025b)](https://arxiv.org/abs/2507.00913)
+- [Scikit-learn documentation](https://scikit-learn.org/stable/modules/model_evaluation.html)
+
+By following this tutorial and exploring the provided resources, developers can gain a better understanding of AI metrics and make more informed decisions when evaluating and deploying AI models.
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
