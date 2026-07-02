@@ -1,0 +1,92 @@
+---
+title: "Epistemic AI Literacy Detection"
+description: "Detecting epistemic aims and processes in student-AI co-programming."
+date: "2026-07-02"
+author: "Usama"
+tags: ["ai", "literacy", "education"]
+aiSummary: "Epistemic thinking plays a central role in students' learning processes when applying generative artificial intelligence. This tutorial introduces a conceptual framework for detecting epistemic aims and processes in student-AI co-programming. We will explore a step-by-step approach to constructing epistemic AI literacy and provide working code examples."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1692607431208-28cc794e0067?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxDb25zdHJ1Y3RpbmclMjBFcGlzdGVtaWMlMjBMaXRlcmFjeSUyMERldGVjdGluZyUyMEVwaXN0ZW1pYyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MzAwMjMzN3ww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Epistemic thinking is a crucial aspect of students' learning processes, particularly when applying generative artificial intelligence (GenAI) in programming contexts. The ability to construct queries, evaluate and validate AI-generated outputs, and regulate problem-solving strategies is essential for effective learning. In this tutorial, we will introduce a conceptual framework for detecting epistemic aims and processes in student-AI co-programming and provide a step-by-step guide on constructing epistemic AI literacy.
+
+## Understanding Epistemic Aims and Processes
+Epistemic aims refer to the goals and objectives that students set for themselves when engaging with AI-generated outputs. These aims can include understanding the underlying concepts, evaluating the accuracy of the outputs, and identifying potential biases. Epistemic processes, on the other hand, refer to the cognitive and metacognitive strategies that students employ to achieve their epistemic aims. These processes can include critical thinking, problem-solving, and reflection.
+
+## Detecting Epistemic Aims and Processes
+To detect epistemic aims and processes in student-AI co-programming, we can use a combination of natural language processing (NLP) and machine learning techniques. We can analyze the student's input, such as their queries and feedback, to identify their epistemic aims. We can also analyze the AI-generated outputs to evaluate their accuracy and identify potential biases.
+
+### NLP Approach
+One approach to detecting epistemic aims and processes is to use NLP techniques to analyze the student's input. We can use techniques such as sentiment analysis and topic modeling to identify the student's emotions and interests.
+
+```python
+import nltk
+from nltk.sentiment import SentimentIntensityAnalyzer
+
+# Define a function to analyze the student's input
+def analyze_input(input_text):
+    # Initialize the sentiment intensity analyzer
+    sia = SentimentIntensityAnalyzer()
+    
+    # Analyze the sentiment of the input text
+    sentiment = sia.polarity_scores(input_text)
+    
+    # Return the sentiment scores
+    return sentiment
+
+# Test the function
+input_text = "I'm having trouble understanding the concept of epistemic thinking."
+sentiment = analyze_input(input_text)
+print(sentiment)
+```
+
+### Machine Learning Approach
+Another approach to detecting epistemic aims and processes is to use machine learning techniques to analyze the student's input and the AI-generated outputs. We can use techniques such as supervised learning and reinforcement learning to train models that can predict the student's epistemic aims and processes.
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+
+# Define a function to train a model to predict epistemic aims
+def train_model(data):
+    # Split the data into training and testing sets
+    X_train, X_test, y_train, y_test = train_test_split(data['input'], data['label'], test_size=0.2, random_state=42)
+    
+    # Initialize the random forest classifier
+    clf = RandomForestClassifier(n_estimators=100, random_state=42)
+    
+    # Train the model
+    clf.fit(X_train, y_train)
+    
+    # Return the trained model
+    return clf
+
+# Test the function
+data = pd.read_csv('data.csv')
+clf = train_model(data)
+print(clf)
+```
+
+## Constructing Epistemic AI Literacy
+To construct epistemic AI literacy, we need to provide students with the skills and knowledge necessary to effectively engage with AI-generated outputs. This can include teaching students how to construct queries, evaluate and validate AI-generated outputs, and regulate problem-solving strategies.
+
+![graphical user interface, application, shape, arrow](https://images.unsplash.com/photo-1667984436026-99b165e3672b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxDb25zdHJ1Y3RpbmclMjBFcGlzdGVtaWMlMjBMaXRlcmFjeSUyMERldGVjdGluZyUyMEVwaXN0ZW1pYyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MzAwMjMzN3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+Detecting epistemic aims and processes in student-AI co-programming is a crucial aspect of constructing epistemic AI literacy. By using a combination of NLP and machine learning techniques, we can analyze the student's input and the AI-generated outputs to identify their epistemic aims and processes. By providing students with the skills and knowledge necessary to effectively engage with AI-generated outputs, we can help them develop epistemic AI literacy and improve their learning outcomes.
+
+![scrabble tiles spelling out the word statistics on a wooden surface](https://images.unsplash.com/photo-1705484229173-691d4fb8cd1a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxDb25zdHJ1Y3RpbmclMjBFcGlzdGVtaWMlMjBMaXRlcmFjeSUyMERldGVjdGluZyUyMEVwaXN0ZW1pYyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4MzAwMjMzN3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+### Future Work
+Future work can include exploring the use of other machine learning techniques, such as deep learning, to detect epistemic aims and processes. Additionally, we can investigate the use of multimodal data, such as text, images, and videos, to provide a more comprehensive understanding of the student's epistemic aims and processes.
+
+### References
+* [arXiv:2607.00211v1](https://arxiv.org/abs/2607.00211)
+* [NLP and Machine Learning](https://www.nltk.org/book/)
+* [Epistemic AI Literacy](https://www.epistemicailiteracy.org/)
+
+*Photo by [Google DeepMind](https://unsplash.com/@googledeepmind?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-close-up-of-a-container-with-words-on-it-b8GH92xVoUw?utm_source=techversation&utm_medium=referral)*

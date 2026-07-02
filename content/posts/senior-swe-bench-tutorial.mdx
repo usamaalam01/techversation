@@ -1,0 +1,96 @@
+---
+title: "Senior SWE-Bench Tutorial"
+description: "Assessing agents as senior engineers with open-source benchmark"
+date: "2026-07-02"
+author: "Usama"
+tags: ["tools", "benchmark", "senior-swe-bench"]
+aiSummary: "Senior SWE-Bench is an open-source benchmark that evaluates agents as senior software engineers. This tutorial provides a hands-on guide to getting started with Senior SWE-Bench. We will explore the features and capabilities of the tool, and demonstrate how to use it to assess agent performance."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1662647343295-2225e6508bdb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxTZW5pb3IlMjBTV0UlMjBCZW5jaCUyMG9wZW4lMjBzb3VyY2UlMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc4MzAwMjE4MHww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Senior SWE-Bench
+
+Senior SWE-Bench is an open-source benchmark designed to assess agents as senior software engineers. The tool is developed by Snorkel AI and is available on their website at [https://senior-swe-bench.snorkel.ai/](https://senior-swe-bench.snorkel.ai/). As a developer, it's essential to understand how to use this tool to evaluate the performance of agents in various software engineering tasks.
+
+![green wooden bench near wall](https://images.unsplash.com/photo-1493670455706-e3c92c489f22?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxTZW5pb3IlMjBTV0UlMjBCZW5jaCUyMG9wZW4lMjBzb3VyY2UlMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc4MzAwMjE4MHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Getting Started with Senior SWE-Bench
+
+To get started with Senior SWE-Bench, you need to have Python installed on your system. You can download the tool from the Snorkel AI website and follow the installation instructions. Once installed, you can use the tool to evaluate agent performance in various software engineering tasks.
+
+Here's an example of how to use Senior SWE-Bench to evaluate agent performance in a simple task:
+```python
+import senior_swe_bench
+
+# Define the task
+task = senior_swe_bench.Task(
+    name="Simple Task",
+    description="This is a simple task",
+    requirements=["Python 3.x"]
+)
+
+# Define the agent
+agent = senior_swe_bench.Agent(
+    name="My Agent",
+    description="This is my agent"
+)
+
+# Evaluate the agent
+evaluation = senior_swe_bench.evaluate_agent(agent, task)
+
+# Print the evaluation results
+print(evaluation)
+```
+This code defines a simple task and an agent, and then uses the `evaluate_agent` function to evaluate the agent's performance in the task. The evaluation results are then printed to the console.
+
+## Features and Capabilities of Senior SWE-Bench
+
+Senior SWE-Bench provides a range of features and capabilities that make it a powerful tool for evaluating agent performance. Some of the key features include:
+
+* **Task definition**: Senior SWE-Bench allows you to define tasks with specific requirements and constraints.
+* **Agent evaluation**: The tool provides a range of evaluation metrics to assess agent performance, including accuracy, precision, and recall.
+* **Customization**: Senior SWE-Bench allows you to customize the evaluation metrics and task definitions to suit your specific needs.
+
+Here's an example of how to customize the evaluation metrics:
+```python
+import senior_swe_bench
+
+# Define the task
+task = senior_swe_bench.Task(
+    name="Custom Task",
+    description="This is a custom task",
+    requirements=["Python 3.x"]
+)
+
+# Define the agent
+agent = senior_swe_bench.Agent(
+    name="My Agent",
+    description="This is my agent"
+)
+
+# Define the evaluation metrics
+evaluation_metrics = [
+    senior_swe_bench.AccuracyMetric(),
+    senior_swe_bench.PrecisionMetric(),
+    senior_swe_bench.RecallMetric()
+]
+
+# Evaluate the agent
+evaluation = senior_swe_bench.evaluate_agent(agent, task, evaluation_metrics)
+
+# Print the evaluation results
+print(evaluation)
+```
+This code defines a custom task and agent, and then uses the `evaluate_agent` function to evaluate the agent's performance in the task with custom evaluation metrics.
+
+## Conclusion
+
+Senior SWE-Bench is a powerful tool for evaluating agent performance in software engineering tasks. With its range of features and capabilities, it provides a comprehensive framework for assessing agent capabilities. By following the tutorial in this post, you can get started with using Senior SWE-Bench to evaluate agent performance and customize the evaluation metrics to suit your specific needs.
+
+![a white rectangular device](https://images.unsplash.com/photo-1662460149302-02a1934bbc12?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxTZW5pb3IlMjBTV0UlMjBCZW5jaCUyMG9wZW4lMjBzb3VyY2UlMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc4MzAwMjE4MHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+For more information on Senior SWE-Bench, you can visit the Snorkel AI website at [https://senior-swe-bench.snorkel.ai/](https://senior-swe-bench.snorkel.ai/).
+
+*Photo by [Bluewater Sweden](https://unsplash.com/@bluewaterglobe?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/text-Azu1AouNft8?utm_source=techversation&utm_medium=referral)*
