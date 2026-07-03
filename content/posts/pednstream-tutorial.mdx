@@ -1,0 +1,97 @@
+---
+title: "PedNStream Tutorial"
+description: "Scalable network flow simulation for pedestrian traffic management."
+date: "2026-07-03"
+author: "Usama"
+tags: ["pedestrian", "simulation", "python"]
+aiSummary: "PedNStream is an open-source tool for large-scale crowd management. It provides a scalable network flow simulation for pedestrian traffic management. This tutorial will guide you through the process of using PedNStream for your projects."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1644088379091-d574269d422f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxQZWROU3RyZWFtJTIwU2NhbGFibGUlMjBOZXR3b3JrJTIwRmxvdyUyMFNpbXVsYXRpb24lMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODMwNTEyMDB8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to PedNStream
+PedNStream is an open-source, Python-based tool designed for large-scale crowd management. It provides a scalable network flow simulation for pedestrian traffic management, making it an ideal solution for researchers and developers working on projects that require efficient and accurate crowd simulations. In this tutorial, we will explore the features and capabilities of PedNStream and provide a step-by-step guide on how to use it for your projects.
+
+## Installing PedNStream
+To start using PedNStream, you need to install it first. You can do this by cloning the repository from GitHub and installing the required dependencies. Here's an example of how to do it:
+
+```bash
+git clone https://github.com/pednstream/pednstream.git
+cd pednstream
+pip install -r requirements.txt
+```
+
+## Basic Usage of PedNStream
+Once you have installed PedNStream, you can start using it to simulate pedestrian traffic. The basic usage of PedNStream involves creating a network of nodes and edges, defining the pedestrian traffic flow, and running the simulation. Here's an example of how to do it:
+
+```python
+import pednstream as pns
+
+# Create a network
+network = pns.Network()
+
+# Add nodes and edges to the network
+network.add_node(pns.Node(1, (0, 0)))
+network.add_node(pns.Node(2, (10, 0)))
+network.add_edge(pns.Edge(1, 2, capacity=100))
+
+# Define the pedestrian traffic flow
+traffic_flow = pns.TrafficFlow(network, 100, 10)
+
+# Run the simulation
+simulation = pns.Simulation(traffic_flow, network)
+simulation.run(100)
+```
+
+## Advanced Features of PedNStream
+PedNStream provides several advanced features that can be used to customize and extend the simulation. These features include:
+
+*   **Network optimization**: PedNStream provides a network optimization algorithm that can be used to optimize the network for pedestrian traffic flow.
+*   **Traffic signal control**: PedNStream provides a traffic signal control algorithm that can be used to control the traffic signals in the network.
+*   **Pedestrian behavior modeling**: PedNStream provides a pedestrian behavior modeling framework that can be used to model the behavior of pedestrians in the network.
+
+Here's an example of how to use the network optimization algorithm:
+
+```python
+# Optimize the network
+network.optimize()
+```
+
+And here's an example of how to use the traffic signal control algorithm:
+
+```python
+# Control the traffic signals
+traffic_signals = pns.TrafficSignals(network)
+traffic_signals.control()
+```
+
+## Visualizing the Simulation
+PedNStream provides a visualization tool that can be used to visualize the simulation. The visualization tool can be used to visualize the network, the pedestrian traffic flow, and the traffic signals. Here's an example of how to use the visualization tool:
+
+```python
+# Visualize the simulation
+visualization = pns.Visualization(simulation)
+visualization.show()
+```
+
+![a blue abstract background with lines and dots](https://images.unsplash.com/photo-1644325349124-d1756b79dd42?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxQZWROU3RyZWFtJTIwU2NhbGFibGUlMjBOZXR3b3JrJTIwRmxvdyUyMFNpbXVsYXRpb24lMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODMwNTEyMDB8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we have explored the features and capabilities of PedNStream and provided a step-by-step guide on how to use it for your projects. PedNStream is a powerful tool for large-scale crowd management, and its scalable network flow simulation makes it an ideal solution for researchers and developers working on projects that require efficient and accurate crowd simulations.
+
+## Further Reading
+For more information on PedNStream, you can visit the [official website](https://arxiv.org/abs/2607.01021) or read the [research paper](https://arxiv.org/abs/2607.01021) that introduces the tool.
+
+## Example Use Cases
+PedNStream can be used in a variety of scenarios, including:
+
+*   **Crowd management**: PedNStream can be used to manage crowds in public events, such as concerts, festivals, and sports games.
+*   **Urban planning**: PedNStream can be used to design and optimize urban infrastructure, such as roads, sidewalks, and public transportation systems.
+*   **Emergency response**: PedNStream can be used to simulate emergency response scenarios, such as evacuations and rescue operations.
+
+![a bunch of blue wires connected to each other](https://images.unsplash.com/photo-1683322499436-f4383dd59f5a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxQZWROU3RyZWFtJTIwU2NhbGFibGUlMjBOZXR3b3JrJTIwRmxvdyUyMFNpbXVsYXRpb24lMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODMwNTEyMDB8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+By following this tutorial, you should now have a good understanding of how to use PedNStream for your projects. With its scalable network flow simulation and advanced features, PedNStream is a powerful tool for large-scale crowd management.
+
+*Photo by [Conny Schneider](https://unsplash.com/@choys_?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-blue-background-with-lines-and-dots-xuTJZ7uD7PI?utm_source=techversation&utm_medium=referral)*
