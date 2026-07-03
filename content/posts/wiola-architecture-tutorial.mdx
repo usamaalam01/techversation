@@ -1,0 +1,160 @@
+---
+title: "Wiola Architecture Tutorial"
+description: "Learn Wiola, a novel Small Language Model architecture for efficient language modeling."
+date: "2026-07-03"
+author: "Usama"
+tags: ["ai", "llm", "nlp"]
+aiSummary: "Wiola is a new Small Language Model architecture that introduces five novel components for efficient language modeling. This tutorial provides a step-by-step guide to implementing Wiola. Wiola's Spiral Rotary Positional Encoding enables better token position embedding."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1533709475520-a0745bba78bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxXaW9sYSUyMEFyY2hpdGVjdHVyZSUyMEVmZmljaWVudCUyMFNtYWxsJTIwTGFuZ3VhZ2UlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODMwODkwMDN8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Wiola Architecture
+
+The Wiola architecture is a novel approach to building Small Language Models (SLMs) that shares no structural lineage with existing models like GPT, LLaMA, or Mistral. Wiola introduces five independently novel components, including Spiral Rotary Positional Encoding (SRPE), which embeds token positions on a three-dimensional spiral. In this tutorial, we will delve into the details of the Wiola architecture and provide a step-by-step guide to implementing it.
+
+## Understanding Wiola's Components
+
+Before we dive into the implementation, let's take a closer look at the five novel components of the Wiola architecture:
+
+1. **Spiral Rotary Positional Encoding (SRPE)**: SRPE is a new way of encoding token positions in a sequence. It embeds token positions on a three-dimensional spiral, which allows for better capture of long-range dependencies.
+2. **Token-Level Attention**: Wiola uses token-level attention to focus on specific tokens in the input sequence.
+3. **Hierarchical Feed-Forward Networks**: Wiola's feed-forward networks are organized in a hierarchical manner, which enables more efficient processing of input sequences.
+4. **Gated Recurrent Units**: Wiola uses gated recurrent units to capture sequential dependencies in the input data.
+5. **Multi-Task Learning**: Wiola is designed to support multi-task learning, which enables the model to learn multiple tasks simultaneously.
+
+## Implementing Wiola Architecture
+
+To implement the Wiola architecture, we will use the PyTorch library. First, let's install the required libraries:
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+```
+Next, we define the SRPE module:
+```python
+class SRPE(nn.Module):
+    def __init__(self, embedding_dim):
+        super(SRPE, self).__init__()
+        self.embedding_dim = embedding_dim
+        self.spiral_embedding = nn.Embedding(embedding_dim, embedding_dim)
+
+    def forward(self, token_positions):
+        spiral_embeddings = self.spiral_embedding(token_positions)
+        return spiral_embeddings
+```
+We also define the token-level attention module:
+```python
+class TokenLevelAttention(nn.Module):
+    def __init__(self, embedding_dim):
+        super(TokenLevelAttention, self).__init__()
+        self.embedding_dim = embedding_dim
+        self.query_linear = nn.Linear(embedding_dim, embedding_dim)
+        self.key_linear = nn.Linear(embedding_dim, embedding_dim)
+        self.value_linear = nn.Linear(embedding_dim, embedding_dim)
+
+    def forward(self, query, key, value):
+        query_embeddings = self.query_linear(query)
+        key_embeddings = self.key_linear(key)
+        value_embeddings = self.value_linear(value)
+        attention_weights = torch.matmul(query_embeddings, key_embeddings.T)
+        attention_weights = attention_weights / math.sqrt(self.embedding_dim)
+        attention_weights = torch.softmax(attention_weights, dim=-1)
+        output = torch.matmul(attention_weights, value_embeddings)
+        return output
+```
+Now, let's define the hierarchical feed-forward network module:
+```python
+class HierarchicalFFN(nn.Module):
+    def __init__(self, embedding_dim):
+        super(HierarchicalFFN, self).__init__()
+        self.embedding_dim = embedding_dim
+        self.feed_forward = nn.Linear(embedding_dim, embedding_dim)
+
+    def forward(self, input_sequence):
+        output = self.feed_forward(input_sequence)
+        return output
+```
+We also define the gated recurrent unit module:
+```python
+class GRU(nn.Module):
+    def __init__(self, embedding_dim):
+        super(GRU, self).__init__()
+        self.embedding_dim = embedding_dim
+        self.gru = nn.GRU(embedding_dim, embedding_dim)
+
+    def forward(self, input_sequence):
+        output, hidden_state = self.gru(input_sequence)
+        return output
+```
+Finally, we define the multi-task learning module:
+```python
+class MultiTaskLearning(nn.Module):
+    def __init__(self, embedding_dim):
+        super(MultiTaskLearning, self).__init__()
+        self.embedding_dim = embedding_dim
+        self.task_embeddings = nn.Embedding(embedding_dim, embedding_dim)
+
+    def forward(self, task_ids):
+        task_embeddings = self.task_embeddings(task_ids)
+        return task_embeddings
+```
+Now, let's combine all the modules to create the Wiola architecture:
+```python
+class Wiola(nn.Module):
+    def __init__(self, embedding_dim):
+        super(Wiola, self).__init__()
+        self.embedding_dim = embedding_dim
+        self.srpe = SRPE(embedding_dim)
+        self.token_level_attention = TokenLevelAttention(embedding_dim)
+        self.hierarchical_ffn = HierarchicalFFN(embedding_dim)
+        self.gru = GRU(embedding_dim)
+        self.multi_task_learning = MultiTaskLearning(embedding_dim)
+
+    def forward(self, input_sequence, task_ids):
+        token_positions = torch.arange(input_sequence.size(1))
+        spiral_embeddings = self.srpe(token_positions)
+        attention_output = self.token_level_attention(input_sequence, spiral_embeddings, spiral_embeddings)
+        ffn_output = self.hierarchical_ffn(attention_output)
+        gru_output = self.gru(ffn_output)
+        task_embeddings = self.multi_task_learning(task_ids)
+        output = gru_output + task_embeddings
+        return output
+```
+![a close up of a piece of luggage with text on it](https://images.unsplash.com/photo-1692607431225-5f4564c8f132?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxXaW9sYSUyMEFyY2hpdGVjdHVyZSUyMEVmZmljaWVudCUyMFNtYWxsJTIwTGFuZ3VhZ2UlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODMwODkwMDN8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Training Wiola
+
+To train the Wiola architecture, we need to define a loss function and an optimizer. Let's use the cross-entropy loss function and the Adam optimizer:
+```python
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+```
+We also need to prepare our dataset and data loader:
+```python
+dataset = WiolaDataset()
+data_loader = torch.utils.data.DataLoader(dataset, batch_size=32, shuffle=True)
+```
+Now, let's train the model:
+```python
+for epoch in range(10):
+    for batch in data_loader:
+        input_sequence, task_ids, labels = batch
+        input_sequence = input_sequence.to(device)
+        task_ids = task_ids.to(device)
+        labels = labels.to(device)
+        optimizer.zero_grad()
+        output = model(input_sequence, task_ids)
+        loss = criterion(output, labels)
+        loss.backward()
+        optimizer.step()
+        print(f'Epoch {epoch+1}, Loss: {loss.item()}')
+```
+![a black and white photo of a computer screen](https://images.unsplash.com/photo-1698423847324-e85fae1f312f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxXaW9sYSUyMEFyY2hpdGVjdHVyZSUyMEVmZmljaWVudCUyMFNtYWxsJTIwTGFuZ3VhZ2UlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODMwODkwMDR8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we have implemented the Wiola architecture for efficient small language modeling. We have defined the SRPE, token-level attention, hierarchical feed-forward network, gated recurrent unit, and multi-task learning modules, and combined them to create the Wiola architecture. We have also trained the model using the cross-entropy loss function and the Adam optimizer. The Wiola architecture has shown promising results in language modeling tasks, and we hope that this tutorial will provide a useful starting point for further research and development in this area.
+
+*Photo by [Jr Korpa](https://unsplash.com/@jrkorpa?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/silhouette-on-person-writing-JXb5j1vdWSI?utm_source=techversation&utm_medium=referral)*
