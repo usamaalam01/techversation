@@ -1,0 +1,169 @@
+---
+title: "Geometry-Aware Graph Fusion"
+description: "Reconstruct rainfall fields with spatial support."
+date: "2026-07-04"
+author: "Usama"
+tags: ["ai", "geometry", "reconstruction"]
+aiSummary: "Geometry-aware graph fusion is a novel approach for reconstructing rainfall fields. It combines data from different sources with incompatible spatial supports. This method uses geometrically distinct constraints to improve the accuracy of rainfall field reconstruction."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1644088379091-d574269d422f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxTcGF0aWFsJTIwU3VwcG9ydCUyME1hdHRlcnMlMjBHZW9tZXRyeSUyMEF3YXJlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgzMTM3MjExfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Rainfall field reconstruction is a critical task in urban flood modeling. However, real-world rainfall sensing systems observe the field through incompatible spatial supports, such as gauges, microwave links, and radar/satellite products. These differences in measurement support impose geometrically distinct constraints, making it challenging to reconstruct accurate rainfall fields. Recently, a new approach called geometry-aware graph fusion has been proposed to address this issue.
+
+## Geometry-Aware Graph Fusion
+
+Geometry-aware graph fusion is a method that combines data from different sources with incompatible spatial supports. It uses geometrically distinct constraints to improve the accuracy of rainfall field reconstruction. The basic idea is to represent the rainfall field as a graph, where each node corresponds to a measurement location, and the edges represent the relationships between these locations.
+
+The graph fusion process involves two main steps:
+
+1.  **Graph Construction**: The first step is to construct a graph that represents the rainfall field. This graph should capture the geometric relationships between the measurement locations.
+2.  **Graph Fusion**: The second step is to fuse the graphs from different sources using a geometry-aware approach. This involves using the geometric constraints to combine the information from different sources and produce a more accurate reconstruction of the rainfall field.
+
+## Implementing Geometry-Aware Graph Fusion
+
+To implement geometry-aware graph fusion, we can use a combination of Python libraries, including `networkx` for graph construction and `scipy` for spatial interpolation. Here is an example code snippet that demonstrates the basic idea:
+
+```python
+import networkx as nx
+import numpy as np
+from scipy.interpolate import griddata
+
+# Define the measurement locations and values
+locations = np.array([[0, 0], [1, 0], [0, 1], [1, 1]])
+values = np.array([10, 20, 30, 40])
+
+# Construct the graph
+G = nx.Graph()
+G.add_nodes_from(range(len(locations)))
+
+# Add edges to the graph based on the geometric relationships
+for i in range(len(locations)):
+    for j in range(i+1, len(locations)):
+        distance = np.linalg.norm(locations[i] - locations[j])
+        if distance < 1:
+            G.add_edge(i, j)
+
+# Define the grid points for interpolation
+grid_x = np.linspace(0, 1, 100)
+grid_y = np.linspace(0, 1, 100)
+grid_x, grid_y = np.meshgrid(grid_x, grid_y)
+
+# Interpolate the values using the graph
+interpolated_values = griddata(locations, values, (grid_x, grid_y), method='linear')
+
+# Visualize the interpolated values
+import matplotlib.pyplot as plt
+plt.imshow(interpolated_values, origin='lower')
+plt.show()
+```
+
+This code snippet demonstrates how to construct a graph from measurement locations and values, and then use this graph to interpolate the values at a set of grid points. The resulting interpolated values can be visualized using a heatmap.
+
+## Using Geometry-Aware Graph Fusion for Rainfall Field Reconstruction
+
+To use geometry-aware graph fusion for rainfall field reconstruction, we need to modify the above code snippet to accommodate the different sources of data with incompatible spatial supports. We can do this by constructing separate graphs for each source of data, and then fusing these graphs using a geometry-aware approach.
+
+Here is an example code snippet that demonstrates how to modify the above code snippet to accommodate multiple sources of data:
+
+```python
+import networkx as nx
+import numpy as np
+from scipy.interpolate import griddata
+
+# Define the measurement locations and values for each source
+locations_gauges = np.array([[0, 0], [1, 0], [0, 1], [1, 1]])
+values_gauges = np.array([10, 20, 30, 40])
+
+locations_microwave = np.array([[0.5, 0], [0.5, 1]])
+values_microwave = np.array([15, 35])
+
+locations_radar = np.array([[0, 0.5], [1, 0.5]])
+values_radar = np.array([25, 45])
+
+# Construct separate graphs for each source
+G_gauges = nx.Graph()
+G_gauges.add_nodes_from(range(len(locations_gauges)))
+
+G_microwave = nx.Graph()
+G_microwave.add_nodes_from(range(len(locations_microwave)))
+
+G_radar = nx.Graph()
+G_radar.add_nodes_from(range(len(locations_radar)))
+
+# Add edges to each graph based on the geometric relationships
+for i in range(len(locations_gauges)):
+    for j in range(i+1, len(locations_gauges)):
+        distance = np.linalg.norm(locations_gauges[i] - locations_gauges[j])
+        if distance < 1:
+            G_gauges.add_edge(i, j)
+
+for i in range(len(locations_microwave)):
+    for j in range(i+1, len(locations_microwave)):
+        distance = np.linalg.norm(locations_microwave[i] - locations_microwave[j])
+        if distance < 1:
+            G_microwave.add_edge(i, j)
+
+for i in range(len(locations_radar)):
+    for j in range(i+1, len(locations_radar)):
+        distance = np.linalg.norm(locations_radar[i] - locations_radar[j])
+        if distance < 1:
+            G_radar.add_edge(i, j)
+
+# Fuse the graphs using a geometry-aware approach
+G_fused = nx.Graph()
+G_fused.add_nodes_from(range(len(locations_gauges) + len(locations_microwave) + len(locations_radar)))
+
+# Add edges to the fused graph based on the geometric relationships
+for i in range(len(locations_gauges)):
+    for j in range(len(locations_microwave)):
+        distance = np.linalg.norm(locations_gauges[i] - locations_microwave[j])
+        if distance < 1:
+            G_fused.add_edge(i, len(locations_gauges) + j)
+
+for i in range(len(locations_gauges)):
+    for j in range(len(locations_radar)):
+        distance = np.linalg.norm(locations_gauges[i] - locations_radar[j])
+        if distance < 1:
+            G_fused.add_edge(i, len(locations_gauges) + len(locations_microwave) + j)
+
+for i in range(len(locations_microwave)):
+    for j in range(len(locations_radar)):
+        distance = np.linalg.norm(locations_microwave[i] - locations_radar[j])
+        if distance < 1:
+            G_fused.add_edge(len(locations_gauges) + i, len(locations_gauges) + len(locations_microwave) + j)
+
+# Define the grid points for interpolation
+grid_x = np.linspace(0, 1, 100)
+grid_y = np.linspace(0, 1, 100)
+grid_x, grid_y = np.meshgrid(grid_x, grid_y)
+
+# Interpolate the values using the fused graph
+interpolated_values = griddata(np.vstack((locations_gauges, locations_microwave, locations_radar)), np.hstack((values_gauges, values_microwave, values_radar)), (grid_x, grid_y), method='linear')
+
+# Visualize the interpolated values
+import matplotlib.pyplot as plt
+plt.imshow(interpolated_values, origin='lower')
+plt.show()
+```
+
+This code snippet demonstrates how to construct separate graphs for each source of data, and then fuse these graphs using a geometry-aware approach. The resulting fused graph can be used to interpolate the values at a set of grid points, and the interpolated values can be visualized using a heatmap.
+
+![a black and white photo of a bunch of cubes](https://images.unsplash.com/photo-1639322537504-6427a16b0a28?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxTcGF0aWFsJTIwU3VwcG9ydCUyME1hdHRlcnMlMjBHZW9tZXRyeSUyMEF3YXJlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgzMTM3MjExfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+Geometry-aware graph fusion is a powerful approach for reconstructing rainfall fields from data with incompatible spatial supports. By constructing separate graphs for each source of data and then fusing these graphs using a geometry-aware approach, we can produce more accurate reconstructions of the rainfall field. The resulting fused graph can be used to interpolate the values at a set of grid points, and the interpolated values can be visualized using a heatmap.
+
+## Future Work
+
+There are several directions for future work in this area. One possible direction is to explore the use of more advanced graph fusion techniques, such as those based on deep learning or spectral graph theory. Another possible direction is to apply geometry-aware graph fusion to other types of data, such as image or video data. Finally, it may be possible to use geometry-aware graph fusion in combination with other techniques, such as data assimilation or model reduction, to produce even more accurate reconstructions of the rainfall field.
+
+![a ferris wheel lit up at night with colorful lights](https://images.unsplash.com/photo-1534777410147-084a460870fc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxTcGF0aWFsJTIwU3VwcG9ydCUyME1hdHRlcnMlMjBHZW9tZXRyeSUyMEF3YXJlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgzMTM3MjExfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+By exploring these directions, we can continue to improve the accuracy and robustness of geometry-aware graph fusion, and apply it to a wider range of problems in science and engineering.
+
+*Photo by [Conny Schneider](https://unsplash.com/@choys_?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-blue-background-with-lines-and-dots-xuTJZ7uD7PI?utm_source=techversation&utm_medium=referral)*
