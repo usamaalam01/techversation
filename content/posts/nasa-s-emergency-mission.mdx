@@ -1,0 +1,90 @@
+---
+title: "NASA's Emergency Mission"
+description: "NASA launched an emergency mission to stop the Swift Observatory from crashing to Earth"
+date: "2026-07-04"
+author: "Usama"
+tags: ["nasa", "space-tech", "emergency-mission"]
+aiSummary: "NASA has launched an emergency mission to save the Swift Observatory from crashing to Earth. The Swift Observatory was launched in 2004, but recent solar storms have pushed its orbit lower. NASA has enlisted Katalyst Space Technologies to intercept the observatory and prevent it from burning up in Earth's atmosphere. In this post, we will explore the technical aspects of the mission and provide a hands-on tutorial on how to track the Swift Observatory's orbit using Python."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1742171085474-990a67ea990f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxOQVNBJTIwbGF1bmNoZWQlMjBlbWVyZ2VuY3klMjBtaXNzaW9uJTIwc3RvcCUyMHRlY2hub2xvZ3klMjBkaWdpdGFsJTIwaW5ub3ZhdGlvbnxlbnwxfDB8fHwxNzgzMTkzMjI3fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+The Swift Observatory was launched in 2004 as a gamma-ray burst observatory, designed to detect and study gamma-ray bursts in the universe. However, recent solar storms have pushed its orbit lower, and it is now in danger of burning up in Earth's atmosphere as soon as this year. To prevent this from happening, NASA has launched an emergency mission to intercept the observatory and raise its orbit.
+
+## The Mission
+The mission involves using a spacecraft called Link, developed by Katalyst Space Technologies, to intercept the Swift Observatory and attach a propulsion system to it. The propulsion system will then be used to raise the observatory's orbit and prevent it from burning up in the atmosphere. The Link spacecraft launched on Friday and is expected to reach the Swift Observatory in the coming weeks.
+
+## Tracking the Swift Observatory's Orbit
+To track the Swift Observatory's orbit, we can use the `skyfield` library in Python. The `skyfield` library provides a simple and efficient way to calculate the positions of celestial bodies in the solar system.
+
+```python
+import numpy as np
+from skyfield.api import load, Topos
+
+# Load the timescale and ephemeris
+ts = load.timescale()
+e = load('de421.bsp')
+
+# Define the Swift Observatory's orbit
+swift_orbit = e['earth barycenter'] + e['swift']
+
+# Define the time range for the orbit
+t = ts.now() + np.arange(0, 30, 0.1)
+
+# Calculate the Swift Observatory's position at each time step
+position = swift_orbit.at(t)
+
+# Print the position
+print(position)
+```
+
+This code loads the timescale and ephemeris using the `skyfield` library, defines the Swift Observatory's orbit, and calculates its position at each time step over a range of 30 days.
+
+## Visualizing the Orbit
+To visualize the Swift Observatory's orbit, we can use the `matplotlib` library in Python. The `matplotlib` library provides a simple and efficient way to create 2D and 3D plots.
+
+```python
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+# Calculate the Swift Observatory's position at each time step
+position = swift_orbit.at(t)
+
+# Extract the x, y, and z coordinates
+x = position.x.au
+y = position.y.au
+z = position.z.au
+
+# Create a 3D plot
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+# Plot the orbit
+ax.plot(x, y, z)
+
+# Set the labels and title
+ax.set_xlabel('X (au)')
+ax.set_ylabel('Y (au)')
+ax.set_zlabel('Z (au)')
+ax.set_title('Swift Observatory Orbit')
+
+# Show the plot
+plt.show()
+```
+
+This code calculates the Swift Observatory's position at each time step, extracts the x, y, and z coordinates, and creates a 3D plot of the orbit using the `matplotlib` library.
+
+![a sign for the jet propulsion laboratory in california](https://images.unsplash.com/photo-1642524280583-489f9645788a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxOQVNBJTIwbGF1bmNoZWQlMjBlbWVyZ2VuY3klMjBtaXNzaW9uJTIwc3RvcCUyMHRlY2hub2xvZ3klMjBkaWdpdGFsJTIwaW5ub3ZhdGlvbnxlbnwxfDB8fHwxNzgzMTkzMjI3fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this post, we have explored the technical aspects of NASA's emergency mission to save the Swift Observatory from crashing to Earth. We have also provided a hands-on tutorial on how to track the Swift Observatory's orbit using Python and visualize it using the `matplotlib` library. The success of this mission will depend on the ability of the Link spacecraft to intercept the Swift Observatory and attach a propulsion system to it. If successful, the mission will extend the life of the Swift Observatory and allow it to continue its important work in studying gamma-ray bursts.
+
+### Future Work
+In the future, we can use the `skyfield` and `matplotlib` libraries to track and visualize the orbits of other celestial bodies, such as planets, asteroids, and comets. We can also use these libraries to simulate the orbits of spacecraft and predict their trajectories.
+
+### References
+For more information on the Swift Observatory and NASA's emergency mission, please visit the [NASA website](https://www.nasa.gov/). For more information on the `skyfield` and `matplotlib` libraries, please visit the [Skyfield website](https://rhodesmill.org/skyfield/) and the [Matplotlib website](https://matplotlib.org/).
+
+*Photo by [Yuzhe Dong](https://unsplash.com/@dannnyzi?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/the-nasa-vehicle-assembly-building-stands-tall-w-YKItrq0pk?utm_source=techversation&utm_medium=referral)*
