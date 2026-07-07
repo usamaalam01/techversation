@@ -1,0 +1,68 @@
+---
+title: "Open Source AI Rise"
+description: "Open source AI models' success isn't coming at the expense of labs."
+date: "2026-07-07"
+author: "Usama"
+tags: ["ai", "open-source", "technology"]
+aiSummary: "The rise of open source AI models isn't hurting Anthropic, a leading AI lab. Open source models capture a different phase of the life cycle, focusing on accessibility and community-driven development. This post explores the relationship between open source AI and labs like Anthropic, and provides a practical tutorial on working with open source AI models."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1589829068065-20154e8f9642?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxyaXNlJTIwb3BlbiUyMHNvdXJjZSUyMGlzbiUyMGh1cnRpbmclMjB0ZWNobm9sb2d5JTIwZGlnaXRhbCUyMGlubm92YXRpb258ZW58MXwwfHx8MTc4MzQ1NDk5Mnww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Open Source AI
+
+The rise of open source AI has been a significant trend in the technology industry, with many models and frameworks being made available to the public. This has led to a surge in interest and adoption of AI technology, with many developers and organizations exploring its potential. However, some have questioned whether the rise of open source AI would hurt companies like Anthropic, which have invested heavily in developing their own AI models.
+
+According to a recent article on [TechCrunch](https://techcrunch.com/2026/07/07/why-the-rise-of-open-source-ai-isnt-hurting-anthropic-yet/), the success of open source AI models isn't coming at the expense of frontier labs like Anthropic. Instead, they each seem to capture two phases of the same life cycle. Open source models focus on accessibility and community-driven development, while labs like Anthropic focus on pushing the boundaries of AI research and development.
+
+## Working with Open Source AI Models
+
+One popular open source AI model is the [Hugging Face Transformers](https://huggingface.co/transformers/) library, which provides a wide range of pre-trained models and a simple interface for using them. To get started with using open source AI models, you can install the Hugging Face Transformers library using pip:
+```python
+pip install transformers
+```
+Once installed, you can use the library to load a pre-trained model and use it for tasks like text classification or language translation. For example:
+```python
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+# Load pre-trained model and tokenizer
+model = AutoModelForSequenceClassification.from_pretrained("distilbert-base-uncased")
+tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
+
+# Define a function to classify text
+def classify_text(text):
+    inputs = tokenizer(text, return_tensors="pt")
+    outputs = model(**inputs)
+    return outputs.logits.detach().numpy()
+
+# Test the function
+text = "This is a test sentence."
+print(classify_text(text))
+```
+This code loads a pre-trained DistilBERT model and uses it to classify a test sentence.
+
+![a room with a lot of blue lights on it](https://images.unsplash.com/photo-1705615791240-c35f4799863b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxyaXNlJTIwb3BlbiUyMHNvdXJjZSUyMGlzbiUyMGh1cnRpbmclMjB0ZWNobm9sb2d5JTIwZGlnaXRhbCUyMGlubm92YXRpb258ZW58MXwwfHx8MTc4MzQ1NDk5Mnww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Benefits of Open Source AI
+
+The rise of open source AI has several benefits, including:
+
+* **Accessibility**: Open source AI models are available to anyone, regardless of their background or resources.
+* **Community-driven development**: Open source AI models are developed and maintained by a community of developers, which can lead to faster development and more innovative solutions.
+* **Customizability**: Open source AI models can be customized and modified to suit specific use cases and applications.
+
+However, there are also some challenges associated with using open source AI models, including:
+
+* **Quality and reliability**: Open source AI models may not be as reliable or accurate as models developed by commercial companies.
+* **Support and maintenance**: Open source AI models may not have the same level of support and maintenance as commercial models.
+
+## Conclusion
+
+The rise of open source AI is not hurting companies like Anthropic, but rather complementing their work. Open source AI models capture a different phase of the life cycle, focusing on accessibility and community-driven development. By working with open source AI models, developers and organizations can tap into the power of AI technology and develop innovative solutions. As the field of AI continues to evolve, it will be interesting to see how open source AI models and commercial companies like Anthropic work together to push the boundaries of what is possible.
+
+To get started with using open source AI models, you can explore libraries like Hugging Face Transformers and start building your own AI-powered applications. With the right tools and resources, you can unlock the full potential of AI technology and create innovative solutions that transform industries and improve lives. 
+
+![a box with a key chain and a key chain on it](https://images.unsplash.com/photo-1652111865960-15f4a46a7688?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxyaXNlJTIwb3BlbiUyMHNvdXJjZSUyMGlzbiUyMGh1cnRpbmclMjB0ZWNobm9sb2d5JTIwZGlnaXRhbCUyMGlubm92YXRpb258ZW58MXwwfHx8MTc4MzQ1NDk5Mnww&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Matt Ridley](https://unsplash.com/@mattwridley?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/text-60atsfCakP8?utm_source=techversation&utm_medium=referral)*

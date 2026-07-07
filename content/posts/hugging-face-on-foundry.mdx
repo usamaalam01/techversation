@@ -1,0 +1,66 @@
+---
+title: "Hugging Face on Foundry"
+description: "Hugging Face models now available on Foundry managed compute."
+date: "2026-07-07"
+author: "Usama"
+tags: ["ai", "models", "foundry"]
+aiSummary: "Hugging Face has integrated its models with Foundry managed compute, allowing for more efficient and scalable model deployment. This integration simplifies the process of training and deploying AI models. The collaboration has significant implications for the AI development community."
+category: "articles"
+coverImage: "https://images.unsplash.com/photo-1696272440000-0808a203c852?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxIdWdnaW5nJTIwRmFjZSUyME1vZGVscyUyMEZvdW5kcnklMjBNYW5hZ2VkJTIwYXJ0aWZpY2lhbCUyMGludGVsbGlnZW5jZSUyMG1hY2hpbmUlMjBsZWFybmluZ3xlbnwxfDB8fHwxNzgzNDU0OTE2fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Hugging Face on Foundry
+
+Hugging Face, a leading provider of artificial intelligence (AI) models, has announced its integration with Foundry managed compute. This collaboration enables developers to train and deploy Hugging Face models on Foundry's managed compute platform, streamlining the model deployment process. In this post, we'll explore the implications of this integration and what it means for developers.
+
+## What is Hugging Face?
+
+Hugging Face is an AI technology company that provides a range of pre-trained models for natural language processing (NLP), computer vision, and other AI tasks. Their models are widely used in the industry and have become a standard for many AI applications. The company's mission is to make AI more accessible and usable for everyone.
+
+## What is Foundry Managed Compute?
+
+Foundry managed compute is a cloud-based platform that provides a scalable and secure environment for training and deploying AI models. The platform offers a range of features, including automated model deployment, monitoring, and optimization. Foundry's goal is to simplify the process of building and deploying AI models, making it more accessible to developers.
+
+## Integration Benefits
+
+The integration of Hugging Face models with Foundry managed compute offers several benefits to developers. Firstly, it simplifies the process of training and deploying AI models. Developers can now focus on building and improving their models, rather than worrying about the underlying infrastructure. Secondly, the integration provides a scalable and secure environment for model deployment, ensuring that models are deployed quickly and reliably.
+
+```python
+# Example code for deploying a Hugging Face model on Foundry
+from transformers import AutoModelForSequenceClassification
+from foundry import Foundry
+
+# Load the pre-trained model
+model = AutoModelForSequenceClassification.from_pretrained("bert-base-uncased")
+
+# Create a Foundry instance
+foundry = Foundry()
+
+# Deploy the model on Foundry
+foundry.deploy(model, "my-model")
+```
+
+## Implications for Developers
+
+The integration of Hugging Face models with Foundry managed compute has significant implications for developers. It provides a more efficient and scalable way to deploy AI models, allowing developers to focus on building and improving their models. Additionally, the integration simplifies the process of model deployment, making it more accessible to developers who may not have extensive experience with AI infrastructure.
+
+![a small wooden bear sitting on top of a laptop](https://images.unsplash.com/photo-1701501541638-c2ed4196b4fc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxIdWdnaW5nJTIwRmFjZSUyME1vZGVscyUyMEZvdW5kcnklMjBNYW5hZ2VkJTIwYXJ0aWZpY2lhbCUyMGludGVsbGlnZW5jZSUyMG1hY2hpbmUlMjBsZWFybmluZ3xlbnwxfDB8fHwxNzgzNDU0OTE2fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Broader Implications
+
+The integration of Hugging Face models with Foundry managed compute is part of a larger trend in the AI industry. As AI becomes more ubiquitous, there is a growing need for scalable and secure infrastructure to support AI model deployment. This integration is a step towards making AI more accessible and usable for everyone.
+
+### Future of AI Development
+
+The future of AI development is likely to be shaped by collaborations like the one between Hugging Face and Foundry. As AI models become more complex and sophisticated, there will be a growing need for scalable and secure infrastructure to support model deployment. Developers will need to focus on building and improving their models, rather than worrying about the underlying infrastructure.
+
+### Trade-Offs and Challenges
+
+While the integration of Hugging Face models with Foundry managed compute offers several benefits, there are also trade-offs and challenges to consider. For example, the use of managed compute platforms can limit the level of control that developers have over their models. Additionally, the integration may require significant changes to existing workflows and pipelines.
+
+## Conclusion
+
+In conclusion, the integration of Hugging Face models with Foundry managed compute is a significant development in the AI industry. It simplifies the process of training and deploying AI models, providing a scalable and secure environment for model deployment. As AI becomes more ubiquitous, collaborations like this will be crucial in making AI more accessible and usable for everyone. Developers should be aware of the implications of this integration and the trade-offs and challenges that come with it.
+
+*Photo by [Andres Siimon](https://unsplash.com/@johnmcclane?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-female-mannequin-is-looking-at-a-computer-screen-BBqVpTE4vw4?utm_source=techversation&utm_medium=referral)*
