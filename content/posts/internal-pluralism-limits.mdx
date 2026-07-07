@@ -1,0 +1,113 @@
+---
+title: "Internal Pluralism Limits"
+description: "Exploring internal pluralism and pairwise comparisons in decision rules."
+date: "2026-07-07"
+author: "Usama"
+tags: ["ai", "science", "research"]
+aiSummary: "Internal pluralism refers to the diversity of perspectives within an individual. Pairwise comparisons are used to learn decision rules, but they have limitations. This tutorial explores these concepts and provides code examples to demonstrate their implementation."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1733482787118-48cff2807891?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxJbnRlcm5hbCUyMFBsdXJhbGlzbSUyMExpbWl0cyUyMFBhaXJ3aXNlJTIwQ29tcGFyaXNvbnMlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODMzOTc0Mzd8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Internal pluralism is a concept that refers to the diversity of perspectives within an individual. In the context of decision-making, internal pluralism can lead to conflicting preferences and unclear decision rules. Pairwise comparisons are a common approach used to learn decision rules, but they have limitations. In this tutorial, we will explore the concept of internal pluralism and the limits of pairwise comparisons, and provide code examples to demonstrate their implementation.
+
+## Understanding Internal Pluralism
+Internal pluralism is the idea that individuals may have multiple, conflicting preferences or values. This can lead to unclear decision rules, as the individual may not be able to provide a clear ranking of their preferences. For example, consider a person who values both environmental sustainability and economic growth. When faced with a decision that involves trading off these two values, the person may struggle to provide a clear preference.
+
+![Scientific equations and abstract glowing forms against a dark background.](https://images.unsplash.com/photo-1782925510335-f3e2ca576871?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxJbnRlcm5hbCUyMFBsdXJhbGlzbSUyMExpbWl0cyUyMFBhaXJ3aXNlJTIwQ29tcGFyaXNvbnMlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhafGVufDF8MHx8fDE3ODMzOTc0Mzd8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Pairwise Comparisons
+Pairwise comparisons are a common approach used to learn decision rules. The idea is to present the individual with a series of pairwise comparisons, where they are asked to prefer one option over another. For example, consider a decision rule that involves ranking a set of options based on their environmental sustainability and economic growth. The individual may be presented with a series of pairwise comparisons, such as:
+
+* Option A vs. Option B: which is more environmentally sustainable?
+* Option A vs. Option C: which has greater economic growth?
+* Option B vs. Option C: which is more environmentally sustainable?
+
+The individual's preferences are then used to construct a decision rule that can be used to rank the options.
+
+### Implementing Pairwise Comparisons in Python
+We can implement pairwise comparisons in Python using the following code:
+```python
+import numpy as np
+
+# Define the options
+options = ['A', 'B', 'C']
+
+# Define the preferences
+preferences = {
+    ('A', 'B'): 1,  # A is preferred over B
+    ('A', 'C'): 0,  # C is preferred over A
+    ('B', 'C'): 1   # B is preferred over C
+}
+
+# Define a function to perform pairwise comparisons
+def pairwise_comparison(option1, option2):
+    if (option1, option2) in preferences:
+        return preferences[(option1, option2)]
+    elif (option2, option1) in preferences:
+        return 1 - preferences[(option2, option1)]
+    else:
+        raise ValueError("No preference defined for this pair")
+
+# Perform pairwise comparisons
+for option1 in options:
+    for option2 in options:
+        if option1 != option2:
+            print(f"{option1} vs. {option2}: {pairwise_comparison(option1, option2)}")
+```
+This code defines a set of options and a set of preferences, and then performs pairwise comparisons between each pair of options.
+
+## Limits of Pairwise Comparisons
+While pairwise comparisons can be useful for learning decision rules, they have several limitations. One limitation is that they assume that the individual's preferences are transitive, meaning that if A is preferred over B, and B is preferred over C, then A is preferred over C. However, this assumption may not always hold, especially in cases where the individual has conflicting preferences.
+
+Another limitation of pairwise comparisons is that they can be sensitive to the order in which the comparisons are presented. For example, if the individual is presented with a series of comparisons in a particular order, they may be more likely to prefer one option over another based on the order in which they were presented.
+
+### Addressing the Limits of Pairwise Comparisons
+To address the limits of pairwise comparisons, we can use more advanced techniques, such as multi-criteria decision analysis (MCDA). MCDA involves evaluating options based on multiple criteria, and can be used to handle conflicting preferences and non-transitive preferences.
+
+We can implement MCDA in Python using the following code:
+```python
+import numpy as np
+
+# Define the options
+options = ['A', 'B', 'C']
+
+# Define the criteria
+criteria = ['environmental sustainability', 'economic growth']
+
+# Define the weights for each criterion
+weights = {
+    'environmental sustainability': 0.6,
+    'economic growth': 0.4
+}
+
+# Define the scores for each option
+scores = {
+    'A': {'environmental sustainability': 0.8, 'economic growth': 0.2},
+    'B': {'environmental sustainability': 0.4, 'economic growth': 0.6},
+    'C': {'environmental sustainability': 0.2, 'economic growth': 0.8}
+}
+
+# Define a function to perform MCDA
+def mcda(option):
+    score = 0
+    for criterion in criteria:
+        score += weights[criterion] * scores[option][criterion]
+    return score
+
+# Perform MCDA
+for option in options:
+    print(f"{option}: {mcda(option)}")
+```
+This code defines a set of options, criteria, and weights, and then performs MCDA to evaluate each option based on the multiple criteria.
+
+## Conclusion
+In this tutorial, we explored the concept of internal pluralism and the limits of pairwise comparisons. We provided code examples to demonstrate the implementation of pairwise comparisons and MCDA, and discussed the limitations and advantages of each approach. By understanding the limits of pairwise comparisons and using more advanced techniques, such as MCDA, we can develop more effective decision rules that take into account the complexity of human preferences.
+
+![a close up of a piece of paper with arrows](https://images.unsplash.com/photo-1716840646010-e5622fd6683d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxJbnRlcm5hbCUyMFBsdXJhbGlzbSUyMExpbWl0cyUyMFBhaXJ3aXNlJTIwQ29tcGFyaXNvbnMlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhafGVufDF8MHx8fDE3ODMzOTc0Mzd8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+For more information on internal pluralism and pairwise comparisons, see the [original research paper](https://arxiv.org/abs/2607.02672).
+
+*Photo by [Doğan Alpaslan DEMİR](https://unsplash.com/@izafi?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/two-pieces-of-chess-sitting-on-top-of-a-wooden-table-F-9aH5SWKf4?utm_source=techversation&utm_medium=referral)*

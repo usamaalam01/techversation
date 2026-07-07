@@ -1,0 +1,85 @@
+---
+title: "Oldest American Objects in Space"
+description: "Exploring historical American space launches and their legacy."
+date: "2026-07-07"
+author: "Usama"
+tags: ["space", "history", "innovation"]
+aiSummary: "The oldest American object in space is a topic of fascination, with several historical items having been launched over the years. From a Revolutionary War flag to the Statue of Liberty, these objects represent a significant part of American history. In this post, we'll delve into the world of space exploration and examine the oldest American objects that have been launched into space. We'll also explore how to use publicly available APIs to retrieve information about these launches."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1782931778078-47dec5cc3340?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxvbGRlc3QlMjBBbWVyaWNhbiUyMG9iamVjdCUyMGV2ZXIlMjBsYXVuY2hlZCUyMHRlY2hub2xvZ3klMjBkaWdpdGFsJTIwaW5ub3ZhdGlvbnxlbnwxfDB8fHwxNzgzMzk3MjgzfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+The history of American space exploration is a long and fascinating one, with numerous objects having been launched into space over the years. From satellites and spacecraft to flags and other symbolic items, these launches have played a significant role in shaping the country's space program. In this post, we'll take a closer look at the oldest American objects in space and explore how to use publicly available APIs to retrieve information about these launches.
+
+## Historical Background
+The first American object to be launched into space was a V-2 rocket, which was launched on February 24, 1949. However, the oldest American object still in space is a topic of debate among space enthusiasts. According to an article published on [Ars Technica](https://arstechnica.com/space/2026/07/whats-the-oldest-americana-flown-in-space/), some of the oldest American objects in space include a Revolutionary War flag and the Statue of Liberty.
+
+## Using APIs to Retrieve Launch Information
+To retrieve information about historical launches, we can use publicly available APIs such as the [NASA API](https://api.nasa.gov/). This API provides access to a wide range of data, including launch information, spacecraft details, and more.
+
+```python
+import requests
+
+# Set API endpoint and parameters
+endpoint = "https://api.nasa.gov/planetary/launches"
+params = {
+    "api_key": "YOUR_API_KEY",
+    "start_date": "1949-01-01",
+    "end_date": "1960-12-31"
+}
+
+# Send GET request to API
+response = requests.get(endpoint, params=params)
+
+# Parse JSON response
+data = response.json()
+
+# Print launch information
+for launch in data["launches"]:
+    print(launch["name"], launch["date"])
+```
+
+## Exploring Launch Data
+Once we have retrieved the launch data, we can explore it further to gain insights into the history of American space exploration. For example, we can use the data to create a timeline of launches, or to analyze the types of spacecraft that were launched during different periods.
+
+```python
+import pandas as pd
+
+# Create Pandas dataframe from launch data
+df = pd.DataFrame(data["launches"])
+
+# Print dataframe
+print(df.head())
+```
+
+![a model of a rocket with a smaller rocket next to it](https://images.unsplash.com/photo-1634175735590-b2ed7b02d143?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxvbGRlc3QlMjBBbWVyaWNhbiUyMG9iamVjdCUyMGV2ZXIlMjBsYXVuY2hlZCUyMHRlY2hub2xvZ3klMjBkaWdpdGFsJTIwaW5ub3ZhdGlvbnxlbnwxfDB8fHwxNzgzMzk3MjgzfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In conclusion, the oldest American objects in space are a fascinating topic that provides a unique glimpse into the country's history of space exploration. By using publicly available APIs, we can retrieve information about these launches and explore the data further to gain insights into the history of American space exploration.
+
+## Future Work
+In the future, we can extend this work by exploring other APIs and datasets related to space exploration. For example, we can use the [SpaceX API](https://github.com/r-spacex/SpaceX-API) to retrieve information about SpaceX launches, or the [European Space Agency API](https://api.esa.int/) to retrieve information about ESA launches.
+
+```python
+import requests
+
+# Set API endpoint and parameters
+endpoint = "https://api.spacex.com/v4/launches"
+params = {
+    "limit": 100
+}
+
+# Send GET request to API
+response = requests.get(endpoint, params=params)
+
+# Parse JSON response
+data = response.json()
+
+# Print launch information
+for launch in data:
+    print(launch["name"], launch["date_utc"])
+```
+
+*Photo by [Brecht Corbeel](https://unsplash.com/@brechtcorbeel?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-model-rocket-painted-with-an-american-flag-design-5Iq2c2QMtsg?utm_source=techversation&utm_medium=referral)*
