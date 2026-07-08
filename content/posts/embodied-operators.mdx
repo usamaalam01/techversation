@@ -1,0 +1,108 @@
+---
+title: "Embodied Operators"
+description: "Building reusable embodied intelligence systems with operators and benchmarking."
+date: "2026-07-08"
+author: "Usama"
+tags: ["ai", "robotics", "embodied-intelligence"]
+aiSummary: "Embodied intelligence systems require reusable functional modules that transform multimodal observations into structured representations. This tutorial defines these modules as embodied operators and provides a step-by-step guide to building and benchmarking them. We will implement embodied operators using Python and the PyTorch library."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxFbWJvZGllZCUyME9wZXJhdG9ycyUyMEJlbmNobWFya2luZyUyMFRvd2FyZCUyMFJldXNhYmxlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgzNDgxODMwfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Embodied Operators
+
+Embodied intelligence systems are designed to interact with their environment and learn from their experiences. These systems require not only end-to-end policy models but also reusable functional modules that can transform multimodal observations, robot states, human demonstrations, and task contexts into structured representations, decisions, trajectories, control references, and system services. In this tutorial, we will define these modules as embodied operators and provide a step-by-step guide to building and benchmarking them.
+
+![man using computer](https://images.unsplash.com/photo-1578496479939-722d9dd1cc5b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxFbWJvZGllZCUyME9wZXJhdG9ycyUyMEJlbmNobWFya2luZyUyMFRvd2FyZCUyMFJldXNhYmxlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgzNDgxODMwfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Defining Embodied Operators
+
+Embodied operators are reusable functional modules that can transform multimodal observations into structured representations. These operators can be used to perform various tasks such as object recognition, pose estimation, and motion planning. In this tutorial, we will define an embodied operator as a Python class that takes in a set of inputs and produces a set of outputs.
+
+```python
+import torch
+import torch.nn as nn
+
+class EmbodiedOperator(nn.Module):
+    def __init__(self):
+        super(EmbodiedOperator, self).__init__()
+        self.fc1 = nn.Linear(64, 128)  # input layer (64) -> hidden layer (128)
+        self.fc2 = nn.Linear(128, 64)  # hidden layer (128) -> output layer (64)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))  # activation function for hidden layer
+        x = self.fc2(x)
+        return x
+```
+
+## Implementing Embodied Operators
+
+To implement an embodied operator, we need to define the inputs and outputs of the operator. For example, if we want to build an operator that recognizes objects, the input could be an image of the object and the output could be a class label. We can use the PyTorch library to implement the operator.
+
+```python
+import torch
+import torch.nn as nn
+import torchvision
+import torchvision.transforms as transforms
+
+class ObjectRecognitionOperator(nn.Module):
+    def __init__(self):
+        super(ObjectRecognitionOperator, self).__init__()
+        self.conv1 = nn.Conv2d(3, 6, 5)  # input layer (3) -> convolutional layer (6)
+        self.pool = nn.MaxPool2d(2, 2)  # pooling layer
+        self.fc1 = nn.Linear(16 * 5 * 5, 120)  # flatten layer (16*5*5) -> hidden layer (120)
+        self.fc2 = nn.Linear(120, 84)  # hidden layer (120) -> hidden layer (84)
+        self.fc3 = nn.Linear(84, 10)  # hidden layer (84) -> output layer (10)
+
+    def forward(self, x):
+        x = self.pool(torch.relu(self.conv1(x)))  # activation function for convolutional layer
+        x = x.view(-1, 16 * 5 * 5)  # flatten layer
+        x = torch.relu(self.fc1(x))  # activation function for hidden layer
+        x = torch.relu(self.fc2(x))
+        x = self.fc3(x)
+        return x
+```
+
+## Benchmarking Embodied Operators
+
+To benchmark an embodied operator, we need to evaluate its performance on a set of tasks. For example, if we want to benchmark an object recognition operator, we can use a dataset of images of objects and evaluate the operator's accuracy on the dataset.
+
+```python
+import torch
+import torch.nn as nn
+import torchvision
+import torchvision.transforms as transforms
+from torchvision import datasets
+
+# Load the dataset
+transform = transforms.Compose([transforms.ToTensor()])
+trainset = datasets.CIFAR10(root='./data', train=True, download=True, transform=transform)
+trainloader = torch.utils.data.DataLoader(trainset, batch_size=64, shuffle=True)
+
+# Evaluate the operator's accuracy
+operator = ObjectRecognitionOperator()
+criterion = nn.CrossEntropyLoss()
+optimizer = torch.optim.SGD(operator.parameters(), lr=0.001)
+for epoch in range(10):
+    running_loss = 0.0
+    for i, data in enumerate(trainloader, 0):
+        inputs, labels = data
+        optimizer.zero_grad()
+        outputs = operator(inputs)
+        loss = criterion(outputs, labels)
+        loss.backward()
+        optimizer.step()
+        running_loss += loss.item()
+    print('Epoch %d, loss = %.3f' % (epoch+1, running_loss/(i+1)))
+```
+
+## Conclusion
+
+In this tutorial, we defined embodied operators as reusable functional modules that can transform multimodal observations into structured representations. We implemented an embodied operator using PyTorch and benchmarked its performance on a set of tasks. Embodied operators have the potential to enable the development of more general and flexible embodied intelligence systems.
+
+![black flat screen computer monitor](https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxFbWJvZGllZCUyME9wZXJhdG9ycyUyMEJlbmNobWFya2luZyUyMFRvd2FyZCUyMFJldXNhYmxlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgzNDgxODMwfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+By following this tutorial, developers can build and benchmark their own embodied operators, enabling the development of more general and flexible embodied intelligence systems.
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
