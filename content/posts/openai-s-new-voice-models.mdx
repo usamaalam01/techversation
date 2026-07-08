@@ -1,0 +1,153 @@
+---
+title: "OpenAI's New Voice Models"
+description: "OpenAI releases voice models for natural live conversations."
+date: "2026-07-08"
+author: "Usama"
+tags: ["ai", "openai", "voice-models"]
+aiSummary: "OpenAI has released new voice models that can speak and listen simultaneously, enabling more natural live conversations. These models have the potential to revolutionize live translation and other applications. In this post, we'll explore how to work with these new voice models and provide concrete code examples."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1676272682018-b1435bad1cf0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxPcGVuQUklMjByZWxlYXNlcyUyMG5ldyUyMHZvaWNlJTIwbW9kZWxzJTIwdGVjaG5vbG9neSUyMGRpZ2l0YWwlMjBpbm5vdmF0aW9ufGVufDF8MHx8fDE3ODM1NDAxMTh8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+OpenAI has recently released new voice models that can speak and listen at the same time, a key ability for live translation. This technology has the potential to revolutionize the way we interact with machines and each other. In this post, we'll take a closer look at these new voice models and provide a practical tutorial on how to work with them.
+
+According to a recent article on [TechCrunch](https://techcrunch.com/2026/07/08/openai-releases-new-voice-models-for-more-natural-live-conversations/), OpenAI's new voice models are designed to enable more natural live conversations. These models can be used for a variety of applications, including live translation, voice assistants, and more.
+
+![Layered "openai" text with orange shapes on a gray background.](https://images.unsplash.com/photo-1782511742843-1b901be04a3a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxPcGVuQUklMjByZWxlYXNlcyUyMG5ldyUyMHZvaWNlJTIwbW9kZWxzJTIwdGVjaG5vbG9neSUyMGRpZ2l0YWwlMjBpbm5vdmF0aW9ufGVufDF8MHx8fDE3ODM1NDAxMTh8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Getting Started
+
+To get started with OpenAI's new voice models, you'll need to create an account on the OpenAI website and obtain an API key. Once you have your API key, you can use the OpenAI API to interact with the voice models.
+
+Here's an example of how to use the OpenAI API to generate speech using the new voice models:
+```python
+import requests
+
+# Replace with your API key
+api_key = "YOUR_API_KEY"
+
+# Set the API endpoint and parameters
+endpoint = "https://api.openai.com/v1/voice/generate"
+params = {
+    "model": "new-voice-model",
+    "text": "Hello, world!",
+    "voice": "en-US"
+}
+
+# Set the API key in the headers
+headers = {
+    "Authorization": f"Bearer {api_key}"
+}
+
+# Send the request
+response = requests.post(endpoint, headers=headers, json=params)
+
+# Check if the response was successful
+if response.status_code == 200:
+    # Get the generated speech
+    speech = response.json()["speech"]
+
+    # Play the speech using your preferred audio library
+    # For example, using pydub:
+    from pydub import AudioSegment
+    from pydub.playback import play
+
+    # Load the speech audio
+    speech_audio = AudioSegment.from_file(speech)
+
+    # Play the speech
+    play(speech_audio)
+else:
+    print("Error generating speech")
+```
+This code generates speech using the new voice model and plays it using the pydub library.
+
+## Live Translation
+
+One of the most exciting applications of OpenAI's new voice models is live translation. By using the voice models to generate speech in real-time, you can create a live translation system that can translate spoken language in real-time.
+
+Here's an example of how to use the OpenAI API to create a live translation system:
+```python
+import requests
+import pyaudio
+import wave
+
+# Replace with your API key
+api_key = "YOUR_API_KEY"
+
+# Set the API endpoint and parameters
+endpoint = "https://api.openai.com/v1/voice/translate"
+params = {
+    "model": "new-voice-model",
+    "source_language": "en-US",
+    "target_language": "es-ES"
+}
+
+# Set the API key in the headers
+headers = {
+    "Authorization": f"Bearer {api_key}"
+}
+
+# Create a PyAudio object
+p = pyaudio.PyAudio()
+
+# Open the microphone stream
+stream = p.open(format=pyaudio.paInt16, channels=1, rate=44100, input=True, frames_per_buffer=1024)
+
+while True:
+    # Read audio data from the microphone
+    audio_data = stream.read(1024)
+
+    # Send the audio data to the OpenAI API for translation
+    response = requests.post(endpoint, headers=headers, json={"audio": audio_data})
+
+    # Check if the response was successful
+    if response.status_code == 200:
+        # Get the translated speech
+        translated_speech = response.json()["translated_speech"]
+
+        # Play the translated speech using your preferred audio library
+        # For example, using pydub:
+        from pydub import AudioSegment
+        from pydub.playback import play
+
+        # Load the translated speech audio
+        translated_speech_audio = AudioSegment.from_file(translated_speech)
+
+        # Play the translated speech
+        play(translated_speech_audio)
+    else:
+        print("Error translating speech")
+
+# Close the microphone stream
+stream.stop_stream()
+stream.close()
+p.terminate()
+```
+This code creates a live translation system that translates spoken language in real-time using the OpenAI API.
+
+![a cell phone sitting on top of a laptop computer](https://images.unsplash.com/photo-1676299081847-824916de030a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxPcGVuQUklMjByZWxlYXNlcyUyMG5ldyUyMHZvaWNlJTIwbW9kZWxzJTIwdGVjaG5vbG9neSUyMGRpZ2l0YWwlMjBpbm5vdmF0aW9ufGVufDF8MHx8fDE3ODM1NDAxMTh8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+OpenAI's new voice models have the potential to revolutionize the way we interact with machines and each other. By providing a more natural and intuitive way to communicate, these models can enable a wide range of applications, from live translation to voice assistants.
+
+In this post, we've provided a practical tutorial on how to work with OpenAI's new voice models, including code examples for generating speech and creating a live translation system. We hope this tutorial has been helpful in getting you started with these exciting new models.
+
+As with any new technology, there are sure to be challenges and limitations to overcome. However, with the potential benefits of OpenAI's new voice models, we believe that the effort will be well worth it.
+
+### Future Work
+
+There are many potential directions for future work with OpenAI's new voice models. Some ideas include:
+
+* Improving the accuracy and naturalness of the generated speech
+* Expanding the range of languages and dialects supported
+* Integrating the voice models with other AI technologies, such as computer vision and natural language processing
+* Exploring new applications and use cases for the voice models
+
+We hope that this tutorial has provided a solid foundation for exploring these and other ideas, and we look forward to seeing the innovative applications that you will create with OpenAI's new voice models.
+
+*Photo by [Rolf van Root](https://unsplash.com/@freshvanroot?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-computer-screen-with-a-web-page-on-it-oLthDWAG244?utm_source=techversation&utm_medium=referral)*

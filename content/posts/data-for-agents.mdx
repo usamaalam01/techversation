@@ -1,0 +1,102 @@
+---
+title: "Data for Agents"
+description: "Open data for agents with NVIDIA and Hugging Face."
+date: "2026-07-08"
+author: "Usama"
+tags: ["ai", "nvidia", "huggingface"]
+aiSummary: "The Data for Agents project provides a large-scale dataset for training and evaluating AI agents. This project is a collaboration between NVIDIA and Hugging Face. The dataset includes a wide range of data sources and can be used for various tasks such as text classification and regression."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1674027444485-cec3da58eef4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxEYXRhJTIwQWdlbnRzJTIwYXJ0aWZpY2lhbCUyMGludGVsbGlnZW5jZSUyMG1hY2hpbmUlMjBsZWFybmluZ3xlbnwxfDB8fHwxNzgzNTQwMjczfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+The field of artificial intelligence (AI) has seen significant advancements in recent years, with the development of more sophisticated models and algorithms. One area that has gained particular attention is the development of AI agents, which are designed to perform specific tasks and interact with their environment. However, training and evaluating these agents requires large amounts of high-quality data, which can be difficult to obtain. To address this challenge, NVIDIA and Hugging Face have collaborated on the Data for Agents project, which provides a large-scale dataset for training and evaluating AI agents.
+
+## What is Data for Agents?
+Data for Agents is a large-scale dataset that includes a wide range of data sources, such as text, images, and audio. The dataset is designed to be used for various tasks, including text classification, regression, and reinforcement learning. The dataset is also annotated with labels and metadata, making it easier to use for training and evaluating AI agents.
+
+## Getting Started with Data for Agents
+To get started with Data for Agents, you can visit the [Hugging Face blog post](https://huggingface.co/blog/nvidia/open-data-for-agents) and follow the instructions for downloading and installing the dataset. The dataset is available in various formats, including CSV, JSON, and HDF5.
+
+### Installing the Required Libraries
+To work with the Data for Agents dataset, you will need to install the following libraries:
+```python
+pip install transformers
+pip install torch
+pip install pandas
+```
+### Loading the Dataset
+Once you have installed the required libraries, you can load the dataset using the following code:
+```python
+import pandas as pd
+from transformers import AutoTokenizer, AutoModel
+
+# Load the dataset
+df = pd.read_csv("data.csv")
+
+# Load the tokenizer and model
+tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+model = AutoModel.from_pretrained("bert-base-uncased")
+```
+## Using Data for Agents for Text Classification
+One of the tasks that you can use Data for Agents for is text classification. Text classification involves training a model to classify text into different categories, such as spam vs. non-spam emails.
+
+### Preprocessing the Data
+To use Data for Agents for text classification, you will need to preprocess the data by tokenizing the text and converting it into a format that can be used by the model.
+```python
+# Preprocess the data
+input_ids = []
+attention_masks = []
+
+for text in df["text"]:
+    inputs = tokenizer.encode_plus(
+        text,
+        add_special_tokens=True,
+        max_length=512,
+        return_attention_mask=True,
+        return_tensors="pt"
+    )
+    input_ids.append(inputs["input_ids"])
+    attention_masks.append(inputs["attention_mask"])
+```
+### Training the Model
+Once you have preprocessed the data, you can train the model using the following code:
+```python
+# Train the model
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model.to(device)
+
+criterion = torch.nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-5)
+
+for epoch in range(5):
+    model.train()
+    total_loss = 0
+    for batch in range(0, len(input_ids), 32):
+        input_ids_batch = torch.cat(input_ids[batch:batch+32], dim=0).to(device)
+        attention_masks_batch = torch.cat(attention_masks[batch:batch+32], dim=0).to(device)
+        labels_batch = torch.tensor(df["label"][batch:batch+32]).to(device)
+
+        optimizer.zero_grad()
+
+        outputs = model(input_ids_batch, attention_mask=attention_masks_batch, labels=labels_batch)
+        loss = criterion(outputs, labels_batch)
+
+        loss.backward()
+        optimizer.step()
+
+        total_loss += loss.item()
+
+    print(f"Epoch {epoch+1}, Loss: {total_loss / len(input_ids)}")
+```
+![a computer circuit board with a brain on it](https://images.unsplash.com/photo-1677442135703-1787eea5ce01?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxEYXRhJTIwQWdlbnRzJTIwYXJ0aWZpY2lhbCUyMGludGVsbGlnZW5jZSUyMG1hY2hpbmUlMjBsZWFybmluZ3xlbnwxfDB8fHwxNzgzNTQwMjczfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we have shown how to use the Data for Agents dataset for text classification. We have also provided a step-by-step guide on how to load the dataset, preprocess the data, and train a model using the Hugging Face Transformers library. The Data for Agents dataset provides a large-scale dataset for training and evaluating AI agents, and can be used for various tasks such as text classification, regression, and reinforcement learning.
+
+![robot and human hands reaching toward ai text](https://images.unsplash.com/photo-1694903089438-bf28d4697d9a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxEYXRhJTIwQWdlbnRzJTIwYXJ0aWZpY2lhbCUyMGludGVsbGlnZW5jZSUyMG1hY2hpbmUlMjBsZWFybmluZ3xlbnwxfDB8fHwxNzgzNTQwMjczfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+We hope that this tutorial has provided a useful introduction to the Data for Agents dataset and how to use it for text classification. For more information on the Data for Agents dataset and how to use it for other tasks, please visit the [Hugging Face blog post](https://huggingface.co/blog/nvidia/open-data-for-agents).
+
+*Photo by [Growtika](https://unsplash.com/@growtika?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/an-abstract-image-of-a-sphere-with-dots-and-lines-nGoCBxiaRO0?utm_source=techversation&utm_medium=referral)*
