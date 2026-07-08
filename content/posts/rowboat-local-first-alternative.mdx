@@ -1,0 +1,70 @@
+---
+title: "Rowboat: Local-first Alternative"
+description: "Open-source local-first alternative to Claude Desktop."
+date: "2026-07-08"
+author: "Usama"
+tags: ["ai", "local-first", "open-source"]
+aiSummary: "Rowboat is an open-source, local-first alternative to Claude Desktop. It allows users to run AI models locally on their machines, reducing reliance on cloud services. Rowboat provides a flexible and customizable platform for building and deploying AI applications."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1563559212593-402839fa3a97?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxTaG93JTIwUm93Ym9hdCUyME9wZW4lMjBzb3VyY2UlMjBsb2NhbCUyMHRlY2hub2xvZ3klMjBzb2Z0d2FyZXxlbnwxfDB8fHwxNzgzNTIxMjI2fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Rowboat is a new open-source tool that provides a local-first alternative to Claude Desktop. With Rowboat, users can run AI models locally on their machines, reducing their reliance on cloud services and improving data privacy. In this tutorial, we will explore how to get started with Rowboat and demonstrate its capabilities with concrete code examples.
+
+## Setting up Rowboat
+To get started with Rowboat, you need to clone the repository from GitHub and follow the installation instructions. The Rowboat repository can be found at [https://github.com/rowboatlabs/rowboat](https://github.com/rowboatlabs/rowboat).
+
+```bash
+git clone https://github.com/rowboatlabs/rowboat.git
+cd rowboat
+pip install -r requirements.txt
+```
+
+## Building and Deploying AI Models
+Rowboat provides a flexible and customizable platform for building and deploying AI models. It supports a wide range of AI frameworks, including TensorFlow and PyTorch. To build and deploy an AI model using Rowboat, you need to create a new project and define your model architecture.
+
+```python
+import rowboat
+
+# Create a new project
+project = rowboat.Project("my_project")
+
+# Define the model architecture
+model = rowboat.Model("my_model")
+model.add_layer(rowboat.Dense(64, activation="relu"))
+model.add_layer(rowboat.Dense(10, activation="softmax"))
+
+# Compile the model
+model.compile(loss="categorical_crossentropy", optimizer="adam", metrics=["accuracy"])
+```
+
+## Training and Evaluating AI Models
+Once you have defined your model architecture, you can train and evaluate your AI model using Rowboat. Rowboat provides a range of tools and APIs for training and evaluating AI models, including support for batch processing and hyperparameter tuning.
+
+```python
+# Train the model
+model.train(X_train, y_train, epochs=10, batch_size=32)
+
+# Evaluate the model
+loss, accuracy = model.evaluate(X_test, y_test)
+print(f"Loss: {loss:.3f}, Accuracy: {accuracy:.3f}")
+```
+
+## Conclusion
+Rowboat is a powerful and flexible open-source tool for building and deploying AI applications. Its local-first approach reduces reliance on cloud services and improves data privacy. With Rowboat, users can build and deploy AI models using a range of AI frameworks, including TensorFlow and PyTorch. Whether you are a developer, researcher, or enthusiast, Rowboat is definitely worth checking out.
+
+![Man rowing a small boat on a lake.](https://images.unsplash.com/photo-1770927306764-7bf3ec0d5861?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxTaG93JTIwUm93Ym9hdCUyME9wZW4lMjBzb3VyY2UlMjBsb2NhbCUyMHRlY2hub2xvZ3klMjBzb2Z0d2FyZXxlbnwxfDB8fHwxNzgzNTIxMjI2fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+### Future Development
+The Rowboat project is still in its early stages, and there are many exciting developments on the horizon. The Rowboat team is actively working on new features and improvements, including support for more AI frameworks and better integration with other tools and platforms. If you are interested in contributing to the Rowboat project or learning more about its future development plans, be sure to check out the Rowboat GitHub repository and join the Rowboat community.
+
+### Getting Involved
+If you are interested in getting involved with the Rowboat project, there are many ways to contribute. You can start by checking out the Rowboat GitHub repository and reviewing the documentation and issue tracker. You can also join the Rowboat community and participate in discussions on the Rowboat forum or social media channels. Whether you are a developer, researcher, or enthusiast, your contributions are welcome and appreciated.
+
+![Man in a green shirt rowing a boat](https://images.unsplash.com/photo-1768245074376-a3b7d019cd85?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxTaG93JTIwUm93Ym9hdCUyME9wZW4lMjBzb3VyY2UlMjBsb2NhbCUyMHRlY2hub2xvZ3klMjBzb2Z0d2FyZXxlbnwxfDB8fHwxNzgzNTIxMjI2fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+By following this tutorial and exploring the Rowboat project, you can gain hands-on experience with this exciting new tool and contribute to its development and growth. Happy coding!
+
+*Photo by [Jacob Jolibois](https://unsplash.com/@jolibois?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/couple-riding-boat-photography-AjcRS_cHpKg?utm_source=techversation&utm_medium=referral)*
