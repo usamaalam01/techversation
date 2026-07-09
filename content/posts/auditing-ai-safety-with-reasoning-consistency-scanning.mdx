@@ -1,0 +1,102 @@
+---
+title: "Auditing AI Safety with Reasoning Consistency Scanning"
+description: "Detecting unfaithful chain-of-thought reasoning in AI models."
+date: "2026-07-09"
+author: "Usama"
+tags: ["ai", "safety", "evaluation"]
+aiSummary: "Reasoning Consistency Scanning is a framework for auditing chain-of-thought validity in AI safety evaluations. This tutorial provides a step-by-step guide on how to implement this framework. We will explore the concepts and code examples to detect unfaithful reasoning in AI models."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1768839724256-28cd4a373209?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxSZWFzb25pbmclMjBDb25zaXN0ZW5jeSUyMFNjYW5uaW5nJTIwRnJhbWV3b3JrJTIwQXVkaXRpbmclMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODM1OTEwMjV8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Artificial Intelligence (AI) models have become increasingly complex, making it challenging to understand their decision-making processes. Chain-of-thought (CoT) reasoning is a technique used to provide insights into the reasoning process of AI models. However, prior work has shown that CoT reasoning is often unfaithful, meaning that the stated reasoning does not reliably reflect the process that produced the output. In this tutorial, we will explore the Reasoning Consistency Scanning framework for auditing chain-of-thought validity in AI safety evaluations.
+
+## Understanding Reasoning Consistency Scanning
+
+Reasoning Consistency Scanning is a framework designed to detect unfaithful CoT reasoning in AI models. The framework consists of three main components:
+
+1. **Data Collection**: Gathering transcripts of AI model outputs and their corresponding CoT reasoning.
+2. **Consistency Scoring**: Assigning a consistency score to each transcript based on the faithfulness of the CoT reasoning.
+3. **Auditing**: Identifying transcripts with low consistency scores, indicating potential unfaithful CoT reasoning.
+
+### Consistency Scoring
+
+The consistency score is calculated using a combination of natural language processing (NLP) and machine learning techniques. The score reflects the degree to which the CoT reasoning aligns with the actual output. A higher score indicates more faithful reasoning, while a lower score suggests unfaithful reasoning.
+
+## Implementing Reasoning Consistency Scanning
+
+To implement the Reasoning Consistency Scanning framework, we will use Python as our programming language. We will utilize the following libraries:
+
+* `nltk` for NLP tasks
+* `transformers` for machine learning tasks
+* `pandas` for data manipulation
+
+### Step 1: Data Collection
+
+First, we need to collect transcripts of AI model outputs and their corresponding CoT reasoning. For demonstration purposes, let's assume we have a dataset `transcripts.csv` containing the following columns:
+
+* `output`: AI model output
+* `cot_reasoning`: corresponding CoT reasoning
+
+```python
+import pandas as pd
+
+# Load transcripts dataset
+transcripts = pd.read_csv('transcripts.csv')
+```
+
+### Step 2: Consistency Scoring
+
+Next, we will calculate the consistency score for each transcript. We will use a pre-trained language model to analyze the CoT reasoning and output.
+
+```python
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+import torch
+
+# Load pre-trained language model and tokenizer
+model = AutoModelForSequenceClassification.from_pretrained('bert-base-uncased')
+tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
+
+# Define consistency scoring function
+def consistency_score(output, cot_reasoning):
+    # Tokenize input sequences
+    output_tokens = tokenizer.encode(output, return_tensors='pt')
+    cot_reasoning_tokens = tokenizer.encode(cot_reasoning, return_tensors='pt')
+
+    # Calculate consistency score
+    output_embeddings = model(output_tokens).last_hidden_state[:, 0, :]
+    cot_reasoning_embeddings = model(cot_reasoning_tokens).last_hidden_state[:, 0, :]
+    consistency_score = torch.cosine_similarity(output_embeddings, cot_reasoning_embeddings)
+
+    return consistency_score.item()
+```
+
+### Step 3: Auditing
+
+Finally, we will identify transcripts with low consistency scores, indicating potential unfaithful CoT reasoning.
+
+```python
+# Calculate consistency scores for all transcripts
+consistency_scores = transcripts.apply(lambda row: consistency_score(row['output'], row['cot_reasoning']), axis=1)
+
+# Identify transcripts with low consistency scores
+low_consistency_transcripts = transcripts[consistency_scores < 0.5]
+
+# Print low consistency transcripts
+print(low_consistency_transcripts)
+```
+
+![graphical user interface, application, shape, arrow](https://images.unsplash.com/photo-1667984436026-99b165e3672b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxSZWFzb25pbmclMjBDb25zaXN0ZW5jeSUyMFNjYW5uaW5nJTIwRnJhbWV3b3JrJTIwQXVkaXRpbmclMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODM1OTEwMjV8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we have explored the Reasoning Consistency Scanning framework for auditing chain-of-thought validity in AI safety evaluations. We have implemented the framework using Python and demonstrated how to detect unfaithful CoT reasoning in AI models. By following this guide, developers can integrate Reasoning Consistency Scanning into their AI development workflow to ensure more transparent and trustworthy AI models.
+
+To learn more about the Reasoning Consistency Scanning framework, please refer to the original research paper: [https://arxiv.org/abs/2607.07229](https://arxiv.org/abs/2607.07229)
+
+![black flat screen computer monitor](https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxSZWFzb25pbmclMjBDb25zaXN0ZW5jeSUyMFNjYW5uaW5nJTIwRnJhbWV3b3JrJTIwQXVkaXRpbmclMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODM1OTEwMjV8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Sasun Bughdaryan](https://unsplash.com/@sasun1990?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/calculator-magnifying-glass-and-chart-with-gears-on-paper-njiadDwbgaM?utm_source=techversation&utm_medium=referral)*
