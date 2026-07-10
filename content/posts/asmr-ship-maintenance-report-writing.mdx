@@ -1,0 +1,117 @@
+---
+title: "ASMR: Ship Maintenance Report Writing"
+description: "Automatic schema generation for ship maintenance reports."
+date: "2026-07-10"
+author: "Usama"
+tags: ["asmr", "ship-maintenance", "report-writing"]
+aiSummary: "ASMR is a modular approach to automatic schema generation for ship maintenance reports. It captures essential information requirements from historical reports. This tutorial guides developers through implementing ASMR for ship maintenance report writing."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1530890448995-4d82724f702c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxBU01SJTIwQWdlbnRpYyUyMFNjaGVtYSUyMEdlbmVyYXRpb24lMjBTaGlwJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgzNjk0OTQ2fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Automatic schema generation is a crucial task in various applications, including ship maintenance report writing. The ASMR (Agentic Schema Generation for Ship Maintenance Report Writing) approach, proposed in the paper [ASMR: Agentic Schema Generation for Ship Maintenance Report Writing](https://arxiv.org/abs/2607.08177), provides a modular solution to this problem. In this tutorial, we will delve into the implementation of ASMR for ship maintenance report writing, providing a step-by-step guide and working code examples.
+
+## Background
+Ship maintenance reports are crucial for ensuring the safety and efficiency of ships. These reports contain essential information about the ship's condition, maintenance activities, and operational status. However, the manual creation of these reports can be time-consuming and prone to errors. ASMR aims to automate the schema generation process, enabling the efficient creation of informative and compact schemas for ship maintenance reports.
+
+## ASMR Architecture
+The ASMR architecture consists of three primary components:
+1. **Data Preprocessing**: This module is responsible for collecting and preprocessing historical ship maintenance reports.
+2. **Schema Generation**: This module generates schemas based on the preprocessed data.
+3. **Schema Refining**: This module refines the generated schemas to ensure they capture the essential information requirements of each report type.
+
+## Implementation
+We will implement the ASMR approach using Python. First, install the required libraries:
+```python
+pip install pandas numpy scikit-learn
+```
+### Data Preprocessing
+We start by loading the historical ship maintenance reports into a Pandas DataFrame:
+```python
+import pandas as pd
+
+# Load historical reports
+reports = pd.read_csv('reports.csv')
+```
+Next, we preprocess the reports by removing any unnecessary columns and handling missing values:
+```python
+# Remove unnecessary columns
+reports = reports.drop(['column1', 'column2'], axis=1)
+
+# Handle missing values
+reports = reports.fillna('Unknown')
+```
+### Schema Generation
+We use a clustering algorithm (e.g., K-Means) to group similar reports together:
+```python
+from sklearn.cluster import KMeans
+
+# Define the number of clusters (schemas)
+n_clusters = 5
+
+# Initialize the K-Means model
+kmeans = KMeans(n_clusters=n_clusters)
+
+# Fit the model to the preprocessed data
+kmeans.fit(reports)
+```
+The resulting clusters represent the generated schemas.
+
+### Schema Refining
+We refine the generated schemas by analyzing the reports within each cluster:
+```python
+# Get the cluster labels
+labels = kmeans.labels_
+
+# Create a dictionary to store the refined schemas
+refined_schemas = {}
+
+# Iterate over the clusters
+for i in range(n_clusters):
+    # Get the reports in the current cluster
+    cluster_reports = reports[labels == i]
+
+    # Analyze the reports to refine the schema
+    refined_schema = analyze_reports(cluster_reports)
+
+    # Store the refined schema
+    refined_schemas[i] = refined_schema
+```
+The `analyze_reports` function is a placeholder for the actual analysis process, which may involve natural language processing, entity recognition, or other techniques to extract essential information from the reports.
+
+## Example Use Case
+Suppose we have a set of historical ship maintenance reports in a CSV file named `reports.csv`. We can use the ASMR implementation to generate and refine schemas for these reports:
+```python
+# Load the reports
+reports = pd.read_csv('reports.csv')
+
+# Preprocess the reports
+reports = preprocess_reports(reports)
+
+# Generate schemas
+schemas = generate_schemas(reports)
+
+# Refine the schemas
+refined_schemas = refine_schemas(schemas, reports)
+
+# Print the refined schemas
+for schema in refined_schemas.values():
+    print(schema)
+```
+This code will output the refined schemas, which can be used to create informative and compact ship maintenance reports.
+
+![Blue 3D acme logo with a swirling white line.](https://images.unsplash.com/photo-1782512855608-08c78a1f9d58?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxBU01SJTIwQWdlbnRpYyUyMFNjaGVtYSUyMEdlbmVyYXRpb24lMjBTaGlwJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgzNjk0OTQ2fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we have implemented the ASMR approach for automatic schema generation in ship maintenance report writing. The ASMR architecture provides a modular solution to this problem, consisting of data preprocessing, schema generation, and schema refining components. By following this tutorial, developers can create their own ASMR implementation and apply it to various ship maintenance report writing applications.
+
+## Future Work
+Future work can focus on improving the accuracy and efficiency of the ASMR approach. This can be achieved by exploring different clustering algorithms, analyzing the reports using natural language processing techniques, or incorporating domain-specific knowledge into the schema generation process.
+
+![green and red space ship](https://images.unsplash.com/photo-1603656563593-c04f37312318?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxBU01SJTIwQWdlbnRpYyUyMFNjaGVtYSUyMEdlbmVyYXRpb24lMjBTaGlwJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgzNjk0OTQ2fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+The ASMR approach has the potential to significantly improve the efficiency and accuracy of ship maintenance report writing, enabling the creation of informative and compact schemas that capture the essential information requirements of each report type.
+
+*Photo by [Dylan McLeod](https://unsplash.com/@son_of_media?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/oil-tanker-ship-4zqvu9dyvSk?utm_source=techversation&utm_medium=referral)*
