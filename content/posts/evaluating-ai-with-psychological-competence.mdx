@@ -1,0 +1,80 @@
+---
+title: "Evaluating AI with Psychological Competence"
+description: "Assessing human-facing AI systems beyond technical performance."
+date: "2026-07-11"
+author: "Usama"
+tags: ["ai", "evaluation", "psychology"]
+aiSummary: "Current AI evaluation frameworks focus on technical performance, but human-facing AI systems require assessment of psychological competence. This tutorial demonstrates how to integrate psychological competence into AI evaluation. We will explore a step-by-step approach to implementing a psychological competence framework in AI systems."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1732780769402-b4ca6455ded0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxQc3ljaG9sb2dpY2FsJTIwQ29tcGV0ZW5jZSUyME1pc3NpbmclMjBEaW1lbnNpb24lMjBFdmFsdWF0aW9uJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgzNzQwNjIzfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Human-facing AI systems are increasingly used as advisors, coaches, and tutors, making it essential to evaluate their psychological competence. Current AI evaluation frameworks focus primarily on technical performance, including accuracy, robustness, reasoning ability, and policy compliance. However, these measures are not sufficient for systems that interact directly with users through natural language. In this tutorial, we will demonstrate how to integrate psychological competence into AI evaluation.
+
+## Understanding Psychological Competence
+Psychological competence refers to the ability of an AI system to understand and respond to human emotions, needs, and behaviors. It involves assessing the system's capacity for empathy, self-awareness, and social skills. To evaluate psychological competence, we need to consider factors such as:
+
+* Emotional intelligence: The ability to recognize and respond to human emotions.
+* Empathy: The capacity to understand and share human feelings.
+* Self-awareness: The ability to recognize and understand one's own strengths, weaknesses, and emotions.
+
+![a close up of a container with words on it](https://images.unsplash.com/photo-1692607431208-28cc794e0067?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxQc3ljaG9sb2dpY2FsJTIwQ29tcGV0ZW5jZSUyME1pc3NpbmclMjBEaW1lbnNpb24lMjBFdmFsdWF0aW9uJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgzNzQwNjIzfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Implementing Psychological Competence Evaluation
+To implement psychological competence evaluation, we can use a combination of natural language processing (NLP) and machine learning techniques. Here is a step-by-step approach:
+
+### Step 1: Data Collection
+Collect a dataset of human-AI interactions, including text-based conversations and user feedback.
+
+### Step 2: Preprocessing
+Preprocess the data by tokenizing the text, removing stop words, and converting all text to lowercase.
+
+### Step 3: Feature Extraction
+Extract features from the preprocessed data, including sentiment analysis, emotion recognition, and topic modeling.
+
+### Step 4: Model Training
+Train a machine learning model using the extracted features to predict psychological competence.
+
+### Step 5: Evaluation
+Evaluate the trained model using a test dataset and calculate metrics such as accuracy, precision, and recall.
+
+```python
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
+
+# Load dataset
+df = pd.read_csv('human_ai_interactions.csv')
+
+# Preprocess data
+vectorizer = TfidfVectorizer(stop_words='english')
+X = vectorizer.fit_transform(df['text'])
+y = df['psychological_competence']
+
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train model
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# Evaluate model
+y_pred = model.predict(X_test)
+print('Accuracy:', accuracy_score(y_test, y_pred))
+print('Classification Report:')
+print(classification_report(y_test, y_pred))
+```
+
+## Conclusion
+Evaluating psychological competence in human-facing AI systems is essential to ensure that these systems are not only technically proficient but also emotionally intelligent and empathetic. By following the steps outlined in this tutorial, developers can integrate psychological competence evaluation into their AI systems, leading to more effective and user-friendly interactions. For more information on this topic, refer to the [arXiv paper](https://arxiv.org/abs/2607.08285) on psychological competence as a missing dimension in AI evaluation.
+
+## Future Work
+Future work in this area can focus on developing more sophisticated models for psychological competence evaluation, incorporating multimodal data such as speech and facial expressions, and exploring the applications of psychological competence evaluation in various domains, including healthcare, education, and customer service. 
+
+![a close up of a typewriter with a paper on it](https://images.unsplash.com/photo-1593444286621-98245b7d4530?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxQc3ljaG9sb2dpY2FsJTIwQ29tcGV0ZW5jZSUyME1pc3NpbmclMjBEaW1lbnNpb24lMjBFdmFsdWF0aW9uJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzgzNzQwNjIzfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Wiki Sinaloa](https://unsplash.com/@wikisinaloa?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/surreal-profile-of-faces-and-abstract-elements-raJrSL-LfVg?utm_source=techversation&utm_medium=referral)*
