@@ -1,0 +1,97 @@
+---
+title: "Urban Mining with KGs & XAI"
+description: "Using knowledge graphs and explainable AI for pre-demolition assessment."
+date: "2026-07-13"
+author: "Usama"
+tags: ["ai", "urban-mining", "explainability"]
+aiSummary: "Knowledge graphs and explainable AI can support pre-demolition assessment in urban mining. This tutorial demonstrates how to build a KG-XAI system for defensible decision-making. We will use Python and popular libraries to create a working example."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxLbm93bGVkZ2UlMjBHcmFwaHMlMjBFeHBsYWluYWJsZSUyMENvbXBsZW1lbnRhcnklMjBSZXNvdXJjZXMlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODM5NTQ0ODR8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Urban mining is the process of recovering valuable materials from demolished buildings. Pre-demolition assessment is a critical step in this process, where auditors evaluate the building's contents to determine the most valuable materials to recover. Artificial intelligence (AI) can support this process, but it must provide defensible decisions, not just accurate predictions. In this tutorial, we will explore how knowledge graphs (KGs) and explainable AI (XAI) can be used together to support pre-demolition assessment.
+
+## Knowledge Graphs
+A knowledge graph is a graphical representation of knowledge, where entities are connected by relationships. In the context of urban mining, a KG can represent the building's contents, such as materials, components, and their relationships. We can use the popular Python library, `networkx`, to create a KG.
+
+```python
+import networkx as nx
+import matplotlib.pyplot as plt
+
+# Create an empty graph
+G = nx.Graph()
+
+# Add entities and relationships
+G.add_node("Building")
+G.add_node("Material")
+G.add_node("Component")
+G.add_edge("Building", "Material", relation="contains")
+G.add_edge("Building", "Component", relation="has")
+
+# Draw the graph
+nx.draw(G, with_labels=True)
+plt.show()
+```
+
+## Explainable AI
+Explainable AI is a set of techniques used to provide insights into AI decision-making processes. In the context of urban mining, XAI can be used to explain why a particular material or component is recommended for recovery. We can use the popular Python library, `lime`, to create an XAI model.
+
+```python
+from lime import lime_tabular
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+
+# Load data
+df = pd.read_csv("urban_mining_data.csv")
+
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(df.drop("target", axis=1), df["target"], test_size=0.2, random_state=42)
+
+# Train a random forest classifier
+rf = RandomForestClassifier(n_estimators=100)
+rf.fit(X_train, y_train)
+
+# Create an XAI model
+explainer = lime_tabular.LimeTabularExplainer(X_train, feature_names=X_train.columns, class_names=[" Material", "Component"], discretize_continuous=True)
+
+# Explain a prediction
+exp = explainer.explain_instance(X_test.iloc[0], rf.predict_proba, num_features=10)
+print(exp.as_list())
+```
+
+## Integrating KGs and XAI
+To integrate KGs and XAI, we can use the KG to provide context for the XAI model. For example, we can use the KG to identify the relationships between materials and components, and then use the XAI model to explain why a particular material or component is recommended for recovery.
+
+```python
+# Use the KG to identify relationships between materials and components
+relationships = []
+for node in G.nodes():
+    for neighbor in G.neighbors(node):
+        relationships.append((node, neighbor))
+
+# Use the XAI model to explain a prediction
+for relationship in relationships:
+    material = relationship[0]
+    component = relationship[1]
+    exp = explainer.explain_instance(X_test.iloc[0], rf.predict_proba, num_features=10)
+    print(f"Material: {material}, Component: {component}, Explanation: {exp.as_list()}")
+```
+
+![a computer screen with a bunch of data on it](https://images.unsplash.com/photo-1686061593213-98dad7c599b9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxLbm93bGVkZ2UlMjBHcmFwaHMlMjBFeHBsYWluYWJsZSUyMENvbXBsZW1lbnRhcnklMjBSZXNvdXJjZXMlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODM5NTQ0ODR8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we demonstrated how to use knowledge graphs and explainable AI to support pre-demolition assessment in urban mining. By integrating KGs and XAI, we can provide defensible decisions and explanations for material and component recovery. This approach has the potential to improve the efficiency and effectiveness of urban mining, while also providing insights into the decision-making process.
+
+## Future Work
+There are several directions for future work, including:
+
+*   **Scaling up the KG**: The current KG is a simplified representation of the building's contents. In the future, we could scale up the KG to include more entities and relationships, such as the building's structure, electrical systems, and plumbing.
+*   **Improving the XAI model**: The current XAI model is a basic implementation of LIME. In the future, we could improve the XAI model by using more advanced techniques, such as SHAP or Anchors.
+*   **Integrating with other data sources**: The current system only uses data from the building's contents. In the future, we could integrate with other data sources, such as sensor data or maintenance records, to provide a more comprehensive view of the building's condition.
+
+By continuing to develop and refine this system, we can provide a more effective and efficient solution for pre-demolition assessment in urban mining.
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
