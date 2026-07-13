@@ -1,0 +1,47 @@
+---
+title: "Chromium 148 Exposes OS via Math.tanh"
+description: "Chromium 148 update makes Math.tanh fingerprintable to link underlying OS."
+date: "2026-07-13"
+author: "Usama"
+tags: ["chromium", "security", "fingerprinting"]
+aiSummary: "The latest Chromium 148 update introduces a vulnerability that allows websites to fingerprint the underlying operating system using the Math.tanh function. This raises concerns about user privacy and security. The update has significant implications for developers and users alike."
+category: "news"
+coverImage: "https://images.unsplash.com/photo-1774901128192-10e5b4921888?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxTaW5jZSUyMENocm9taXVtJTIwTWF0aCUyMHRhbmglMjBub3clMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc4MzkxNDA3NHww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to the Vulnerability
+
+A recent update to Chromium, version 148, has introduced a surprising vulnerability that allows websites to fingerprint the underlying operating system using the `Math.tanh` function. This news, [first reported on Scrapfly](https://scrapfly.dev/posts/browser-math-os-fingerprint/), has raised concerns about user privacy and security. In this post, we'll delve into what happened, why it matters to developers, and the broader implications of this update.
+
+## What Happened?
+
+The `Math.tanh` function, used for calculating the hyperbolic tangent of a number, has been found to behave slightly differently across various operating systems. This difference in behavior can be exploited by websites to determine the underlying OS of a visitor's device. The vulnerability is not a result of a bug in the `Math.tanh` function itself but rather a consequence of how different operating systems handle the calculation of this mathematical function.
+
+```javascript
+// Example of using Math.tanh
+const result = Math.tanh(1);
+console.log(result);
+```
+
+The discrepancy in results, although minor, can be used to create a fingerprint that identifies the operating system. This fingerprinting technique can potentially be used to track users across the web, undermining their privacy.
+
+## Why It Matters to Developers
+
+For developers, this vulnerability highlights the importance of considering the broader security and privacy implications of their work. Even seemingly innocuous aspects of web development, such as mathematical functions, can have unforeseen consequences. It's crucial for developers to stay informed about updates and vulnerabilities in the technologies they use, including browsers like Chromium.
+
+Moreover, this issue underscores the need for ongoing testing and evaluation of web applications to identify and mitigate potential security risks. Developers should be vigilant about updates to browsers and other technologies, assessing how these changes might impact their applications and the privacy of their users.
+
+## Broader Implications
+
+The ability to fingerprint the operating system via the `Math.tanh` function has significant implications beyond the immediate concern of user privacy. It points to a larger issue of how complex systems, like web browsers, can have unforeseen vulnerabilities due to the intricate interactions of their components.
+
+![Computer screen displaying code and terminal prompts](https://images.unsplash.com/photo-1774901128275-dcba96786383?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxTaW5jZSUyMENocm9taXVtJTIwTWF0aCUyMHRhbmglMjBub3clMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc4MzkxNDA3NHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+As technology advances, the potential for similar vulnerabilities will likely increase, making it essential for both developers and users to be aware of these risks. The community's response to this issue, including how quickly a patch or workaround is developed and implemented, will be crucial in mitigating the impact of this vulnerability.
+
+## Conclusion
+
+The discovery that Chromium 148's `Math.tanh` function can be used to fingerprint the underlying operating system is a stark reminder of the complex and often unforeseen challenges in ensuring web privacy and security. For developers, this serves as a call to action: to be more vigilant, to test thoroughly, and to prioritize privacy and security in their work. As the web ecosystem continues to evolve, addressing such vulnerabilities promptly and effectively will be vital to protecting user privacy and maintaining trust in the digital world.
+
+*Photo by [Bernd 📷 Dittrich](https://unsplash.com/@hdbernd?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/computer-screen-displaying-lines-of-code-Pu27coP2jPk?utm_source=techversation&utm_medium=referral)*
