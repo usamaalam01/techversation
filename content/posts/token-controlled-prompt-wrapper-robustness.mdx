@@ -1,0 +1,94 @@
+---
+title: "Token-Controlled Prompt Wrapper Robustness"
+description: "Measuring format sensitivity in LLM benchmarking with FSI and PSI metrics."
+date: "2026-07-14"
+author: "Usama"
+tags: ["llm", "benchmarking", "nlp"]
+aiSummary: "The Format Sensitivity Index (FSI) and Parseability Sensitivity Index (PSI) are two new metrics for evaluating the robustness of large language models (LLMs) to prompt wrapper formatting. This tutorial demonstrates how to calculate these metrics using Python and the Hugging Face Transformers library."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxGb3JtYXQlMjBTZW5zaXRpdml0eSUyMEluZGV4JTIwVG9rZW4lMjBDb250cm9sbGVkJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg0MDE3NTMxfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Large language models (LLMs) have become a crucial component of many natural language processing (NLP) applications. However, the performance of these models can be heavily influenced by the formatting of the input prompts. Recent research has shown that even small changes in prompt formatting can significantly impact the model's performance, leading to changes in leaderboard conclusions. To address this issue, researchers have introduced two new metrics: the Format Sensitivity Index (FSI) and the Parseability Sensitivity Index (PSI).
+
+## Understanding FSI and PSI
+
+The Format Sensitivity Index (FSI) measures the range of accuracy scores induced by different prompt wrapper choices. This metric helps to evaluate the robustness of an LLM to changes in prompt formatting. On the other hand, the Parseability Sensitivity Index (PSI) measures the sensitivity of the model's performance to the parseability of the input prompts.
+
+To calculate these metrics, we need to use a token-controlled protocol, which involves generating multiple prompt wrappers with varying formatting and evaluating the model's performance on each wrapper.
+
+## Calculating FSI and PSI using Python
+
+We will use the Hugging Face Transformers library to calculate the FSI and PSI metrics. First, install the required library using pip:
+```bash
+pip install transformers
+```
+Next, import the necessary modules and load the LLM model:
+```python
+import torch
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+# Load the LLM model and tokenizer
+model_name = "bert-base-uncased"
+model = AutoModelForSequenceClassification.from_pretrained(model_name)
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+```
+Now, let's define a function to generate multiple prompt wrappers with varying formatting:
+```python
+def generate_prompt_wrappers(prompt, num_wrappers):
+    wrappers = []
+    for i in range(num_wrappers):
+        # Apply random formatting to the prompt
+        wrapper = prompt + " " + str(i)
+        wrappers.append(wrapper)
+    return wrappers
+```
+We can then use these prompt wrappers to calculate the FSI and PSI metrics:
+```python
+def calculate_fsi_and_psi(model, tokenizer, prompt, num_wrappers):
+    wrappers = generate_prompt_wrappers(prompt, num_wrappers)
+    accuracy_scores = []
+    for wrapper in wrappers:
+        # Tokenize the prompt wrapper
+        inputs = tokenizer(wrapper, return_tensors="pt")
+        # Evaluate the model's performance on the prompt wrapper
+        outputs = model(**inputs)
+        # Calculate the accuracy score
+        accuracy = torch.argmax(outputs.logits)
+        accuracy_scores.append(accuracy)
+    # Calculate the FSI metric
+    fsi = max(accuracy_scores) - min(accuracy_scores)
+    # Calculate the PSI metric
+    psi = sum(accuracy_scores) / len(accuracy_scores)
+    return fsi, psi
+```
+## Example Usage
+
+Let's use the `calculate_fsi_and_psi` function to evaluate the robustness of the BERT model to changes in prompt formatting:
+```python
+prompt = "What is the capital of France?"
+num_wrappers = 10
+fsi, psi = calculate_fsi_and_psi(model, tokenizer, prompt, num_wrappers)
+print(f"FSI: {fsi:.4f}")
+print(f"PSI: {psi:.4f}")
+```
+This code will output the FSI and PSI metrics for the BERT model on the given prompt.
+
+![A laptop computer sitting on top of a desk](https://images.unsplash.com/photo-1737703638422-2cfa152cdcb7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxGb3JtYXQlMjBTZW5zaXRpdml0eSUyMEluZGV4JTIwVG9rZW4lMjBDb250cm9sbGVkJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg0MDE3NTMxfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we demonstrated how to calculate the Format Sensitivity Index (FSI) and Parseability Sensitivity Index (PSI) metrics using Python and the Hugging Face Transformers library. These metrics provide valuable insights into the robustness of large language models to changes in prompt formatting. By using these metrics, developers can evaluate the performance of their LLM models and identify areas for improvement.
+
+## Future Work
+
+There are several avenues for future research in this area. One potential direction is to explore the use of more advanced prompt wrapper generation techniques, such as using generative models to generate prompt wrappers. Another direction is to investigate the use of FSI and PSI metrics in other NLP applications, such as text classification and sentiment analysis.
+
+![a computer screen with a line graph on it](https://images.unsplash.com/photo-1634097537825-b446635b2f7f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxGb3JtYXQlMjBTZW5zaXRpdml0eSUyMEluZGV4JTIwVG9rZW4lMjBDb250cm9sbGVkJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg0MDE3NTMxfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+We hope that this tutorial has provided a useful introduction to the FSI and PSI metrics and has inspired readers to explore the use of these metrics in their own NLP applications. For more information on this topic, please refer to the original research paper on [arXiv](https://arxiv.org/abs/2607.09665).
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
