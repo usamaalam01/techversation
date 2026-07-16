@@ -1,0 +1,93 @@
+---
+title: "Probabilistic Neuro-Symbolic AGI"
+description: "Expanding cognitive power with probability computation"
+date: "2026-07-16"
+author: "Usama"
+tags: ["ai", "neuro-symbolic", "fol"]
+aiSummary: "This tutorial explores the probabilistic extension of neuro-symbolic AGI robots based on Belnap's Typed Intensional FOL. We will implement a basic example in Python to demonstrate the concept. The paper introduces a new approach to combine neural learning and symbolic reasoning. By using probability computation, the cognitive power of IFOL_B is expanded."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxQcm9iYWJpbGlzdGljJTIwRXh0ZW5zaW9uJTIwTmV1cm8lMjBTeW1ib2xpYyUyMEFHSSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4NDIxMTM3OHww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Neuro-symbolic AI is a rapidly growing field that combines the strengths of neural networks and symbolic reasoning. The paper "Probabilistic Extension of Neuro-Symbolic AGI Robots based on Belnap's Typed Intensional FOL" introduces a new approach to expand the cognitive power of $IFOL_B$ by using probability computation. In this tutorial, we will explore the concept and implement a basic example in Python.
+
+## Background
+
+Neuro-symbolic AI aims to overcome the limitations of purely neural systems, such as lack of interpretability and logical structure. By combining neural learning and symbolic reasoning, neuro-symbolic AI can provide more robust and explainable results. Belnap's Typed Intensional FOL ($IFOL_B$) is a formal logical machinery that provides a framework for self-reference and intensional reasoning.
+
+## Probabilistic Extension
+
+The probabilistic extension of $IFOL_B$ allows for the computation of probabilities for the formulas in the system. This is achieved by introducing a probability distribution over the possible worlds in the system. The probability of a formula is then computed as the sum of the probabilities of the worlds that satisfy the formula.
+
+### Example
+
+Let's consider a simple example to illustrate the concept. Suppose we have a robot that can move in a 2D space and we want to compute the probability of the robot being in a certain location. We can define a formula in $IFOL_B$ that represents the location of the robot and compute the probability of the formula using the probabilistic extension.
+
+```python
+import numpy as np
+
+# Define the possible worlds (locations)
+worlds = [(0, 0), (0, 1), (1, 0), (1, 1)]
+
+# Define the probability distribution over the worlds
+probabilities = np.array([0.2, 0.3, 0.2, 0.3])
+
+# Define the formula (location of the robot)
+def formula(world):
+    return world[0] == 0 and world[1] == 1
+
+# Compute the probability of the formula
+probability = np.sum([probabilities[i] for i, world in enumerate(worlds) if formula(world)])
+
+print("Probability of the formula:", probability)
+```
+
+## Implementation
+
+To implement the probabilistic extension of $IFOL_B$, we need to define the possible worlds, the probability distribution over the worlds, and the formulas that we want to compute the probabilities for. We can use a Python library such as `numpy` to compute the probabilities.
+
+### Code
+
+Here is a more complete example of how we can implement the probabilistic extension of $IFOL_B$ in Python:
+```python
+import numpy as np
+
+class IFOLB:
+    def __init__(self, worlds, probabilities):
+        self.worlds = worlds
+        self.probabilities = probabilities
+
+    def compute_probability(self, formula):
+        return np.sum([self.probabilities[i] for i, world in enumerate(self.worlds) if formula(world)])
+
+# Define the possible worlds (locations)
+worlds = [(0, 0), (0, 1), (1, 0), (1, 1)]
+
+# Define the probability distribution over the worlds
+probabilities = np.array([0.2, 0.3, 0.2, 0.3])
+
+# Create an instance of IFOLB
+ifolb = IFOLB(worlds, probabilities)
+
+# Define the formula (location of the robot)
+def formula(world):
+    return world[0] == 0 and world[1] == 1
+
+# Compute the probability of the formula
+probability = ifolb.compute_probability(formula)
+
+print("Probability of the formula:", probability)
+```
+
+## Conclusion
+
+In this tutorial, we explored the probabilistic extension of neuro-symbolic AGI robots based on Belnap's Typed Intensional FOL. We implemented a basic example in Python to demonstrate the concept. The probabilistic extension of $IFOL_B$ provides a powerful tool for computing probabilities in neuro-symbolic AI systems. By using probability computation, we can expand the cognitive power of $IFOL_B$ and provide more robust and explainable results.
+
+![a close up of a human brain on a black background](https://images.unsplash.com/photo-1711409645921-ef3db0501f96?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxQcm9iYWJpbGlzdGljJTIwRXh0ZW5zaW9uJTIwTmV1cm8lMjBTeW1ib2xpYyUyMEFHSSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4NDIxMTM3OHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+For more information on the paper, please visit the [arXiv website](https://arxiv.org/abs/2607.13073).
+
+*Photo by [Steve A Johnson](https://unsplash.com/@steve_j?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-computer-circuit-board-with-a-brain-on-it-_0iV9LmPDn0?utm_source=techversation&utm_medium=referral)*
