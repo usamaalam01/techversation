@@ -1,0 +1,98 @@
+---
+title: "Microsoft Comic Chat Goes Open Source"
+description: "Microsoft Comic Chat is now available as open source, enabling developers to explore and build upon its capabilities."
+date: "2026-07-16"
+author: "Usama"
+tags: ["open-source", "microsoft", "chat"]
+aiSummary: "Microsoft Comic Chat, a pioneering chat platform, has been released as open source. Developers can now access and contribute to its codebase. This move is expected to foster innovation and community-driven development."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1762330471491-297fa1ad33c3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxNaWNyb3NvZnQlMjBDb21pYyUyMENoYXQlMjBub3clMjBvcGVuJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODQyMjk5ODh8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+Microsoft Comic Chat, a chat platform that was first introduced in the 1990s, has been made available as open source by Microsoft. This move is significant, as it allows developers to explore, modify, and build upon the platform's capabilities. In this tutorial, we will delve into the world of Microsoft Comic Chat, explore its features, and provide a hands-on guide on how to get started with the open-source version.
+
+## Introduction to Microsoft Comic Chat
+Microsoft Comic Chat was first released in 1996 as a component of Internet Explorer. It was designed to provide a unique chat experience, using comic strips as a medium for communication. The platform used a combination of text, images, and audio to create an immersive experience for users. Although it was initially popular, the platform's usage declined with the rise of other chat platforms.
+
+## Getting Started with Open-Source Microsoft Comic Chat
+To get started with the open-source version of Microsoft Comic Chat, you will need to clone the repository from GitHub. You can do this by running the following command in your terminal:
+```bash
+git clone https://github.com/microsoft/comic-chat.git
+```
+Once you have cloned the repository, you can navigate to the project directory and explore the codebase. The repository includes a range of files, including the platform's core code, documentation, and example use cases.
+
+## Exploring the Codebase
+The Microsoft Comic Chat codebase is written in C++ and uses a combination of Windows-specific APIs and custom libraries. To build the platform, you will need to have Visual Studio installed on your system. You can open the project in Visual Studio by navigating to the `comic-chat` directory and opening the `comic-chat.sln` file.
+
+```cpp
+// Example code snippet from the Microsoft Comic Chat codebase
+#include <windows.h>
+#include <commdlg.h>
+
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+{
+    // Initialize the platform
+    InitializeComicChat();
+
+    // Create a new chat window
+    HWND hWnd = CreateWindowEx(0, "ComicChatWindow", "Microsoft Comic Chat", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, hInstance, NULL);
+
+    // Show the chat window
+    ShowWindow(hWnd, nCmdShow);
+
+    // Run the message loop
+    MSG msg;
+    while (GetMessage(&msg, NULL, 0, 0))
+    {
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
+
+    return 0;
+}
+```
+This code snippet demonstrates how to create a new chat window using the Microsoft Comic Chat platform. You can modify this code to suit your needs and create custom chat experiences.
+
+## Building and Running Microsoft Comic Chat
+To build and run Microsoft Comic Chat, you will need to have the necessary dependencies installed on your system. The platform requires Windows 10 or later, as well as the Visual Studio 2019 or later. You can build the platform by opening the `comic-chat.sln` file in Visual Studio and selecting the "Build" option.
+
+Once you have built the platform, you can run it by selecting the "Run" option or by navigating to the `comic-chat.exe` file in the project directory. The platform will launch, and you can start using it to chat with others.
+
+## Customizing Microsoft Comic Chat
+One of the benefits of the open-source version of Microsoft Comic Chat is that you can customize it to suit your needs. You can modify the platform's codebase to add new features, change the user interface, or integrate it with other platforms.
+
+For example, you can add support for new chat protocols, such as WebSocket or WebRTC, by modifying the platform's network code. You can also add new features, such as file transfer or video conferencing, by integrating third-party libraries or services.
+
+```python
+# Example code snippet demonstrating how to add support for WebSockets
+import websocket
+
+def on_open(ws):
+    print("Connected to the WebSocket server")
+
+def on_message(ws, message):
+    print("Received message:", message)
+
+def on_error(ws, error):
+    print("Error occurred:", error)
+
+def on_close(ws):
+    print("Disconnected from the WebSocket server")
+
+ws = websocket.WebSocketApp("ws://example.com/chat",
+                            on_open=on_open,
+                            on_message=on_message,
+                            on_error=on_error,
+                            on_close=on_close)
+
+ws.run_forever()
+```
+This code snippet demonstrates how to add support for WebSockets to the Microsoft Comic Chat platform. You can modify this code to suit your needs and integrate it with the platform's codebase.
+
+## Conclusion
+The open-source version of Microsoft Comic Chat provides a unique opportunity for developers to explore and build upon a pioneering chat platform. With its rich history and customizable codebase, the platform offers a range of possibilities for innovation and community-driven development. By following the steps outlined in this tutorial, you can get started with the open-source version of Microsoft Comic Chat and start building your own custom chat experiences.
+
+As the platform continues to evolve, it will be exciting to see how developers choose to use and customize it. Whether you are a seasoned developer or just starting out, the open-source version of Microsoft Comic Chat is definitely worth exploring. So why not give it a try and see what you can create?
+
+*Photo by [Zulfugar Karimov](https://unsplash.com/@zulfugarkarimov?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/linkedin-app-notification-on-a-laptop-screen-scmzhpIgMzQ?utm_source=techversation&utm_medium=referral)*

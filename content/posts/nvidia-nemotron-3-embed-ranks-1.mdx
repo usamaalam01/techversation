@@ -1,0 +1,76 @@
+---
+title: "NVIDIA Nemotron 3 Embed Ranks #1"
+description: "Advancing agentic retrieval with NVIDIA Nemotron 3 Embed."
+date: "2026-07-16"
+author: "Usama"
+tags: ["ai", "nvidia", "nemotron"]
+aiSummary: "NVIDIA Nemotron 3 Embed has achieved the top rank on the RTEB leaderboard. This tutorial provides a step-by-step guide on how to use the Nemotron 3 Embed model for agentic retrieval tasks. We will explore the capabilities of this model and demonstrate its usage with practical code examples."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1716967318503-05b7064afa41?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxOVklESUElMjBOZW1vdHJvbiUyMEVtYmVkJTIwUmFua3MlMjBPdmVyYWxsJTIwYXJ0aWZpY2lhbCUyMGludGVsbGlnZW5jZSUyMG1hY2hpbmUlMjBsZWFybmluZ3xlbnwxfDB8fHwxNzg0MjMwMTQwfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to NVIDIA Nemotron 3 Embed
+NVIDIA Nemotron 3 Embed has recently topped the RTEB leaderboard, showcasing its exceptional performance in agentic retrieval tasks. In this tutorial, we will delve into the world of Nemotron 3 Embed and explore its capabilities. We will provide a step-by-step guide on how to use this model, along with practical code examples to help you get started.
+
+## Setting Up the Environment
+To begin working with NVIDIA Nemotron 3 Embed, you need to have the following dependencies installed:
+- `transformers` library by Hugging Face
+- `torch` library for PyTorch
+- `numpy` library for numerical computations
+
+You can install these dependencies using pip:
+```bash
+pip install transformers torch numpy
+```
+## Loading the Nemotron 3 Embed Model
+To load the Nemotron 3 Embed model, you can use the `transformers` library. Here's an example code snippet:
+```python
+from transformers import AutoModel, AutoTokenizer
+
+# Load the Nemotron 3 Embed model and tokenizer
+model_name = "nvidia/nemotron3-embed"
+model = AutoModel.from_pretrained(model_name)
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+```
+## Preprocessing Input Data
+Before feeding input data to the model, you need to preprocess it using the `tokenizer`. Here's an example code snippet:
+```python
+# Define a sample input text
+input_text = "This is a sample input text."
+
+# Preprocess the input text using the tokenizer
+inputs = tokenizer(input_text, return_tensors="pt")
+```
+## Generating Embeddings
+To generate embeddings using the Nemotron 3 Embed model, you can use the `model` object. Here's an example code snippet:
+```python
+# Generate embeddings for the input text
+outputs = model(**inputs)
+embeddings = outputs.last_hidden_state[:, 0, :]
+```
+## Using Nemotron 3 Embed for Agentic Retrieval
+Nemotron 3 Embed can be used for various agentic retrieval tasks, such as text similarity search and question answering. Here's an example code snippet demonstrating how to use the model for text similarity search:
+```python
+# Define a sample query text
+query_text = "This is a sample query text."
+
+# Preprocess the query text using the tokenizer
+query_inputs = tokenizer(query_text, return_tensors="pt")
+
+# Generate embeddings for the query text
+query_outputs = model(**query_inputs)
+query_embeddings = query_outputs.last_hidden_state[:, 0, :]
+
+# Calculate the similarity between the query embeddings and the input embeddings
+similarity = torch.cosine_similarity(query_embeddings, embeddings)
+```
+![logo](https://images.unsplash.com/photo-1662947683395-1ce33bdcd094?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxOVklESUElMjBOZW1vdHJvbiUyMEVtYmVkJTIwUmFua3MlMjBPdmVyYWxsJTIwYXJ0aWZpY2lhbCUyMGludGVsbGlnZW5jZSUyMG1hY2hpbmUlMjBsZWFybmluZ3xlbnwxfDB8fHwxNzg0MjMwMTQwfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we explored the capabilities of NVIDIA Nemotron 3 Embed and demonstrated its usage for agentic retrieval tasks. We provided a step-by-step guide on how to load the model, preprocess input data, generate embeddings, and use the model for text similarity search. With this knowledge, you can now leverage the power of Nemotron 3 Embed for your own projects and applications.
+
+### Additional Resources
+For more information on NVIDIA Nemotron 3 Embed, you can visit the [Hugging Face blog](https://huggingface.co/blog/nvidia/nemotron-3-embed-wins-rteb) or the [RTEB leaderboard](https://huggingface.co/rteb). You can also explore the [NVIDIA Nemotron 3 Embed model page](https://huggingface.co/nvidia/nemotron3-embed) for more details on the model architecture and usage.
+
+*Photo by [Mariia Shalabaieva](https://unsplash.com/@maria_shalabaieva?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/the-nvidia-logo-is-displayed-on-a-table-0SqsTxWhgNU?utm_source=techversation&utm_medium=referral)*
