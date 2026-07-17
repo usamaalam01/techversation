@@ -1,0 +1,86 @@
+---
+title: "Investing in Free Open Source AI"
+description: "Governments, companies, and nonprofits should invest in free open source AI for better technology."
+date: "2026-07-17"
+author: "Usama"
+tags: ["ai", "open-source", "nonprofits"]
+aiSummary: "Investing in free open source AI can provide better technology and more control over the development process. This approach also promotes collaboration and transparency. In this post, we will explore the benefits of investing in free open source AI and provide a practical guide on how to get started."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1528901166007-3784c7dd3653?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxHb3Zlcm5tZW50cyUyMGNvbXBhbmllcyUyMG5vbnByb2ZpdHMlMjBpbnZlc3QlMjBmcmVlJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODQyNTg5MDF8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+The concept of investing in free open source AI has gained significant attention in recent years. As discussed in the [paper by David Siegel](https://www.siegelendowment.org/wp-content/uploads/2026/07/fortune-david-siegel-open-source-ai.pdf), governments, companies, and nonprofits can benefit from investing in free open source AI. In this post, we will delve into the benefits of this approach and provide a practical guide on how to get started.
+
+## Benefits of Free Open Source AI
+Investing in free open source AI can provide several benefits, including:
+
+* **Better technology**: Open source AI allows for collaboration and transparency, leading to better technology and more efficient development processes.
+* **More control**: With open source AI, organizations have more control over the development process and can customize the technology to meet their specific needs.
+* **Cost-effective**: Open source AI can be more cost-effective than proprietary solutions, as organizations can avoid licensing fees and other costs associated with closed-source software.
+
+## Getting Started with Free Open Source AI
+To get started with free open source AI, organizations can follow these steps:
+
+### Step 1: Choose an Open Source AI Framework
+There are several open source AI frameworks available, including TensorFlow, PyTorch, and Scikit-learn. When choosing a framework, consider the specific needs of your organization and the type of AI project you want to undertake.
+
+### Step 2: Set Up the Development Environment
+Once you have chosen an open source AI framework, set up the development environment. This may involve installing the framework and any necessary dependencies, as well as configuring the environment to meet your specific needs.
+
+### Step 3: Develop and Train the AI Model
+With the development environment set up, you can begin developing and training the AI model. This may involve collecting and preprocessing data, designing the model architecture, and training the model using the chosen framework.
+
+### Step 4: Deploy and Maintain the AI Model
+Once the AI model is trained and tested, deploy it in a production environment. This may involve integrating the model with other systems and applications, as well as monitoring and maintaining the model to ensure it continues to perform effectively.
+
+## Example Code: Training a Simple AI Model with PyTorch
+Here is an example of how to train a simple AI model using PyTorch:
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+# Define the model architecture
+class Net(nn.Module):
+    def __init__(self):
+        super(Net, self).__init__()
+        self.fc1 = nn.Linear(5, 10)  # input layer (5) -> hidden layer (10)
+        self.fc2 = nn.Linear(10, 5)  # hidden layer (10) -> output layer (5)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))  # activation function for hidden layer
+        x = self.fc2(x)
+        return x
+
+# Initialize the model, loss function, and optimizer
+model = Net()
+criterion = nn.MSELoss()
+optimizer = optim.SGD(model.parameters(), lr=0.01)
+
+# Train the model
+for epoch in range(100):
+    # forward pass
+    inputs = torch.randn(100, 5)
+    labels = torch.randn(100, 5)
+    outputs = model(inputs)
+    loss = criterion(outputs, labels)
+
+    # backward pass
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+
+    print('Epoch {}: Loss = {:.4f}'.format(epoch+1, loss.item()))
+```
+This code defines a simple neural network with one hidden layer and trains it using stochastic gradient descent.
+
+![A laptop computer sitting on top of a wooden table](https://images.unsplash.com/photo-1722937117724-4044158343df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxHb3Zlcm5tZW50cyUyMGNvbXBhbmllcyUyMG5vbnByb2ZpdHMlMjBpbnZlc3QlMjBmcmVlJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODQyNTg5MDF8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+Investing in free open source AI can provide several benefits, including better technology, more control, and cost-effectiveness. By following the steps outlined in this post and using open source AI frameworks like PyTorch, organizations can develop and deploy effective AI models. Whether you are a nonprofit organization or a company, investing in free open source AI can help you achieve your goals and stay competitive in the market. 
+
+For more information on how nonprofits can leverage technology, you can visit [nonprofit resource hubs](https://images.unsplash.com/photo-1762330463346-5c71fbfee5d6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxHb3Zlcm5tZW50cyUyMGNvbXBhbmllcyUyMG5vbnByb2ZpdHMlMjBpbnZlc3QlMjBmcmVlJTIwdGVjaG5vbG9neTUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODQyNTg5MDF8MA&ixlib=rb-4.1.0&q=80&w=1080) for guidance and support.
+
+*Photo by [X](https://unsplash.com/@disruptxn?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/man-using-black-laptop-computer-kwzWjTnDPLk?utm_source=techversation&utm_medium=referral)*

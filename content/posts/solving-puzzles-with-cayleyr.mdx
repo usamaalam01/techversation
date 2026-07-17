@@ -1,0 +1,69 @@
+---
+title: "Solving Puzzles with CayleyR"
+description: "CayleyR solves permutation puzzles using cycle intersection in Cayley graphs."
+date: "2026-07-17"
+author: "Usama"
+tags: ["r", "cayley-graphs", "puzzles"]
+aiSummary: "CayleyR is an R package for solving permutation puzzles by detecting cycle intersections in Cayley graphs. It uses an iterative bidirectional search algorithm to find the solution. The package can be used to solve various puzzles, including the TopSpin puzzle."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1605712916066-e143c317df72?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxDYXlsZXlSJTIwU29sdmluZyUyMFRvcFNwaW4lMjBwdXp6bGUlMjB2aWElMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODQyNTkwNTZ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Permutation puzzles, such as the TopSpin puzzle, can be challenging to solve. However, with the help of the CayleyR package in R, we can use cycle intersection in Cayley graphs to find the solution. In this tutorial, we will explore how to use CayleyR to solve permutation puzzles.
+
+## What is CayleyR?
+CayleyR is an R package that uses an iterative bidirectional search algorithm to detect cycle intersections in Cayley graphs. The algorithm starts from both the initial and target permutation states and generates random operation sequences to create cycles in the Cayley graph. The intersection of these cycles yields a common sequence of operations that can be used to transform the initial state into the target state.
+
+## Installing CayleyR
+To use CayleyR, we need to install the package in R. We can do this by running the following command:
+```r
+install.packages("cayleyR")
+```
+Once the package is installed, we can load it into our R environment:
+```r
+library(cayleyR)
+```
+
+## Solving the TopSpin Puzzle
+The TopSpin puzzle is a classic permutation puzzle that involves rotating a set of colored disks to create a specific pattern. We can use CayleyR to solve this puzzle by defining the initial and target states of the puzzle.
+
+Let's assume that the initial state of the puzzle is:
+```r
+initial_state <- c(1, 2, 3, 4, 5)
+```
+And the target state is:
+```r
+target_state <- c(5, 4, 3, 2, 1)
+```
+We can use the `cayley_graph` function in CayleyR to create a Cayley graph for the symmetric group S5:
+```r
+cayley_graph <- cayley_graph(n = 5)
+```
+Next, we can use the `bidirectional_search` function to find the solution to the puzzle:
+```r
+solution <- bidirectional_search(cayley_graph, initial_state, target_state)
+```
+The `solution` variable will contain the sequence of operations needed to transform the initial state into the target state.
+
+![A single orange puzzle piece rests on a pile of grey pieces.](https://images.unsplash.com/photo-1756920681451-3103b5ca092d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxDYXlsZXlSJTIwU29sdmluZyUyMFRvcFNwaW4lMjBwdXp6bGUlMjB2aWElMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODQyNTkwNTZ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Visualizing the Solution
+We can visualize the solution by plotting the sequence of operations:
+```r
+plot(solution)
+```
+This will create a graph showing the sequence of operations needed to transform the initial state into the target state.
+
+## Conclusion
+In this tutorial, we have seen how to use CayleyR to solve permutation puzzles, including the TopSpin puzzle. By defining the initial and target states of the puzzle and using the `bidirectional_search` function, we can find the sequence of operations needed to transform the initial state into the target state. We can also visualize the solution by plotting the sequence of operations.
+
+## Further Reading
+For more information on CayleyR and its applications, please refer to the [arXiv paper](https://arxiv.org/abs/2607.13219) introducing the package.
+
+![person holding red jigsaw puzzle](https://images.unsplash.com/photo-1526566661780-1a67ea3c863e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxDYXlsZXlSJTIwU29sdmluZyUyMFRvcFNwaW4lMjBwdXp6bGUlMjB2aWElMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODQyNTkwNTZ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+Note: The code examples in this tutorial are for illustration purposes only and may need to be modified to work with your specific use case.
+
+*Photo by [Edge2Edge Media](https://unsplash.com/@edge2edgemedia?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/black-puzzle-piece-on-white-paper-x21KgBfOd_4?utm_source=techversation&utm_medium=referral)*
