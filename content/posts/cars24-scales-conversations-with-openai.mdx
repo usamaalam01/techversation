@@ -1,0 +1,59 @@
+---
+title: "Cars24 Scales Conversations with OpenAI"
+description: "Cars24 uses OpenAI to handle conversations and recover lost leads."
+date: "2026-07-17"
+author: "Usama"
+tags: ["ai", "openai", "conversations"]
+aiSummary: "Cars24 has successfully implemented OpenAI-powered voice and chat agents to handle over 1 million monthly conversation minutes. The company has seen a 12% recovery of lost leads and has brought agentic workflows to teams across the company. This integration has significant implications for developers and the future of customer service."
+category: "articles"
+coverImage: "https://images.unsplash.com/photo-1674027444485-cec3da58eef4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxzY2FsZXMlMjBjb252ZXJzYXRpb25zJTIwYnVpbGRzJTIwZmFzdGVyJTIwT3BlbkFJJTIwYXJ0aWZpY2lhbCUyMGludGVsbGlnZW5jZSUyMG1hY2hpbmUlMjBsZWFybmluZ3xlbnwxfDB8fHwxNzg0Mjc2NTk4fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Cars24 and OpenAI Integration
+
+Cars24, a leading online marketplace for buying and selling used cars, has recently integrated OpenAI-powered voice and chat agents into its customer service operations. According to the [OpenAI case study](https://openai.com/index/cars24), this integration has enabled Cars24 to handle over 1 million monthly conversation minutes, recover 12% of lost leads, and bring agentic workflows to teams across the company. This development has significant implications for developers, customer service, and the future of artificial intelligence (AI) in business operations.
+
+## Why It Matters to Developers
+
+The successful integration of OpenAI-powered voice and chat agents by Cars24 demonstrates the potential of AI in automating customer service operations. For developers, this means that they can leverage AI-powered tools to build more efficient and scalable conversation systems. The use of OpenAI's API allows developers to focus on building the core logic of their applications, rather than spending time and resources on developing AI capabilities from scratch.
+
+```python
+import openai
+
+# Initialize the OpenAI API
+openai.api_key = "YOUR_API_KEY"
+
+# Define a function to handle customer inquiries
+def handle_inquiry(inquiry):
+    # Use the OpenAI API to generate a response
+    response = openai.Completion.create(
+        engine="davinci",
+        prompt=inquiry,
+        max_tokens=1024,
+        n=1,
+        stop=None,
+        temperature=0.7,
+    )
+
+    # Return the generated response
+    return response.choices[0].text
+
+# Test the function
+inquiry = "What is the price of a used Toyota Camry?"
+print(handle_inquiry(inquiry))
+```
+
+## Broader Implications
+
+The integration of OpenAI-powered voice and chat agents by Cars24 has significant implications for the future of customer service. With the ability to handle over 1 million monthly conversation minutes, Cars24 can provide 24/7 support to its customers, improving their overall experience and satisfaction. The recovery of 12% of lost leads also demonstrates the potential of AI in identifying and capitalizing on missed opportunities.
+
+![a computer generated image of a human brain](https://images.unsplash.com/photo-1674027215016-0a4abfdbf1cc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxzY2FsZXMlMjBjb252ZXJzYXRpb25zJTIwYnVpbGRzJTIwZmFzdGVyJTIwT3BlbkFJJTIwYXJ0aWZpY2lhbCUyMGludGVsbGlnZW5jZSUyMG1hY2hpbmUlMjBsZWFybmluZ3xlbnwxfDB8fHwxNzg0Mjc2NTk4fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+The use of AI-powered voice and chat agents also raises important questions about the future of work and the role of humans in customer service. As AI becomes more advanced, it is likely that we will see a shift towards more automated customer service operations, with humans playing a supporting role in handling complex or sensitive inquiries.
+
+## Conclusion
+
+The integration of OpenAI-powered voice and chat agents by Cars24 is a significant development in the field of AI and customer service. For developers, it demonstrates the potential of AI in automating customer service operations and provides a powerful tool for building more efficient and scalable conversation systems. As AI continues to evolve and improve, it is likely that we will see a shift towards more automated customer service operations, with humans playing a supporting role in handling complex or sensitive inquiries.
+
+*Photo by [Growtika](https://unsplash.com/@growtika?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/an-abstract-image-of-a-sphere-with-dots-and-lines-nGoCBxiaRO0?utm_source=techversation&utm_medium=referral)*

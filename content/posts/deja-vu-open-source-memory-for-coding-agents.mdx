@@ -1,0 +1,80 @@
+---
+title: "Deja Vu: Open-Source Memory for Coding Agents"
+description: "Explore Deja Vu, an open-source memory for coding agents synced over SSH."
+date: "2026-07-17"
+author: "Usama"
+tags: ["ai", "memory", "ssh"]
+aiSummary: "Deja Vu is an open-source tool that provides a shared memory for coding agents, allowing them to learn from each other and improve their performance. It uses SSH for synchronization and is designed to work with various coding languages. In this tutorial, we'll explore how to get started with Deja Vu and integrate it into your development workflow."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1669023414162-8b0573b9c6b2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxPcGVuJTIwc291cmNlJTIwbWVtb3J5JTIwY29kaW5nJTIwYWdlbnRzJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODQyNzY2NzV8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+As developers, we're constantly looking for ways to improve our coding efficiency and productivity. One approach to achieving this is by leveraging the power of artificial intelligence (AI) and machine learning (ML) in our development workflow. Deja Vu, an open-source tool, offers a unique solution by providing a shared memory for coding agents. In this tutorial, we'll delve into the world of Deja Vu, exploring its features, benefits, and how to integrate it into your development workflow.
+
+## What is Deja Vu?
+
+Deja Vu is an open-source memory for coding agents that enables them to learn from each other and improve their performance. It uses SSH for synchronization, allowing agents to share knowledge and adapt to new situations. The tool is designed to work with various coding languages, making it a versatile solution for developers.
+
+To get started with Deja Vu, you'll need to install it on your system. You can find the installation instructions on the [official GitHub repository](https://github.com/vshulcz/deja-vu/).
+
+## Setting up Deja Vu
+
+Once you've installed Deja Vu, you'll need to set it up on your system. This involves configuring the SSH connection and initializing the memory store. Here's an example of how you can do this using the command line:
+```bash
+# Initialize the memory store
+deja-vu init
+
+# Configure the SSH connection
+deja-vu config --ssh-host <your-ssh-host> --ssh-port <your-ssh-port>
+```
+Make sure to replace `<your-ssh-host>` and `<your-ssh-port>` with your actual SSH host and port.
+
+## Integrating Deja Vu with Your Development Workflow
+
+To integrate Deja Vu with your development workflow, you'll need to write code that interacts with the memory store. Here's an example of how you can do this using Python:
+```python
+import os
+import ssh
+
+# Connect to the Deja Vu memory store
+ssh_client = ssh.SSHClient()
+ssh_client.set_missing_host_key_policy(ssh.AutoAddPolicy())
+ssh_client.connect('<your-ssh-host>', port=<your-ssh-port>)
+
+# Initialize the Deja Vu client
+deja_vu_client = DejaVuClient(ssh_client)
+
+# Store a code snippet in the memory store
+code_snippet = "print('Hello World!')"
+deja_vu_client.store_code_snippet(code_snippet)
+
+# Retrieve a code snippet from the memory store
+retrieved_code_snippet = deja_vu_client.retrieve_code_snippet()
+print(retrieved_code_snippet)
+```
+This code connects to the Deja Vu memory store using SSH, stores a code snippet, and then retrieves it.
+
+![a computer with a keyboard and mouse](https://images.unsplash.com/photo-1669023414162-5bb06bbff0ec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxPcGVuJTIwc291cmNlJTIwbWVtb3J5JTIwY29kaW5nJTIwYWdlbnRzJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODQyNzY2NzV8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Benefits of Using Deja Vu
+
+Deja Vu offers several benefits to developers, including:
+
+* **Improved coding efficiency**: By leveraging the collective knowledge of coding agents, Deja Vu can help developers write code more efficiently.
+* **Enhanced collaboration**: Deja Vu enables developers to share knowledge and work together more effectively.
+* **Adaptability**: Deja Vu's ML-based approach allows it to adapt to new situations and improve its performance over time.
+
+## Conclusion
+
+Deja Vu is a powerful tool that has the potential to revolutionize the way we develop software. By providing a shared memory for coding agents, it enables developers to learn from each other and improve their performance. In this tutorial, we've explored how to get started with Deja Vu, integrate it into your development workflow, and leverage its benefits. Whether you're a seasoned developer or just starting out, Deja Vu is definitely worth checking out.
+
+To learn more about Deja Vu, visit the [official GitHub repository](https://github.com/vshulcz/deja-vu/). With its open-source nature and active community, Deja Vu is an exciting project to watch and contribute to.
+
+![a computer on a desk](https://images.unsplash.com/photo-1669023414180-4dcf35d943e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxPcGVuJTIwc291cmNlJTIwbWVtb3J5JTIwY29kaW5nJTIwYWdlbnRzJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODQyNzY2NzV8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+We hope this tutorial has provided you with a comprehensive introduction to Deja Vu and its capabilities. Happy coding!
+
+*Photo by [Growtika](https://unsplash.com/@growtika?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-computer-with-a-keyboard-and-mouse-9WnjxT1NCoY?utm_source=techversation&utm_medium=referral)*
