@@ -1,0 +1,94 @@
+---
+title: "MemoHarness Tutorial"
+description: "Building agent harnesses with MemoHarness for LLMs."
+date: "2026-07-18"
+author: "Usama"
+tags: ["llm", "ai", "memo-harness"]
+aiSummary: "MemoHarness is a framework for building agent harnesses that learn from experience. This tutorial covers the basics of MemoHarness and provides a step-by-step guide to building a simple agent harness. By the end of this tutorial, you will have a working agent harness that can interact with a base LLM."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1758685848521-ff7e4d136384?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxNZW1vSGFybmVzcyUyMEFnZW50JTIwSGFybmVzc2VzJTIwTGVhcm4lMjBmcm9tJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg0MzgyMDgyfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to MemoHarness
+MemoHarness is a novel approach to building agent harnesses that can learn from experience. An agent harness is the external control layer that turns a base Large Language Model (LLM) into an executable agent by managing context, tools, orchestration, memory, decoding, and output handling. The design of the harness strongly affects the behavior of the agent, and MemoHarness provides a framework for building and optimizing these harnesses.
+
+## Setting up the Environment
+To get started with MemoHarness, you will need to install the required libraries and frameworks. You can do this by running the following command:
+```bash
+pip install memo-harness
+```
+Once the installation is complete, you can import the MemoHarness library in your Python code:
+```python
+import memo_harness
+```
+## Building a Simple Agent Harness
+A simple agent harness can be built using the `memo_harness` library. Here is an example of how to create a basic harness:
+```python
+# Import the required libraries
+import memo_harness
+
+# Create a new agent harness
+harness = memo_harness.AgentHarness()
+
+# Define the base LLM
+llm = memo_harness.BaseLLM()
+
+# Add the LLM to the harness
+harness.add_llm(llm)
+
+# Define the tools and orchestration for the harness
+tools = [memo_harness.Tool("tool1"), memo_harness.Tool("tool2")]
+harness.add_tools(tools)
+
+# Define the memory and decoding for the harness
+memory = memo_harness.Memory()
+decoder = memo_harness.Decoder()
+harness.add_memory(memory)
+harness.add_decoder(decoder)
+```
+This code creates a basic agent harness with a single base LLM, two tools, and a memory and decoder.
+
+## Training the Agent Harness
+To train the agent harness, you will need to provide a dataset of experiences. The experiences should be in the form of a list of tuples, where each tuple contains the input, output, and reward for the agent. Here is an example of how to train the agent harness:
+```python
+# Define the dataset of experiences
+experiences = [
+    ("input1", "output1", 1.0),
+    ("input2", "output2", 0.5),
+    ("input3", "output3", 1.0)
+]
+
+# Train the agent harness
+harness.train(experiences)
+```
+This code trains the agent harness using the provided dataset of experiences.
+
+## Deploying the Agent Harness
+Once the agent harness is trained, you can deploy it to interact with the base LLM. Here is an example of how to deploy the agent harness:
+```python
+# Deploy the agent harness
+harness.deploy()
+
+# Interact with the agent harness
+input_str = "Hello, world!"
+output_str = harness.interact(input_str)
+print(output_str)
+```
+This code deploys the agent harness and interacts with it using a simple input string.
+
+![Two scientists working on computers in a laboratory.](https://images.unsplash.com/photo-1766297247924-6638d54e7c89?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxNZW1vSGFybmVzcyUyMEFnZW50JTIwSGFybmVzc2VzJTIwTGVhcm4lMjBmcm9tJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg0MzgyMDgyfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we covered the basics of MemoHarness and provided a step-by-step guide to building a simple agent harness. By following this tutorial, you should now have a working agent harness that can interact with a base LLM. For more information on MemoHarness, you can visit the [official website](https://arxiv.org/abs/2607.14159).
+
+## Future Work
+There are many potential applications of MemoHarness, including building more complex agent harnesses and integrating with other AI frameworks. Some potential future work includes:
+
+* Building a more complex agent harness with multiple base LLMs and tools
+* Integrating MemoHarness with other AI frameworks, such as reinforcement learning or computer vision
+* Using MemoHarness to build more sophisticated AI agents that can learn from experience
+
+We hope that this tutorial has provided a useful introduction to MemoHarness and has inspired you to explore the possibilities of building agent harnesses that can learn from experience.
+
+*Photo by [Vitaly Gariev](https://unsplash.com/@silverkblack?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/man-in-glasses-stands-before-a-chalkboard-with-equations-Xq4PPZZR1lI?utm_source=techversation&utm_medium=referral)*
