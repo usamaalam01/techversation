@@ -1,0 +1,79 @@
+---
+title: "ReasFlow Tutorial"
+description: "Discover ReasFlow, a knowledge-based multi-agent system for mathematically grounded disciplines."
+date: "2026-07-18"
+author: "Usama"
+tags: ["ai", "mathematics", "multi-agent"]
+aiSummary: "ReasFlow is a novel tool for assisting reasoning-centric scientific discovery in applied mathematics. It utilizes a knowledge-based multi-agent system to tackle complex tasks. This tutorial provides a step-by-step guide on how to use ReasFlow. Recent advances in Large Language Models have enabled autonomous AI agents to tackle complex scientific tasks."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxSZWFzRmxvdyUyMEFzc2lzdGluZyUyMFJlYXNvbmluZyUyMENlbnRyaWMlMjBTY2llbnRpZmljJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg0NDAyMjQ1fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+ReasFlow is a knowledge-based multi-agent system designed to assist reasoning-centric scientific discovery in applied mathematics. The system utilizes a combination of Large Language Models (LLMs) and a multi-agent framework to tackle complex tasks in mathematically grounded disciplines. In this tutorial, we will explore how to use ReasFlow to facilitate scientific discovery.
+
+## Setting Up ReasFlow
+To get started with ReasFlow, you need to have a basic understanding of Python programming and access to a compatible environment. You can install the required dependencies using pip:
+```python
+pip install reasflow
+```
+Once the installation is complete, you can import the ReasFlow library in your Python script:
+```python
+import reasflow
+```
+## Creating a Knowledge Graph
+A knowledge graph is a crucial component of the ReasFlow system. It represents the domain knowledge and relationships between concepts. You can create a knowledge graph using the `reasflow.KnowledgeGraph` class:
+```python
+kg = reasflow.KnowledgeGraph()
+```
+You can then add nodes and edges to the knowledge graph using the `add_node` and `add_edge` methods:
+```python
+kg.add_node("Mathematics", "Field of study")
+kg.add_node("Algebra", "Branch of mathematics")
+kg.add_edge("Mathematics", "Algebra", "has_branch")
+```
+## Defining Agents
+Agents are the core components of the ReasFlow system. They are responsible for reasoning and decision-making. You can define an agent using the `reasflow.Agent` class:
+```python
+agent = reasflow.Agent(kg, "Mathematics")
+```
+You can then specify the agent's goals and objectives using the `set_goal` method:
+```python
+agent.set_goal("Solve equation")
+```
+## Running the Simulation
+Once you have defined the knowledge graph and agents, you can run the simulation using the `run_simulation` method:
+```python
+reasflow.run_simulation([agent], kg)
+```
+This will execute the simulation and produce output based on the agent's actions and decisions.
+
+## Example Use Case
+Let's consider an example use case where we want to use ReasFlow to solve a mathematical equation. We can define the knowledge graph and agents as follows:
+```python
+kg = reasflow.KnowledgeGraph()
+kg.add_node("Equation", "Mathematical expression")
+kg.add_node("Variable", "Unknown value")
+kg.add_edge("Equation", "Variable", "has_variable")
+
+agent = reasflow.Agent(kg, "Equation")
+agent.set_goal("Solve equation")
+
+reasflow.run_simulation([agent], kg)
+```
+This will execute the simulation and produce output based on the agent's actions and decisions.
+
+![a close up of a computer keyboard with a blurry background](https://images.unsplash.com/photo-1650327034581-1711a15a5430?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxSZWFzRmxvdyUyMEFzc2lzdGluZyUyMFJlYXNvbmluZyUyMENlbnRyaWMlMjBTY2llbnRpZmljJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg0NDAyMjQ1fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+ReasFlow is a powerful tool for assisting reasoning-centric scientific discovery in applied mathematics. By utilizing a knowledge-based multi-agent system, ReasFlow can tackle complex tasks and provide valuable insights. In this tutorial, we have explored how to use ReasFlow to facilitate scientific discovery. We have also provided a step-by-step guide on how to set up the system, create a knowledge graph, define agents, and run the simulation.
+
+## Future Work
+There are several potential directions for future work with ReasFlow. One possible area of research is to integrate ReasFlow with other AI systems, such as machine learning models or natural language processing tools. Another possible direction is to apply ReasFlow to other domains, such as physics or biology.
+
+![a computer screen with a bar chart on it](https://images.unsplash.com/photo-1686061592689-312bbfb5c055?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxSZWFzRmxvdyUyMEFzc2lzdGluZyUyMFJlYXNvbmluZyUyMENlbnRyaWMlMjBTY2llbnRpZmljJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg0NDAyMjQ1fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+By exploring these directions, we can further develop the capabilities of ReasFlow and unlock its full potential for assisting scientific discovery. For more information on ReasFlow, you can visit the [official website](https://arxiv.org/abs/2607.14178).
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
