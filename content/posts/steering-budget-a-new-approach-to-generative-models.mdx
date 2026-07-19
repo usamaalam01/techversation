@@ -1,0 +1,107 @@
+---
+title: "Steering Budget: A New Approach to Generative Models"
+description: "Generative models can be steered with examples, not knobs, for better control."
+date: "2026-07-19"
+author: "Usama"
+tags: ["ai", "generative-models", "steering-budget"]
+aiSummary: "The Steering Budget approach allows for more precise control over generative models by using examples instead of knobs. This method overcomes the limitations of traditional knob-based steering. By leveraging the Steering Budget, developers can create more accurate and efficient generative models."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1720962158903-191e054846d1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxTdGVlcmluZyUyMEJ1ZGdldCUyMEV4YW1wbGVzJTIwYmVhdCUyMEtub2JzJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg0NDMyMjcyfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Steering Budget
+
+Generative models have become increasingly popular in recent years, with applications in image and text generation, among others. However, controlling these models can be a challenging task. Traditional methods rely on knobs, such as prompts, guidance scales, and property tags, to steer the model. Nevertheless, these knobs have limitations, and past a certain point, they stop moving the property you care about. 
+
+The Steering Budget approach, introduced in the paper [The Steering Budget: Examples beat Knobs](https://arxiv.org/abs/2607.14246), offers a new perspective on this problem. According to this approach, the ceiling is not a shortcoming of the model but a budget, set by the training data before the model is trained. A property's movable range splits into two parts: the part that can be controlled by knobs and the part that requires examples to steer.
+
+![Vintage car steering wheel and dashboard with light reflections.](https://images.unsplash.com/photo-1783794467474-ed5a39b6a683?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxTdGVlcmluZyUyMEJ1ZGdldCUyMEV4YW1wbGVzJTIwYmVhdCUyMEtub2JzJTIwYmVhdCUyMEtub2JzJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg0NDMyMjcyfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Understanding the Steering Budget
+
+To understand the Steering Budget, let's consider a simple example. Suppose we have a generative model that generates images of cars. We want to steer the model to generate images of red cars. Using the traditional knob-based approach, we can use a prompt or a guidance scale to control the color of the car. However, past a certain point, the knob will stop moving the property we care about, which is the color of the car.
+
+The Steering Budget approach suggests that instead of using knobs, we can use examples to steer the model. For instance, we can provide the model with examples of red cars and ask it to generate more images like those. This approach allows for more precise control over the model and can overcome the limitations of the traditional knob-based approach.
+
+## Implementing the Steering Budget
+
+To implement the Steering Budget, we need to modify the way we train and use our generative models. Here's a step-by-step guide:
+
+### Step 1: Data Preparation
+
+First, we need to prepare our data. We need to collect a dataset of examples that demonstrate the property we want to steer. For instance, if we want to steer the model to generate images of red cars, we need to collect a dataset of images of red cars.
+
+```python
+import os
+import numpy as np
+from PIL import Image
+
+# Load the dataset of images
+dataset = []
+for file in os.listdir('data'):
+    img = Image.open(os.path.join('data', file))
+    dataset.append(np.array(img))
+```
+
+### Step 2: Model Training
+
+Next, we need to train our generative model using the prepared dataset. We can use any type of generative model, such as a GAN or a VAE.
+
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+# Define the generative model
+class Generator(nn.Module):
+    def __init__(self):
+        super(Generator, self).__init__()
+        self.fc1 = nn.Linear(100, 128)
+        self.fc2 = nn.Linear(128, 784)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = torch.sigmoid(self.fc2(x))
+        return x
+
+# Train the model
+generator = Generator()
+criterion = nn.MSELoss()
+optimizer = optim.Adam(generator.parameters(), lr=0.001)
+
+for epoch in range(100):
+    for x in dataset:
+        x = torch.tensor(x)
+        optimizer.zero_grad()
+        output = generator(x)
+        loss = criterion(output, x)
+        loss.backward()
+        optimizer.step()
+```
+
+### Step 3: Steering the Model
+
+Once the model is trained, we can use it to generate new images. To steer the model, we can provide it with examples of the property we want to steer.
+
+```python
+# Use the model to generate new images
+def generate_image(example):
+    example = torch.tensor(example)
+    output = generator(example)
+    return output.detach().numpy()
+
+# Steer the model to generate images of red cars
+red_car_example = np.array(Image.open('red_car.jpg'))
+generated_image = generate_image(red_car_example)
+```
+
+## Conclusion
+
+The Steering Budget approach offers a new perspective on controlling generative models. By using examples instead of knobs, we can overcome the limitations of traditional knob-based steering and achieve more precise control over the model. This approach has the potential to revolutionize the field of generative models and enable the creation of more accurate and efficient models.
+
+![black and white analog gauge](https://images.unsplash.com/photo-1600201305000-4d74fce1c5f6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxTdGVlcmluZyUyMEJ1ZGdldCUyMEV4YW1wbGVzJTIwYmVhdCUyMEtub2JzJTIwYmVhdCUyMEtub2JzJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg0NDMyMjcyfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+By following the steps outlined in this tutorial, developers can implement the Steering Budget approach in their own projects and achieve more precise control over their generative models.
+
+*Photo by [Egor Komarov](https://unsplash.com/@egorkomarov?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-close-up-of-a-watch-face-with-different-colors-2h4jFpDZaLI?utm_source=techversation&utm_medium=referral)*
