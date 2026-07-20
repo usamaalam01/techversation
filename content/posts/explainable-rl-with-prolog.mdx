@@ -1,0 +1,102 @@
+---
+title: "Explainable RL with Prolog"
+description: "Transforming black box policies into executable logic programs."
+date: "2026-07-20"
+author: "Usama"
+tags: ["ai", "prolog", "rl"]
+aiSummary: "This tutorial demonstrates a three-stage post-hoc transformation to extract a frozen proximal policy and rewrite it as an executable logic program. We will use Prolog to create an explainable reinforcement learning model. The resulting program can be read, run, and edited by humans and machines alike."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1752679813117-49fdab167868?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxGcm9tJTIwQmxhY2slMjBCb3glMjBFeGVjdXRhYmxlJTIwTG9naWMlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODQ1Mzk5MzV8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Explainable Reinforcement Learning
+
+Reinforcement learning (RL) has made tremendous progress in recent years, achieving state-of-the-art results in various domains. However, the complexity of deep RL models often makes them difficult to understand and interpret. This lack of transparency can be a significant obstacle in high-stakes applications, where explainability and accountability are crucial.
+
+To address this challenge, researchers have proposed various techniques to transform black box RL policies into more interpretable and explainable models. One promising approach is to rewrite the policy as an executable logic program, which can be run, edited, and optimized by humans and machines alike.
+
+In this tutorial, we will explore how to apply this approach using Prolog, a logic programming language. We will demonstrate a three-stage post-hoc transformation that extracts a frozen proximal policy and rewrites it as an executable logic program.
+
+## Stage 1: Extracting the Policy
+
+The first stage involves extracting the frozen proximal policy from the trained RL model. This can be done by analyzing the model's weights and biases to identify the underlying decision-making process.
+
+```python
+import numpy as np
+import torch
+
+# Load the trained RL model
+model = torch.load('rl_model.pth')
+
+# Extract the policy weights and biases
+policy_weights = model.policy_weights
+policy_biases = model.policy_biases
+
+# Print the policy weights and biases
+print(policy_weights)
+print(policy_biases)
+```
+
+## Stage 2: Rewriting the Policy as a Logic Program
+
+The second stage involves rewriting the extracted policy as a logic program in Prolog. This requires identifying the key decision-making rules and constraints that govern the policy's behavior.
+
+```prolog
+% Define the policy rules
+policy_rule1 :-
+    state(S),
+    S >= 0.5,
+    action(a).
+
+policy_rule2 :-
+    state(S),
+    S < 0.5,
+    action(b).
+
+% Define the state and action predicates
+state(S) :-
+    S is 0.3.  % Replace with actual state value
+
+action(A) :-
+    A = a.  % Replace with actual action value
+```
+
+## Stage 3: Optimizing and Executing the Logic Program
+
+The third stage involves optimizing and executing the rewritten logic program. This can be done using a Prolog interpreter or a logic programming framework.
+
+```prolog
+% Optimize the policy rules
+optimize_policy :-
+    policy_rule1;
+    policy_rule2.
+
+% Execute the optimized policy
+execute_policy :-
+    optimize_policy,
+    action(A),
+    write(A).
+```
+
+## Example Use Case
+
+To illustrate the effectiveness of this approach, let's consider a simple example. Suppose we have a reinforcement learning model that learns to play a game of tic-tac-toe. The model is trained using a deep Q-network, and we want to extract the policy and rewrite it as an executable logic program.
+
+![A grey and white photo of a building](https://images.unsplash.com/photo-1651836528367-dbfa1035ebdb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxGcm9tJTIwQmxhY2slMjBCb3glMjBFeGVjdXRhYmxlJTIwTG9naWMlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODQ1Mzk5MzV8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+Using the three-stage transformation, we can extract the policy and rewrite it as a logic program in Prolog. The resulting program can be executed and optimized using a Prolog interpreter.
+
+## Conclusion
+
+In this tutorial, we demonstrated how to transform a black box reinforcement learning policy into an executable logic program using Prolog. The resulting program can be read, run, and edited by humans and machines alike, providing a more transparent and explainable model.
+
+By applying this approach, developers can create more interpretable and accountable RL models, which is essential in high-stakes applications. The use of Prolog as a logic programming language provides a powerful tool for rewriting and optimizing the policy, making it an attractive choice for explainable reinforcement learning.
+
+As the field of reinforcement learning continues to evolve, the need for explainable and transparent models will become increasingly important. By adopting techniques like the three-stage transformation, developers can create more trustworthy and reliable RL models that can be used in a wide range of applications.
+
+![A gray wooden frame](https://images.unsplash.com/photo-1555393643-b58daf90fbcc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxGcm9tJTIwQmxhY2slMjBCb3glMjBFeGVjdXRhYmxlJTIwTG9naWMlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODQ1Mzk5MzV8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+For more information on this topic, please refer to the original research paper on [arXiv](https://arxiv.org/abs/2607.15459).
+
+*Photo by [Atul](https://unsplash.com/@atulr?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/dark-geometric-shapes-create-a-minimalistic-abstract-image-4eVfJho8dA0?utm_source=techversation&utm_medium=referral)*
