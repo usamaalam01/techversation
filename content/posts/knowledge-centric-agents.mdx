@@ -1,0 +1,145 @@
+---
+title: "Knowledge-Centric Agents"
+description: "Generate workflows with knowledge-centric agents."
+date: "2026-07-20"
+author: "Usama"
+tags: ["ai", "llm", "workflow"]
+aiSummary: "Knowledge-centric agents can generate workflows with expert-level reasoning. This tutorial shows how to use them for workflow generation. We'll build a basic workflow generator using a knowledge-centric agent."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1667984436026-99b165e3672b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxLbm93bGVkZ2UlMjBDZW50cmljJTIwQWdlbnRzJTIwV29ya2Zsb3clMjBHZW5lcmF0aW9uJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg0NTc3NDM5fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Workflow generation in visual creation systems like ComfyUI requires not only syntactic accuracy but also expert-level reasoning over modular compositions. Existing large language model (LLM) approaches often struggle with structural brittleness and lack the experiential knowledge required. Knowledge-centric agents can fill this gap by providing a more robust and knowledgeable approach to workflow generation.
+
+## What are Knowledge-Centric Agents?
+Knowledge-centric agents are artificial intelligence (AI) systems that focus on acquiring, representing, and using knowledge to make decisions. They are designed to mimic human-like reasoning and decision-making processes. In the context of workflow generation, knowledge-centric agents can be used to create workflows that are not only syntactically correct but also semantically meaningful.
+
+## Building a Basic Workflow Generator
+To demonstrate the use of knowledge-centric agents for workflow generation, we'll build a basic workflow generator using Python. We'll use the `networkx` library to represent the workflow as a graph and the `json` library to handle JSON data.
+
+```python
+import networkx as nx
+import json
+
+class WorkflowGenerator:
+    def __init__(self):
+        self.graph = nx.DiGraph()
+
+    def add_node(self, node_id, node_type):
+        self.graph.add_node(node_id, type=node_type)
+
+    def add_edge(self, from_node, to_node):
+        self.graph.add_edge(from_node, to_node)
+
+    def generate_workflow(self):
+        workflow = []
+        for node in self.graph.nodes():
+            node_data = self.graph.nodes[node]
+            workflow.append({
+                'id': node,
+                'type': node_data['type']
+            })
+        return workflow
+
+# Create a workflow generator
+generator = WorkflowGenerator()
+
+# Add nodes and edges to the graph
+generator.add_node('start', 'start')
+generator.add_node('task1', 'task')
+generator.add_node('task2', 'task')
+generator.add_node('end', 'end')
+generator.add_edge('start', 'task1')
+generator.add_edge('task1', 'task2')
+generator.add_edge('task2', 'end')
+
+# Generate the workflow
+workflow = generator.generate_workflow()
+print(json.dumps(workflow, indent=4))
+```
+
+## Integrating Knowledge-Centric Agents
+To integrate knowledge-centric agents into our workflow generator, we need to add a knowledge representation layer. We can use a knowledge graph to represent the relationships between different concepts and entities in our workflow.
+
+```python
+import networkx as nx
+import json
+
+class KnowledgeGraph:
+    def __init__(self):
+        self.graph = nx.DiGraph()
+
+    def add_entity(self, entity_id, entity_type):
+        self.graph.add_node(entity_id, type=entity_type)
+
+    def add_relationship(self, from_entity, to_entity, relationship_type):
+        self.graph.add_edge(from_entity, to_entity, type=relationship_type)
+
+    def query(self, query_string):
+        # Implement a query function to retrieve entities and relationships
+        pass
+
+# Create a knowledge graph
+knowledge_graph = KnowledgeGraph()
+
+# Add entities and relationships to the graph
+knowledge_graph.add_entity('task1', 'task')
+knowledge_graph.add_entity('task2', 'task')
+knowledge_graph.add_relationship('task1', 'task2', 'depends_on')
+
+# Query the knowledge graph
+query_result = knowledge_graph.query('What tasks depend on task1?')
+print(query_result)
+```
+
+## Using Knowledge-Centric Agents for Workflow Generation
+Now that we have a basic workflow generator and a knowledge graph, we can use knowledge-centric agents to generate workflows. We can use the knowledge graph to retrieve entities and relationships and use this information to generate a workflow.
+
+```python
+class KnowledgeCentricAgent:
+    def __init__(self, knowledge_graph):
+        self.knowledge_graph = knowledge_graph
+
+    def generate_workflow(self, start_node, end_node):
+        workflow = []
+        current_node = start_node
+        while current_node != end_node:
+            # Query the knowledge graph to retrieve the next node
+            query_result = self.knowledge_graph.query(f'What tasks depend on {current_node}?')
+            next_node = query_result[0]
+            workflow.append({
+                'id': current_node,
+                'type': 'task'
+            })
+            current_node = next_node
+        workflow.append({
+            'id': end_node,
+            'type': 'end'
+        })
+        return workflow
+
+# Create a knowledge-centric agent
+agent = KnowledgeCentricAgent(knowledge_graph)
+
+# Generate a workflow
+workflow = agent.generate_workflow('start', 'end')
+print(json.dumps(workflow, indent=4))
+```
+
+![People are looking at a mind map on a laptop screen.](https://images.unsplash.com/photo-1745847768382-816bfc32e1bb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxLbm93bGVkZ2UlMjBDZW50cmlcJTIwQWdlbnRzJTIwV29ya2Zsb3clMjBHZW5lcmF0aW9uJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg0NTc3NDM5fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we demonstrated how to use knowledge-centric agents for workflow generation. We built a basic workflow generator and integrated it with a knowledge graph to provide a more robust and knowledgeable approach to workflow generation. We also showed how to use knowledge-centric agents to generate workflows using the knowledge graph.
+
+## Future Work
+There are several areas for future work, including:
+
+* Implementing a more sophisticated query function for the knowledge graph
+* Integrating multiple knowledge graphs to provide a more comprehensive knowledge base
+* Using machine learning algorithms to improve the accuracy of the workflow generator
+
+By using knowledge-centric agents for workflow generation, we can create more efficient and effective workflows that take into account the complexities and nuances of real-world systems.
+
+*Photo by [Growtika](https://unsplash.com/@growtika?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphical-user-interface-application-shape-arrow-hPdY3vuLRgI?utm_source=techversation&utm_medium=referral)*
