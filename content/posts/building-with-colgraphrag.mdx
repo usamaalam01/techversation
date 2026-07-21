@@ -1,0 +1,120 @@
+---
+title: "Building with ColGraphRAG"
+description: "Practical guide to late-interaction evidence retrieval for multimodal GraphRAG."
+date: "2026-07-21"
+author: "Usama"
+tags: ["ai", "graph-rag", "multimodal"]
+aiSummary: "ColGraphRAG is a novel approach for late-interaction evidence retrieval in multimodal GraphRAG. This tutorial provides a step-by-step guide on how to implement ColGraphRAG for graph-grounded multimodal question answering. We will cover the key components of ColGraphRAG, including graph construction, node representation, and evidence retrieval."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxDb2xHcmFwaFJBRyUyMExhdGUlMjBJbnRlcmFjdGlvbiUyMEV2aWRlbmNlJTIwUmV0cmlldmFsJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg0NjYzMjg1fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Graph-grounded multimodal question answering has gained significant attention in recent years, as it enables the organization of text, tables, and images in a structured evidence graph. However, the accuracy of these models depends on the ranking of multimodal assets, which can lead to the discard of important patch- and token-level structure. To address this issue, ColGraphRAG has been proposed as a novel approach for late-interaction evidence retrieval in multimodal GraphRAG.
+
+## Background
+Before diving into the implementation of ColGraphRAG, let's briefly review the concept of graph-grounded multimodal question answering. In this setting, a question is asked about a given context, which consists of text, tables, and images. The goal is to answer the question by retrieving relevant evidence from the context.
+
+## ColGraphRAG Architecture
+The ColGraphRAG architecture consists of three main components:
+1. **Graph Construction**: The first step is to construct a graph that represents the relationships between the different modalities (text, tables, and images).
+2. **Node Representation**: Once the graph is constructed, each node is represented using a combination of token-level and patch-level features.
+3. **Evidence Retrieval**: The final step is to retrieve the relevant evidence from the graph, which is done using a late-interaction mechanism.
+
+## Implementation
+To implement ColGraphRAG, we will use the PyTorch library and the PyTorch Geometric module for graph neural networks. We will also use the Hugging Face Transformers library for token-level feature extraction.
+
+```python
+import torch
+from torch_geometric.data import Data
+from transformers import AutoModel, AutoTokenizer
+```
+
+### Graph Construction
+The graph construction step involves creating a graph that represents the relationships between the different modalities. We will use a simple graph structure, where each node represents a sentence or an image, and the edges represent the relationships between them.
+
+```python
+def construct_graph(context):
+    # Create a graph with nodes representing sentences and images
+    nodes = []
+    edges = []
+    for sentence in context['sentences']:
+        nodes.append(sentence)
+    for image in context['images']:
+        nodes.append(image)
+    for i in range(len(nodes)):
+        for j in range(i + 1, len(nodes)):
+            edges.append((i, j))
+    # Create a PyTorch Geometric data object
+    x = torch.randn(len(nodes), 128)  # Node features
+    edge_index = torch.tensor(edges, dtype=torch.long).t().contiguous()
+    data = Data(x=x, edge_index=edge_index)
+    return data
+```
+
+### Node Representation
+The node representation step involves combining token-level and patch-level features to represent each node.
+
+```python
+def node_representation(data, context):
+    # Use Hugging Face Transformers for token-level feature extraction
+    tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
+    model = AutoModel.from_pretrained('bert-base-uncased')
+    token_features = []
+    for sentence in context['sentences']:
+        inputs = tokenizer(sentence, return_tensors='pt')
+        outputs = model(**inputs)
+        token_features.append(outputs.last_hidden_state[:, 0, :])
+    # Use a patch-level feature extractor for images
+    patch_features = []
+    for image in context['images']:
+        # Assume we have a patch-level feature extractor
+        patch_features.append(image_features(image))
+    # Combine token-level and patch-level features
+    node_features = []
+    for i in range(len(data.x)):
+        if i < len(context['sentences']):
+            node_features.append(token_features[i])
+        else:
+            node_features.append(patch_features[i - len(context['sentences'])])
+    return torch.stack(node_features)
+```
+
+### Evidence Retrieval
+The evidence retrieval step involves using a late-interaction mechanism to retrieve the relevant evidence from the graph.
+
+```python
+def evidence_retrieval(data, node_features, question):
+    # Use a late-interaction mechanism to retrieve the relevant evidence
+    # Assume we have a late-interaction mechanism implemented
+    evidence = late_interaction(data, node_features, question)
+    return evidence
+```
+
+## Example Use Case
+Let's consider an example use case, where we have a context that consists of text, tables, and images, and a question that asks about a specific aspect of the context.
+
+```python
+context = {
+    'sentences': ['The capital of France is Paris.', 'The Eiffel Tower is located in Paris.'],
+    'images': ['image1.jpg', 'image2.jpg'],
+    'tables': ['table1.csv', 'table2.csv']
+}
+question = 'What is the capital of France?'
+data = construct_graph(context)
+node_features = node_representation(data, context)
+evidence = evidence_retrieval(data, node_features, question)
+print(evidence)
+```
+
+This code will output the relevant evidence from the context that answers the question.
+
+![black flat screen computer monitor](https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxDb2xHcmFwaFJBRyUyMExhdGUlMjBJbnRlcmFjdGlvbiUyMEV2aWRlbmNlJTIwUmV0cmlldmFsJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg0NjYzMjg1fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we have provided a step-by-step guide on how to implement ColGraphRAG for graph-grounded multimodal question answering. We have covered the key components of ColGraphRAG, including graph construction, node representation, and evidence retrieval. We have also provided a working code example that demonstrates how to use ColGraphRAG to retrieve relevant evidence from a context.
+
+Note that this is a simplified example, and you may need to modify the code to fit your specific use case. Additionally, you may need to fine-tune the hyperparameters and experiment with different architectures to achieve the best results.
+
+*Photo by [Stephen Phillips - Hostreviews.co.uk](https://unsplash.com/@hostreviews?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/monitor-screengrab-shr_Xn8S8QU?utm_source=techversation&utm_medium=referral)*

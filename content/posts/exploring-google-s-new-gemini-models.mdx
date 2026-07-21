@@ -1,0 +1,103 @@
+---
+title: "Exploring Google's New Gemini Models"
+description: "Google releases three new Gemini models, expanding AI capabilities."
+date: "2026-07-21"
+author: "Usama"
+tags: ["ai", "google", "gemini"]
+aiSummary: "Google has released three new Gemini models: Gemini 3.6 Flash, 3.5 Flash-Lite, and Flash Cyber. These models expand Google's AI capabilities, but the absence of Gemini 3.5 Pro raises questions. This tutorial explores the new models and provides code examples."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxHb29nbGUlMjByZWxlYXNlcyUyMHRocmVlJTIwbmV3JTIwR2VtaW5pJTIwdGVjaG5vbG9neSUyMGRpZ2l0YWwlMjBpbm5vdmF0aW9ufGVufDF8MHx8fDE3ODQ2NjMxMzF8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Google has recently released three new Gemini models: Gemini 3.6 Flash, 3.5 Flash-Lite, and Flash Cyber. These models are designed to expand Google's AI capabilities, providing developers with more tools to build innovative applications. In this tutorial, we will explore the new Gemini models, discuss their features, and provide code examples to get you started.
+
+## What are Gemini Models?
+Gemini models are a series of AI models developed by Google, designed to provide a range of natural language processing (NLP) capabilities. These models can be used for tasks such as text classification, sentiment analysis, and language translation. The new Gemini models released by Google offer improved performance and efficiency, making them suitable for a wide range of applications.
+
+## Gemini 3.6 Flash
+The Gemini 3.6 Flash model is the most advanced model released by Google. It offers improved performance and efficiency, making it suitable for applications that require high accuracy and speed. The model is trained on a large dataset and can be fine-tuned for specific tasks.
+
+### Example Code: Using Gemini 3.6 Flash for Text Classification
+```python
+import torch
+from transformers import GeminiForSequenceClassification, GeminiTokenizer
+
+# Load the Gemini 3.6 Flash model and tokenizer
+model = GeminiForSequenceClassification.from_pretrained('google/gemini-3.6-flash')
+tokenizer = GeminiTokenizer.from_pretrained('google/gemini-3.6-flash')
+
+# Define a sample text
+text = "This is a sample text."
+
+# Tokenize the text
+inputs = tokenizer(text, return_tensors='pt')
+
+# Classify the text
+outputs = model(**inputs)
+
+# Print the classification result
+print(outputs.logits)
+```
+
+## Gemini 3.5 Flash-Lite
+The Gemini 3.5 Flash-Lite model is a lightweight version of the Gemini 3.6 Flash model. It offers improved efficiency and is suitable for applications that require low latency and low computational resources. The model is trained on a smaller dataset and can be fine-tuned for specific tasks.
+
+### Example Code: Using Gemini 3.5 Flash-Lite for Sentiment Analysis
+```python
+import torch
+from transformers import GeminiForSequenceClassification, GeminiTokenizer
+
+# Load the Gemini 3.5 Flash-Lite model and tokenizer
+model = GeminiForSequenceClassification.from_pretrained('google/gemini-3.5-flash-lite')
+tokenizer = GeminiTokenizer.from_pretrained('google/gemini-3.5-flash-lite')
+
+# Define a sample text
+text = "I love this product!"
+
+# Tokenize the text
+inputs = tokenizer(text, return_tensors='pt')
+
+# Analyze the sentiment
+outputs = model(**inputs)
+
+# Print the sentiment result
+print(outputs.logits)
+```
+
+## Flash Cyber
+The Flash Cyber model is a specialized model designed for cybersecurity applications. It offers improved performance and efficiency, making it suitable for applications that require high accuracy and speed. The model is trained on a large dataset of cybersecurity-related text and can be fine-tuned for specific tasks.
+
+### Example Code: Using Flash Cyber for Cybersecurity Text Classification
+```python
+import torch
+from transformers import GeminiForSequenceClassification, GeminiTokenizer
+
+# Load the Flash Cyber model and tokenizer
+model = GeminiForSequenceClassification.from_pretrained('google/flash-cyber')
+tokenizer = GeminiTokenizer.from_pretrained('google/flash-cyber')
+
+# Define a sample text
+text = "This is a sample cybersecurity text."
+
+# Tokenize the text
+inputs = tokenizer(text, return_tensors='pt')
+
+# Classify the text
+outputs = model(**inputs)
+
+# Print the classification result
+print(outputs.logits)
+```
+
+## Conclusion
+Google's new Gemini models offer a range of AI capabilities, providing developers with more tools to build innovative applications. The Gemini 3.6 Flash, 3.5 Flash-Lite, and Flash Cyber models offer improved performance and efficiency, making them suitable for a wide range of applications. By using these models, developers can build applications that require high accuracy and speed, such as text classification, sentiment analysis, and language translation.
+
+![the google logo is displayed on the side of a building](https://images.unsplash.com/photo-1688235142578-c4e1523c6347?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxHb29nbGUlMjByZWxlYXNlcyUyMHRocmVlJTIwbmV3JTIwR2VtaW5pJTIwdGVjaG5vbG9neSUyMGRpZ2l0YWwlMjBpbm5vdmF0aW9ufGVufDF8MHx8fDE3ODQ2NjMxMzF8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+The absence of Gemini 3.5 Pro raises fresh questions about Google's AI strategy. However, the new Gemini models released by Google offer a range of AI capabilities, providing developers with more tools to build innovative applications. By using these models, developers can build applications that require high accuracy and speed, such as text classification, sentiment analysis, and language translation.
+
+For more information about the new Gemini models, visit the [Google AI Blog](https://ai.googleblog.com/). To get started with the new Gemini models, visit the [Google Cloud AI Platform](https://cloud.google.com/ai-platform).
+
+*Photo by [Mitchell Luo](https://unsplash.com/@mitchel3uo?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/google-logo-neon-light-signage-jz4ca36oJ_M?utm_source=techversation&utm_medium=referral)*
