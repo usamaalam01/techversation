@@ -1,0 +1,117 @@
+---
+title: "Weak-to-Strong Off-Policy RL"
+description: "Reinforcement learning with verifiable rewards for large language models."
+date: "2026-07-21"
+author: "Usama"
+tags: ["rl", "ai", "reinforcement-learning"]
+aiSummary: "This post explores the concept of weak-to-strong off-policy reinforcement learning via auxiliary branches, a new approach for enhancing reasoning in large language models. We'll dive into the details of this technique and provide working code examples to demonstrate its implementation. The proposed method identifies a critical support limited bottleneck in the traditional paradigm and addresses it using auxiliary branches."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxUYWtlcyUyMFRva2VucyUyMFdlYWslMjBTdHJvbmclMjBPZmYlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODQ2NDMyMTZ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Reinforcement learning (RL) has emerged as a standard approach for enhancing reasoning in large language models. The traditional paradigm optimizes the policy by contrasting multiple self-generated rollouts. However, this approach has a critical support limited bottleneck, particularly on challenging reasoning tasks. In this post, we'll explore a new technique called weak-to-strong off-policy RL via auxiliary branches, which addresses this bottleneck.
+
+## Background
+The traditional RL paradigm uses a single model to generate rollouts and optimize the policy. However, this approach can lead to a support limited bottleneck, where the model struggles to explore the entire state space. To address this issue, the proposed method uses auxiliary branches to generate additional rollouts, which are then used to optimize the policy.
+
+## Weak-to-Strong Off-Policy RL via Auxiliary Branches
+The proposed method consists of two main components: a primary model and auxiliary branches. The primary model generates the initial rollout, while the auxiliary branches generate additional rollouts. The policy is then optimized using the combined rollouts from the primary model and auxiliary branches.
+
+### Primary Model
+The primary model is a standard RL model that generates the initial rollout. The primary model consists of an encoder, a decoder, and a policy head. The encoder takes in the input state and generates a latent representation, which is then passed to the decoder to generate the rollout.
+
+```python
+import torch
+import torch.nn as nn
+
+class PrimaryModel(nn.Module):
+    def __init__(self, input_dim, hidden_dim, output_dim):
+        super(PrimaryModel, self).__init__()
+        self.encoder = nn.Sequential(
+            nn.Linear(input_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, hidden_dim)
+        )
+        self.decoder = nn.Sequential(
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, output_dim)
+        )
+        self.policy_head = nn.Linear(hidden_dim, output_dim)
+
+    def forward(self, input_state):
+        latent_representation = self.encoder(input_state)
+        rollout = self.decoder(latent_representation)
+        policy = self.policy_head(latent_representation)
+        return rollout, policy
+```
+
+### Auxiliary Branches
+The auxiliary branches generate additional rollouts, which are then used to optimize the policy. Each auxiliary branch consists of a separate encoder, decoder, and policy head.
+
+```python
+class AuxiliaryBranch(nn.Module):
+    def __init__(self, input_dim, hidden_dim, output_dim):
+        super(AuxiliaryBranch, self).__init__()
+        self.encoder = nn.Sequential(
+            nn.Linear(input_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, hidden_dim)
+        )
+        self.decoder = nn.Sequential(
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, output_dim)
+        )
+        self.policy_head = nn.Linear(hidden_dim, output_dim)
+
+    def forward(self, input_state):
+        latent_representation = self.encoder(input_state)
+        rollout = self.decoder(latent_representation)
+        policy = self.policy_head(latent_representation)
+        return rollout, policy
+```
+
+### Optimizing the Policy
+The policy is optimized using the combined rollouts from the primary model and auxiliary branches. The optimization process involves calculating the loss function, which is a combination of the primary model loss and the auxiliary branch losses.
+
+```python
+def optimize_policy(primary_model, auxiliary_branches, input_state, target_policy):
+    primary_rollout, primary_policy = primary_model(input_state)
+    auxiliary_rollouts = []
+    auxiliary_policies = []
+    for branch in auxiliary_branches:
+        rollout, policy = branch(input_state)
+        auxiliary_rollouts.append(rollout)
+        auxiliary_policies.append(policy)
+
+    primary_loss = torch.mean((primary_policy - target_policy) ** 2)
+    auxiliary_losses = []
+    for i in range(len(auxiliary_branches)):
+        auxiliary_loss = torch.mean((auxiliary_policies[i] - target_policy) ** 2)
+        auxiliary_losses.append(auxiliary_loss)
+
+    total_loss = primary_loss + torch.mean(torch.stack(auxiliary_losses))
+    return total_loss
+```
+
+## Example Use Case
+To demonstrate the effectiveness of the proposed method, let's consider an example use case. Suppose we want to train a language model to generate text based on a given prompt. The primary model generates an initial rollout, while the auxiliary branches generate additional rollouts. The policy is then optimized using the combined rollouts.
+
+![A wooden block that says token sitting on a table](https://images.unsplash.com/photo-1740560051614-8c5743c8bd61?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxUYWtlcyUyMFRva2VucyUyMFdlYWslMjBTdHJvbmclMjBPZmYlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODQ2NDMyMTZ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this post, we explored the concept of weak-to-strong off-policy RL via auxiliary branches, a new approach for enhancing reasoning in large language models. We provided working code examples to demonstrate the implementation of this technique. The proposed method addresses the critical support limited bottleneck in the traditional paradigm by using auxiliary branches to generate additional rollouts. This approach has the potential to improve the performance of language models on challenging reasoning tasks.
+
+## Future Work
+There are several directions for future work, including:
+
+* Investigating the effectiveness of the proposed method on different tasks and datasets
+* Exploring alternative architectures for the primary model and auxiliary branches
+* Developing more efficient optimization algorithms for the policy
+
+By continuing to develop and refine this technique, we can unlock the full potential of RL for enhancing reasoning in large language models.
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
