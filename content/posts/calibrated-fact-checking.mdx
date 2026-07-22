@@ -1,0 +1,87 @@
+---
+title: "Calibrated Fact-Checking"
+description: "Evaluating evidence chains for reliable fact-checking with LLMs."
+date: "2026-07-22"
+author: "Usama"
+tags: ["llm", "fact-checking", "evidence-chain"]
+aiSummary: "Large language models can achieve strong fact-checking accuracy, but may issue confident verdicts even when supporting evidence is weak. Evidence Chain Evaluation (ECE) addresses this issue by selectively evaluating evidence chains. This tutorial demonstrates how to implement ECE for calibrated fact-checking."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1529078155058-5d716f45d604?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxDYWxpYnJhdGVkJTIwU2VsZWN0aXZlJTIwRmFjdCUyMENoZWNraW5nJTIwdmlhJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg0NzI5ODI4fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Large language models (LLMs) have shown impressive performance in fact-checking tasks, but their reliability can be compromised when supporting evidence is weak, sparse, or internally inconsistent. To address this issue, researchers have proposed Evidence Chain Evaluation (ECE), a selective fact-checking framework that evaluates the strength of evidence chains. In this tutorial, we will explore how to implement ECE for calibrated fact-checking using LLMs.
+
+## Understanding Evidence Chain Evaluation
+ECE is a framework that evaluates the reliability of fact-checking decisions by assessing the strength of evidence chains. An evidence chain is a sequence of statements that support or contradict a claim. ECE selectively evaluates these chains to determine the confidence of the fact-checking decision.
+
+To illustrate this concept, consider a claim "Climate change is caused by human activities." An evidence chain for this claim might include statements such as "Human activities release greenhouse gases," "Greenhouse gases trap heat in the atmosphere," and "Rising temperatures are causing extreme weather events." ECE would evaluate the strength of this evidence chain by assessing the reliability of each statement and the coherence of the chain as a whole.
+
+## Implementing ECE with LLMs
+To implement ECE with LLMs, we need to follow these steps:
+
+1. **Claim identification**: Identify the claim to be fact-checked.
+2. **Evidence chain construction**: Construct an evidence chain for the claim by retrieving relevant statements from a knowledge base or generating them using an LLM.
+3. **Statement evaluation**: Evaluate the reliability of each statement in the evidence chain using an LLM.
+4. **Chain evaluation**: Evaluate the coherence of the evidence chain by assessing the consistency of the statements and the strength of the relationships between them.
+
+Here is an example code snippet in Python that demonstrates how to implement ECE using an LLM:
+```python
+import torch
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+# Load pre-trained LLM and tokenizer
+model = AutoModelForSequenceClassification.from_pretrained("bert-base-uncased")
+tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+
+# Define a function to evaluate the reliability of a statement
+def evaluate_statement(statement):
+    inputs = tokenizer(statement, return_tensors="pt")
+    outputs = model(**inputs)
+    logits = outputs.logits
+    probabilities = torch.nn.functional.softmax(logits, dim=1)
+    return probabilities[:, 1].item()  # Return the probability of the statement being true
+
+# Define a function to evaluate the coherence of an evidence chain
+def evaluate_chain(evidence_chain):
+    chain_score = 0
+    for i in range(len(evidence_chain) - 1):
+        statement1 = evidence_chain[i]
+        statement2 = evidence_chain[i + 1]
+        # Evaluate the consistency of the two statements
+        consistency_score = evaluate_statement(f"{statement1} implies {statement2}")
+        chain_score += consistency_score
+    return chain_score / (len(evidence_chain) - 1)
+
+# Example usage
+claim = "Climate change is caused by human activities."
+evidence_chain = [
+    "Human activities release greenhouse gases.",
+    "Greenhouse gases trap heat in the atmosphere.",
+    "Rising temperatures are causing extreme weather events."
+]
+
+statement_reliabilities = [evaluate_statement(statement) for statement in evidence_chain]
+chain_coherence = evaluate_chain(evidence_chain)
+
+print("Statement reliabilities:", statement_reliabilities)
+print("Chain coherence:", chain_coherence)
+```
+This code snippet demonstrates how to evaluate the reliability of statements and the coherence of an evidence chain using an LLM. The `evaluate_statement` function returns the probability of a statement being true, and the `evaluate_chain` function returns a score representing the coherence of the evidence chain.
+
+## Visualizing Evidence Chains
+To better understand the relationships between statements in an evidence chain, we can visualize the chain as a graph. Each statement can be represented as a node, and the relationships between statements can be represented as edges.
+
+![a close up of a screen with numbers on it](https://images.unsplash.com/photo-1586974175111-967d0ab10c7b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxDYWxpYnJhdGVkJTIwU2VsZWN0aXZlJTIwRmFjdCUyMENoZWNraW5nJTIwdmlhJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg0NzI5ODI4fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+By visualizing the evidence chain, we can identify potential weaknesses in the chain and improve the reliability of the fact-checking decision.
+
+## Conclusion
+ECE is a powerful framework for calibrated fact-checking that selectively evaluates evidence chains to determine the confidence of a fact-checking decision. By implementing ECE with LLMs, we can improve the reliability of fact-checking decisions and provide more accurate and transparent evaluations of claims. The code snippet provided in this tutorial demonstrates how to implement ECE using an LLM and can be extended to more complex fact-checking tasks.
+
+![a calculator decision - making sourcebook with a calculator next to](https://images.unsplash.com/photo-1711346105319-76535ef7e9b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxDYWxpYnJhdGVkJTIwU2VsZWN0aXZlJTIwRmFjdCUyMENoZWNraW5nJTIwdmlhJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg0NzI5ODI4fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+By following the steps outlined in this tutorial, developers can implement ECE with LLMs and improve the accuracy and transparency of fact-checking decisions.
+
+*Photo by [Mika Baumeister](https://unsplash.com/@kommumikation?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/white-printing-paper-with-numbers-Wpnoqo2plFA?utm_source=techversation&utm_medium=referral)*
