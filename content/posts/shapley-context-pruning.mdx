@@ -1,0 +1,98 @@
+---
+title: "Shapley Context Pruning"
+description: "Improving RAG systems with cooperative game theory"
+date: "2026-07-22"
+author: "Usama"
+tags: ["ai", "rag", "pruning"]
+aiSummary: "Shapley Context Pruning is a novel approach to improve the efficiency of Retrieval-Augmented Generation systems. This method uses cooperative game theory to rerank and prune contexts. In this tutorial, we will explore how to implement Shapley Context Pruning from scratch."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1605606809227-0aaad5fec1a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxTaGFwbGV5JTIwQ29udGV4dCUyMFBydW5pbmclMjBDb29wZXJhdGl2ZSUyMEdhbWUlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODQ2OTExODd8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Retrieval-Augmented Generation (RAG) systems have become a crucial component in many natural language processing applications. These systems rely on retrieving relevant contexts to generate high-quality text. However, the efficiency of RAG systems can be hindered by the large number of contexts that need to be processed. To address this issue, context reranking and pruning have become essential techniques. In this tutorial, we will delve into Shapley Context Pruning, a novel approach that utilizes cooperative game theory to improve the efficiency of RAG systems.
+
+## Background
+Shapley Context Pruning is based on the concept of cooperative game theory, which studies how multiple agents can work together to achieve a common goal. In the context of RAG systems, the agents are the contexts, and the goal is to generate high-quality text. The Shapley value is a concept in cooperative game theory that assigns a value to each agent based on its contribution to the overall goal. In Shapley Context Pruning, the Shapley value is used to rerank and prune contexts.
+
+## Implementing Shapley Context Pruning
+To implement Shapley Context Pruning, we need to follow these steps:
+
+### Step 1: Define the Cooperative Game
+The first step is to define the cooperative game, which consists of the contexts and the goal of generating high-quality text. We can represent the cooperative game as a tuple (N, v), where N is the set of contexts and v is the value function that assigns a value to each subset of contexts.
+
+### Step 2: Calculate the Shapley Value
+The next step is to calculate the Shapley value for each context. The Shapley value is calculated using the following formula:
+
+```python
+import numpy as np
+
+def calculate_shapley_value(contexts, value_function):
+    num_contexts = len(contexts)
+    shapley_values = np.zeros(num_contexts)
+    
+    for i in range(num_contexts):
+        context = contexts[i]
+        value = value_function(context)
+        shapley_values[i] = value / num_contexts
+    
+    return shapley_values
+```
+
+### Step 3: Rerank and Prune Contexts
+Once we have calculated the Shapley value for each context, we can rerank and prune the contexts based on their Shapley values. We can use a threshold to determine which contexts to prune.
+
+```python
+def rerank_and_prune(contexts, shapley_values, threshold):
+    pruned_contexts = []
+    for i in range(len(contexts)):
+        if shapley_values[i] > threshold:
+            pruned_contexts.append(contexts[i])
+    
+    return pruned_contexts
+```
+
+## Example Use Case
+To demonstrate the effectiveness of Shapley Context Pruning, let's consider an example use case. Suppose we have a RAG system that generates text based on a set of contexts. We can use Shapley Context Pruning to rerank and prune the contexts based on their Shapley values.
+
+```python
+# Define the contexts
+contexts = ["Context 1", "Context 2", "Context 3", "Context 4", "Context 5"]
+
+# Define the value function
+def value_function(context):
+    # Assign a value to each context based on its relevance
+    values = {
+        "Context 1": 0.8,
+        "Context 2": 0.6,
+        "Context 3": 0.4,
+        "Context 4": 0.2,
+        "Context 5": 0.1
+    }
+    return values[context]
+
+# Calculate the Shapley value for each context
+shapley_values = calculate_shapley_value(contexts, value_function)
+
+# Rerank and prune the contexts
+pruned_contexts = rerank_and_prune(contexts, shapley_values, 0.3)
+
+print(pruned_contexts)
+```
+
+This code will output the pruned contexts based on their Shapley values. The threshold value of 0.3 determines which contexts to prune.
+
+![brown wooden blocks on white surface](https://images.unsplash.com/photo-1605606809235-36c5d388f24a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxTaGFwbGV5JTIwQ29udGV4dCUyMFBydW5pbmclMjBDb29wZXJhdGl2ZSUyMEdhbWUlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODQ2OTExODd8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+Shapley Context Pruning is a novel approach to improve the efficiency of RAG systems. By using cooperative game theory to rerank and prune contexts, we can reduce the computational cost of RAG systems while maintaining their performance. The code examples provided in this tutorial demonstrate how to implement Shapley Context Pruning from scratch. By applying this technique, developers can build more efficient and effective RAG systems.
+
+## Future Work
+There are several avenues for future research in Shapley Context Pruning. One potential direction is to explore the use of different value functions to assign values to contexts. Another direction is to investigate the application of Shapley Context Pruning to other NLP tasks, such as question answering and text classification.
+
+![person holding black and white chess board](https://images.unsplash.com/photo-1599591520541-9290b3be3a12?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxTaGFwbGV5JTIwQ29udGV4dCUyMFBydW5pbmclMjBDb29wZXJhdGl2ZSUyMEdhbWUlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODQ2OTExODd8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+By continuing to explore and develop Shapley Context Pruning, we can unlock new possibilities for building efficient and effective NLP systems.
+
+*Photo by [Brett Jordan](https://unsplash.com/@brett_jordan?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/brown-wooden-blocks-on-white-table-x0x-jMEixZI?utm_source=techversation&utm_medium=referral)*
