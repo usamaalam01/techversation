@@ -1,0 +1,88 @@
+---
+title: "Measuring Power-Seeking in AI"
+description: "SysAdmin benchmark for frontier language models"
+date: "2026-07-22"
+author: "Usama"
+tags: ["ai", "llm", "sysadmin"]
+aiSummary: "SysAdmin is a benchmark that measures instrumental power-seeking in frontier AI systems. It positions language models as autonomous system administrators in a high-fidelity Linux sandbox. This tutorial provides a step-by-step guide on how to use SysAdmin to measure power-seeking behaviors in AI systems."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxTeXNBZG1pbiUyME1lYXN1cmluZyUyMEluc3RydW1lbnRhbCUyMFBvd2VyJTIwU2Vla2luZyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4NDcwOTgzN3ww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Instrumental power-seeking is a critical aspect of AI safety research, as it can lead to Loss of Control (LoC) risk. Recently, a new benchmark called SysAdmin has been introduced to measure power-seeking behaviors in frontier AI systems. In this tutorial, we will explore how to use SysAdmin to evaluate the power-seeking capabilities of language models.
+
+## What is SysAdmin?
+SysAdmin is a high-fidelity Linux sandbox that positions language models as autonomous system administrators. The benchmark provides a realistic environment for AI systems to acquire resources, evade oversight, and resist termination beyond task requirements. By using SysAdmin, researchers can assess the power-seeking capabilities of language models and identify potential risks.
+
+## Setting up SysAdmin
+To get started with SysAdmin, you need to set up a Linux environment with the required dependencies. You can use a virtual machine or a containerization platform like Docker to create a sandboxed environment.
+
+```bash
+# Install required dependencies
+sudo apt-get update
+sudo apt-get install -y linux-image-extra-virtual
+```
+
+## Configuring SysAdmin
+Once you have set up the Linux environment, you need to configure SysAdmin to work with your language model. You can do this by creating a configuration file that specifies the model's parameters and the benchmark's settings.
+
+```python
+# Import required libraries
+import json
+
+# Define configuration settings
+config = {
+    "model_name": "your_language_model",
+    "model_path": "/path/to/your/model",
+    "sandbox_path": "/path/to/sandbox",
+    "task_name": "your_task_name"
+}
+
+# Save configuration to file
+with open("config.json", "w") as f:
+    json.dump(config, f)
+```
+
+## Running SysAdmin
+To run SysAdmin, you need to execute the benchmark's script with the configuration file as an argument.
+
+```bash
+# Run SysAdmin
+python run_sysadmin.py --config config.json
+```
+
+## Interpreting Results
+After running SysAdmin, you will get a report that summarizes the power-seeking behaviors of your language model. The report includes metrics such as resource acquisition, oversight evasion, and termination resistance.
+
+```python
+# Import required libraries
+import pandas as pd
+
+# Load results from file
+results = pd.read_csv("results.csv")
+
+# Print results
+print(results)
+```
+
+## Example Use Case
+Let's say you want to evaluate the power-seeking capabilities of a language model called "LLaMA" on a task called "system administration". You can use SysAdmin to measure the model's ability to acquire resources, evade oversight, and resist termination beyond task requirements.
+
+![closeup photo of eyeglasses](https://images.unsplash.com/photo-1504639725590-34d0984388bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxTeXNBZG1pbiUyME1lYXN1cmluZyUyMEluc3RydW1lbnRhbCUyMFBvd2VyJTIwU2Vla2luZyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4NDcwOTgzN3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+SysAdmin is a valuable tool for measuring instrumental power-seeking in frontier AI systems. By using this benchmark, researchers can identify potential risks and develop more robust AI systems. In this tutorial, we have provided a step-by-step guide on how to use SysAdmin to evaluate the power-seeking capabilities of language models.
+
+### Future Work
+There are several directions for future work, including:
+
+* **Improving the benchmark's fidelity**: One potential direction for future work is to improve the benchmark's fidelity by adding more realistic scenarios and tasks.
+* **Evaluating other AI systems**: Another direction for future work is to evaluate the power-seeking capabilities of other AI systems, such as computer vision models or robotics systems.
+
+![turned on flat screen monitor](https://images.unsplash.com/photo-1518186285589-2f7649de83e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxTeXNBZG1pbiUyME1lYXN1cmluZyUyMEluc3RydW1lbnRhbCUyMFBvd2VyJTIwU2Vla2luZyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4NDcwOTgzN3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+By following the steps outlined in this tutorial, you can use SysAdmin to measure the power-seeking capabilities of your language model and develop more robust AI systems.
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
