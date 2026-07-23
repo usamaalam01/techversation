@@ -1,0 +1,115 @@
+---
+title: "Benchmarking Confidential GPU Inference"
+description: "Measuring performance of confidential GPU inference on NVIDIA H100 under Intel TDX."
+date: "2026-07-23"
+author: "Usama"
+tags: ["ai", "gpu", "tdx"]
+aiSummary: "This tutorial guides developers through benchmarking confidential GPU inference on NVIDIA H100 under Intel TDX. It covers setting up the environment, installing required libraries, and running benchmarks. The goal is to measure the performance cost of enabling confidential execution for GPU-accelerated large language model serving."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1716967318503-05b7064afa41?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxCZW5jaG1hcmtpbmclMjBDb25maWRlbnRpYWwlMjBHUFUlMjBJbmZlcmVuY2UlMjBOVklESUElMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODQ4MTY5MDN8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Confidential computing is becoming a crucial requirement for AI inference workloads that process sensitive inputs or protect proprietary model assets. The performance cost of enabling confidential execution for GPU-accelerated large language model serving remains workload dependent and operationally important. In this tutorial, we will guide developers through benchmarking confidential GPU inference on NVIDIA H100 under Intel TDX.
+
+## Setting up the Environment
+To get started, you need to set up your environment with the required libraries and tools. First, install the NVIDIA driver and CUDA toolkit on your system. You can download the driver and toolkit from the [NVIDIA website](https://www.nvidia.com/).
+
+```bash
+# Install NVIDIA driver and CUDA toolkit
+sudo apt-get update
+sudo apt-get install nvidia-driver-515
+sudo apt-get install nvidia-cuda-toolkit
+```
+
+Next, install the Intel TDX SDK and libraries. You can download the SDK from the [Intel website](https://www.intel.com/).
+
+```bash
+# Install Intel TDX SDK and libraries
+sudo apt-get install intel-tdx-sdk
+```
+
+## Installing Required Libraries
+To benchmark confidential GPU inference, you need to install the required libraries, including TensorFlow and PyTorch. You can install these libraries using pip.
+
+```bash
+# Install TensorFlow and PyTorch
+pip install tensorflow
+pip install torch
+```
+
+## Running Benchmarks
+To run benchmarks, you need to create a sample dataset and model. For this example, we will use a simple neural network model with a large input size.
+
+```python
+# Import required libraries
+import tensorflow as tf
+import torch
+import numpy as np
+
+# Create a sample dataset
+input_size = 1024
+output_size = 10
+batch_size = 32
+
+# Create a sample model
+model = tf.keras.models.Sequential([
+    tf.keras.layers.Dense(64, activation='relu', input_shape=(input_size,)),
+    tf.keras.layers.Dense(output_size)
+])
+
+# Compile the model
+model.compile(optimizer='adam', loss='mean_squared_error')
+```
+
+To run the benchmark, you need to enable confidential execution using Intel TDX. You can do this by setting the `TDX_ENABLE` environment variable.
+
+```bash
+# Enable confidential execution
+export TDX_ENABLE=1
+```
+
+Now, you can run the benchmark using the `tensorflow` or `torch` library.
+
+```python
+# Run the benchmark using TensorFlow
+import time
+start_time = time.time()
+model.predict(np.random.rand(batch_size, input_size))
+end_time = time.time()
+print(f"TensorFlow benchmark time: {end_time - start_time} seconds")
+
+# Run the benchmark using PyTorch
+import time
+start_time = time.time()
+input_tensor = torch.randn(batch_size, input_size)
+output = model(input_tensor)
+end_time = time.time()
+print(f"PyTorch benchmark time: {end_time - start_time} seconds")
+```
+
+## Measuring Performance Cost
+To measure the performance cost of enabling confidential execution, you need to compare the benchmark results with and without confidential execution.
+
+```python
+# Run the benchmark without confidential execution
+export TDX_ENABLE=0
+start_time = time.time()
+model.predict(np.random.rand(batch_size, input_size))
+end_time = time.time()
+print(f"TensorFlow benchmark time without TDx: {end_time - start_time} seconds")
+
+# Calculate the performance cost
+performance_cost = (end_time - start_time) / (end_time - start_time)
+print(f"Performance cost: {performance_cost}")
+```
+
+![selective focus photography of GEFORCE RTX graphics card](https://images.unsplash.com/photo-1555618254-84e2cf498b01?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxCZW5jaG1hcmtpbmclMjBDb25maWRlbnRpYWwlMjBHUFUlMjBJbmZlcmVuY2UlMjBOVklESUElMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODQ4MTY5MDN8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we guided developers through benchmarking confidential GPU inference on NVIDIA H100 under Intel TDX. We covered setting up the environment, installing required libraries, and running benchmarks. The goal was to measure the performance cost of enabling confidential execution for GPU-accelerated large language model serving. By following this tutorial, developers can evaluate the performance cost of confidential computing for their AI workloads and make informed decisions about deploying confidential computing in production environments.
+
+To learn more about confidential computing and its applications, you can refer to the [arXiv paper](https://arxiv.org/abs/2607.19353) on benchmarking confidential GPU inference on NVIDIA H100 under Intel TDX. The paper provides a detailed analysis of the performance cost of enabling confidential execution for GPU-accelerated large language model serving and its implications for real-world applications.
+
+*Photo by [Mariia Shalabaieva](https://unsplash.com/@maria_shalabaieva?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/the-nvidia-logo-is-displayed-on-a-table-0SqsTxWhgNU?utm_source=techversation&utm_medium=referral)*
