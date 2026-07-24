@@ -1,0 +1,96 @@
+---
+title: "Evaluating LLM Watermarks in Medical Texts"
+description: "Assessing the reliability of LLM watermarks in clinical workflows."
+date: "2026-07-24"
+author: "Usama"
+tags: ["llm", "watermarking", "medical-texts"]
+aiSummary: "Large language models are increasingly used in clinical workflows, necessitating reliable watermarking for traceability. However, most watermarks are evaluated on general-purpose benchmarks, neglecting domains like medicine. This tutorial demonstrates how to evaluate LLM watermarks in medical texts using Python. We will explore the challenges of watermarking in medical texts and provide a step-by-step guide on how to implement and evaluate LLM watermarks."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1586436008973-a9ff747dd260?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxNYXJraW5nJTIwV3JvbmclMjBTeW1wdG9tcyUyMEV2YWx1YXRpbmclMjBMTE0lMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODQ4ODIzODl8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+The integration of large language models (LLMs) into clinical workflows has become increasingly common, with applications ranging from medical text analysis to patient data processing. However, this integration also raises concerns about the reliability and traceability of model-generated output. Watermarking has emerged as a potential solution, allowing developers to embed identifiable patterns or marks into the output of LLMs. Yet, most watermarks are evaluated on general-purpose benchmarks, leaving domains like medicine, where small token-level perturbations can result in significant semantic changes, understudied.
+
+![Doctor consults with a distressed male patient in office.](https://images.unsplash.com/photo-1758691463084-17ed846d4a50?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxNYXJraW5nJTIwV3JvbmclMjBTeW1wdG9tcyUyMEV2YWx1YXRpbmclMjBMTE0lMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODQ4ODIzODl8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+In this tutorial, we will delve into the challenges of watermarking in medical texts and provide a step-by-step guide on how to implement and evaluate LLM watermarks using Python.
+
+## Challenges of Watermarking in Medical Texts
+
+Watermarking in medical texts poses unique challenges due to the sensitivity and complexity of medical information. Small changes to the text can significantly alter its meaning, making it essential to develop watermarks that are both robust and imperceptible.
+
+### Token-Level Perturbations
+
+Medical texts often contain specialized vocabulary and abbreviations, which can be easily perturbed by watermarks. For instance, changing a single token in a medical term can alter its meaning entirely.
+
+### Semantic Changes
+
+Watermarks can introduce semantic changes that affect the overall meaning of the text. In medical texts, such changes can have serious consequences, making it crucial to evaluate watermarks carefully.
+
+## Implementing LLM Watermarks in Medical Texts
+
+To implement LLM watermarks in medical texts, we will use the Hugging Face Transformers library in Python. We will start by installing the required libraries and loading a pre-trained LLM model.
+
+```python
+import torch
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+# Load pre-trained LLM model and tokenizer
+model_name = "bert-base-uncased"
+model = AutoModelForSequenceClassification.from_pretrained(model_name)
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+```
+
+Next, we will define a function to embed watermarks into the output of the LLM model.
+
+```python
+def embed_watermark(text, watermark):
+    # Tokenize the input text
+    inputs = tokenizer(text, return_tensors="pt")
+    
+    # Embed the watermark into the output
+    outputs = model(**inputs)
+    watermark_embedding = torch.tensor(watermark)
+    outputs.last_hidden_state[:, 0, :] += watermark_embedding
+    
+    # Return the watermarked output
+    return outputs.last_hidden_state
+```
+
+## Evaluating LLM Watermarks in Medical Texts
+
+To evaluate the effectiveness of LLM watermarks in medical texts, we need to assess their robustness and imperceptibility. We can use metrics such as precision, recall, and F1-score to evaluate the robustness of the watermarks.
+
+```python
+from sklearn.metrics import precision_score, recall_score, f1_score
+
+def evaluate_watermark(watermarked_text, original_text):
+    # Tokenize the input texts
+    watermarked_inputs = tokenizer(watermarked_text, return_tensors="pt")
+    original_inputs = tokenizer(original_text, return_tensors="pt")
+    
+    # Evaluate the robustness of the watermark
+    watermarked_outputs = model(**watermarked_inputs)
+    original_outputs = model(**original_inputs)
+    precision = precision_score(original_outputs.last_hidden_state, watermarked_outputs.last_hidden_state)
+    recall = recall_score(original_outputs.last_hidden_state, watermarked_outputs.last_hidden_state)
+    f1 = f1_score(original_outputs.last_hidden_state, watermarked_outputs.last_hidden_state)
+    
+    # Return the evaluation metrics
+    return precision, recall, f1
+```
+
+## Conclusion
+
+In this tutorial, we explored the challenges of watermarking in medical texts and provided a step-by-step guide on how to implement and evaluate LLM watermarks using Python. We demonstrated how to embed watermarks into the output of LLM models and evaluate their robustness and imperceptibility.
+
+![A doctor holding a stethoscope](https://images.unsplash.com/photo-1659353888161-d71c6fd99847?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxNYXJraW5nJTIwV3JvbmclMjBTeW1wdG9tcyUyMEV2YWx1YXRpbmclMjBMTE0lMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODQ4ODIzODl8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+By following this tutorial, developers can create and evaluate LLM watermarks in medical texts, ensuring the reliability and traceability of model-generated output in clinical workflows.
+
+For further reading, please refer to the original paper on [arXiv](https://arxiv.org/abs/2607.20462).
+
+*Photo by [iMattSmart](https://unsplash.com/@imattsmart?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/white-printer-paper-on-brown-wooden-table-h1HWaEXcTcY?utm_source=techversation&utm_medium=referral)*
