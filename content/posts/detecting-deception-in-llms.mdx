@@ -1,0 +1,127 @@
+---
+title: "Detecting Deception in LLMs"
+description: "Deception detection in large language models is a challenging problem."
+date: "2026-07-24"
+author: "Usama"
+tags: ["ai", "llm", "deception-detection"]
+aiSummary: "Deception detection in large language models is an open problem. Recent work has shown that detection probes fail in out-of-domain scenarios. This tutorial provides a step-by-step guide on how to detect deception in LLMs using lie typology, depth, and sparsity. We will use Python and the Hugging Face Transformers library to build a deception detection model."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1709285671944-a27fcbd207eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxCZXlvbmQlMjBMaWFycyUyMEJlbmNoJTIwSW1wYWN0JTIwTGllJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg0OTIyMzAxfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Deception detection in large language models (LLMs) is a challenging problem. Recent work has shown that detection probes fail in out-of-domain scenarios, where training on one type of lie does not transfer well to deception scenarios involving other types of lies. In this tutorial, we will provide a step-by-step guide on how to detect deception in LLMs using lie typology, depth, and sparsity.
+
+## Lie Typology
+Lie typology refers to the different types of lies that can be told. These can include:
+
+*   **White lies**: lies told to avoid hurting someone's feelings
+*   **Black lies**: lies told to achieve a personal gain
+*   **Gray lies**: lies told to achieve a goal without harming anyone
+
+Understanding the different types of lies is crucial in building an effective deception detection model.
+
+## Depth and Sparsity
+Depth and sparsity refer to the complexity and density of the lies told. A lie can be simple or complex, and it can be told in a straightforward or roundabout way. Understanding the depth and sparsity of lies is essential in building a model that can detect deception effectively.
+
+## Building a Deception Detection Model
+To build a deception detection model, we will use the Hugging Face Transformers library in Python. We will use the `transformers` library to load a pre-trained LLM and fine-tune it on a dataset of labeled lies.
+
+```python
+import pandas as pd
+import torch
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+# Load the dataset
+df = pd.read_csv("lies.csv")
+
+# Split the data into training and testing sets
+train_text, test_text, train_labels, test_labels = df["text"][:800], df["text"][800:], df["label"][:800], df["label"][800:]
+
+# Load the pre-trained model and tokenizer
+model = AutoModelForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=2)
+tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+
+# Preprocess the data
+train_encodings = tokenizer(list(train_text), truncation=True, padding=True)
+test_encodings = tokenizer(list(test_text), truncation=True, padding=True)
+
+# Convert the labels to torch tensors
+train_labels = torch.tensor(train_labels)
+test_labels = torch.tensor(test_labels)
+
+# Create a custom dataset class
+class LieDataset(torch.utils.data.Dataset):
+    def __init__(self, encodings, labels):
+        self.encodings = encodings
+        self.labels = labels
+
+    def __getitem__(self, idx):
+        item = {key: torch.tensor(val[idx]) for key, val in self.encodings.items()}
+        item["labels"] = torch.tensor(self.labels[idx])
+        return item
+
+    def __len__(self):
+        return len(self.labels)
+
+# Create the datasets and data loaders
+train_dataset = LieDataset(train_encodings, train_labels)
+test_dataset = LieDataset(test_encodings, test_labels)
+train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=16, shuffle=True)
+test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=16, shuffle=False)
+
+# Train the model
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model.to(device)
+criterion = torch.nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-5)
+
+for epoch in range(5):
+    model.train()
+    total_loss = 0
+    for batch in train_loader:
+        input_ids = batch["input_ids"].to(device)
+        attention_mask = batch["attention_mask"].to(device)
+        labels = batch["labels"].to(device)
+        optimizer.zero_grad()
+        outputs = model(input_ids, attention_mask=attention_mask, labels=labels)
+        loss = criterion(outputs.logits, labels)
+        loss.backward()
+        optimizer.step()
+        total_loss += loss.item()
+    print(f"Epoch {epoch+1}, Loss: {total_loss / len(train_loader)}")
+
+    model.eval()
+    total_correct = 0
+    with torch.no_grad():
+        for batch in test_loader:
+            input_ids = batch["input_ids"].to(device)
+            attention_mask = batch["attention_mask"].to(device)
+            labels = batch["labels"].to(device)
+            outputs = model(input_ids, attention_mask=attention_mask)
+            logits = outputs.logits
+            _, predicted = torch.max(logits, dim=1)
+            total_correct += (predicted == labels).sum().item()
+
+    accuracy = total_correct / len(test_labels)
+    print(f"Epoch {epoch+1}, Test Accuracy: {accuracy:.4f}")
+
+```
+
+## Conclusion
+In this tutorial, we have provided a step-by-step guide on how to detect deception in LLMs using lie typology, depth, and sparsity. We have used the Hugging Face Transformers library in Python to build a deception detection model. The model is trained on a dataset of labeled lies and can be fine-tuned on other datasets to improve its performance.
+
+![a bench sits unoccupied](https://images.unsplash.com/photo-1648612008113-74720d7fc933?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxCZXlvbmQlMjBMaWFycyUyMEJlbmNoJTIwSW1wYWN0JTIwTGllJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg0OTIyMzAxfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+The model can be used in a variety of applications, including:
+
+*   **Cybercrime analysis**: The model can be used to detect deceptive language in online communications, such as emails, chat messages, or social media posts.
+*   **Research**: The model can be used to study the behavior of LLMs and their limitations in detecting deception.
+*   **Education**: The model can be used to teach students about the importance of detecting deception in language models.
+
+Overall, the model has the potential to be a valuable tool in a variety of fields, and its performance can be improved by fine-tuning it on other datasets and using other techniques, such as data augmentation and ensemble methods.
+
+![Cybercrime Analysis & research Alliance building](https://images.unsplash.com/photo-1556289414-d531d624c74f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxCZXlvbmQlMjBMaWFycyUyMEJlbmNoJTIwSW1wYWN0JTIwTGllJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg0OTIyMzAxfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Hartono Creative Studio](https://unsplash.com/@hartonocreativestudio?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-scale-with-the-words-fake-news-on-it-v9xYKxe5wok?utm_source=techversation&utm_medium=referral)*
