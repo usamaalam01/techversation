@@ -45,11 +45,24 @@ function parsePost(slug: string, filePath: string, includeDraft = false): Post |
   };
 }
 
+// getAllPosts is called from generateStaticParams, generateMetadata, and every
+// page render (getRelatedPosts calls it too), so without a cache a build
+// re-reads and re-parses the whole content directory thousands of times. Posts
+// are read-only for the lifetime of a build, so memoize per process.
+// Skipped in development so edits under content/ show up without a restart.
+let allPostsCache: Post[] | null = null;
+
 export function getAllPosts(): Post[] {
-  return getPostFiles()
+  if (allPostsCache && process.env.NODE_ENV === "production") {
+    return allPostsCache;
+  }
+
+  allPostsCache = getPostFiles()
     .map(({ slug, filePath }) => parsePost(slug, filePath))
     .filter((p): p is Post => p !== null)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  return allPostsCache;
 }
 
 export function getPostBySlug(slug: string, { includeDraft = false } = {}): Post | null {

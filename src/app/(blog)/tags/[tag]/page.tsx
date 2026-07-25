@@ -1,13 +1,26 @@
 import type { Metadata } from "next";
-import { getAllPosts, getAllTags } from "@/lib/posts";
+import { getAllPosts } from "@/lib/posts";
 import PostCard from "@/components/blog/PostCard";
 
 interface TagPageProps {
   params: Promise<{ tag: string }>;
 }
 
+// See the note in blog/[slug]/page.tsx: most tags match only a handful of
+// posts, so prerender the busiest ones and leave the long tail on demand.
+const PRERENDERED_TAGS = 50;
+
 export async function generateStaticParams() {
-  return getAllTags().map((tag) => ({ tag }));
+  const counts = new Map<string, number>();
+  for (const post of getAllPosts()) {
+    for (const tag of post.tags ?? []) {
+      counts.set(tag, (counts.get(tag) ?? 0) + 1);
+    }
+  }
+  return Array.from(counts.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, PRERENDERED_TAGS)
+    .map(([tag]) => ({ tag }));
 }
 
 export async function generateMetadata({ params }: TagPageProps): Promise<Metadata> {

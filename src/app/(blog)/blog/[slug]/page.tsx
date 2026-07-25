@@ -15,8 +15,16 @@ interface PostPageProps {
   params: Promise<{ slug: string }>;
 }
 
+// Vercel caps the build step at 45 minutes. Prerendering every post pushed us
+// past that once the archive grew, so only the newest posts are built ahead of
+// time; the rest render on first request (dynamicParams defaults to true) and
+// are cached from then on.
+const PRERENDERED_POSTS = 200;
+
 export async function generateStaticParams() {
-  return getAllPosts().map((post) => ({ slug: post.slug }));
+  return getAllPosts()
+    .slice(0, PRERENDERED_POSTS)
+    .map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({ params }: PostPageProps): Promise<Metadata> {
