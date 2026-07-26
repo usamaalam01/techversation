@@ -1,0 +1,68 @@
+---
+title: "LLMs on Microcontrollers"
+description: "Running large language models on tiny devices is now possible."
+date: "2026-07-26"
+author: "Usama"
+tags: ["ai", "llm", "microcontroller"]
+aiSummary: "A developer has successfully run a 28.9M parameter large language model on an $8 microcontroller. This achievement has significant implications for the future of AI and IoT. The project demonstrates the potential for running complex AI models on low-power, low-cost devices."
+category: "trending"
+coverImage: "https://images.unsplash.com/photo-1555543451-eeaff357e0f3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxSdW5uaW5nJTIwcGFyYW1ldGVyJTIwTExNJTIwbWljcm9jb250cm9sbGVyJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODUwNzM2OTh8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+The recent achievement of running a 28.9M parameter large language model (LLM) on an $8 microcontroller has sent shockwaves through the developer community. The project, available on [GitHub](https://github.com/slvDev/esp32-ai), showcases the potential for running complex AI models on low-power, low-cost devices. In this post, we'll delve into the details of this achievement, explore why it matters to developers, and discuss the broader implications for the future of AI and IoT.
+
+## The Achievement
+
+The project uses an ESP32 microcontroller, a popular choice for IoT development, to run a large language model with 28.9M parameters. This is a significant achievement, as LLMs are typically associated with powerful servers and data centers. The fact that a developer has been able to run such a model on a device that costs just $8 is a testament to the rapid progress being made in the field of AI and IoT.
+
+To put this achievement into perspective, consider the fact that just a few years ago, running an LLM of this size would have required a powerful server with multiple GPUs. The fact that we can now run such models on devices that are not only low-power but also extremely low-cost opens up a wide range of possibilities for developers.
+
+![green and black computer motherboard](https://images.unsplash.com/photo-1610878785620-3ab2d3a2ae7b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxSdW5uaW5nJTIwcGFyYW1ldGVyJTIwTExNJTIwbWljcm9jb250cm9sbGVyJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODUwNzM2OTh8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Why it Matters to Developers
+
+So, why does this achievement matter to developers? For starters, it demonstrates the potential for running complex AI models on devices that are not only low-power but also extremely low-cost. This opens up a wide range of possibilities for developers, from building intelligent IoT devices to creating AI-powered applications that can run on devices with limited resources.
+
+Developers can also use this project as a starting point for their own experiments with LLMs on microcontrollers. The fact that the project is open-source and available on GitHub means that developers can access the code and learn from the experience of the developer who created the project.
+
+### Example Code
+
+To give you an idea of how this project works, let's take a look at some example code. The project uses the ESP32 microcontroller and the TensorFlow Lite framework to run the LLM. Here's an example of how you might use the TensorFlow Lite framework to run an LLM on an ESP32:
+```python
+import tensorflow as tf
+from tensorflow import lite
+
+# Load the LLM model
+model = lite.load('model.tflite')
+
+# Create a TensorFlow Lite interpreter
+interpreter = tf.lite.Interpreter(model_content=model)
+
+# Allocate memory for the input and output tensors
+input_tensor = interpreter.get_input_details()[0]
+output_tensor = interpreter.get_output_details()[0]
+
+# Run the LLM
+interpreter.invoke()
+
+# Get the output from the LLM
+output = interpreter.get_tensor(output_tensor['index'])
+```
+This code snippet demonstrates how to load an LLM model, create a TensorFlow Lite interpreter, and run the model on an ESP32 microcontroller.
+
+## Broader Implications
+
+The achievement of running an LLM on an $8 microcontroller has significant implications for the future of AI and IoT. For starters, it demonstrates the potential for running complex AI models on devices that are not only low-power but also extremely low-cost. This could lead to a wide range of new applications, from intelligent IoT devices to AI-powered applications that can run on devices with limited resources.
+
+It also highlights the rapid progress being made in the field of AI and IoT. Just a few years ago, running an LLM of this size would have required a powerful server with multiple GPUs. The fact that we can now run such models on devices that are not only low-power but also extremely low-cost is a testament to the rapid progress being made in this field.
+
+![brown wooden framed glass window](https://images.unsplash.com/photo-1598845685288-98d5e7128987?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxSdW5uaW5nJTIwcGFyYW1ldGVyJTIwTExNJTIwbWljcm9jb250cm9sbGVyJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODUwNzM2OTh8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In conclusion, the achievement of running a 28.9M parameter LLM on an $8 microcontroller is a significant milestone in the field of AI and IoT. It demonstrates the potential for running complex AI models on devices that are not only low-power but also extremely low-cost, and highlights the rapid progress being made in this field. As developers, we can learn from this project and use it as a starting point for our own experiments with LLMs on microcontrollers. The future of AI and IoT looks bright, and achievements like this one will only continue to push the boundaries of what is possible.
+
+*Photo by [Harrison Broadbent](https://unsplash.com/@harrisonbroadbent?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/blue-circuit-board-19YCOjHosDk?utm_source=techversation&utm_medium=referral)*
