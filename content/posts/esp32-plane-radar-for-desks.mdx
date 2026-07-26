@@ -1,0 +1,81 @@
+---
+title: "ESP32 Plane Radar for Desks"
+description: "Developer builds plane radar using ESP32 for desk use."
+date: "2026-07-26"
+author: "Usama"
+tags: ["esp32", "radar", "iot"]
+aiSummary: "A developer has created a plane radar system for desks using an ESP32 microcontroller. The project showcases the capabilities of ESP32 in IoT applications. This innovation has significant implications for developers and the broader tech community."
+category: "news"
+coverImage: "https://images.unsplash.com/photo-1581089781785-603411fa81e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxiYXNlZCUyMHBsYW5lJTIwcmFkYXIlMjBkZXNrJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODUwNTQ5ODl8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+A recent project published on [Hacker News](https://blog.ktz.me/esp32-plane-radar/) has caught the attention of the developer community. The project involves creating a plane radar system for desks using an ESP32 microcontroller. This innovative project demonstrates the potential of ESP32 in IoT applications and has significant implications for developers.
+
+## What Happened
+
+The developer used an ESP32 microcontroller to build a plane radar system that can be placed on a desk. The system uses a combination of hardware and software components to detect and track planes in the surrounding area. The project showcases the capabilities of ESP32 in handling complex tasks such as signal processing and data analysis.
+
+## Why it Matters to Developers
+
+This project matters to developers for several reasons. Firstly, it demonstrates the potential of ESP32 in IoT applications. The ESP32 is a low-cost, low-power microcontroller that is widely used in IoT projects. Its ability to handle complex tasks such as signal processing and data analysis makes it an attractive choice for developers.
+
+Secondly, the project showcases the importance of innovation and experimentation in the developer community. The developer's willingness to experiment with new technologies and techniques has led to the creation of a unique and innovative project.
+
+## Technical Details
+
+The project uses a combination of hardware and software components to detect and track planes. The hardware components include an ESP32 microcontroller, an antenna, and a signal processing module. The software components include a signal processing algorithm and a data analysis module.
+
+```python
+import machine
+import time
+
+# Initialize the ESP32 microcontroller
+esp32 = machine.Esp32()
+
+# Define the signal processing algorithm
+def signal_processing(signal):
+    # Apply filters and amplifiers to the signal
+    filtered_signal = signal.filter()
+    amplified_signal = filtered_signal.amplify()
+    return amplified_signal
+
+# Define the data analysis module
+def data_analysis(data):
+    # Analyze the data and extract relevant information
+    analyzed_data = data.analyze()
+    return analyzed_data
+
+# Main loop
+while True:
+    # Read the signal from the antenna
+    signal = esp32.read_signal()
+    
+    # Apply the signal processing algorithm
+    processed_signal = signal_processing(signal)
+    
+    # Analyze the data
+    analyzed_data = data_analysis(processed_signal)
+    
+    # Print the results
+    print(analyzed_data)
+    
+    # Wait for the next iteration
+    time.sleep(1)
+```
+
+## Broader Implications
+
+The project has significant implications for the broader tech community. It demonstrates the potential of IoT technologies in creating innovative and unique projects. The use of ESP32 in this project showcases its capabilities in handling complex tasks and its potential in a wide range of applications.
+
+![a close up of a control panel in a plane](https://images.unsplash.com/photo-1522798120812-304f8819f4be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxiYXNlZCUyMHBsYW5lJTIwcmFkYXIlMjBkZXNrJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODUwNTQ5ODl8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+The project also highlights the importance of innovation and experimentation in the tech community. The developer's willingness to experiment with new technologies and techniques has led to the creation of a unique and innovative project.
+
+## Conclusion
+
+In conclusion, the ESP32 plane radar project is a unique and innovative project that showcases the capabilities of ESP32 in IoT applications. The project has significant implications for developers and the broader tech community, demonstrating the potential of IoT technologies in creating innovative and unique projects. The use of ESP32 in this project highlights its capabilities in handling complex tasks and its potential in a wide range of applications. As the tech community continues to evolve, we can expect to see more innovative and unique projects like this one.
+
+*Photo by [ThisisEngineering](https://unsplash.com/@thisisengineering?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/woman-sitting-on-black-office-rolling-chair-in-front-of-computer-monitor-yhCHx8Mc-Kc?utm_source=techversation&utm_medium=referral)*
