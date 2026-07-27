@@ -1,0 +1,84 @@
+---
+title: "Marvel API Tutorial"
+description: "Explore Marvel's API with Python and get started with comic book data"
+date: "2026-07-27"
+author: "Usama"
+tags: ["api", "python", "comics"]
+aiSummary: "Marvel's API provides access to a vast library of comic book data. This tutorial will guide you through getting started with the API using Python. You'll learn how to fetch character data, comic book issues, and more."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1620336655052-b57986f5a26a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxNYXJ2ZWwlMjBhbm5vdW5jZXMlMjBSeWFuJTIwR29zbGluZyUyMEdob3N0JTIwdGVjaG5vbG9neSUyMGRpZ2l0YWwlMjBpbm5vdmF0aW9ufGVufDF8MHx8fDE3ODUxNDY4MzB8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Marvel's API is a powerful tool for developers and comic book enthusiasts alike. With it, you can access a vast library of character data, comic book issues, and more. In this tutorial, we'll explore how to get started with the Marvel API using Python.
+
+## Setting up the API
+To start using the Marvel API, you'll need to create an account on the [Marvel Developer Portal](https://developer.marvel.com/). Once you've created your account, you'll receive a public and private API key. These keys will be used to authenticate your API requests.
+
+### Installing the Required Libraries
+To interact with the Marvel API, we'll be using the `requests` library in Python. You can install it using pip:
+```bash
+pip install requests
+```
+### Authenticating API Requests
+To authenticate your API requests, you'll need to include your public and private API keys in the request headers. Here's an example of how to do this:
+```python
+import requests
+
+public_key = "YOUR_PUBLIC_KEY"
+private_key = "YOUR_PRIVATE_KEY"
+
+def get_marvel_data(url):
+    headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {public_key}"
+    }
+    params = {
+        "ts": "1",
+        "apikey": public_key,
+        "hash": "YOUR_HASH"
+    }
+    response = requests.get(url, headers=headers, params=params)
+    return response.json()
+
+# Example usage:
+url = "https://gateway.marvel.com:443/v1/public/characters"
+data = get_marvel_data(url)
+print(data)
+```
+Note that you'll need to replace `YOUR_PUBLIC_KEY`, `YOUR_PRIVATE_KEY`, and `YOUR_HASH` with your actual API keys and hash.
+
+## Fetching Character Data
+Now that we have our API keys set up, let's fetch some character data. We can use the `characters` endpoint to retrieve a list of characters. Here's an example:
+```python
+url = "https://gateway.marvel.com:443/v1/public/characters"
+data = get_marvel_data(url)
+print(data["data"]["results"])
+```
+This will print out a list of characters, including their names, descriptions, and more.
+
+## Fetching Comic Book Issues
+We can also use the Marvel API to fetch comic book issues. Let's use the `comics` endpoint to retrieve a list of comic book issues for a specific character. Here's an example:
+```python
+character_id = "1009351"  # Spider-Man
+url = f"https://gateway.marvel.com:443/v1/public/characters/{character_id}/comics"
+data = get_marvel_data(url)
+print(data["data"]["results"])
+```
+This will print out a list of comic book issues featuring the specified character.
+
+![a man holding up a tablet with a spiderman sticker on it](https://images.unsplash.com/photo-1623244237391-19780d065a59?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxNYXJ2ZWwlMjBhbm5vdW5jZXMlMjBSeWFuJTIwR29zbGluZyUyMEdob3N0JTIwdGVjaG5vbG9neSUyMGRpZ2l0YWwlMjBpbm5vdmF0aW9ufGVufDF8MHx8fDE3ODUxNDY4MzB8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we've explored how to get started with the Marvel API using Python. We've covered how to authenticate API requests, fetch character data, and fetch comic book issues. With this knowledge, you can start building your own Marvel-themed projects and applications.
+
+### Next Steps
+If you're interested in learning more about the Marvel API, I recommend checking out the [official documentation](https://developer.marvel.com/docs). You can also experiment with different endpoints and parameters to see what kind of data you can retrieve.
+
+![a close up of a typewriter with the word ghosting on it](https://images.unsplash.com/photo-1695720952840-1911c2928366?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxNYXJ2ZWwlMjBhbm5vdW5jZXMlMjBSeWFuJTIwR29zbGluZyUyMEdob3N0JTIwdGVjaG5vbG9neSUyMGRpZ2l0YWwlMjBpbm5vdmF0aW9ufGVufDF8MHx8fDE3ODUxNDY4MzB8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+I hope this tutorial has been helpful in getting you started with the Marvel API. Happy coding!
+
+*Photo by [Erik Mclean](https://unsplash.com/@introspectivedsgn?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-bunch-of-comic-books-laying-on-top-of-each-other-tNO5weLNt-E?utm_source=techversation&utm_medium=referral)*

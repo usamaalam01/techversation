@@ -1,0 +1,115 @@
+---
+title: "Cloud-Native AI Monitoring"
+description: "Scalable AI evaluation with microservices architecture"
+date: "2026-07-27"
+author: "Usama"
+tags: ["ai", "cloud-native", "microservices"]
+aiSummary: "EaaS is a cloud-native reference architecture for operationalizing AI evaluation methods. It uses six stateless Kubernetes microservices for conformal prediction, calibration assessment, and drift detection. This tutorial provides a step-by-step guide to building a scalable AI monitoring system with conformal guarantees."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1667984390538-3dea7a3fe33d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxDbG91ZCUyME5hdGl2ZSUyMEV2YWx1YXRpb24lMjBTZXJ2aWNlJTIwTWljcm9zZXJ2aWNlcyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4NTE0Njk4Nnww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+The increasing adoption of artificial intelligence (AI) and machine learning (ML) in various industries has led to a growing need for scalable and reliable AI monitoring systems. [EaaS](https://arxiv.org/abs/2607.21623) is a cloud-native reference architecture that operationalizes AI evaluation methods as six stateless Kubernetes microservices. In this tutorial, we will explore how to build a scalable AI monitoring system using EaaS.
+
+## Overview of EaaS
+EaaS consists of six microservices:
+1. Conformal prediction with finite-sample-corrected Adaptive Prediction Sets
+2. Calibration assessment
+3. Drift detection via RFF-approximated Maximum Mean Discrepancy
+4. Fairness monitoring with bootstrap confidence
+5. Data ingestion
+6. API gateway
+
+These microservices work together to provide a scalable and reliable AI monitoring system.
+
+## Setting up the Environment
+To get started with EaaS, we need to set up a Kubernetes cluster. We can use a cloud provider like Google Kubernetes Engine (GKE) or Amazon Elastic Container Service for Kubernetes (EKS).
+
+```bash
+# Create a Kubernetes cluster
+gcloud container clusters create eaas-cluster --num-nodes 3
+```
+
+## Building the Conformal Prediction Microservice
+The conformal prediction microservice is responsible for generating prediction sets with conformal guarantees. We can use the [conformal-prediction](https://github.com/conformal-prediction/conformal-prediction) library to implement this microservice.
+
+```python
+# conformal_prediction.py
+from conformal_prediction import ConformalPredictor
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+
+# Load the iris dataset
+iris = load_iris()
+X, y = iris.data, iris.target
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train a random forest classifier
+rf = RandomForestClassifier(n_estimators=100, random_state=42)
+rf.fit(X_train, y_train)
+
+# Create a conformal predictor
+cp = ConformalPredictor(rf, alpha=0.1)
+
+# Generate prediction sets
+prediction_sets = cp.predict(X_test)
+```
+
+## Building the Calibration Assessment Microservice
+The calibration assessment microservice is responsible for evaluating the calibration of the AI model. We can use the [scikit-calibration](https://github.com/scikit-calibration/scikit-calibration) library to implement this microservice.
+
+```python
+# calibration_assessment.py
+from scikit_calibration import CalibrationCurve
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+
+# Load the iris dataset
+iris = load_iris()
+X, y = iris.data, iris.target
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train a random forest classifier
+rf = RandomForestClassifier(n_estimators=100, random_state=42)
+rf.fit(X_train, y_train)
+
+# Create a calibration curve
+cc = CalibrationCurve(rf, X_test, y_test)
+
+# Plot the calibration curve
+cc.plot()
+```
+
+## Deploying the Microservices
+Once we have built the microservices, we can deploy them to the Kubernetes cluster.
+
+```bash
+# Deploy the conformal prediction microservice
+kubectl apply -f conformal-prediction-deployment.yaml
+
+# Deploy the calibration assessment microservice
+kubectl apply -f calibration-assessment-deployment.yaml
+```
+
+![a computer screen with a cloud shaped object on top of it](https://images.unsplash.com/photo-1690627931320-16ac56eb2588?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxDbG91ZCUyME5hdGl2ZSUyMEV2YWx1YXRpb24lMjBTZXJ2aWNlJTIwTWljcm9zZXJ2aWNlcyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4NTE0Njk4Nnww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we have built a scalable AI monitoring system using EaaS. We have implemented two microservices: conformal prediction and calibration assessment. We have also deployed these microservices to a Kubernetes cluster. This system provides a reliable and scalable way to monitor AI models and ensure that they are functioning as expected.
+
+### Future Work
+There are several areas for future work:
+* Implementing the remaining microservices (drift detection, fairness monitoring, data ingestion, and API gateway)
+* Integrating the microservices with a data pipeline
+* Evaluating the performance of the system using real-world datasets
+
+By following this tutorial, developers can build a scalable AI monitoring system that provides conformal guarantees and ensures the reliability and trustworthiness of AI models.
+
+*Photo by [Growtika](https://unsplash.com/@growtika?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/3d-render-of-cloud-computing-concept-Am6pBe2FpJw?utm_source=techversation&utm_medium=referral)*
