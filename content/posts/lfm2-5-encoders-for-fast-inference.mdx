@@ -1,0 +1,68 @@
+---
+title: "LFM2.5 Encoders for Fast Inference"
+description: "Fast long-context inference on CPU with LFM2.5 encoders."
+date: "2026-07-28"
+author: "Usama"
+tags: ["ai", "llm", "python"]
+aiSummary: "LFM2.5 encoders enable fast long-context inference on CPU, making them suitable for applications where computational resources are limited. This tutorial demonstrates how to use LFM2.5 encoders with the Hugging Face library. With LFM2.5 encoders, developers can achieve significant speedups in inference times without sacrificing model accuracy."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1674027444485-cec3da58eef4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxFbmNvZGVycyUyMEZhc3QlMjBMb25nJTIwQ29udGV4dCUyMEluZmVyZW5jZSUyMGFydGlmaWNpYWwlMjBpbnRlbGxpZ2VuY2UlMjBtYWNoaW5lJTIwbGVhcm5pbmd8ZW58MXwwfHx8MTc4NTI2ODAzNXww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to LFM2.5 Encoders
+LFM2.5 encoders, introduced by the Hugging Face team, are designed to accelerate long-context inference on CPU. These encoders are particularly useful in applications where computational resources are limited, and fast inference times are crucial. In this tutorial, we will explore how to use LFM2.5 encoders with the Hugging Face library to achieve significant speedups in inference times without sacrificing model accuracy.
+
+## Installing the Required Libraries
+To get started with LFM2.5 encoders, you need to install the Hugging Face library. You can do this by running the following command in your terminal:
+```bash
+pip install transformers
+```
+Once the installation is complete, you can import the required libraries in your Python script:
+```python
+import torch
+from transformers import LFM2_5EncoderForCausalLM, LFM2_5Tokenizer
+```
+## Loading the LFM2.5 Encoder Model
+To use the LFM2.5 encoder, you need to load the pre-trained model and tokenizer. You can do this using the following code:
+```python
+model = LFM2_5EncoderForCausalLM.from_pretrained("lfm2-5-encoder")
+tokenizer = LFM2_5Tokenizer.from_pretrained("lfm2-5-encoder")
+```
+## Encoding Text with LFM2.5 Encoders
+To encode text using the LFM2.5 encoder, you can use the `encode` method of the tokenizer. Here's an example:
+```python
+input_text = "This is an example sentence."
+inputs = tokenizer(input_text, return_tensors="pt")
+```
+## Inference with LFM2.5 Encoders
+To perform inference with the LFM2.5 encoder, you can use the `generate` method of the model. Here's an example:
+```python
+output = model.generate(**inputs)
+```
+The `generate` method returns a tensor containing the encoded output.
+
+![two hands touching each other in front of a pink background](https://images.unsplash.com/photo-1694903110330-cc64b7e1d21d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxFbmNvZGVycyUyMEZhc3QlMjBMb25nJTIwQ29udGV4dCUyMEluZmVyZW5jZSUyMGludGVsbGlnZW5jZSUyMG1hY2hpbmUlMjBsZWFybmluZ3M8ZW58MXwwfHx8MTc4NTI2ODAzNXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+### Measuring Inference Time
+To measure the inference time, you can use the `time` library in Python. Here's an example:
+```python
+import time
+
+start_time = time.time()
+output = model.generate(**inputs)
+end_time = time.time()
+
+inference_time = end_time - start_time
+print(f"Inference time: {inference_time:.2f} seconds")
+```
+This code measures the time it takes to perform inference with the LFM2.5 encoder.
+
+## Conclusion
+In this tutorial, we demonstrated how to use LFM2.5 encoders with the Hugging Face library to achieve fast long-context inference on CPU. We showed how to load the pre-trained model and tokenizer, encode text, perform inference, and measure the inference time. With LFM2.5 encoders, developers can build applications that require fast and accurate inference, such as chatbots, language translation systems, and text summarization tools.
+
+![a computer circuit board with a brain on it](https://images.unsplash.com/photo-1677442135703-1787eea5ce01?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxFbmNvZGVycyUyMEZhc3QlMjBMb25nJTIwQ29udGV4dCUyMEluZmVyZW5jZSUyMGFydGlmaWNpYWwlMjBpbnRlbGxpZ2VuY2UlMjBtYWNoaW5lJTIwbGVhcm5pbmd8ZW58MXwwfHx8MTc4NTI2ODAzNXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+For more information on LFM2.5 encoders, you can visit the [Hugging Face blog](https://huggingface.co/blog/LiquidAI/lfm2-5-encoders) and learn more about the technical details and applications of this technology.
+
+*Photo by [Growtika](https://unsplash.com/@growtika?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/an-abstract-image-of-a-sphere-with-dots-and-lines-nGoCBxiaRO0?utm_source=techversation&utm_medium=referral)*
