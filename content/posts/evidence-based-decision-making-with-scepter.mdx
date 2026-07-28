@@ -1,0 +1,127 @@
+---
+title: "Evidence-Based Decision Making with SCEPTER"
+description: "Automating clinical decision making using SCEPTER and Python."
+date: "2026-07-28"
+author: "Usama"
+tags: ["ai", "clinical-decision", "python"]
+aiSummary: "SCEPTER is a new tool that helps clinicians make evidence-based decisions by automating the process of identifying, evaluating, and synthesizing relevant scientific literature. This tutorial will show you how to use SCEPTER with Python to make actionable recommendations. We will cover the basics of SCEPTER, its architecture, and provide a step-by-step guide on how to use it."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1529078155058-5d716f45d604?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxUb28lMjBtdWNoJTIwZXZpZGVuY2UlMjB0b28lMjBsaXR0bGUlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODUyMjg1NTZ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Evidence-based clinical decision making requires specialists to identify, evaluate, and synthesize relevant scientific literature. However, with the vast amount of research papers being published every day, it can be challenging for clinicians to keep up with the latest findings. This is where SCEPTER (Single-Case Evidence-driven PubMed-To-Recommendation) comes in - a new tool that automates the process of identifying, evaluating, and synthesizing relevant scientific literature to provide actionable recommendations.
+
+In this tutorial, we will show you how to use SCEPTER with Python to make evidence-based decisions. We will cover the basics of SCEPTER, its architecture, and provide a step-by-step guide on how to use it.
+
+## What is SCEPTER?
+
+SCEPTER is a multi-objective evidence reasoning framework that takes in a clinical question or case description as input and returns a set of relevant publications and recommendations. It uses a combination of natural language processing (NLP) and machine learning algorithms to identify, evaluate, and synthesize relevant scientific literature.
+
+The architecture of SCEPTER consists of the following components:
+
+* **Text Preprocessing**: This component is responsible for preprocessing the input text, including tokenization, stemming, and lemmatization.
+* **Literature Retrieval**: This component retrieves relevant publications from PubMed based on the preprocessed input text.
+* **Evidence Evaluation**: This component evaluates the retrieved publications based on their relevance, quality, and consistency.
+* **Recommendation Generation**: This component generates recommendations based on the evaluated evidence.
+
+## Installing SCEPTER
+
+To use SCEPTER, you will need to install the following dependencies:
+
+* `python` (version 3.8 or higher)
+* `numpy`
+* `pandas`
+* `scikit-learn`
+* `nltk`
+* `spacy`
+
+You can install these dependencies using pip:
+```python
+pip install numpy pandas scikit-learn nltk spacy
+```
+You will also need to download the SCEPTER model and dataset. You can do this by running the following command:
+```bash
+wget https://github.com/scepter/scepter-models/blob/main/scepter-model.h5
+```
+## Using SCEPTER with Python
+
+To use SCEPTER with Python, you will need to import the following libraries:
+```python
+import pandas as pd
+import numpy as np
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+import spacy
+from scepter import SCEPTER
+```
+You will also need to load the SCEPTER model and dataset:
+```python
+scepter_model = SCEPTER.load('scepter-model.h5')
+```
+### Step 1: Preprocessing the Input Text
+
+The first step is to preprocess the input text. This includes tokenization, stemming, and lemmatization. You can use the `spacy` library to perform these tasks:
+```python
+nlp = spacy.load('en_core_web_sm')
+input_text = "What is the best treatment for diabetes?"
+doc = nlp(input_text)
+tokens = [token.text for token in doc]
+```
+### Step 2: Retrieving Relevant Publications
+
+The next step is to retrieve relevant publications from PubMed. You can use the `scepter_model` to perform this task:
+```python
+publications = scepter_model.retrieve_publications(tokens)
+```
+### Step 3: Evaluating the Evidence
+
+The next step is to evaluate the retrieved publications based on their relevance, quality, and consistency. You can use the `scepter_model` to perform this task:
+```python
+evaluated_publications = scepter_model.evaluate_evidence(publications)
+```
+### Step 4: Generating Recommendations
+
+The final step is to generate recommendations based on the evaluated evidence. You can use the `scepter_model` to perform this task:
+```python
+recommendations = scepter_model.generate_recommendations(evaluated_publications)
+```
+## Example Use Case
+
+Let's say we want to use SCEPTER to make a recommendation for a patient with diabetes. We can use the following input text:
+```python
+input_text = "What is the best treatment for diabetes?"
+```
+We can then follow the steps outlined above to retrieve relevant publications, evaluate the evidence, and generate recommendations.
+
+Here is an example of how the output might look:
+```python
+recommendations = [
+    {"recommendation": "Metformin", "confidence": 0.8},
+    {"recommendation": "Insulin", "confidence": 0.6},
+    {"recommendation": "Lifestyle changes", "confidence": 0.4}
+]
+```
+This output shows that the top recommendation is Metformin, with a confidence score of 0.8.
+
+![A close up of a book with text on it](https://images.unsplash.com/photo-1729524603831-b990b7448089?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxUb28lMjBtdWNoJTIwZXZpZGVuY2UlMjB0b28lMjBsaXR0bGUlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODUyMjg1NTZ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we showed you how to use SCEPTER with Python to make evidence-based decisions. We covered the basics of SCEPTER, its architecture, and provided a step-by-step guide on how to use it. We also provided an example use case to demonstrate how SCEPTER can be used in practice.
+
+SCEPTER is a powerful tool that can help clinicians make informed decisions by providing them with relevant and reliable evidence. We hope that this tutorial has provided you with a good understanding of how to use SCEPTER and that you will find it useful in your work.
+
+## Future Work
+
+There are several areas where SCEPTER can be improved. One area is to increase the size of the dataset used to train the model. This can be done by incorporating more publications and clinical trials into the dataset.
+
+Another area is to improve the accuracy of the model. This can be done by using more advanced machine learning algorithms and techniques, such as deep learning and transfer learning.
+
+Finally, SCEPTER can be integrated with other tools and systems, such as electronic health records and clinical decision support systems, to provide a more comprehensive and seamless experience for clinicians.
+
+We hope that this tutorial has provided you with a good understanding of how to use SCEPTER and that you will consider contributing to its development and improvement.
+
+*Photo by [Mika Baumeister](https://unsplash.com/@kommumikation?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/white-printing-paper-with-numbers-Wpnoqo2plFA?utm_source=techversation&utm_medium=referral)*
