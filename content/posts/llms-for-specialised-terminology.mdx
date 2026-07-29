@@ -1,0 +1,144 @@
+---
+title: "LLMs for Specialised Terminology"
+description: "Using LLMs for specialised translation and terminology research."
+date: "2026-07-29"
+author: "Usama"
+tags: ["llm", "terminology", "translation"]
+aiSummary: "This tutorial explores the use of Large Language Models (LLMs) for specialised terminology, providing a practical guide on how to utilise LLMs for terminology research. We discuss the benefits and limitations of using LLMs and demonstrate how to fine-tune a pre-trained LLM for specialised translation tasks. The tutorial includes working code examples in Python, showcasing the application of LLMs in real-world scenarios."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1705484229341-4f7f7519b718?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxVc2UlMjBMTE1zJTIwU3BlY2lhbGlzZWQlMjBUZXJtaW5vbG9neSUyMEdvb2QlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODUzNTQwMTJ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Specialised translation relies heavily on the use of documentary and terminological resources, including corpora. However, compiling and exploiting these resources can be time-consuming, require technical skills, and involve accessing data that can be difficult to collect. Recent studies have investigated the use of Large Language Models (LLMs) as a potential alternative to traditional corpora for specialised terminology research. In this tutorial, we will delve into the world of LLMs and explore their application in specialised translation and terminology research.
+
+## What are LLMs?
+
+LLMs are a type of artificial intelligence (AI) designed to process and generate human-like language. They are trained on vast amounts of text data, allowing them to learn patterns, relationships, and context. LLMs have been successfully applied in various natural language processing (NLP) tasks, including language translation, text summarisation, and sentiment analysis.
+
+## Benefits of Using LLMs for Specialised Terminology
+
+The use of LLMs for specialised terminology offers several benefits, including:
+
+*   **Accessibility**: LLMs can be easily accessed and utilised through APIs or pre-trained models, eliminating the need for extensive technical expertise.
+*   **Scalability**: LLMs can handle large volumes of data, making them ideal for tasks that require processing extensive terminological resources.
+*   **Flexibility**: LLMs can be fine-tuned for specific tasks, allowing researchers to adapt them to their particular needs.
+
+## Limitations of Using LLMs for Specialised Terminology
+
+While LLMs offer several advantages, they also have some limitations:
+
+*   **Data Quality**: LLMs are only as good as the data they are trained on. If the training data is biased or of poor quality, the LLM's performance will suffer.
+*   **Domain Knowledge**: LLMs may not always possess the same level of domain-specific knowledge as human experts, which can lead to inaccuracies or inconsistencies.
+
+## Fine-Tuning a Pre-Trained LLM for Specialised Translation
+
+To demonstrate the application of LLMs in specialised translation, we will fine-tune a pre-trained LLM using the Hugging Face Transformers library in Python. We will use the `t5-small` model, which is a popular choice for NLP tasks.
+
+```python
+import torch
+from transformers import T5Tokenizer, T5ForConditionalGeneration
+
+# Load pre-trained T5 model and tokenizer
+model = T5ForConditionalGeneration.from_pretrained('t5-small')
+tokenizer = T5Tokenizer.from_pretrained('t5-small')
+
+# Define a custom dataset class for our specialised translation task
+class SpecialisedTranslationDataset(torch.utils.data.Dataset):
+    def __init__(self, data, tokenizer):
+        self.data = data
+        self.tokenizer = tokenizer
+
+    def __getitem__(self, idx):
+        source_text = self.data[idx]['source']
+        target_text = self.data[idx]['target']
+
+        encoding = self.tokenizer.encode_plus(
+            source_text,
+            add_special_tokens=True,
+            max_length=512,
+            return_attention_mask=True,
+            return_tensors='pt',
+            truncation=True,
+            padding='max_length'
+        )
+
+        decoding = self.tokenizer.encode_plus(
+            target_text,
+            add_special_tokens=True,
+            max_length=512,
+            return_attention_mask=True,
+            return_tensors='pt',
+            truncation=True,
+            padding='max_length'
+        )
+
+        return {
+            'input_ids': encoding['input_ids'].flatten(),
+            'attention_mask': encoding['attention_mask'].flatten(),
+            'labels': decoding['input_ids'].flatten()
+        }
+
+    def __len__(self):
+        return len(self.data)
+
+# Create a sample dataset for specialised translation
+data = [
+    {'source': 'This is a sample source text.', 'target': 'Ceci est un exemple de texte source.'},
+    {'source': 'Another sample source text.', 'target': 'Un autre exemple de texte source.'}
+]
+
+dataset = SpecialisedTranslationDataset(data, tokenizer)
+
+# Create a data loader for our dataset
+batch_size = 16
+data_loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=True)
+
+# Fine-tune the pre-trained LLM on our dataset
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+model.to(device)
+
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-5)
+
+for epoch in range(5):
+    model.train()
+    total_loss = 0
+    for batch in data_loader:
+        input_ids = batch['input_ids'].to(device)
+        attention_mask = batch['attention_mask'].to(device)
+        labels = batch['labels'].to(device)
+
+        optimizer.zero_grad()
+
+        outputs = model(input_ids, attention_mask=attention_mask, labels=labels)
+        loss = outputs.loss
+
+        loss.backward()
+        optimizer.step()
+
+        total_loss += loss.item()
+
+    print(f'Epoch {epoch+1}, Loss: {total_loss / len(data_loader)}')
+
+model.eval()
+```
+
+## Conclusion
+
+In this tutorial, we explored the use of LLMs for specialised terminology, discussing the benefits and limitations of this approach. We demonstrated how to fine-tune a pre-trained LLM using the Hugging Face Transformers library in Python, providing a practical guide for researchers and developers interested in applying LLMs to their terminology research.
+
+![a black and white photo of a computer screen](https://images.unsplash.com/photo-1698423847324-e85fae1f312f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxVc2UlMjBMTE1zJTIwU3BlY2lhbGlzZWQlMjBUZXJtaW5vbG9neSUyMEdvb2QlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODUzNTQwMTJ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+As the field of NLP continues to evolve, we can expect to see further advancements in the application of LLMs to specialised terminology research. By providing a practical guide to using LLMs, we hope to encourage researchers and developers to explore the potential of these models in their own work.
+
+### Further Reading
+
+For those interested in learning more about LLMs and their application to NLP tasks, we recommend the following resources:
+
+*   [Hugging Face Transformers Library](https://huggingface.co/docs/transformers/index)
+*   [T5 Model](https://huggingface.co/docs/transformers/model_doc/t5)
+*   [arXiv:2607.24784v1](https://arxiv.org/abs/2607.24784)
+
+*Photo by [Markus Winkler](https://unsplash.com/@markuswinkler?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/scrabble-tiles-spelling-out-the-word-data-on-a-wooden-surface-z6hKpyCuQME?utm_source=techversation&utm_medium=referral)*
