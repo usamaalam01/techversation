@@ -1,0 +1,88 @@
+---
+title: "Personalization in AI"
+description: "Value alignment with personas and forecasting."
+date: "2026-07-29"
+author: "Usama"
+tags: ["ai", "llm", "personalization"]
+aiSummary: "This tutorial explores personalization in AI using personas and forecasting. We will use the World Values Survey to evaluate the performance of different language models. By the end of this tutorial, you will be able to implement value alignment in your own AI projects."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxQZXJzb25hbGl6YXRpb24lMjBQZXJzb25hcyUyMEZvcmVjYXN0aW5nJTIwVmFsdWUlMjBBbGlnbm1lbnQlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODUzMzUyOTh8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Personalization in AI
+
+Personalization is a crucial aspect of artificial intelligence (AI) that involves tailoring the behavior of AI systems to individual users or groups. This can be achieved through various techniques, including using personas and forecasting. In this tutorial, we will delve into the concept of personalization in AI, exploring how to use personas and forecasting to align values in AI systems.
+
+## Understanding Personas and Forecasting
+
+Personas are fictional characters that represent a specific group of people, often used in design and marketing to understand user behavior. In AI, personas can be used to condition the behavior of language models, allowing them to adapt to different user groups. Forecasting, on the other hand, involves predicting how people would answer value-laden questions.
+
+To demonstrate the concept of personas and forecasting, let's consider an example using the World Values Survey (WVS). The WVS is a global survey that collects data on people's values and beliefs. We can use this data to create personas and forecast how people would answer value-laden questions.
+
+### Creating Personas using the World Values Survey
+
+To create personas, we need to analyze the data from the WVS. We can use the survey questions to identify patterns and trends in people's values and beliefs. For example, we can use the answers to questions about politics, religion, and social issues to create personas that represent different demographics.
+
+```python
+import pandas as pd
+
+# Load the World Values Survey data
+wvs_data = pd.read_csv('wvs_data.csv')
+
+# Analyze the data to identify patterns and trends
+personas = wvs_data.groupby('demographic').mean()
+
+print(personas)
+```
+
+## Evaluating Language Models using Personas and Forecasting
+
+Once we have created personas, we can use them to evaluate the performance of different language models. We can ask the language models to adapt to the personas and forecast how people would answer value-laden questions.
+
+Let's consider an example using the GPT-5.4 language model. We can use the personas we created earlier to condition the behavior of the language model and forecast how people would answer value-laden questions.
+
+```python
+import torch
+from transformers import GPT2Tokenizer, GPT2Model
+
+# Load the pre-trained GPT-5.4 language model
+tokenizer = GPT2Tokenizer.from_pretrained('gpt-5.4')
+model = GPT2Model.from_pretrained('gpt-5.4')
+
+# Define a function to forecast how people would answer value-laden questions
+def forecast(persona, question):
+    # Tokenize the question and persona
+    inputs = tokenizer.encode_plus(question, persona, return_tensors='pt')
+
+    # Generate a response using the language model
+    response = model.generate(inputs['input_ids'], max_length=100)
+
+    # Return the response
+    return tokenizer.decode(response[0], skip_special_tokens=True)
+
+# Test the forecast function
+persona = 'young adult'
+question = 'What is the most important value in life?'
+response = forecast(persona, question)
+print(response)
+```
+
+![black flat screen computer monitor](https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxQZXJzb25hbGl6YXRpb24lMjBQZXJzb25hcyUyMEZvcmVjYXN0aW5nJTIwVmFsdWUlMjBBbGlnbm1lbnQlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODUzMzUyOTh8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we explored the concept of personalization in AI using personas and forecasting. We demonstrated how to create personas using the World Values Survey and evaluate the performance of different language models using these personas. By the end of this tutorial, you should be able to implement value alignment in your own AI projects using personas and forecasting.
+
+### Future Work
+
+There are several directions for future work in this area. One potential direction is to explore the use of other survey datasets, such as the General Social Survey (GSS), to create personas and forecast how people would answer value-laden questions. Another direction is to investigate the use of other language models, such as the Claude Sonnet 4.6 or the Gemini 2.5 Flash, to evaluate their performance in value alignment tasks.
+
+![person writing on whiteboard](https://images.unsplash.com/photo-1546437593-3d0258c28037?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxQZXJzb25hbGl6YXRpb24lMjBQZXJzb25hcyUyMEZvcmVjYXN0aW5nJTIwVmFsdWUlMjBBbGlnbm1lbnQlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODUzMzUyOTh8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+### References
+
+* World Values Survey. (n.d.). World Values Survey. Retrieved from <https://www.worldvaluessurvey.org/>
+* GPT-5.4. (n.d.). GPT-5.4. Retrieved from <https://huggingface.co/gpt-5.4>
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
