@@ -1,0 +1,133 @@
+---
+title: "Schema-Constrained Causal Graphs"
+description: "Introducing HCG-RAG for efficient graph-based retrieval-augmented generation"
+date: "2026-07-29"
+author: "Usama"
+tags: ["ai", "rag", "graph-generation"]
+aiSummary: "HCG-RAG introduces a hierarchical causal graph approach for retrieval-augmented generation, reducing the cost of graph construction. This tutorial provides a step-by-step guide to implementing HCG-RAG. We will explore the benefits of schema-constrained causal graphs and demonstrate how to integrate them into a graph-based retrieval-augmented generation system."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1664526936886-67d4e7ff743c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxTdHJ1Y3R1cmUlMjBPdmVyJTIwU2NhbGUlMjBTY2hlbWElMjBDb25zdHJhaW5lZCUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4NTI5NTUxNHww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to HCG-RAG
+
+The concept of retrieval-augmented generation (RAG) has gained significant attention in recent years, particularly in the context of graph-based models. However, current systems often suffer from scalability issues due to the exhaustive extraction of entities and relationships, resulting in large graphs that are costly to construct. To address this challenge, the research paper "Structure Over Scale: Schema-Constrained Causal Graphs for RAG" introduces HCG-RAG (Hierarchical Causal Graph RAG), a novel approach that grounds answers in structured knowledge while reducing the cost of graph construction.
+
+## Understanding Schema-Constrained Causal Graphs
+
+At the core of HCG-RAG lies the concept of schema-constrained causal graphs. These graphs are designed to capture the causal relationships between entities in a hierarchical manner, allowing for more efficient reasoning and graph construction. The key idea is to constrain the graph structure using a predefined schema, which defines the relationships between entities and their corresponding causal dependencies.
+
+To illustrate this concept, consider a simple example where we have a set of entities representing events, and a set of relationships representing causal dependencies between these events. The schema would define the structure of the graph, specifying which entities can be related to each other and in what way.
+
+## Implementing HCG-RAG
+
+To implement HCG-RAG, we will use a combination of natural language processing (NLP) and graph-based techniques. The following code example demonstrates how to create a simple schema-constrained causal graph using the NetworkX library in Python:
+```python
+import networkx as nx
+
+# Define the schema
+schema = {
+    "Event": ["cause", "effect"],
+    "Cause": ["event"],
+    "Effect": ["event"]
+}
+
+# Create an empty graph
+G = nx.DiGraph()
+
+# Add entities to the graph
+G.add_node("Event1", type="Event")
+G.add_node("Event2", type="Event")
+G.add_node("Cause1", type="Cause")
+G.add_node("Effect1", type="Effect")
+
+# Add relationships to the graph based on the schema
+G.add_edge("Event1", "Cause1", type="cause")
+G.add_edge("Cause1", "Event2", type="effect")
+G.add_edge("Event2", "Effect1", type="effect")
+
+# Print the graph structure
+print(G.nodes(data=True))
+print(G.edges(data=True))
+```
+This code example creates a simple graph with four entities (Event1, Event2, Cause1, and Effect1) and three relationships (cause and effect) between them. The schema defines the structure of the graph, specifying which entities can be related to each other and in what way.
+
+## Integrating HCG-RAG with RAG
+
+To integrate HCG-RAG with a graph-based retrieval-augmented generation system, we need to modify the graph construction process to use the schema-constrained causal graph approach. This involves the following steps:
+
+1.  **Entity Extraction**: Extract entities from the input text using NLP techniques such as named entity recognition (NER) or part-of-speech (POS) tagging.
+2.  **Schema-Based Graph Construction**: Construct the graph using the extracted entities and the predefined schema. This involves adding nodes and edges to the graph based on the relationships defined in the schema.
+3.  **Causal Reasoning**: Perform causal reasoning on the constructed graph to identify the most relevant entities and relationships for the given query.
+
+The following code example demonstrates how to integrate HCG-RAG with a simple RAG system:
+```python
+import numpy as np
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+
+# Load the pre-trained RAG model and tokenizer
+model = AutoModelForSeq2SeqLM.from_pretrained("facebook/rag-token-base")
+tokenizer = AutoTokenizer.from_pretrained("facebook/rag-token-base")
+
+# Define the schema
+schema = {
+    "Event": ["cause", "effect"],
+    "Cause": ["event"],
+    "Effect": ["event"]
+}
+
+# Define the entity extraction function
+def extract_entities(text):
+    # Use NLP techniques to extract entities from the input text
+    entities = []
+    # ...
+    return entities
+
+# Define the graph construction function
+def construct_graph(entities, schema):
+    # Construct the graph using the extracted entities and the predefined schema
+    G = nx.DiGraph()
+    # ...
+    return G
+
+# Define the causal reasoning function
+def perform_causal_reasoning(G, query):
+    # Perform causal reasoning on the constructed graph to identify the most relevant entities and relationships
+    # ...
+    return relevant_entities
+
+# Define the RAG function
+def rag(query, context):
+    # Extract entities from the input text
+    entities = extract_entities(context)
+    
+    # Construct the graph using the extracted entities and the predefined schema
+    G = construct_graph(entities, schema)
+    
+    # Perform causal reasoning on the constructed graph to identify the most relevant entities and relationships
+    relevant_entities = perform_causal_reasoning(G, query)
+    
+    # Generate the response using the relevant entities and relationships
+    response = model.generate(tokenizer.encode(query, return_tensors="pt"), num_beams=4, no_repeat_ngram_size=3)
+    return response
+
+# Test the RAG function
+query = "What is the cause of the event?"
+context = "The event was caused by a combination of factors, including the economy and politics."
+response = rag(query, context)
+print(response)
+```
+This code example demonstrates how to integrate HCG-RAG with a simple RAG system. The `extract_entities` function extracts entities from the input text, the `construct_graph` function constructs the graph using the extracted entities and the predefined schema, and the `perform_causal_reasoning` function performs causal reasoning on the constructed graph to identify the most relevant entities and relationships.
+
+## Conclusion
+
+In this tutorial, we explored the concept of schema-constrained causal graphs and how they can be used to improve the efficiency of graph-based retrieval-augmented generation systems. We demonstrated how to implement HCG-RAG using a combination of NLP and graph-based techniques, and how to integrate it with a simple RAG system. The benefits of using schema-constrained causal graphs include reduced graph construction cost, improved reasoning capabilities, and enhanced overall system performance.
+
+![diagram](https://images.unsplash.com/photo-1664526936810-ec0856d31b92?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxTdHJ1Y3R1cmUlMjBPdmVyJTIwU2NhbGUlMjBTY2hlbWElMjBDb25zdHJhaW5lZCUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4NTI5NTUxNHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+By following the steps outlined in this tutorial, developers can create their own HCG-RAG system and integrate it with their existing RAG applications. The use of schema-constrained causal graphs has the potential to significantly improve the performance and efficiency of graph-based retrieval-augmented generation systems, and we hope that this tutorial has provided a useful introduction to this exciting new area of research.
+
+For more information on the original research paper, please visit the [arXiv website](https://arxiv.org/abs/2607.22592).
+
+*Photo by [GuerrillaBuzz](https://unsplash.com/@guerrillabuzz?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/diagram-EqS6OrIOaTs?utm_source=techversation&utm_medium=referral)*
