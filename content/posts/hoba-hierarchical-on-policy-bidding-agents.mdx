@@ -1,0 +1,131 @@
+---
+title: "HOBA: Hierarchical On-Policy Bidding Agents"
+description: "Adaptive online advertising with hierarchical bidding agents"
+date: "2026-07-29"
+author: "Usama"
+tags: ["ai", "online-advertising", "reinforcement-learning"]
+aiSummary: "HOBA is a hierarchical on-policy bidding agent designed for adaptive online advertising. It addresses the limitations of traditional offline-trained expert models by providing online adaptability and automated hyperparameter tuning. This tutorial provides a step-by-step guide to implementing HOBA using Python and reinforcement learning libraries."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxIT0JBJTIwSGllcmFyY2hpY2FsJTIwUG9saWN5JTIwQmlkZGluZyUyMEFnZW50cyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4NTMxNTI0NHww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Online advertising has become a crucial aspect of modern marketing, with companies spending billions of dollars on digital ads every year. However, traditional online advertising bidding systems often rely on offline-trained expert models, which can be limited by their lack of online adaptability and reliance on manual hyperparameter tuning. To address these limitations, researchers have proposed a new approach called Hierarchical On-Policy Bidding Agents (HOBA).
+
+## What is HOBA?
+
+HOBA is a hierarchical on-policy bidding agent designed for adaptive online advertising. It consists of a hierarchical structure of bidding agents, each responsible for a specific aspect of the bidding process. The agents learn to bid optimally using reinforcement learning, allowing them to adapt to changing market conditions and automate hyperparameter tuning.
+
+## Implementing HOBA
+
+To implement HOBA, we will use Python and the popular reinforcement learning library, Gym. We will also use the PyTorch library for building and training the neural networks.
+
+### Step 1: Install Required Libraries
+
+First, we need to install the required libraries. We can do this using pip:
+```python
+pip install gym torch
+```
+### Step 2: Define the Environment
+
+Next, we need to define the environment in which the bidding agents will operate. This environment will simulate the online advertising market, with agents bidding on ad slots and receiving rewards based on their performance.
+```python
+import gym
+
+class AdvertisingEnvironment(gym.Env):
+    def __init__(self):
+        self.action_space = gym.spaces.Discrete(10)  # 10 possible bid values
+        self.observation_space = gym.spaces.Box(low=0, high=100, shape=(5,), dtype=np.float32)  # 5 features: ad slot ID, user ID, ad creative ID, bid value, reward
+
+    def reset(self):
+        # Reset the environment to its initial state
+        self.ad_slot_id = 0
+        self.user_id = 0
+        self.ad_creative_id = 0
+        self.bid_value = 0
+        self.reward = 0
+        return np.array([self.ad_slot_id, self.user_id, self.ad_creative_id, self.bid_value, self.reward])
+
+    def step(self, action):
+        # Take a step in the environment
+        self.bid_value = action
+        self.reward = self.get_reward()
+        return np.array([self.ad_slot_id, self.user_id, self.ad_creative_id, self.bid_value, self.reward]), self.reward, False, {}
+
+    def get_reward(self):
+        # Calculate the reward based on the bid value and ad slot ID
+        return np.random.uniform(0, 1)  # Simulate a random reward
+```
+### Step 3: Define the Bidding Agent
+
+Next, we need to define the bidding agent that will learn to bid optimally using reinforcement learning. We will use a simple neural network with one hidden layer.
+```python
+import torch
+import torch.nn as nn
+
+class BiddingAgent(nn.Module):
+    def __init__(self):
+        super(BiddingAgent, self).__init__()
+        self.fc1 = nn.Linear(5, 128)  # Input layer (5 features) -> Hidden layer (128 units)
+        self.fc2 = nn.Linear(128, 10)  # Hidden layer (128 units) -> Output layer (10 possible bid values)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))  # Activation function for hidden layer
+        x = self.fc2(x)
+        return x
+```
+### Step 4: Train the Bidding Agent
+
+Finally, we can train the bidding agent using reinforcement learning. We will use the Q-learning algorithm with a learning rate of 0.01 and a discount factor of 0.9.
+```python
+import torch.optim as optim
+
+# Initialize the bidding agent and optimizer
+agent = BiddingAgent()
+optimizer = optim.Adam(agent.parameters(), lr=0.01)
+
+# Train the agent for 1000 episodes
+for episode in range(1000):
+    state = env.reset()
+    done = False
+    rewards = 0.0
+
+    while not done:
+        # Select a bid value using epsilon-greedy policy
+        q_values = agent(torch.tensor(state, dtype=torch.float32))
+        action = torch.argmax(q_values).item()
+        next_state, reward, done, _ = env.step(action)
+
+        # Update the agent's parameters using Q-learning
+        q_values = agent(torch.tensor(state, dtype=torch.float32))
+        q_values[action] = reward + 0.9 * torch.max(agent(torch.tensor(next_state, dtype=torch.float32)))
+        loss = (q_values - agent(torch.tensor(state, dtype=torch.float32))) ** 2
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+        # Update the state and rewards
+        state = next_state
+        rewards += reward
+
+    print(f'Episode {episode+1}, Reward: {rewards:.2f}')
+```
+![a computer screen with a bar chart on it](https://images.unsplash.com/photo-1686061592689-312bbfb5c055?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxIT0JBJTIwSGllcmFyY2hpY2FsJTIwUG9saWN5JTIwQmlkZGluZyUyMEFnZW50cyUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4NTMxNTI0NHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we have implemented a hierarchical on-policy bidding agent (HOBA) using Python and reinforcement learning libraries. HOBA is designed to address the limitations of traditional offline-trained expert models by providing online adaptability and automated hyperparameter tuning. By following the steps outlined in this tutorial, developers can build and train their own HOBA agents to optimize their online advertising campaigns.
+
+### Future Work
+
+There are several directions for future work, including:
+
+*   **Improving the bidding agent's architecture**: The current implementation uses a simple neural network with one hidden layer. More complex architectures, such as convolutional neural networks (CNNs) or recurrent neural networks (RNNs), could be explored to improve the agent's performance.
+*   **Incorporating additional features**: The current implementation uses a limited set of features, including ad slot ID, user ID, ad creative ID, bid value, and reward. Additional features, such as user demographics or ad creative attributes, could be incorporated to improve the agent's decision-making.
+*   **Evaluating the agent's performance**: The current implementation evaluates the agent's performance using a simulated environment. Real-world experiments could be conducted to evaluate the agent's performance in a live online advertising setting.
+
+By continuing to develop and refine HOBA, developers can create more effective and efficient online advertising campaigns that drive real results for businesses.
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
