@@ -1,0 +1,118 @@
+---
+title: "Senior-Friendly Routing"
+description: "Designing pedestrian routes for seniors with safety and accessibility in mind."
+date: "2026-07-31"
+author: "Usama"
+tags: ["routing", "ai", "accessibility"]
+aiSummary: "This tutorial introduces a design science approach to create senior-friendly pedestrian routing systems. It presents a step-by-step guide on how to develop an artefact that optimizes routes for older adults, considering barriers, safety thresholds, and supportive infrastructure. The approach combines graph theory, machine learning, and human-centered design to create a more inclusive and accessible navigation system."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1569396116180-7fe09fa16dd8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxTaG9ydGVzdCUyMElzbiUyMFNhZmVzdCUyMERlc2lnbiUyMFNjaWVuY2UlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODU0NjkzMzJ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Pedestrian navigation systems have traditionally optimized routes for distance or time, often overlooking the unique needs and challenges faced by older adults. As the global population ages, it is essential to create senior-friendly pedestrian routing systems that prioritize safety, accessibility, and inclusivity. In this tutorial, we will explore a design science approach to develop an artefact that addresses these concerns.
+
+## Understanding Senior Mobility Needs
+
+Older adults' independent mobility is crucial for their well-being, health, and out-of-home participation. However, pedestrian navigation systems often fail to consider the barriers, safety thresholds, and supportive infrastructure that shape late-life walking decisions. To design a senior-friendly routing system, we need to understand the factors that influence older adults' mobility, such as:
+
+* Physical abilities and limitations
+* Cognitive impairments
+* Sensory deficits
+* Fear of crime or traffic
+* Availability of supportive infrastructure (e.g., benches, pedestrian crossings)
+
+## Design Science Approach
+
+Our design science approach combines graph theory, machine learning, and human-centered design to create a senior-friendly pedestrian routing system. The approach consists of the following steps:
+
+1. **Data Collection**: Gather data on the pedestrian infrastructure, including the location of benches, pedestrian crossings, and other supportive infrastructure.
+2. **Graph Construction**: Construct a graph representation of the pedestrian network, where nodes represent intersections and edges represent pedestrian paths.
+3. **Weight Assignment**: Assign weights to the edges based on the senior-friendly criteria, such as the presence of benches, pedestrian crossings, and the distance between nodes.
+4. **Route Optimization**: Use machine learning algorithms to optimize routes for older adults, considering the weighted graph and the senior-friendly criteria.
+
+### Graph Construction
+
+To construct the graph, we can use a library like NetworkX in Python. Here is an example of how to create a simple graph:
+```python
+import networkx as nx
+
+# Create an empty graph
+G = nx.Graph()
+
+# Add nodes (intersections)
+G.add_node("Node 1")
+G.add_node("Node 2")
+G.add_node("Node 3")
+
+# Add edges (pedestrian paths)
+G.add_edge("Node 1", "Node 2")
+G.add_edge("Node 2", "Node 3")
+G.add_edge("Node 3", "Node 1")
+```
+### Weight Assignment
+
+To assign weights to the edges, we can use a dictionary to store the senior-friendly criteria for each edge. Here is an example:
+```python
+# Define the senior-friendly criteria
+criteria = {
+    "Node 1-Node 2": {"bench": True, "pedestrian_crossing": True, "distance": 100},
+    "Node 2-Node 3": {"bench": False, "pedestrian_crossing": False, "distance": 200},
+    "Node 3-Node 1": {"bench": True, "pedestrian_crossing": True, "distance": 150}
+}
+
+# Assign weights to the edges
+for edge, attributes in criteria.items():
+    weight = 0
+    if attributes["bench"]:
+        weight += 1
+    if attributes["pedestrian_crossing"]:
+        weight += 1
+    weight += attributes["distance"]
+    G[edge[0]][edge[1]]["weight"] = weight
+```
+### Route Optimization
+
+To optimize routes for older adults, we can use a machine learning algorithm like Dijkstra's algorithm. Here is an example:
+```python
+import heapq
+
+# Define the starting and ending nodes
+start_node = "Node 1"
+end_node = "Node 3"
+
+# Create a priority queue
+queue = [(0, start_node, [])]
+
+while queue:
+    (cost, node, path) = heapq.heappop(queue)
+    if node not in path:
+        path = path + [node]
+        if node == end_node:
+            break
+        for neighbor, attributes in G[node].items():
+            if neighbor not in path:
+                heapq.heappush(queue, (cost + attributes["weight"], neighbor, path))
+
+print("Optimized route:", path)
+```
+![a diagram of a number of circles and a number of dots](https://images.unsplash.com/photo-1717501218456-c4789b65fc21?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxTaG9ydGVzdCUyMElzbiUyMFNhZmVzdCUyMERlc2lnbiUyMFNjaWVuY2UlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODU0NjkzMzJ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we presented a design science approach to create senior-friendly pedestrian routing systems. By combining graph theory, machine learning, and human-centered design, we can develop an artefact that prioritizes safety, accessibility, and inclusivity for older adults. The approach consists of data collection, graph construction, weight assignment, and route optimization. By following these steps, we can create a more inclusive and accessible navigation system that enables older adults to participate fully in their communities.
+
+## Future Work
+
+There are several avenues for future research and development, including:
+
+* Integrating additional senior-friendly criteria, such as accessibility features and public transportation options
+* Developing a user-friendly interface for the routing system
+* Conducting user testing and evaluation to refine the system
+* Exploring the application of this approach to other domains, such as wheelchair-accessible routing or routing for people with visual impairments
+
+By continuing to develop and refine this approach, we can create a more inclusive and accessible transportation system that enables people of all ages and abilities to participate fully in their communities.
+
+*Photo by [Alexander Sinn](https://unsplash.com/@swimstaralex?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/turned-on-monitor-displays-source-codes-7KyLHiDM770?utm_source=techversation&utm_medium=referral)*
