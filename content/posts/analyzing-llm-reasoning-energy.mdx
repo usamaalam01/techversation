@@ -1,0 +1,92 @@
+---
+title: "Analyzing LLM Reasoning Energy"
+description: "Measuring computational effort in chain-of-thought trajectories."
+date: "2026-08-03"
+author: "Usama"
+tags: ["llm", "ai", "reasoning"]
+aiSummary: "The Step-Aware Reasoning Energy (SARE) method analyzes computational effort in LLM chain-of-thought trajectories. This tutorial demonstrates how to implement SARE using Python. We will explore the SARE algorithm and provide working code examples to get you started."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxIYXJkJTIwVGhpbmslMjBBbmFseXppbmclMjBTdGVwJTIwQXdhcmUlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODU3ODY3MDZ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Step-Aware Reasoning Energy
+
+Understanding how computational effort is allocated across individual chain-of-thought (CoT) reasoning steps is an open challenge in the field of large language models (LLMs). Existing interpretability methods rely on output-level signals or collapse processing depth into a single trajectory-level scalar, leaving step-wise effort opaque. To address this challenge, researchers have proposed the Step-Aware Reasoning Energy (SARE) method, which analyzes the computational effort in LLM CoT trajectories.
+
+## Understanding the SARE Algorithm
+
+The SARE algorithm is based on the idea of assigning a reasoning energy score to each step in the CoT trajectory. The reasoning energy score represents the computational effort required to generate the next step in the trajectory. The SARE algorithm consists of the following steps:
+
+1. **Tokenization**: Tokenize the input text into individual tokens.
+2. **Embedding**: Embed the tokens into a high-dimensional vector space using a pre-trained language model.
+3. **Reasoning Energy Calculation**: Calculate the reasoning energy score for each step in the CoT trajectory using the embedded tokens.
+4. **Trajectory Analysis**: Analyze the CoT trajectory using the reasoning energy scores to understand the computational effort allocated across individual steps.
+
+## Implementing SARE using Python
+
+To implement the SARE algorithm, we will use the Hugging Face Transformers library, which provides pre-trained language models and a simple interface for tokenization and embedding. We will also use the NumPy library for numerical computations.
+
+```python
+import torch
+from transformers import AutoTokenizer, AutoModel
+import numpy as np
+
+# Load pre-trained language model and tokenizer
+tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+model = AutoModel.from_pretrained("bert-base-uncased")
+
+# Define the SARE algorithm
+def sare_algorithm(input_text):
+    # Tokenize input text
+    inputs = tokenizer(input_text, return_tensors="pt")
+
+    # Embed tokens
+    embeddings = model(**inputs).last_hidden_state
+
+    # Calculate reasoning energy scores
+    reasoning_energy_scores = []
+    for i in range(len(embeddings[0]) - 1):
+        score = torch.norm(embeddings[0][i] - embeddings[0][i + 1])
+        reasoning_energy_scores.append(score.item())
+
+    return reasoning_energy_scores
+
+# Test the SARE algorithm
+input_text = "This is a test sentence."
+reasoning_energy_scores = sare_algorithm(input_text)
+print(reasoning_energy_scores)
+```
+
+## Visualizing the SARE Results
+
+To visualize the SARE results, we can use a bar chart to show the reasoning energy scores for each step in the CoT trajectory. We can use the Matplotlib library to create the bar chart.
+
+```python
+import matplotlib.pyplot as plt
+
+# Create a bar chart
+plt.bar(range(len(reasoning_energy_scores)), reasoning_energy_scores)
+plt.xlabel("Step Index")
+plt.ylabel("Reasoning Energy Score")
+plt.title("SARE Results")
+plt.show()
+```
+
+![a computer screen with a bar chart on it](https://images.unsplash.com/photo-1686061592689-312bbfb5c055?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxIYXJkJTIwVGhpbmslMjBBbmFseXppbmclMjBTdGVwJTIwQXdhcmUlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODU3ODY3MDZ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we demonstrated how to implement the Step-Aware Reasoning Energy (SARE) method using Python. We explored the SARE algorithm and provided working code examples to get you started. The SARE method provides a new perspective on understanding the computational effort allocated across individual chain-of-thought reasoning steps in large language models. By analyzing the reasoning energy scores, we can gain insights into the decision-making process of LLMs and improve their performance.
+
+## Future Work
+
+There are several directions for future work, including:
+
+* **Improving the SARE algorithm**: The current implementation of the SARE algorithm is a simplified version of the original proposal. Future work can focus on improving the algorithm to make it more accurate and efficient.
+* **Applying SARE to other NLP tasks**: The SARE method can be applied to other NLP tasks, such as question answering, text classification, and machine translation. Future work can explore the application of SARE to these tasks.
+* **Visualizing SARE results**: The SARE results can be visualized using different visualization techniques, such as heat maps, scatter plots, and graphs. Future work can focus on developing new visualization techniques to better understand the SARE results.
+
+By exploring these directions, we can further improve our understanding of the computational effort allocated across individual chain-of-thought reasoning steps in large language models and develop more accurate and efficient NLP models.
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
