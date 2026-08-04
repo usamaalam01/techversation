@@ -1,0 +1,75 @@
+---
+title: "C-Kermit Returns"
+description: "First new C-Kermit release in 15 years is out now."
+date: "2026-08-04"
+author: "Usama"
+tags: ["kermit", "c-kermit", "tools"]
+aiSummary: "C-Kermit is a popular file transfer protocol that has been around for 45 years. After 15 years, a new release is available, bringing updates and improvements to the protocol. This post will explore the new release and provide a hands-on guide to getting started with C-Kermit. The new release includes several bug fixes, performance enhancements, and new features."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1735757608763-48088f15e4dd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxDZWxlYnJhdGluZyUyMFllYXJzJTIwS2VybWl0JTIwRmlyc3QlMjBOZXclMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc4NTgxMzk4NHww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to C-Kermit
+C-Kermit is a file transfer protocol that has been around for 45 years, making it one of the oldest and most widely used protocols for transferring files over a network. It was first released in 1981 and has been maintained by Frank da Cruz and the Kermit Project at Columbia University. The protocol is known for its reliability, flexibility, and ease of use.
+
+## What's New in C-Kermit
+The new release of C-Kermit includes several bug fixes, performance enhancements, and new features. Some of the notable changes include:
+* Improved support for IPv6
+* Enhanced security features, including support for SSL/TLS encryption
+* Better handling of large files and high-speed transfers
+* New command-line options and scripting capabilities
+
+To get started with the new release of C-Kermit, you can download the source code from the [Kermit Project website](https://www.kermitproject.org/). The source code is available for a variety of platforms, including Windows, macOS, and Linux.
+
+### Compiling C-Kermit
+To compile C-Kermit, you will need to have a C compiler installed on your system. The compilation process is straightforward and can be done using the following commands:
+```bash
+# Configure the build process
+./configure
+
+# Compile the source code
+make
+
+# Install the compiled binary
+make install
+```
+Once the compilation process is complete, you can start using C-Kermit to transfer files over a network.
+
+## Using C-Kermit
+C-Kermit is a command-line based protocol, making it easy to use and script. The basic syntax for transferring a file using C-Kermit is as follows:
+```bash
+kermit -s filename
+```
+This will send the specified file to the remote server. To receive a file, you can use the following command:
+```bash
+kermit -r filename
+```
+C-Kermit also supports a variety of options and commands that can be used to customize the transfer process. For example, you can use the `-b` option to specify the baud rate for the transfer:
+```bash
+kermit -s filename -b 9600
+```
+This will send the file at a baud rate of 9600.
+
+![A computer keyboard with the numbers 2013 on it](https://images.unsplash.com/photo-1735757608938-7465bf115e7f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxDZWxlYnJhdGluZyUyMFllYXJzJTIwS2VybWl0JTIwRmlyc3QlMjBOZXclMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc4NTgxMzk4NHww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Scripting C-Kermit
+One of the most powerful features of C-Kermit is its scripting capabilities. You can write scripts that automate the transfer process, making it easy to perform complex transfers with ease. For example, you can write a script that transfers a group of files to a remote server:
+```python
+import subprocess
+
+# Define the files to transfer
+files = ["file1.txt", "file2.txt", "file3.txt"]
+
+# Loop through each file and transfer it
+for file in files:
+    subprocess.run(["kermit", "-s", file])
+```
+This script will transfer each file in the `files` list to the remote server.
+
+## Conclusion
+The new release of C-Kermit is a significant update to the protocol, bringing improved performance, security, and features. With its ease of use, flexibility, and scripting capabilities, C-Kermit is an ideal choice for anyone looking to transfer files over a network. Whether you are a seasoned developer or just starting out, C-Kermit is definitely worth considering.
+
+In this post, we have covered the basics of C-Kermit, including its history, features, and usage. We have also explored the new release and its improvements, and provided a hands-on guide to getting started with the protocol. With C-Kermit, you can easily transfer files over a network, automate complex transfers, and take advantage of its many features and options.
+
+*Photo by [BoliviaInteligente](https://unsplash.com/@boliviainteligente?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-plate-that-has-the-number-205-on-it-qGWaklgtJVM?utm_source=techversation&utm_medium=referral)*

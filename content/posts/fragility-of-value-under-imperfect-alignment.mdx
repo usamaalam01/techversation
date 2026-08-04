@@ -1,0 +1,123 @@
+---
+title: "Fragility of Value under Imperfect Alignment"
+description: "Guaranteeing AI systems are aligned with humanity is crucial for preventing catastrophic outcomes."
+date: "2026-08-04"
+author: "Usama"
+tags: ["ai", "alignment", "safety"]
+aiSummary: "The fragility of value under imperfect alignment is a critical concern in AI safety. As AI systems become more responsible, optimizing for an imperfect proxy to human values can lead to catastrophic outcomes. This tutorial explores the concept of fragility and provides practical code examples to demonstrate the risks of imperfect alignment."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1782711927879-5e6b889e8f30?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxGcmFnaWxpdHklMjBWYWx1ZSUyMHVuZGVyJTIwSW1wZXJmZWN0JTIwQWxpZ25tZW50JTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg1ODE0MTQwfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+As AI systems become increasingly responsible for making decisions that impact human lives, the need to guarantee their alignment with human values has become a pressing concern. The concept of fragility of value under imperfect alignment refers to the risk of optimizing for an imperfect proxy to human values, leading to catastrophic outcomes. In this tutorial, we will delve into the concept of fragility and provide practical code examples to demonstrate the risks of imperfect alignment.
+
+## Understanding Fragility
+
+Fragility occurs when an AI system is optimized for a proxy to human values that is not perfectly aligned with the true human values. This can lead to unintended consequences, such as the AI system prioritizing the proxy over the true human values. For example, if an AI system is designed to optimize for human happiness, but the proxy used is based on social media likes and shares, the AI system may prioritize increasing social media engagement over actual human well-being.
+
+### Mathematical Representation
+
+The fragility of value under imperfect alignment can be represented mathematically using the following equation:
+
+`V = α * V_true + (1 - α) * V_proxy`
+
+where `V` is the overall value, `V_true` is the true human value, `V_proxy` is the proxy value, and `α` is the alignment parameter.
+
+```python
+import numpy as np
+
+def calculate_value(alpha, v_true, v_proxy):
+    """
+    Calculate the overall value based on the alignment parameter and true and proxy values.
+    
+    Args:
+    alpha (float): The alignment parameter.
+    v_true (float): The true human value.
+    v_proxy (float): The proxy value.
+    
+    Returns:
+    float: The overall value.
+    """
+    return alpha * v_true + (1 - alpha) * v_proxy
+
+# Example usage
+alpha = 0.8  # Alignment parameter
+v_true = 10  # True human value
+v_proxy = 5  # Proxy value
+
+overall_value = calculate_value(alpha, v_true, v_proxy)
+print("Overall Value:", overall_value)
+```
+
+## Risks of Imperfect Alignment
+
+The risks of imperfect alignment can be demonstrated using a simple example. Suppose we have an AI system designed to optimize for human happiness, but the proxy used is based on social media likes and shares.
+
+```python
+import numpy as np
+
+def calculate_happiness(likes, shares):
+    """
+    Calculate the happiness based on social media likes and shares.
+    
+    Args:
+    likes (int): The number of likes.
+    shares (int): The number of shares.
+    
+    Returns:
+    float: The happiness.
+    """
+    return likes + shares
+
+# Example usage
+likes = 100  # Number of likes
+shares = 50  # Number of shares
+
+happiness = calculate_happiness(likes, shares)
+print("Happiness:", happiness)
+```
+
+However, if the AI system prioritizes increasing social media engagement over actual human well-being, it may lead to unintended consequences, such as spreading misinformation or promoting unhealthy behaviors.
+
+![Transparent geometric shapes surround a green square with](https://images.unsplash.com/photo-1782711927625-3f80f21eee05?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxGcmFnaWxpdHklMjBWYWx1ZSUyMHVuZGVyJTIwSW1wZXJmZWN0JTIwQWxpZ25tZW50JTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg1ODE0MTQwfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Mitigating the Risks of Imperfect Alignment
+
+To mitigate the risks of imperfect alignment, it is essential to develop AI systems that are aligned with human values. This can be achieved by using techniques such as value alignment, inverse reinforcement learning, and human-centered design.
+
+```python
+import numpy as np
+
+def calculate_alignment(v_true, v_proxy):
+    """
+    Calculate the alignment between the true human value and the proxy value.
+    
+    Args:
+    v_true (float): The true human value.
+    v_proxy (float): The proxy value.
+    
+    Returns:
+    float: The alignment.
+    """
+    return np.abs(v_true - v_proxy)
+
+# Example usage
+v_true = 10  # True human value
+v_proxy = 5  # Proxy value
+
+alignment = calculate_alignment(v_true, v_proxy)
+print("Alignment:", alignment)
+```
+
+## Conclusion
+
+The fragility of value under imperfect alignment is a critical concern in AI safety. By understanding the concept of fragility and the risks of imperfect alignment, we can develop AI systems that are aligned with human values and mitigate the risks of catastrophic outcomes. As AI systems become increasingly responsible for making decisions that impact human lives, it is essential to prioritize value alignment and human-centered design to ensure that AI systems are developed and deployed in a way that is safe and beneficial for humanity.
+
+![Abstract green and clear glass shapes with "agility" text.](https://images.unsplash.com/photo-1782723590689-05aef74f4f77?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxGcmFnaWxpdHklMjBWYWx1ZSUyMHVuZGVyJTIwSW1wZXJmZWN0JTIwQWxpZ25tZW50JTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg1ODE0MTQwfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+For more information on the fragility of value under imperfect alignment, please refer to the original research paper on [arXiv](https://arxiv.org/abs/2607.28881).
+
+*Photo by [Brecht Corbeel](https://unsplash.com/@brechtcorbeel?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/abstract-clear-shapes-and-a-green-square-with-agility-text-7rFEn0AmbCs?utm_source=techversation&utm_medium=referral)*
