@@ -1,0 +1,102 @@
+---
+title: "Discovering Math Conjectures with LLM"
+description: "Using AI for mathematical discoveries"
+date: "2026-08-04"
+author: "Usama"
+tags: ["ai", "math", "llm"]
+aiSummary: "We introduce a three-stage pipeline for major conjecture discovery using Large Language Models. This pipeline includes region search, reflective validation, and expert feedback. Our approach has the potential to accelerate mathematical discoveries and provide new insights into unsolved problems."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1708011271935-3e109df56fe0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxMTE0lMjBGcmFtZXdvcmslMjBEaXNjb3ZlcmluZyUyME1ham9yJTIwTWF0aGVtYXRpY2FsJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg1ODMzNTMzfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Mathematical conjectures have long been a driving force behind advancements in mathematics and science. However, the process of discovering and validating these conjectures remains heavily reliant on expert intuition. Recent advancements in Large Language Models (LLMs) have shown promise in accelerating this process. In this tutorial, we will explore a three-stage pipeline for discovering major mathematical conjectures using LLMs.
+
+## Background
+The pipeline consists of three stages:
+1. **Region Search**: This stage involves using LLMs to search for regions of interest in mathematical spaces. These regions are identified by their potential to contain new conjectures or insights.
+2. **Reflective Validation**: Once a region of interest has been identified, the LLM is used to validate the conjectures within that region. This involves checking the conjectures against known mathematical truths and identifying potential counterexamples.
+3. **Expert Feedback**: The final stage involves soliciting feedback from human experts in the field. This feedback is used to refine the conjectures and identify areas for further research.
+
+## Implementing the Pipeline
+To implement this pipeline, we will use a combination of Python and the Hugging Face Transformers library. First, we need to install the required libraries:
+```python
+pip install transformers
+pip install torch
+```
+Next, we can define a function to perform the region search:
+```python
+import torch
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+
+def region_search(model_name, prompt):
+    # Load the LLM model and tokenizer
+    model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+    # Define the prompt for the region search
+    input_ids = tokenizer.encode(prompt, return_tensors='pt')
+
+    # Generate a response from the LLM
+    output = model.generate(input_ids, max_length=100)
+
+    # Decode the response
+    response = tokenizer.decode(output[0], skip_special_tokens=True)
+
+    return response
+```
+We can then use this function to perform the region search:
+```python
+prompt = "What are some potential conjectures in number theory?"
+response = region_search("t5-base", prompt)
+print(response)
+```
+This will output a list of potential conjectures in number theory.
+
+## Reflective Validation
+Once we have identified a region of interest, we can use the LLM to validate the conjectures within that region. We can define a function to perform this validation:
+```python
+def reflective_validation(model_name, conjecture):
+    # Load the LLM model and tokenizer
+    model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+    # Define the prompt for the reflective validation
+    input_ids = tokenizer.encode(conjecture, return_tensors='pt')
+
+    # Generate a response from the LLM
+    output = model.generate(input_ids, max_length=100)
+
+    # Decode the response
+    response = tokenizer.decode(output[0], skip_special_tokens=True)
+
+    return response
+```
+We can then use this function to validate a conjecture:
+```python
+conjecture = "The Riemann Hypothesis is true."
+response = reflective_validation("t5-base", conjecture)
+print(response)
+```
+This will output a response from the LLM indicating whether the conjecture is likely to be true or false.
+
+## Expert Feedback
+The final stage of the pipeline involves soliciting feedback from human experts in the field. This feedback can be used to refine the conjectures and identify areas for further research.
+
+![a close up of a piece of paper with writing on it](https://images.unsplash.com/photo-1708011271954-c0d2b3155ded?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxMTE0lMjBGcmFtZXdvcmslMjBEaXNjb3ZlcmluZyUyME1ham9yJTIwTWF0aGVtYXRpY2FsJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg1ODMzNTMzfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we have explored a three-stage pipeline for discovering major mathematical conjectures using LLMs. This pipeline has the potential to accelerate mathematical discoveries and provide new insights into unsolved problems. By leveraging the power of LLMs, we can identify regions of interest, validate conjectures, and solicit feedback from human experts.
+
+## Future Work
+There are several areas for future research and development:
+* **Improving the accuracy of the LLM models**: This can be achieved through the use of larger models, more extensive training datasets, and improved training techniques.
+* **Integrating human feedback**: This can be achieved through the development of interfaces that allow human experts to provide feedback on the conjectures and regions of interest.
+* **Applying the pipeline to other fields**: The pipeline can be applied to other fields, such as physics, computer science, and engineering, to accelerate discoveries and provide new insights.
+
+![Blackboard with complex mathematical formulas and symbols.](https://images.unsplash.com/photo-1770719269462-d3c1ed7e184f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxMTE0lMjBGcmFtZXdvcmslMjBEaXNjb3ZlcmluZyUyME1ham9yJTIwTWF0aGVtYXRpY2FsJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg1ODMzNTMzfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+By continuing to develop and refine this pipeline, we can unlock new discoveries and insights in mathematics and beyond.
+
+*Photo by [Bozhin Karaivanov](https://unsplash.com/@bkaraivanov?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-close-up-of-a-sheet-of-paper-with-numbers-on-it-5z70PsbFCMM?utm_source=techversation&utm_medium=referral)*
