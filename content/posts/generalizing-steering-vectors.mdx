@@ -1,0 +1,124 @@
+---
+title: "Generalizing Steering Vectors"
+description: "Improving chain-of-thought faithfulness in AI models"
+date: "2026-08-04"
+author: "Usama"
+tags: ["ai", "llm", "python"]
+aiSummary: "This tutorial explores the concept of generalizing steering vectors for chain-of-thought faithfulness in AI models. We will delve into the importance of this technique and provide concrete code examples to demonstrate its implementation. By the end of this tutorial, you will understand how to improve the faithfulness of your AI models using steering vectors."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1639322537231-2f206e06af84?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxHZW5lcmFsaXphdGlvbiUyMFN0ZWVyaW5nJTIwVmVjdG9ycyUyMENoYWluJTIwVGhvdWdodCUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4NTg3MzAzMnww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+The concept of chain-of-thought faithfulness has gained significant attention in the field of AI safety. It refers to the ability of AI models to verbalize their reasoning process, allowing for monitoring and evaluation. However, in some cases, models may not verbalize important steps in their reasoning process, leading to a lack of faithfulness. To address this issue, researchers have proposed the use of steering vectors, which can help guide the model's reasoning process and improve faithfulness.
+
+## Understanding Steering Vectors
+Steering vectors are a technique used to influence the output of a language model. They are typically used in conjunction with a prompt or input sequence to guide the model's generation process. In the context of chain-of-thought faithfulness, steering vectors can be used to encourage the model to verbalize its reasoning process.
+
+### Implementing Steering Vectors
+To implement steering vectors, you will need a language model and a method for generating the steering vectors. One popular approach is to use a pre-trained language model and generate the steering vectors using a separate model or algorithm.
+
+```python
+import torch
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+
+# Load pre-trained language model and tokenizer
+model = AutoModelForSeq2SeqLM.from_pretrained("t5-base")
+tokenizer = AutoTokenizer.from_pretrained("t5-base")
+
+# Define a function to generate steering vectors
+def generate_steering_vector(prompt, target_sequence):
+    # Tokenize the prompt and target sequence
+    prompt_inputs = tokenizer(prompt, return_tensors="pt")
+    target_inputs = tokenizer(target_sequence, return_tensors="pt")
+
+    # Generate the steering vector using the model
+    steering_vector = model.generate(**prompt_inputs, num_beams=4, no_repeat_ngram_size=2)
+
+    return steering_vector
+
+# Example usage:
+prompt = "What is the capital of France?"
+target_sequence = "The capital of France is Paris."
+steering_vector = generate_steering_vector(prompt, target_sequence)
+```
+
+## Generalizing Steering Vectors
+To generalize steering vectors, you will need to train a model to generate the steering vectors based on the input prompt and target sequence. This can be done using a variety of techniques, including supervised learning and reinforcement learning.
+
+### Training a Steering Vector Model
+To train a steering vector model, you will need a dataset of prompts and target sequences, as well as a method for generating the steering vectors. One popular approach is to use a pre-trained language model and fine-tune it on the dataset.
+
+```python
+import torch
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+
+# Load pre-trained language model and tokenizer
+model = AutoModelForSeq2SeqLM.from_pretrained("t5-base")
+tokenizer = AutoTokenizer.from_pretrained("t5-base")
+
+# Define a dataset class for the steering vector data
+class SteeringVectorDataset(torch.utils.data.Dataset):
+    def __init__(self, prompts, target_sequences):
+        self.prompts = prompts
+        self.target_sequences = target_sequences
+
+    def __getitem__(self, idx):
+        prompt = self.prompts[idx]
+        target_sequence = self.target_sequences[idx]
+
+        # Tokenize the prompt and target sequence
+        prompt_inputs = tokenizer(prompt, return_tensors="pt")
+        target_inputs = tokenizer(target_sequence, return_tensors="pt")
+
+        # Generate the steering vector using the model
+        steering_vector = model.generate(**prompt_inputs, num_beams=4, no_repeat_ngram_size=2)
+
+        return {
+            "prompt": prompt,
+            "target_sequence": target_sequence,
+            "steering_vector": steering_vector
+        }
+
+    def __len__(self):
+        return len(self.prompts)
+
+# Example usage:
+prompts = ["What is the capital of France?", "What is the largest planet in our solar system?"]
+target_sequences = ["The capital of France is Paris.", "The largest planet in our solar system is Jupiter."]
+dataset = SteeringVectorDataset(prompts, target_sequences)
+
+# Fine-tune the model on the dataset
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model.to(device)
+criterion = torch.nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-5)
+
+for epoch in range(5):
+    model.train()
+    total_loss = 0
+    for batch in torch.utils.data.DataLoader(dataset, batch_size=16):
+        input_ids = batch["prompt"]["input_ids"].to(device)
+        attention_mask = batch["prompt"]["attention_mask"].to(device)
+        labels = batch["target_sequence"]["input_ids"].to(device)
+
+        optimizer.zero_grad()
+
+        outputs = model(input_ids, attention_mask=attention_mask, labels=labels)
+        loss = criterion(outputs, labels)
+
+        loss.backward()
+        optimizer.step()
+
+        total_loss += loss.item()
+
+    print(f"Epoch {epoch+1}, Loss: {total_loss / len(dataset)}")
+```
+
+![diagram](https://images.unsplash.com/photo-1664526937033-fe2c11f1be25?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxHZW5lcmFsaXphdGlvbiUyMFN0ZWVyaW5nJTIwVmVjdG9ycyUyMENoYWluJTIwVGhvdWdodCUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4NTg3MzAzMnww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we explored the concept of generalizing steering vectors for chain-of-thought faithfulness in AI models. We demonstrated how to implement steering vectors using a pre-trained language model and how to train a model to generate the steering vectors based on the input prompt and target sequence. By using steering vectors, you can improve the faithfulness of your AI models and encourage them to verbalize their reasoning process.
+
+*Photo by [Shubham Dhage](https://unsplash.com/@theshubhamdhage?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-black-and-white-photo-of-cubes-on-a-black-background-IlUq1ruyv0Q?utm_source=techversation&utm_medium=referral)*
