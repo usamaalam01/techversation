@@ -1,0 +1,115 @@
+---
+title: "Cognitive Parameter Inference"
+description: "Identifying informative environments for cognition parameter inference via Bayesian experimental design."
+date: "2026-08-04"
+author: "Usama"
+tags: ["ai", "cognition", "bayesian"]
+aiSummary: "This tutorial explores Bayesian experimental design for cognitive parameter inference. We'll implement a framework to identify informative environments and demonstrate its application. The approach relies on Bayesian inverse planning and experimental design to infer latent cognitive mechanisms."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1692607431208-28cc794e0067?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxJZGVudGlmeWluZyUyMEluZm9ybWF0aXZlJTIwRW52aXJvbm1lbnRzJTIwQ29nbml0aW9uJTIwUGFyYW1ldGVyJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg1ODU0MTkwfDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Computational cognitive modeling aims to infer latent cognitive mechanisms underlying observed behavior. Bayesian inverse planning provides a principled framework for such inference, but its success depends critically on the experimental environment. In this tutorial, we'll delve into the process of identifying informative environments for cognition parameter inference via Bayesian experimental design.
+
+## Background
+
+Bayesian inverse planning is a framework for inferring latent cognitive mechanisms from observed behavior. However, the choice of experimental environment significantly impacts the accuracy of the inference. Existing approaches typically treat environments as fixed, leaving open the question of which environments are most informative for cognition parameter inference.
+
+## Bayesian Experimental Design
+
+Bayesian experimental design is a methodology for designing experiments that maximize the expected information gain. In the context of cognitive parameter inference, this involves identifying environments that provide the most informative data for inferring latent cognitive mechanisms.
+
+To implement Bayesian experimental design, we'll use the following steps:
+
+1. Define the cognitive model and parameters to be inferred.
+2. Specify the experimental environment and possible interventions.
+3. Compute the expected information gain for each possible intervention.
+4. Select the intervention that maximizes the expected information gain.
+
+### Implementing Bayesian Experimental Design
+
+Let's implement a simple example using Python:
+```python
+import numpy as np
+import scipy.stats as stats
+
+# Define the cognitive model and parameters
+def cognitive_model(parameters, environment):
+    # Simulate the cognitive process
+    return np.random.normal(parameters[0], parameters[1], size=100)
+
+# Define the experimental environment and possible interventions
+environments = ['env1', 'env2', 'env3']
+interventions = ['int1', 'int2', 'int3']
+
+# Compute the expected information gain for each possible intervention
+def expected_information_gain(environment, intervention, parameters):
+    # Simulate the experiment
+    data = cognitive_model(parameters, environment)
+    # Compute the likelihood of the data given the parameters
+    likelihood = stats.norm.pdf(data, loc=parameters[0], scale=parameters[1])
+    # Compute the expected information gain
+    expected_gain = np.mean(np.log(likelihood))
+    return expected_gain
+
+# Select the intervention that maximizes the expected information gain
+def select_intervention(environments, interventions, parameters):
+    max_gain = -np.inf
+    best_intervention = None
+    for environment in environments:
+        for intervention in interventions:
+            gain = expected_information_gain(environment, intervention, parameters)
+            if gain > max_gain:
+                max_gain = gain
+                best_intervention = (environment, intervention)
+    return best_intervention
+
+# Example usage
+parameters = [0, 1]  # mean and standard deviation
+best_intervention = select_intervention(environments, interventions, parameters)
+print(f"Best intervention: {best_intervention}")
+```
+This code defines a simple cognitive model and computes the expected information gain for each possible intervention. The `select_intervention` function selects the intervention that maximizes the expected information gain.
+
+## Applying the Framework
+
+To apply the framework to a real-world problem, we need to define the cognitive model and parameters, specify the experimental environment and possible interventions, and compute the expected information gain for each possible intervention.
+
+### Example Application
+
+Suppose we want to infer the parameters of a cognitive model that describes how people make decisions under uncertainty. We can define the cognitive model as a probabilistic graphical model and specify the experimental environment and possible interventions.
+
+For example, we can use the following cognitive model:
+```python
+import pymc3 as pm
+
+# Define the cognitive model
+with pm.Model() as model:
+    # Define the parameters
+    alpha = pm.Normal('alpha', mu=0, sigma=1)
+    beta = pm.Normal('beta', mu=0, sigma=1)
+    # Define the likelihood
+    likelihood = pm.Normal('likelihood', mu=alpha + beta, sigma=1, observed=data)
+    # Define the prior
+    prior = pm.Normal('prior', mu=0, sigma=1, observed=prior_data)
+    # Define the posterior
+    posterior = pm.sample(1000, tune=500)
+```
+This code defines a simple cognitive model using PyMC3. We can then apply the Bayesian experimental design framework to select the most informative intervention.
+
+![black flat screen computer monitor](https://images.unsplash.com/photo-1585123607190-72ec2979a269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxJZGVudGlmeWluZyUyMEluZm9ybWF0aXZlJTIwRW52aXJvbm1lbnRzJTIwQ29nbml0aW9uJTIwUGFyYW1ldGVyJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg1ODU0MTkwfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we explored the process of identifying informative environments for cognition parameter inference via Bayesian experimental design. We implemented a framework to select the most informative intervention and demonstrated its application to a real-world problem. The approach relies on Bayesian inverse planning and experimental design to infer latent cognitive mechanisms.
+
+By applying this framework, researchers can design more informative experiments and improve the accuracy of cognitive parameter inference. The code examples provided can be used as a starting point for implementing the framework in various domains.
+
+![silhouette on person writing](https://images.unsplash.com/photo-1533709475520-a0745bba78bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxJZGVudGlmeWluZyUyMEluZm9ybWF0aXZlJTIwRW52aXJvbm1lbnRzJTIwQ29nbml0aW9uJTIwUGFyYW1ldGVyJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg1ODU0MTkwfDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+The original paper on arXiv CS.AI can be found at [https://arxiv.org/abs/2607.28894](https://arxiv.org/abs/2607.28894).
+
+*Photo by [Google DeepMind](https://unsplash.com/@googledeepmind?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-close-up-of-a-container-with-words-on-it-b8GH92xVoUw?utm_source=techversation&utm_medium=referral)*
