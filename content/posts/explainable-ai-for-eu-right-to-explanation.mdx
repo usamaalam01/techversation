@@ -1,0 +1,78 @@
+---
+title: "Explainable AI for EU Right to Explanation"
+description: "Explainable AI for EU law grants individuals a Right to Explanation."
+date: "2026-08-05"
+author: "Usama"
+tags: ["ai", "explainability", "eu-law"]
+aiSummary: "The EU Right to Explanation requires algorithms to provide transparent decisions. Explainable AI (XAI) can satisfy this right. This tutorial reviews the law-XAI translation gap and provides a systematic approach to implementing XAI. We will explore the concept of XAI and its applications in satisfying the EU Right to Explanation."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1546437593-3d0258c28037?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxFeHBsYWluYWJsZSUyMFJpZ2h0JTIwRXhwbGFuYXRpb24lMjBTeXN0ZW1hdGljJTIwUmV2aWV3JTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg1OTE5NzI5fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Explainable AI
+
+Explainable AI (XAI) is a subfield of artificial intelligence that focuses on making AI decisions transparent and explainable. The EU Right to Explanation, granted by the General Data Protection Regulation (GDPR), requires algorithms to provide individuals with explanations for decisions made about them. However, the translation of this law into XAI systems remains a challenge.
+
+![a book with a diagram on it](https://images.unsplash.com/photo-1642952469120-eed4b65104be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxFeHBsYWluYWJsZSUyMFJpZ2h0JTIwRXhwbGFuYXRpb24lMjBTeXN0ZW1hdGljJTIwUmV2aWV3JTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg1OTE5NzI5fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+### XAI Techniques
+
+There are several XAI techniques that can be used to satisfy the EU Right to Explanation, including:
+
+* Model interpretability: This involves making the AI model itself transparent and explainable.
+* Model explainability: This involves providing explanations for the decisions made by the AI model.
+* Model transparency: This involves providing information about the data used to train the AI model and the decisions made by the model.
+
+## Implementing XAI
+
+Implementing XAI requires a systematic approach that involves several steps:
+
+1. **Data collection**: Collecting data that is relevant to the decision-making process.
+2. **Model development**: Developing an AI model that can make decisions based on the collected data.
+3. **Model interpretability**: Making the AI model transparent and explainable.
+4. **Model explainability**: Providing explanations for the decisions made by the AI model.
+5. **Model transparency**: Providing information about the data used to train the AI model and the decisions made by the model.
+
+### Example Code
+
+Here is an example of how to implement XAI using Python and the scikit-learn library:
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.inspection import permutation_importance
+
+# Load the data
+data = pd.read_csv("data.csv")
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(data.drop("target", axis=1), data["target"], test_size=0.2, random_state=42)
+
+# Train a random forest classifier
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# Make predictions on the testing set
+y_pred = model.predict(X_test)
+
+# Calculate the accuracy of the model
+accuracy = accuracy_score(y_test, y_pred)
+print("Accuracy:", accuracy)
+
+# Calculate the feature importance
+feature_importance = permutation_importance(model, X_test, y_test, n_repeats=10, random_state=42)
+print("Feature importance:", feature_importance.importances_mean)
+```
+This code trains a random forest classifier on a dataset and calculates the accuracy of the model. It also calculates the feature importance using the permutation importance method.
+
+## Conclusion
+
+Explainable AI (XAI) is a crucial aspect of satisfying the EU Right to Explanation. By implementing XAI techniques, such as model interpretability, model explainability, and model transparency, we can make AI decisions transparent and explainable. The example code provided in this tutorial demonstrates how to implement XAI using Python and the scikit-learn library.
+
+![graphical user interface, application, shape, arrow](https://images.unsplash.com/photo-1667984436026-99b165e3672b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxFeHBsYWluYWJsZSUyMFJpZ2h0JTIwRXhwbGFuYXRpb24lMjBTeXN0ZW1hdGljJTIwUmV2aWV3JTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg1OTE5NzI5fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+For more information on XAI and the EU Right to Explanation, please refer to the [original paper](https://arxiv.org/abs/2608.02699) published on arXiv.
+
+*Photo by [Jason Coudriet](https://unsplash.com/@jcoudriet?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/person-writing-on-whiteboard-c-7iDdmWvF4?utm_source=techversation&utm_medium=referral)*
