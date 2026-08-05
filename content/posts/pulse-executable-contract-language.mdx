@@ -1,0 +1,81 @@
+---
+title: "PULSE: Executable Contract Language"
+description: "PULSE simplifies knowledge graph engineering with a unified language."
+date: "2026-08-05"
+author: "Usama"
+tags: ["pulse", "knowledge-graph", "spatiotemporal"]
+aiSummary: "PULSE is an executable contract language for spatiotemporal knowledge graph engineering. It localizes four operational roles and their write effects in one typed runtime. This language simplifies the process of managing complex knowledge graphs by providing a unified way of defining contracts."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1650327034581-1711a15a5430?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxQVUxTRSUyMEV4ZWN1dGFibGUlMjBDb250cmFjdCUyMExhbmd1YWdlJTIwU3BhdGlvdGVtcG9yYWwlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODU5NDAwOTF8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to PULSE
+
+PULSE is an Object-Process-Methodology-inspired language that aims to simplify the process of knowledge graph engineering. It achieves this by localizing four operational roles and their write effects in one typed runtime. This approach allows developers to define contracts in a unified way, making it easier to manage complex knowledge graphs.
+
+## Key Features of PULSE
+
+PULSE has several key features that make it an attractive choice for knowledge graph engineering:
+
+* **Unified Language**: PULSE provides a unified language for defining contracts, making it easier to manage complex knowledge graphs.
+* **Typed Runtime**: PULSE has a typed runtime, which helps to prevent errors and ensures that contracts are executed correctly.
+* **Operational Roles**: PULSE localizes four operational roles, which are responsible for managing different aspects of the knowledge graph.
+
+### Example Use Case
+
+To illustrate the use of PULSE, let's consider a simple example. Suppose we want to define a contract for a spatiotemporal knowledge graph that represents the location of objects in a scene. We can use PULSE to define the contract as follows:
+```python
+# Define the contract
+contract = {
+    "name": "Spatiotemporal Knowledge Graph",
+    "roles": [
+        {"name": "Observer", "write_effects": ["location"]},
+        {"name": "Processor", "write_effects": ["velocity"]},
+        {"name": "Method", "write_effects": ["acceleration"]},
+        {"name": "Controller", "write_effects": ["position"]}
+    ]
+}
+
+# Define the knowledge graph
+knowledge_graph = {
+    "entities": [
+        {"id": 1, "type": "Object", "location": [0, 0, 0]},
+        {"id": 2, "type": "Object", "location": [1, 1, 1]}
+    ],
+    "relationships": [
+        {"id": 1, "type": "Observer", "source": 1, "target": 2}
+    ]
+}
+```
+In this example, we define a contract with four operational roles: Observer, Processor, Method, and Controller. Each role has a set of write effects, which define the attributes that can be modified by the role. We also define a knowledge graph with two entities and one relationship.
+
+## Executing the Contract
+
+To execute the contract, we can use the PULSE runtime. The runtime takes the contract and the knowledge graph as input and executes the contract according to the rules defined in the contract.
+```python
+# Execute the contract
+pulse_runtime = PULSE.Runtime()
+pulse_runtime.execute(contract, knowledge_graph)
+```
+The `execute` method takes the contract and the knowledge graph as input and executes the contract according to the rules defined in the contract. The result is a new knowledge graph that reflects the changes made by the contract.
+
+![A picture of a sound wave on a black background](https://images.unsplash.com/photo-1740532428070-7d70980c645a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxQVUxTRSUyMEV4ZWN1dGFibGUlMjBDb250cmFjdCUyMExhbmd1YWdlJTIwU3BhdGlvdGVtcG9yYWwlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODU5NDAwOTF8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Benefits of PULSE
+
+PULSE provides several benefits for knowledge graph engineering, including:
+
+* **Simplified Contract Management**: PULSE provides a unified language for defining contracts, making it easier to manage complex knowledge graphs.
+* **Improved Error Handling**: PULSE has a typed runtime, which helps to prevent errors and ensures that contracts are executed correctly.
+* **Increased Flexibility**: PULSE allows developers to define custom operational roles and write effects, making it easier to adapt to changing requirements.
+
+## Conclusion
+
+PULSE is a powerful tool for knowledge graph engineering. Its unified language and typed runtime make it an attractive choice for developers who need to manage complex knowledge graphs. By providing a simple and flexible way to define contracts, PULSE simplifies the process of knowledge graph engineering and reduces the risk of errors.
+
+To learn more about PULSE, you can visit the [arXiv paper](https://arxiv.org/abs/2608.02630) and explore the [PULSE documentation](https://pulse-lang.org/docs/). With PULSE, you can simplify your knowledge graph engineering workflow and focus on building more accurate and reliable models.
+
+![A picture of a black background with pink and green flowers](https://images.unsplash.com/photo-1740532428065-ac723d5571ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxQVUxTRSUyMEV4ZWN1dGFibGUlMjBDb250cmFjdCUyMExhbmd1YWdlJTIwU3BhdGlvdGVtcG9yYWwlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODU5NDAwOTF8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Adrien](https://unsplash.com/@add_rien_20?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-close-up-of-a-computer-keyboard-with-a-blurry-background-q-mH2zk9NGc?utm_source=techversation&utm_medium=referral)*
