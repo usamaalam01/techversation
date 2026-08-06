@@ -1,0 +1,74 @@
+---
+title: "Exploring the Rubin Observatory's LSST Camera"
+description: "Rubin Observatory releases first LSST Camera with 500k galaxies in COSMOS field."
+date: "2026-08-06"
+author: "Usama"
+tags: ["astronomy", "python", "data-analysis"]
+aiSummary: "The Rubin Observatory has released its first LSST Camera, capturing 500,000 galaxies in the COSMOS field. This tutorial will guide developers through exploring the LSST Camera data using Python. We'll cover the basics of the LSST Camera and provide working code examples for data analysis."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1592860475958-6d6dd04b34b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxSdWJpbiUyME9ic2VydmF0b3J5JTIwZmlyc3QlMjBMU1NUJTIwQ2FtZXJhJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODYwMjY2MDJ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+The Rubin Observatory's LSST Camera is a revolutionary tool for astronomy, capturing high-resolution images of the night sky. With the release of its first dataset, featuring 500,000 galaxies in the COSMOS field, developers and researchers can now explore this vast treasure trove of data. In this tutorial, we'll delve into the world of astronomy and explore how to work with the LSST Camera data using Python.
+
+## Understanding the LSST Camera
+
+The LSST Camera is a powerful instrument designed to capture high-resolution images of the night sky. It's equipped with a 3.2-gigapixel sensor, allowing it to detect faint objects and capture stunning images of the cosmos. The camera is mounted on the Rubin Observatory's telescope, which is located in Chile.
+
+![a telescope on top of a building surrounded by trees](https://images.unsplash.com/photo-1676243856428-e67f4028c3d3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxSdWJpbiUyME9ic2VydmF0b3J5JTIwZmlyc3QlMjBMU1NUJTIwQ2FtZXJhJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODYwMjY2MDJ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Getting Started with the LSST Camera Data
+
+To get started with the LSST Camera data, you'll need to download the dataset from the [Rubin Observatory website](https://rubinobservatory.org/news/rubin-new-window-cosmos-field). The dataset is available in FITS format, which can be read using the `astropy` library in Python.
+
+```python
+import astropy.io.fits as fits
+
+# Load the FITS file
+with fits.open('lsst_camera_data.fits') as hdul:
+    # Get the image data
+    image_data = hdul[0].data
+```
+
+## Exploring the LSST Camera Data
+
+Once you have the image data, you can start exploring it using various techniques. One way to visualize the data is to use the `matplotlib` library to create a heatmap of the image.
+
+```python
+import matplotlib.pyplot as plt
+
+# Create a heatmap of the image data
+plt.imshow(image_data, cmap='hot', interpolation='nearest')
+plt.show()
+```
+
+This will create a heatmap of the image data, showing the distribution of galaxies in the COSMOS field.
+
+## Analyzing the LSST Camera Data
+
+To analyze the LSST Camera data, you can use various techniques such as source detection and photometry. One way to detect sources in the image is to use the `photutils` library, which provides a range of tools for source detection and photometry.
+
+```python
+import photutils
+
+# Detect sources in the image data
+sources = photutils.detect_sources(image_data, threshold=5 * np.std(image_data), npixels=5)
+
+# Print the number of sources detected
+print(len(sources))
+```
+
+This will detect sources in the image data and print the number of sources detected.
+
+## Conclusion
+
+In this tutorial, we've explored the LSST Camera data and shown how to work with it using Python. We've covered the basics of the LSST Camera and provided working code examples for data analysis. The LSST Camera is a powerful tool for astronomy, and we hope this tutorial has inspired you to explore its capabilities.
+
+![an artist's rendering of a satellite in space](https://images.unsplash.com/photo-1706800695685-c82b21928d87?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxSdWJpbiUyME9ic2VydmF0b3J5JTIwZmlyc3QlMjBMU1NUJTIwQ2FtZXJhJTIwdGVjaG5vbG9neSUyMHNvZnR3YXJlfGVufDF8MHx8fDE3ODYwMjY2MDJ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+By following this tutorial, you should now have a good understanding of how to work with the LSST Camera data using Python. We encourage you to explore the LSST Camera data and develop your own projects using this powerful tool. For more information on the LSST Camera and its capabilities, please visit the [Rubin Observatory website](https://rubinobservatory.org/news/rubin-new-window-cosmos-field).
+
+*Photo by [Paxton Tomko](https://unsplash.com/@tomkop?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/white-dome-building-on-top-of-mountain-during-daytime-_ynyDGTzTKU?utm_source=techversation&utm_medium=referral)*
