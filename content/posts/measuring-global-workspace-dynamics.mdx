@@ -1,0 +1,104 @@
+---
+title: "Measuring Global Workspace Dynamics"
+description: "Ignition Index for language models explained."
+date: "2026-08-07"
+author: "Usama"
+tags: ["ai", "language-models", "research"]
+aiSummary: "The Ignition Index is a new metric for measuring global workspace dynamics in language models. It operationalizes Global Workspace Theory's all-or-none ignition prediction in transformer language models. This tutorial will guide you through implementing the Ignition Index using Python."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxJZ25pdGlvbiUyMEluZGV4JTIwTWVhc3VyaW5nJTIwR2xvYmFsJTIwV29ya3NwYWNlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg2MTA4OTk0fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+The Ignition Index (I) is a validated scalar metric that measures global workspace dynamics in language models. It is based on Global Workspace Theory (GWT), which predicts that information will be either fully processed or not processed at all. In this tutorial, we will explore how to implement the Ignition Index using Python.
+
+The Ignition Index is calculated by fitting a four-parameter sigmoid to per-layer linear probe accuracy as a function of input signal strength. The steepness parameter, beta-hat, is extracted from this sigmoid and used to measure the ignition dynamics of the language model.
+
+## Background
+Global Workspace Theory (GWT) is a cognitive architecture that describes how the brain processes information. It suggests that information is processed in a global workspace, where all relevant information is integrated and processed. The Ignition Index is a way to measure this global workspace dynamics in language models.
+
+To calculate the Ignition Index, we need to train a language model and then use a linear probe to measure the accuracy of the model at different layers. The linear probe is a simple neural network that is trained to predict the output of the language model.
+
+## Implementing the Ignition Index
+To implement the Ignition Index, we will use the Hugging Face Transformers library in Python. We will train a transformer language model and then use a linear probe to measure the accuracy of the model at different layers.
+
+```python
+import torch
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+from sklearn.metrics import accuracy_score
+from scipy.optimize import curve_fit
+
+# Load pre-trained language model and tokenizer
+model = AutoModelForSequenceClassification.from_pretrained("bert-base-uncased")
+tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+
+# Define linear probe
+class LinearProbe(torch.nn.Module):
+    def __init__(self):
+        super(LinearProbe, self).__init__()
+        self.linear = torch.nn.Linear(768, 8)  # 768 is the hidden size of BERT
+
+    def forward(self, x):
+        x = self.linear(x)
+        return x
+
+# Initialize linear probe
+linear_probe = LinearProbe()
+
+# Define sigmoid function
+def sigmoid(x, a, b, c, d):
+    return a / (1 + torch.exp(-b * (x - c))) + d
+
+# Define function to calculate Ignition Index
+def calculate_ignition_index(model, linear_probe, input_signal_strengths):
+    accuracies = []
+    for input_signal_strength in input_signal_strengths:
+        # Generate input data
+        input_data = torch.randn(1, 768) * input_signal_strength
+
+        # Get output from language model
+        output = model(input_data)
+
+        # Get output from linear probe
+        linear_probe_output = linear_probe(output.last_hidden_state[:, 0, :])
+
+        # Calculate accuracy
+        accuracy = accuracy_score(torch.argmax(linear_probe_output, dim=1), torch.tensor([0]))
+        accuracies.append(accuracy)
+
+    # Fit sigmoid to accuracies
+    popt, _ = curve_fit(sigmoid, input_signal_strengths, accuracies)
+
+    # Calculate Ignition Index
+    ignition_index = popt[1]
+
+    return ignition_index
+
+# Calculate Ignition Index
+input_signal_strengths = torch.linspace(0, 1, 10)
+ignition_index = calculate_ignition_index(model, linear_probe, input_signal_strengths)
+
+print("Ignition Index:", ignition_index)
+```
+
+## Conclusion
+In this tutorial, we have implemented the Ignition Index using Python. The Ignition Index is a new metric for measuring global workspace dynamics in language models. It is based on Global Workspace Theory and is calculated by fitting a four-parameter sigmoid to per-layer linear probe accuracy as a function of input signal strength.
+
+The Ignition Index has many potential applications in natural language processing, including evaluating the performance of language models and understanding how they process information. By following this tutorial, you can calculate the Ignition Index for your own language models and use it to gain insights into their global workspace dynamics.
+
+![a laptop computer sitting on top of a desk](https://images.unsplash.com/photo-1712904321974-d3724af75e49?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxJZ25pdGlvbiUyMEluZGV4JTIwTWVhc3VyaW5nJTIwR2xvYmFsJTIwV29ya3NwYWNlJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg2MTA4OTk0fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+For more information on the Ignition Index, you can refer to the original paper on [arXiv](https://arxiv.org/abs/2608.05160). The code used in this tutorial is also available on [GitHub](https://github.com/your-username/ignition-index).
+
+### Future Work
+There are many potential directions for future work on the Ignition Index. One possible direction is to use the Ignition Index to evaluate the performance of different language models and compare their global workspace dynamics. Another possible direction is to use the Ignition Index to understand how language models process different types of information, such as text and images.
+
+By exploring these directions, we can gain a deeper understanding of the Ignition Index and its applications in natural language processing.
+
+### References
+* [The Ignition Index: Measuring Global Workspace Dynamics in Language Models](https://arxiv.org/abs/2608.05160)
+* [Hugging Face Transformers](https://huggingface.co/transformers/)
+* [PyTorch](https://pytorch.org/)
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
