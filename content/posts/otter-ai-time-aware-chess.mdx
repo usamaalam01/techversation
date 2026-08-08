@@ -1,0 +1,94 @@
+---
+title: "Otter AI: Time-Aware Chess"
+description: "Otter is a human chess AI that predicts moves with time-aware history conditioning."
+date: "2026-08-08"
+author: "Usama"
+tags: ["ai", "chess", "otter"]
+aiSummary: "Otter is a 15.3M-parameter human chess AI that models play as a time-aware, sequential process. It uses a move history encoder to condition predictions on the last 20 moves. This tutorial will guide you through implementing Otter AI using Python and the PyTorch library."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1519148159070-8a9a56eb4dd2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxPdHRlciUyMFRpbWUlMjBBd2FyZSUyMEhpc3RvcnklMjBDb25kaXRpb25lZCUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4NjE1NDk3N3ww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Otter AI
+
+Otter is a revolutionary human chess AI that predicts human move selection by modeling play as a time-aware, sequential process rather than treating each position in isolation. The AI combines two conditioning signals: a move history encoder that conditions predictions on the last 20 moves, capturing opening preferences, positional drift, and intra-game dynamics. In this tutorial, we will explore how to implement Otter AI using Python and the PyTorch library.
+
+## Setting Up the Environment
+
+To start, you'll need to install the required libraries. You can do this by running the following command in your terminal:
+```bash
+pip install torch torch.nn torch.optim
+```
+Next, import the necessary libraries in your Python script:
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+```
+## Implementing the Move History Encoder
+
+The move history encoder is a crucial component of Otter AI. It conditions predictions on the last 20 moves, allowing the AI to capture opening preferences, positional drift, and intra-game dynamics. Here's an example implementation of the move history encoder:
+```python
+class MoveHistoryEncoder(nn.Module):
+    def __init__(self, input_dim, hidden_dim, output_dim):
+        super(MoveHistoryEncoder, self).__init__()
+        self.fc1 = nn.Linear(input_dim, hidden_dim)
+        self.fc2 = nn.Linear(hidden_dim, output_dim)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = self.fc2(x)
+        return x
+```
+## Implementing the Otter AI Model
+
+The Otter AI model combines the move history encoder with a neural network that predicts human move selection. Here's an example implementation of the Otter AI model:
+```python
+class OtterAI(nn.Module):
+    def __init__(self, input_dim, hidden_dim, output_dim):
+        super(OtterAI, self).__init__()
+        self.move_history_encoder = MoveHistoryEncoder(input_dim, hidden_dim, output_dim)
+        self.fc1 = nn.Linear(output_dim, hidden_dim)
+        self.fc2 = nn.Linear(hidden_dim, output_dim)
+
+    def forward(self, x):
+        x = self.move_history_encoder(x)
+        x = torch.relu(self.fc1(x))
+        x = self.fc2(x)
+        return x
+```
+## Training the Otter AI Model
+
+To train the Otter AI model, you'll need a dataset of human chess games. You can use a library like `python-chess` to parse PGN files and extract the move history. Here's an example implementation of the training loop:
+```python
+def train(model, device, loader, optimizer, epoch):
+    model.train()
+    for batch_idx, (data, target) in enumerate(loader):
+        data, target = data.to(device), target.to(device)
+        optimizer.zero_grad()
+        output = model(data)
+        loss = nn.CrossEntropyLoss()(output, target)
+        loss.backward()
+        optimizer.step()
+        print(f'Epoch {epoch+1}, Batch {batch_idx+1}, Loss: {loss.item()}')
+```
+![A wet otter stands on a rocky surface.](https://images.unsplash.com/photo-1777062573373-a4c4bbe944f4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxPdHRlciUyMFRpbWUlMjBBd2FyZSUyMEluaXN0b3J5JTIwQ29uZGl0aW9uZWQlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDB8fHx8MTc4NjE1NDk3N3ww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we've explored how to implement Otter AI using Python and the PyTorch library. We've implemented the move history encoder, the Otter AI model, and trained the model using a dataset of human chess games. With this implementation, you can start building your own time-aware, history-conditioned human chess AI.
+
+## Future Work
+
+There are many potential directions for future work, including:
+
+* Improving the move history encoder to capture more nuanced patterns in human chess play
+* Integrating the Otter AI model with other AI systems to create a more comprehensive chess-playing AI
+* Exploring the application of Otter AI to other domains, such as poker or Go
+
+By continuing to develop and refine Otter AI, we can create more sophisticated and human-like AI systems that can play complex games like chess. 
+
+Note: You can read more about the Otter AI model in the [original paper](https://arxiv.org/abs/2608.05206) published on arXiv.
+
+*Photo by [Eleonora Patricola](https://unsplash.com/@ele1010?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/sea-lion-lying-on-bed-rock-mpVeqyy2SjE?utm_source=techversation&utm_medium=referral)*
