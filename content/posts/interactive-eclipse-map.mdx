@@ -1,0 +1,80 @@
+---
+title: "Interactive Eclipse Map"
+description: "Explore the Aug 12 total solar eclipse with an open-source map"
+date: "2026-08-09"
+author: "Usama"
+tags: ["open-source", "eclipse", "map"]
+aiSummary: "The open-source interactive map for the Aug 12 total solar eclipse provides a unique way to explore the event. This tutorial will guide developers on how to use the map and its API. The map offers various features such as Besselian elements, umbra live, shadow 3D, and cloud projection."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1586449480537-3a22cf98b04c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxPcGVuJTIwc291cmNlJTIwaW50ZXJhY3RpdmUlMjBtYXAlMjBBdWclMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc4NjI1OTI4MXww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+The upcoming total solar eclipse on August 12 has generated significant interest among astronomy enthusiasts and developers alike. To cater to this interest, an open-source interactive map has been made available, providing a detailed and immersive experience for users. This tutorial will delve into the features and capabilities of the map, as well as provide a hands-on guide for developers on how to work with the map's API.
+
+## Features of the Map
+The interactive map offers a range of features that make it an invaluable resource for anyone interested in the eclipse. Some of the key features include:
+
+* Besselian elements: This feature provides detailed information about the eclipse, including the timing, duration, and path of the eclipse.
+* Umbra live: This feature displays the current position of the umbra, the innermost and darkest part of the moon's shadow, in real-time.
+* Shadow 3D: This feature provides a 3D representation of the moon's shadow, allowing users to visualize the eclipse in a more immersive way.
+* Cloud projection: This feature projects the cloud cover onto the map, giving users an idea of the weather conditions during the eclipse.
+
+## Getting Started with the Map API
+To get started with the map API, developers will need to familiarize themselves with the available endpoints and parameters. The API uses a simple RESTful architecture, making it easy to integrate with existing applications.
+
+```python
+import requests
+
+# Set the API endpoint and parameters
+endpoint = "https://eclipsefan.org/api"
+params = {
+    "v": 2,
+    "t": "max",
+    "layers": "eclipse,besselian,umbra-live,shadow-3d,cloud-projection",
+    "lat": 43.4623,
+    "lon": -3.8099,
+    "opacity": "besselian:0.2,umbra-live:0.2",
+    "zoom": 6,
+    "palier": "minute"
+}
+
+# Send a GET request to the API
+response = requests.get(endpoint, params=params)
+
+# Print the response
+print(response.json())
+```
+
+## Customizing the Map
+One of the key benefits of the open-source map is its customizability. Developers can modify the map to suit their specific needs by adjusting the various parameters and layers. For example, to add a custom layer to the map, developers can use the following code:
+
+```javascript
+// Set the custom layer
+var customLayer = L.layerGroup([
+  L.marker([43.4623, -3.8099]).addTo(map)
+]);
+
+// Add the custom layer to the map
+map.addLayer(customLayer);
+```
+
+![turned-on MacBook Pro](https://images.unsplash.com/photo-1555371363-27a37f8e8c46?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxPcGVuJTIwc291cmNlJTIwaW50ZXJhY3RpdmUlMjBtYXAlMjBBdWclMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc4NjI1OTI4MXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+The open-source interactive map for the Aug 12 total solar eclipse provides a unique and immersive experience for users. With its range of features and customizability, the map is an invaluable resource for developers and astronomy enthusiasts alike. By following this tutorial, developers can gain a deeper understanding of the map's API and capabilities, and create their own customized applications.
+
+## Further Reading
+For more information on the map and its API, developers can visit the [official website](https://eclipsefan.org/). Additionally, the [GitHub repository](https://github.com/eclipsefan/eclipse-map) provides access to the source code and documentation for the map.
+
+## Example Use Cases
+Some example use cases for the map include:
+
+* Creating a mobile application that displays the eclipse path and timing
+* Developing a web application that allows users to visualize the eclipse in 3D
+* Integrating the map with existing astronomy software to provide a more comprehensive experience
+
+By leveraging the capabilities of the open-source interactive map, developers can create innovative and engaging applications that enhance the experience of the Aug 12 total solar eclipse.
+
+*Photo by [KOBU Agency](https://unsplash.com/@kobuagency?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/blue-and-red-abstract-painting-FyvE6XPs5gk?utm_source=techversation&utm_medium=referral)*
