@@ -1,0 +1,64 @@
+---
+title: "Redis Replaced with MySQL"
+description: "Shopify scales inventory reservations with MySQL."
+date: "2026-08-09"
+author: "Usama"
+tags: ["mysql", "redis", "scaling"]
+aiSummary: "Shopify replaced Redis with MySQL for inventory reservations, achieving scalability. This move has sparked interest in the developer community, with many discussing the implications. The decision highlights the importance of choosing the right technology for specific use cases."
+category: "trending"
+coverImage: "https://images.unsplash.com/photo-1667984390553-7f439e6ae401?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxyZXBsYWNlZCUyMFJlZGlzJTIwTXlTUUwlMjBpbnZlbnRvcnklMjByZXNlcnZhdGlvbnMlMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc4NjMwMTY0Mnww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+A recent post on the Shopify Engineering blog has been making waves in the developer community, as it details the company's decision to replace Redis with MySQL for inventory reservations. This move has sparked a lively discussion on [Hacker News](https://shopify.engineering/scaling-inventory-reservations), with many developers weighing in on the pros and cons of this approach. In this post, we'll summarize what happened, explain why it matters to developers, and provide our take on the broader implications.
+
+## What Happened
+
+Shopify's engineering team faced a scaling challenge with their inventory reservations system, which was previously powered by Redis. As the company grew, the team encountered issues with Redis's ability to handle the increasing load. After evaluating their options, they decided to replace Redis with MySQL, citing the need for a more robust and scalable solution. The team implemented a custom solution using MySQL, which allowed them to better handle the demands of their inventory reservations system.
+
+## Why It Matters to Developers
+
+The decision to replace Redis with MySQL is significant because it highlights the importance of choosing the right technology for specific use cases. Redis is often used for caching and real-time data processing, but it may not be the best fit for every application. In this case, Shopify's engineering team determined that MySQL was better suited for their inventory reservations system, which requires strong consistency and durability guarantees. This decision demonstrates that developers should carefully evaluate their technology choices and be willing to adapt to changing requirements.
+
+### Technical Considerations
+
+From a technical perspective, the decision to use MySQL instead of Redis is interesting because it involves a trade-off between performance and consistency. Redis is known for its high performance and low latency, but it can be more challenging to ensure data consistency and durability. MySQL, on the other hand, provides strong consistency guarantees but may have higher latency and lower performance. The Shopify engineering team likely chose MySQL because the benefits of strong consistency and durability outweighed the potential performance costs.
+
+```python
+# Example of using MySQL for inventory reservations
+import mysql.connector
+
+# Establish a connection to the MySQL database
+cnx = mysql.connector.connect(
+    user='username',
+    password='password',
+    host='host',
+    database='database'
+)
+
+# Create a cursor object to execute SQL queries
+cursor = cnx.cursor()
+
+# Insert a new inventory reservation
+query = "INSERT INTO inventory_reservations (product_id, quantity) VALUES (%s, %s)"
+cursor.execute(query, (product_id, quantity))
+
+# Commit the changes and close the cursor and connection
+cnx.commit()
+cursor.close()
+cnx.close()
+```
+
+## Broader Implications
+
+The decision to replace Redis with MySQL has broader implications for the developer community. It highlights the importance of being flexible and adaptable when it comes to technology choices. As applications grow and evolve, their requirements may change, and developers should be willing to re-evaluate their technology stack to ensure it remains suitable for their needs. Additionally, this decision demonstrates that MySQL can be a viable option for real-time data processing and inventory management, which may challenge traditional assumptions about the role of relational databases in modern applications.
+
+![diagram](https://images.unsplash.com/photo-1667984390533-64bdefe719ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxyZXBsYWNlZCUyMFJlZGlzJTIwTXlTUUwlMjBpbnZlbnRvcnklMjByZXNlcnZhdGlvbnMlMjB0ZWNobm9sb2d5JTIwc29mdHdhcmV8ZW58MXwwfHx8MTc4NjMwMTY0Mnww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In conclusion, the decision to replace Redis with MySQL for inventory reservations is a significant development that highlights the importance of choosing the right technology for specific use cases. The Shopify engineering team's decision demonstrates that developers should be flexible and adaptable when it comes to their technology choices and be willing to re-evaluate their stack as their applications grow and evolve. As the developer community continues to discuss and debate this decision, it will be interesting to see how it influences the way we think about technology choices and scalability in the future.
+
+*Photo by [Growtika](https://unsplash.com/@growtika?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-computer-generated-image-of-a-computer-WELyMatW3mw?utm_source=techversation&utm_medium=referral)*
