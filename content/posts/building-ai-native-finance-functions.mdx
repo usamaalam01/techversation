@@ -1,0 +1,105 @@
+---
+title: "Building AI-Native Finance Functions"
+description: "OpenAI CFO shares lessons on AI-native finance functions."
+date: "2026-08-10"
+author: "Usama"
+tags: ["ai", "finance", "python"]
+aiSummary: "OpenAI CFO Sarah Friar shares lessons on building AI-native finance functions, including automated forecasting and stronger controls. This tutorial provides a step-by-step guide on implementing these concepts. We will explore how to use Python and machine learning libraries to build a basic AI-native finance function."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxidWlsZGluZyUyMG5hdGl2ZSUyMGZpbmFuY2UlMjBmdW5jdGlvbiUyMHRhdWdodCUyMGFydGlmaWNpYWwlMjBpbnRlbGxpZ2VuY2UlMjBtYWNoaW5lJTIwbGVhcm5pbmd8ZW58MXwwfHx8MTc4NjM4OTAzMXww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Building an AI-native finance function is crucial for companies to stay competitive in today's fast-paced business environment. OpenAI CFO Sarah Friar recently shared five lessons for building an AI-native finance function, from automated forecasting to stronger controls and AI ROI. In this tutorial, we will explore how to implement these concepts using Python and machine learning libraries.
+
+## Automated Forecasting
+Automated forecasting is a critical component of an AI-native finance function. It enables companies to predict future financial performance and make informed decisions. We can use the `prophet` library in Python to build a basic forecasting model.
+
+```python
+import pandas as pd
+from prophet import Prophet
+
+# Load data
+data = pd.read_csv('financial_data.csv')
+
+# Create a Prophet model
+model = Prophet()
+
+# Fit the model
+model.fit(data)
+
+# Make predictions
+future = model.make_future_dataframe(periods=30)
+forecast = model.predict(future)
+
+# Print the forecast
+print(forecast)
+```
+
+This code loads historical financial data, creates a Prophet model, fits the model to the data, and makes predictions for the next 30 days.
+
+![3D rendered ai text on dark digital background](https://images.unsplash.com/photo-1677442136019-21780ecad995?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxidWlsZGluZyUyMG5hdGl2ZSUyMGZpbmFuY2UlMjBmdW5jdGlvbiUyMHRhdWdodCUyMGFydGlmaWNpYWwlMjBpbnRlbGxpZ2VuY2UlMjBtYWNoaW5lJTIwbGVhcm5pbmd8ZW58MXwwfHx8MTc4NjM4OTAzMXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Stronger Controls
+Stronger controls are essential for ensuring the accuracy and reliability of financial forecasts. We can use the `scipy` library in Python to implement statistical process control.
+
+```python
+import numpy as np
+from scipy import stats
+
+# Load data
+data = pd.read_csv('financial_data.csv')
+
+# Calculate the mean and standard deviation
+mean = np.mean(data)
+std_dev = np.std(data)
+
+# Calculate the control limits
+upper_control_limit = mean + 3 * std_dev
+lower_control_limit = mean - 3 * std_dev
+
+# Print the control limits
+print(f'Upper control limit: {upper_control_limit}')
+print(f'Lower control limit: {lower_control_limit}')
+```
+
+This code calculates the mean and standard deviation of the financial data, and then calculates the upper and lower control limits using the 3-sigma rule.
+
+## AI ROI
+Measuring the return on investment (ROI) of AI initiatives is critical for evaluating their effectiveness. We can use the `sklearn` library in Python to implement a basic ROI calculation.
+
+```python
+import numpy as np
+from sklearn.metrics import mean_squared_error
+
+# Load data
+data = pd.read_csv('financial_data.csv')
+
+# Split the data into training and testing sets
+train_data, test_data = np.split(data, [int(0.8 * len(data))])
+
+# Train a model on the training data
+model = Prophet()
+model.fit(train_data)
+
+# Make predictions on the testing data
+predictions = model.predict(test_data)
+
+# Calculate the ROI
+roi = 1 - (mean_squared_error(test_data, predictions) / mean_squared_error(test_data, np.mean(test_data)))
+
+# Print the ROI
+print(f'ROI: {roi}')
+```
+
+This code splits the financial data into training and testing sets, trains a Prophet model on the training data, makes predictions on the testing data, and calculates the ROI using the mean squared error.
+
+## Conclusion
+Building an AI-native finance function requires a combination of technical skills and business acumen. By following the lessons outlined in this tutorial, companies can build a strong foundation for their finance functions and stay competitive in today's fast-paced business environment.
+
+![a person's head with a circuit board in front of it](https://images.unsplash.com/photo-1677442135136-760c813028c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxidWlsZGluZyUyMG5hdGl2ZSUyMGZpbmFuY2UlMjBmdW5jdGlvbiUyMHRhdWdodCUyMGFydGlmaWNpYWwlMjBpbnRlbGxpZ2VuY2UlMjBtYWNoaW5lJTIwbGVhcm5pbmd8ZW58MXwwfHx8MTc4NjM4OTAzMXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+To learn more about building AI-native finance functions, visit the [OpenAI website](https://openai.com/index/building-an-ai-native-finance-function) and read the full article by OpenAI CFO Sarah Friar.
+
+*Photo by [Steve A Johnson](https://unsplash.com/@steve_j?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-computer-circuit-board-with-a-brain-on-it-_0iV9LmPDn0?utm_source=techversation&utm_medium=referral)*
