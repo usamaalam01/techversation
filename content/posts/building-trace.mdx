@@ -1,0 +1,91 @@
+---
+title: "Building TRACE"
+description: "Create a trustworthy conversational engine with retrieval-augmented capabilities"
+date: "2026-08-12"
+author: "Usama"
+tags: ["ai", "llm", "trace"]
+aiSummary: "TRACE is a conversational engine that delivers recommendations from a public service directory while respecting user constraints. It uses a large language model and a retrieval-augmented approach to ensure trustworthy results. In this tutorial, we will build a basic TRACE system using Python and the Hugging Face Transformers library."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxUUkFDRSUyMFRydXN0d29ydGh5JTIwUmV0cmlldmFsJTIwQXVnbWVudGVkJTIwQ29udmVyc2F0aW9uYWwlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODY1NDExNjZ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Public service chatbots are expected to provide accurate and trustworthy recommendations from a public service directory. However, these directories can be noisy and inconsistent, and general-purpose large language models (LLMs) may generate unreliable results. To address this issue, researchers have proposed TRACE, a Trustworthy Retrieval-Augmented Conversational Engine. In this tutorial, we will explore how to build a basic TRACE system using Python and the Hugging Face Transformers library.
+
+## Retrieval-Augmented Approach
+The retrieval-augmented approach used in TRACE involves two main components: a large language model (LLM) and a retrieval system. The LLM generates text based on the input prompt, while the retrieval system fetches relevant documents from the public service directory. The output of the LLM is then augmented with the retrieved documents to provide more accurate and trustworthy results.
+
+### Retrieval System
+The retrieval system is responsible for fetching relevant documents from the public service directory. This can be achieved using a search engine or a database query. For this tutorial, we will use a simple database query to retrieve relevant documents.
+
+```python
+import sqlite3
+
+# Connect to the database
+conn = sqlite3.connect('public_service_directory.db')
+cursor = conn.cursor()
+
+# Define a function to retrieve relevant documents
+def retrieve_documents(query):
+    cursor.execute('SELECT * FROM documents WHERE content LIKE ?', ('%' + query + '%',))
+    return cursor.fetchall()
+```
+
+## Large Language Model
+The large language model (LLM) is responsible for generating text based on the input prompt. We will use the Hugging Face Transformers library to load a pre-trained LLM.
+
+```python
+import torch
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+
+# Load the pre-trained LLM and tokenizer
+model = AutoModelForSeq2SeqLM.from_pretrained('t5-small')
+tokenizer = AutoTokenizer.from_pretrained('t5-small')
+
+# Define a function to generate text using the LLM
+def generate_text(prompt):
+    input_ids = tokenizer.encode(prompt, return_tensors='pt')
+    output = model.generate(input_ids)
+    return tokenizer.decode(output[0], skip_special_tokens=True)
+```
+
+## Augmenting the LLM with Retrieval
+To augment the LLM with retrieval, we will use the retrieved documents to provide more accurate and trustworthy results. We will concatenate the generated text with the retrieved documents and return the result.
+
+```python
+def augment_llm_with_retrieval(prompt):
+    generated_text = generate_text(prompt)
+    retrieved_documents = retrieve_documents(prompt)
+    augmented_text = generated_text + '\n' + '\n'.join([doc[1] for doc in retrieved_documents])
+    return augmented_text
+```
+
+### Example Usage
+Here is an example usage of the `augment_llm_with_retrieval` function:
+
+```python
+prompt = 'What are the public services available for healthcare?'
+result = augment_llm_with_retrieval(prompt)
+print(result)
+```
+
+This will generate text using the LLM, retrieve relevant documents from the public service directory, and augment the generated text with the retrieved documents.
+
+![a close up of a piece of luggage with text on it](https://images.unsplash.com/photo-1692607431225-5f4564c8f132?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxUUkFDRSUyMFRydXN0d29ydGh5JTIwUmV0cmlldmFsJTIwQXVnbWVudGVkJTIwQ29udmVyc2F0aW9uYWwlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODY1NDExNjZ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+In this tutorial, we have built a basic TRACE system using Python and the Hugging Face Transformers library. We have demonstrated how to use a retrieval-augmented approach to provide more accurate and trustworthy results. The `augment_llm_with_retrieval` function can be used to generate text using the LLM and augment it with retrieved documents from the public service directory.
+
+## Future Work
+There are several areas for future work, including:
+
+* Improving the retrieval system to handle more complex queries
+* Using a more advanced LLM to generate more accurate text
+* Integrating the TRACE system with a user interface to provide a more interactive experience
+
+![a close up of a screen with numbers on it](https://images.unsplash.com/photo-1586974175111-967d0ab10c7b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxUUkFDRSUyMFRydXN0d29ydGh5JTIwUmV0cmlldmFsJTIwQXVnbWVudGVkJTIwQ29udmVyc2F0aW9uYWwlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODY1NDExNjZ8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+By following this tutorial, you can build a basic TRACE system and start exploring the possibilities of retrieval-augmented conversational engines.
+
+*Photo by [Stephen Dawson](https://unsplash.com/@dawson2406?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/turned-on-monitoring-screen-qwtCeJ5cLYs?utm_source=techversation&utm_medium=referral)*
