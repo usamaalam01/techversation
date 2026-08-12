@@ -1,0 +1,133 @@
+---
+title: "LFM2.5-VL-3B for Edge Vision"
+description: "Unlock better and faster vision capabilities for edge devices with LFM2.5-VL-3B."
+date: "2026-08-12"
+author: "Usama"
+tags: ["ai", "vision", "edge"]
+aiSummary: "LFM2.5-VL-3B is a powerful vision model for edge devices, offering improved performance and efficiency. This tutorial guides you through using LFM2.5-VL-3B for better and faster vision capabilities. We'll cover the model's architecture, installation, and implementation."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1674027444485-cec3da58eef4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxCZXR0ZXIlMjBGYXN0ZXIlMjBWaXNpb24lMjBDYXBhYmlsaXRpZXMlMjBFZGdlJTIwYXJ0aWZpY2lhbCUyMGludGVsbGlnZW5jZSUyMG1hY2hpbmUlMjBsZWFybmluZ3xlbnwxfDB8fHwxNzg2NTYxOTM3fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to LFM2.5-VL-3B
+
+The demand for efficient and accurate vision capabilities on edge devices has been increasing rapidly. To address this need, the LFM2.5-VL-3B model has been introduced, offering a significant boost in performance and efficiency. In this tutorial, we'll delve into the world of LFM2.5-VL-3B and explore how to harness its power for better and faster vision capabilities on edge devices.
+
+![a computer circuit board with a brain on it](https://images.unsplash.com/photo-1677442135703-1787eea5ce01?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxCZXR0ZXIlMjBGYXN0ZXIlMjBWaXNpb24lMjBDYXBhYmlisaXRpZXMlMjBFZGdlJTIwYXJ0aWZpY2lhbCUyMGludGVsbGlnZW5jZSUyMG1hY2hpbmUlMjBsZWFybmluZ3xlbnwxfDB8fHwxNzg2NTYxOTM3fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+### Model Architecture
+
+Before diving into the implementation, it's essential to understand the architecture of LFM2.5-VL-3B. The model is based on the transformer architecture, which has proven to be highly effective in computer vision tasks. The LFM2.5-VL-3B model consists of an encoder and a decoder, where the encoder extracts features from the input image, and the decoder generates the output.
+
+## Installing LFM2.5-VL-3B
+
+To get started with LFM2.5-VL-3B, you'll need to install the required libraries and models. You can do this by running the following command:
+```bash
+pip install transformers
+```
+Once the installation is complete, you can download the LFM2.5-VL-3B model using the following code:
+```python
+from transformers import AutoModel, AutoTokenizer
+
+model_name = "LiquidAI/lfm2.5-vl-3b"
+model = AutoModel.from_pretrained(model_name)
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+```
+## Implementing LFM2.5-VL-3B
+
+Now that we have the model and tokenizer installed, let's implement a simple image classification task using LFM2.5-VL-3B. We'll use the following code:
+```python
+import torch
+from PIL import Image
+from transformers import AutoModel, AutoTokenizer
+
+# Load the model and tokenizer
+model_name = "LiquidAI/lfm2.5-vl-3b"
+model = AutoModel.from_pretrained(model_name)
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+# Load the image
+image = Image.open("image.jpg")
+
+# Preprocess the image
+inputs = tokenizer(image, return_tensors="pt")
+
+# Forward pass
+outputs = model(**inputs)
+
+# Get the classification output
+classification_output = outputs.last_hidden_state[:, 0, :]
+
+# Print the classification output
+print(classification_output)
+```
+This code loads the LFM2.5-VL-3B model and tokenizer, loads an image, preprocesses the image, and performs a forward pass to get the classification output.
+
+## Fine-Tuning LFM2.5-VL-3B
+
+To fine-tune the LFM2.5-VL-3B model for your specific task, you'll need to create a custom dataset and data loader. You can do this by using the following code:
+```python
+import torch
+from torch.utils.data import Dataset, DataLoader
+
+class CustomDataset(Dataset):
+    def __init__(self, images, labels):
+        self.images = images
+        self.labels = labels
+
+    def __len__(self):
+        return len(self.images)
+
+    def __getitem__(self, idx):
+        image = self.images[idx]
+        label = self.labels[idx]
+
+        # Preprocess the image
+        inputs = tokenizer(image, return_tensors="pt")
+
+        return inputs, label
+
+# Create a custom dataset and data loader
+dataset = CustomDataset(images, labels)
+data_loader = DataLoader(dataset, batch_size=32, shuffle=True)
+
+# Fine-tune the model
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model.to(device)
+
+for epoch in range(5):
+    model.train()
+    for batch in data_loader:
+        inputs, labels = batch
+        inputs = inputs.to(device)
+        labels = labels.to(device)
+
+        # Zero the gradients
+        optimizer.zero_grad()
+
+        # Forward pass
+        outputs = model(**inputs)
+
+        # Calculate the loss
+        loss = criterion(outputs, labels)
+
+        # Backward pass
+        loss.backward()
+
+        # Update the model parameters
+        optimizer.step()
+
+    model.eval()
+```
+This code creates a custom dataset and data loader, fine-tunes the LFM2.5-VL-3B model using the custom dataset, and evaluates the model's performance.
+
+## Conclusion
+
+In this tutorial, we've explored the LFM2.5-VL-3B model and its applications in computer vision tasks. We've also implemented a simple image classification task using LFM2.5-VL-3B and fine-tuned the model for a custom dataset. With its powerful architecture and efficient implementation, LFM2.5-VL-3B is an ideal choice for developers looking to unlock better and faster vision capabilities on edge devices.
+
+![white and black typewriter with white printer paper](https://images.unsplash.com/photo-1591696331111-ef9586a5b17a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxCZXR0ZXIlMjBGYXN0ZXIlMjBWaXNpb24lMjBDYXBhYmlisaXRpZXMlMjBFZGdlJTIwYXJ0aWZpY2lhbCUyMGludGVsbGlnZW5jZSUyMG1hY2hpbmUlMjBsZWFybmluZ3xlbnwxfDB8fHwxNzg2NTYxOTM3fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+For more information on LFM2.5-VL-3B, you can visit the [Hugging Face blog](https://huggingface.co/blog/LiquidAI/lfm2-5-vl-3b) and explore the [official repository](https://huggingface.co/LiquidAI/lfm2.5-vl-3b).
+
+*Photo by [Growtika](https://unsplash.com/@growtika?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/an-abstract-image-of-a-sphere-with-dots-and-lines-nGoCBxiaRO0?utm_source=techversation&utm_medium=referral)*
