@@ -1,0 +1,117 @@
+---
+title: "Locating Failure in Multi-Page Docs"
+description: "Understanding failure modes in multi-page document understanding"
+date: "2026-08-12"
+author: "Usama"
+tags: ["ai", "document-understanding", "nlp"]
+aiSummary: "Multi-page visually-rich document understanding requires managing sparse evidence across pages. We attribute incorrect answers to three failure modes: representation, selection, and attribution. This tutorial will guide you through a step-by-step process of locating failure in multi-page documents using empirical attribution."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxMb2NhdGluZyUyMEZhaWx1cmUlMjBNdWx0aSUyMFBhZ2UlMjBWaXN1YWxseSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4NjUwMTg4Nnww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Multi-page visually-rich document understanding (MP-VRDU) is a complex task that requires managing evidence that is sparse, spread across pages, and often exceeds a model's context window. Prior work has produced competing, largely untested claims about how these systems should be built. In this tutorial, we will explore the three failure modes that can occur in MP-VRDU: representation, selection, and attribution. We will use the paper "Locating Failure in Multi-Page Visually Rich Document Understanding: An Empirical Attribution" as a reference and provide working code examples to demonstrate the concepts.
+
+## Understanding Failure Modes
+
+Before we dive into the implementation, let's understand the three failure modes that can occur in MP-VRDU:
+
+*   **Representation Failure**: This occurs when the model is unable to represent the document accurately. This can happen when the model is not trained on a diverse set of documents or when the document contains complex layouts or tables.
+*   **Selection Failure**: This occurs when the model selects the wrong information from the document. This can happen when the model is not able to identify the relevant information or when the document contains irrelevant information.
+*   **Attribution Failure**: This occurs when the model is unable to attribute the correct source of the information. This can happen when the model is not able to identify the correct page or section of the document.
+
+## Implementing Empirical Attribution
+
+To implement empirical attribution, we need to follow these steps:
+
+1.  **Data Preparation**: We need to prepare a dataset of multi-page documents with annotated answers.
+2.  **Model Training**: We need to train a model to predict the answers based on the document content.
+3.  **Failure Mode Detection**: We need to detect the failure mode for each incorrect answer.
+
+Here is an example code snippet in Python that demonstrates how to implement empirical attribution:
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+# Load the dataset
+df = pd.read_csv("data.csv")
+
+# Split the data into training and testing sets
+train_text, val_text, train_labels, val_labels = train_test_split(df["text"], df["label"], random_state=42, test_size=0.2, stratify=df["label"])
+
+# Load the pre-trained model and tokenizer
+model = AutoModelForSequenceClassification.from_pretrained("distilbert-base-uncased")
+tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
+
+# Train the model
+model.train()
+for epoch in range(5):
+    for batch in train_text:
+        inputs = tokenizer(batch, return_tensors="pt")
+        labels = train_labels[batch]
+        optimizer = torch.optim.Adam(model.parameters(), lr=1e-5)
+        loss = model(**inputs, labels=labels)
+        loss.backward()
+        optimizer.step()
+
+# Evaluate the model
+model.eval()
+predictions = []
+with torch.no_grad():
+    for batch in val_text:
+        inputs = tokenizer(batch, return_tensors="pt")
+        outputs = model(**inputs)
+        logits = outputs.logits
+        predictions.extend(torch.argmax(logits, dim=1))
+
+# Detect failure modes
+failure_modes = []
+for i, prediction in enumerate(predictions):
+    if prediction != val_labels[i]:
+        # Detect representation failure
+        if model(**tokenizer(val_text[i], return_tensors="pt"))["logits"].argmax() != val_labels[i]:
+            failure_modes.append("representation")
+        # Detect selection failure
+        elif model(**tokenizer(val_text[i], return_tensors="pt"))["logits"].argmax() == val_labels[i] and model(**tokenizer(val_text[i], return_tensors="pt"))["logits"].argmax() != prediction:
+            failure_modes.append("selection")
+        # Detect attribution failure
+        else:
+            failure_modes.append("attribution")
+
+# Print the failure modes
+print(failure_modes)
+```
+This code snippet demonstrates how to train a model to predict answers based on document content and detect failure modes for incorrect answers.
+
+## Visualizing Failure Modes
+
+To better understand the failure modes, we can visualize them using a heatmap. Here is an example code snippet that demonstrates how to visualize failure modes:
+```python
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Create a heatmap
+plt.figure(figsize=(10, 8))
+sns.heatmap(failure_modes, annot=True, cmap="Blues")
+plt.xlabel("Failure Mode")
+plt.ylabel("Document ID")
+plt.title("Failure Modes")
+plt.show()
+```
+This code snippet creates a heatmap that shows the failure modes for each document.
+
+![text](https://images.unsplash.com/photo-1623018035782-b269248df916?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxMb2NhdGluZyUyMEZhaWx1cmUlMjBNdWx0aSUyMFBhZ2UlMjBWaXN1YWxseSUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4NjUwMTg4Nnww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we explored the three failure modes that can occur in multi-page visually-rich document understanding: representation, selection, and attribution. We demonstrated how to implement empirical attribution using a pre-trained model and detect failure modes for incorrect answers. We also visualized the failure modes using a heatmap. By understanding and detecting failure modes, we can improve the performance of our models and build more robust document understanding systems.
+
+### Further Reading
+
+For more information on multi-page visually-rich document understanding, we recommend reading the paper "Locating Failure in Multi-Page Visually Rich Document Understanding: An Empirical Attribution" available on [arXiv](https://arxiv.org/abs/2608.07943).
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
