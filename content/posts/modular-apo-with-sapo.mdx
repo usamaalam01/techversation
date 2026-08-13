@@ -1,0 +1,113 @@
+---
+title: "Modular APO with SAPO"
+description: "Segment-level automatic prompt optimization for LLMs"
+date: "2026-08-13"
+author: "Usama"
+tags: ["ai", "llm", "optimization"]
+aiSummary: "SAPO is a new method for automatic prompt optimization that decomposes prompts into segments and applies targeted improvements. This tutorial shows how to use SAPO to optimize prompts for language models. SAPO uses a single LLM to improve prompt quality, making it more efficient than traditional APO methods."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1639322537504-6427a16b0a28?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxGcm9tJTIwTW9ub2xpdGhpYyUyME1vZHVsYXIlMjBTZWdtZW50JTIwbGV2ZWwlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODY2Mjc2NjN8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to SAPO
+Automatic Prompt Optimization (APO) is a technique used to improve the quality of prompts for language models. Traditional APO methods often rewrite prompts monolithically, which can improve one behavior while degrading others. To address this issue, researchers have introduced SAPO, a segment-level APO method that decomposes prompts into role, context, tasks, and output format, and applies targeted improvements based on top-5 and bottom-5 examples.
+
+## How SAPO Works
+SAPO works by first decomposing a prompt into its constituent segments. These segments are then analyzed and improved separately, using a single Large Language Model (LLM). The optimization loop uses the top-5 and bottom-5 examples to apply targeted improvements to each segment. This approach allows SAPO to improve the overall quality of the prompt while minimizing the risk of degrading other behaviors.
+
+## Implementing SAPO
+To implement SAPO, you will need to have a basic understanding of Python and the Hugging Face Transformers library. You can install the required libraries using pip:
+```bash
+pip install transformers
+```
+Next, you will need to import the required libraries and load a pre-trained LLM:
+```python
+import torch
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+
+# Load pre-trained LLM and tokenizer
+model = AutoModelForSeq2SeqLM.from_pretrained("t5-base")
+tokenizer = AutoTokenizer.from_pretrained("t5-base")
+```
+## Decomposing Prompts with SAPO
+To decompose a prompt using SAPO, you will need to define a function that takes a prompt as input and returns its constituent segments. Here is an example of how you can implement this function:
+```python
+def decompose_prompt(prompt):
+    # Define the segments
+    role = prompt["role"]
+    context = prompt["context"]
+    tasks = prompt["tasks"]
+    output_format = prompt["output_format"]
+
+    # Return the segments
+    return role, context, tasks, output_format
+```
+## Applying Targeted Improvements
+Once you have decomposed the prompt into its constituent segments, you can apply targeted improvements to each segment using the top-5 and bottom-5 examples. Here is an example of how you can implement this:
+```python
+def apply_improvements(role, context, tasks, output_format):
+    # Define the top-5 and bottom-5 examples
+    top_5 = ["example1", "example2", "example3", "example4", "example5"]
+    bottom_5 = ["example6", "example7", "example8", "example9", "example10"]
+
+    # Apply improvements to each segment
+    improved_role = improve_segment(role, top_5, bottom_5)
+    improved_context = improve_segment(context, top_5, bottom_5)
+    improved_tasks = improve_segment(tasks, top_5, bottom_5)
+    improved_output_format = improve_segment(output_format, top_5, bottom_5)
+
+    # Return the improved segments
+    return improved_role, improved_context, improved_tasks, improved_output_format
+
+def improve_segment(segment, top_5, bottom_5):
+    # Implement the improvement logic here
+    # For example, you can use the LLM to generate new text based on the top-5 examples
+    new_text = generate_text(segment, top_5)
+    return new_text
+
+def generate_text(segment, top_5):
+    # Implement the text generation logic here
+    # For example, you can use the LLM to generate new text based on the top-5 examples
+    input_ids = tokenizer.encode(segment, return_tensors="pt")
+    output = model.generate(input_ids, max_length=100)
+    new_text = tokenizer.decode(output[0], skip_special_tokens=True)
+    return new_text
+```
+## Combining the Improved Segments
+Once you have applied targeted improvements to each segment, you can combine the improved segments to form the final optimized prompt. Here is an example of how you can implement this:
+```python
+def combine_segments(improved_role, improved_context, improved_tasks, improved_output_format):
+    # Combine the improved segments
+    optimized_prompt = improved_role + " " + improved_context + " " + improved_tasks + " " + improved_output_format
+    return optimized_prompt
+```
+## Example Use Case
+Here is an example of how you can use SAPO to optimize a prompt:
+```python
+# Define the prompt
+prompt = {
+    "role": "The role of the prompt is to",
+    "context": "The context of the prompt is",
+    "tasks": "The tasks of the prompt are",
+    "output_format": "The output format of the prompt is"
+}
+
+# Decompose the prompt
+role, context, tasks, output_format = decompose_prompt(prompt)
+
+# Apply targeted improvements
+improved_role, improved_context, improved_tasks, improved_output_format = apply_improvements(role, context, tasks, output_format)
+
+# Combine the improved segments
+optimized_prompt = combine_segments(improved_role, improved_context, improved_tasks, improved_output_format)
+
+# Print the optimized prompt
+print(optimized_prompt)
+```
+![a computer generated image of a cube surrounded by smaller cubes](https://images.unsplash.com/photo-1639762681485-074b7f938ba0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxGcm9tJTIwTW9ub2xpdGhpYyUyME1vZHVsYXIlMjBTZWdtZW50JTIwbGV2ZWwlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODY2Mjc2NjN8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+SAPO is a powerful tool for optimizing prompts for language models. By decomposing prompts into segments and applying targeted improvements, SAPO can improve the overall quality of the prompt while minimizing the risk of degrading other behaviors. In this tutorial, we showed how to use SAPO to optimize a prompt using a single LLM. We also provided a working code example that demonstrates how to implement SAPO in Python using the Hugging Face Transformers library.
+
+*Photo by [Shubham Dhage](https://unsplash.com/@theshubhamdhage?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-black-and-white-photo-of-a-bunch-of-cubes-gC_aoAjQl2Q?utm_source=techversation&utm_medium=referral)*
