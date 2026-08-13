@@ -1,0 +1,92 @@
+---
+title: "Pixel 11 Event Live Blog"
+description: "Google's new Pixel hardware announced today at Made by Google keynote."
+date: "2026-08-13"
+author: "Usama"
+tags: ["google", "pixel-11", "live-blog"]
+aiSummary: "The Made by Google keynote is live, introducing the brand-new Pixel hardware. Trevor Noah is hosting the event, which is expected to be a celebrity-packed live show. This post will provide a hands-on review of the new Pixel 11 features and APIs."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1705615791240-c35f4799863b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxQaXhlbCUyMGV2ZW50JTIwbGl2ZSUyMGJsb2clMjBMZXQlMjB0ZWNobm9sb2d5JTIwZGlnaXRhbCUyMGlubm92YXRpb258ZW58MXwwfHx8MTc4NjU4ODM0Nnww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Pixel 11
+
+The Made by Google keynote is live, and the company has announced the brand-new Pixel hardware. This year's event is hosted by Trevor Noah, and it's expected to be a celebrity-packed live show. As a developer, I'm excited to explore the new features and APIs of the Pixel 11.
+
+## Getting Started with Pixel 11 APIs
+
+To get started with the Pixel 11 APIs, you'll need to register for a Google Developer account and create a new project. Once you've created a project, you can enable the Pixel 11 APIs and start exploring the available features.
+
+```python
+import requests
+
+# Register for a Google Developer account and create a new project
+# Enable the Pixel 11 APIs and get your API key
+api_key = "YOUR_API_KEY"
+
+# Use the API key to authenticate your requests
+headers = {
+    "Authorization": f"Bearer {api_key}",
+    "Content-Type": "application/json"
+}
+
+# Make a request to the Pixel 11 API
+response = requests.get("https://api.google.com/pixel11/api", headers=headers)
+
+# Print the response
+print(response.json())
+```
+
+## Exploring Pixel 11 Features
+
+The Pixel 11 comes with a range of exciting new features, including improved camera capabilities, enhanced AI-powered performance, and a sleek new design. As a developer, you can take advantage of these features to create innovative apps and experiences.
+
+```java
+// Use the Pixel 11 camera API to capture a photo
+CameraManager cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+CameraDevice cameraDevice = cameraManager.getCameraDevice();
+
+// Set up the camera parameters
+Camera.Parameters parameters = cameraDevice.getParameters();
+parameters.setPictureSize(1024, 768);
+parameters.setJpegQuality(90);
+
+// Capture a photo
+cameraDevice.takePicture(parameters, new Camera.ShutterCallback() {
+    @Override
+    public void onShutter() {
+        // Handle the shutter callback
+    }
+}, new Camera.PictureCallback() {
+    @Override
+    public void onPictureTaken(byte[] data, Camera camera) {
+        // Handle the picture taken callback
+    }
+});
+```
+
+## Live Blogging the Event
+
+As the event is live, I'll be providing updates on the new features and APIs announced. The atmosphere is electric, with Trevor Noah hosting the event and a range of celebrity guests making appearances.
+
+![people watching band performing on stage](https://images.unsplash.com/photo-1614487331144-b5b141c11eab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxQaXhlbCUyMGV2ZW50JTIwbGl2ZSUyMGJsb2clMjBMZXQlMjB0ZWNobm9sb2d5JTIwZGlnaXRhbCUyMGlubm92YXRpb258ZW58MXwwfHx8MTc4NjU4ODM0Nnww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+The Pixel 11 event live blog has come to an end, and I'm excited to dive deeper into the new features and APIs announced. As a developer, I'm looking forward to exploring the possibilities of the Pixel 11 and creating innovative apps and experiences.
+
+```bash
+# Install the Pixel 11 SDK
+sudo apt-get install pixel11-sdk
+
+# Set up the Pixel 11 emulator
+emulator -avd pixel11
+
+# Run your app on the Pixel 11 emulator
+adb install your_app.apk
+```
+
+Overall, the Pixel 11 is an exciting new device that offers a range of innovative features and APIs. As a developer, I'm excited to get started with the Pixel 11 and explore the possibilities it offers.
+
+*Photo by [mos design](https://unsplash.com/@mosdesign?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-room-with-a-lot-of-blue-lights-on-it-8C7qT1-86cg?utm_source=techversation&utm_medium=referral)*

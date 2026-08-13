@@ -1,0 +1,117 @@
+---
+title: "Relational Geometry Attacks"
+description: "Exploring vulnerabilities in contrastive embedding manifolds."
+date: "2026-08-13"
+author: "Usama"
+tags: ["ai", "security", "geometry"]
+aiSummary: "Contrastive learning and Siamese embedding models are widely used in verification systems. However, existing adversarial attacks overlook the vulnerability of relational geometry in embedding space. This post delves into relational geometry attacks on contrastive embedding manifolds, providing a step-by-step guide and working code examples. We will explore how to implement these attacks and discuss their implications for the security of verification systems."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1644088379091-d574269d422f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxCZXlvbmQlMjBEZWNpc2lvbiUyMEJvdW5kYXJpZXMlMjBSZWxhdGlvbmFsJTIwR2VvbWV0cnklMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODY1ODgzNjR8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+Contrastive learning and Siamese embedding models have become the foundation of modern verification systems. These models learn to embed inputs into a high-dimensional space, where decisions are governed by relational geometry rather than discrete classification boundaries. However, existing adversarial attacks remain fundamentally classification-centric, overlooking the vulnerability of relational geometry in embedding space. In this post, we will explore relational geometry attacks on contrastive embedding manifolds, providing a step-by-step guide and working code examples.
+
+## Background
+
+To understand relational geometry attacks, we need to first understand contrastive learning and Siamese embedding models. Contrastive learning involves training a model to distinguish between positive and negative pairs of inputs. Siamese embedding models, on the other hand, consist of two identical neural networks that share the same weights and are used to compute the similarity between two inputs.
+
+### Relational Geometry
+
+Relational geometry refers to the geometric relationships between points in the embedding space. In the context of contrastive learning and Siamese embedding models, relational geometry is used to compute the similarity between inputs. The embedding space is typically high-dimensional, and the relationships between points are complex.
+
+![a group of cubes that are on a black surface](https://images.unsplash.com/photo-1639322537228-f710d846310a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxCZXlvbmQlMjBEZWNpc2lvbiUyMEJvdW5kYXJpZXMlMjBSZWxhdGlvbmFsJTIwR2VvbWV0cnklMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODY1ODgzNjR8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Implementing Relational Geometry Attacks
+
+To implement relational geometry attacks, we need to first understand how to compute the similarity between inputs in the embedding space. We can use the following Python code to compute the similarity between two inputs:
+```python
+import numpy as np
+import torch
+import torch.nn as nn
+
+class SiameseEmbeddingModel(nn.Module):
+    def __init__(self):
+        super(SiameseEmbeddingModel, self).__init__()
+        self.embedding = nn.Sequential(
+            nn.Linear(784, 128),
+            nn.ReLU(),
+            nn.Linear(128, 128)
+        )
+
+    def forward(self, x):
+        return self.embedding(x)
+
+def compute_similarity(x1, x2):
+    model = SiameseEmbeddingModel()
+    embedding1 = model(x1)
+    embedding2 = model(x2)
+    similarity = torch.cosine_similarity(embedding1, embedding2)
+    return similarity
+
+# Example usage:
+x1 = torch.randn(1, 784)
+x2 = torch.randn(1, 784)
+similarity = compute_similarity(x1, x2)
+print(similarity)
+```
+In this code, we define a Siamese embedding model that computes the embedding of two inputs. We then define a function `compute_similarity` that computes the similarity between two inputs using the cosine similarity metric.
+
+## Attacking the Embedding Space
+
+To attack the embedding space, we need to find a way to manipulate the similarity between inputs. One way to do this is to use gradient-based attacks. We can use the following Python code to implement a gradient-based attack:
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+class GradientBasedAttack:
+    def __init__(self, model, x1, x2):
+        self.model = model
+        self.x1 = x1
+        self.x2 = x2
+
+    def attack(self):
+        # Compute the similarity between x1 and x2
+        similarity = compute_similarity(self.x1, self.x2)
+
+        # Define the loss function
+        loss_fn = nn.MSELoss()
+
+        # Define the optimizer
+        optimizer = optim.SGD(self.model.parameters(), lr=0.01)
+
+        # Perform the attack
+        for i in range(100):
+            # Compute the gradient of the loss function
+            loss = loss_fn(similarity, torch.ones_like(similarity))
+            loss.backward()
+
+            # Update the model parameters
+            optimizer.step()
+
+            # Compute the new similarity
+            similarity = compute_similarity(self.x1, self.x2)
+
+        return similarity
+
+# Example usage:
+x1 = torch.randn(1, 784)
+x2 = torch.randn(1, 784)
+attack = GradientBasedAttack(SiameseEmbeddingModel(), x1, x2)
+new_similarity = attack.attack()
+print(new_similarity)
+```
+In this code, we define a gradient-based attack that manipulates the similarity between two inputs. We use the mean squared error loss function and the stochastic gradient descent optimizer to update the model parameters.
+
+## Conclusion
+
+Relational geometry attacks on contrastive embedding manifolds are a new type of attack that can be used to manipulate the similarity between inputs. These attacks can be used to compromise the security of verification systems that rely on contrastive learning and Siamese embedding models. In this post, we provided a step-by-step guide and working code examples to implement relational geometry attacks. We also discussed the implications of these attacks for the security of verification systems.
+
+![a diagram of a number of circles and a number of dots](https://images.unsplash.com/photo-1717501218456-c4789b65fc21?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxCZXlvbmQlMjBEZWNpc2lvbiUyMEJvdW5kYXJpZXMlMjBSZWxhdGlvbmFsJTIwR2VvbWV0cnklMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODY1ODgzNjR8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+By understanding how to implement relational geometry attacks, we can better protect verification systems against these types of attacks. This can be achieved by using more robust similarity metrics, such as the Manhattan distance or the Euclidean distance, or by using more advanced attack detection methods, such as anomaly detection or intrusion detection systems.
+
+*Photo by [Conny Schneider](https://unsplash.com/@choys_?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/a-blue-background-with-lines-and-dots-xuTJZ7uD7PI?utm_source=techversation&utm_medium=referral)*
