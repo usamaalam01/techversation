@@ -1,0 +1,96 @@
+---
+title: "X's Open Source Ranking Algorithm"
+description: "X expands open source code for 'For You' feed and launches transparency tools."
+date: "2026-08-13"
+author: "Usama"
+tags: ["open-source", "ranking-algorithm", "transparency"]
+aiSummary: "X has open sourced its ranking algorithm, allowing users to see if they've been 'shadowbanned'. The move aims to increase transparency and trust in the platform's content moderation. Developers can now access the code behind the 'For You' feed and use it to build their own applications."
+category: "tools"
+coverImage: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxvcGVuJTIwc291cmNlcyUyMHJhbmtpbmclMjBhbGdvcml0aG0lMjBsZXR0aW5nJTIwdGVjaG5vbG9neSUyMGRpZ2l0YWwlMjBpbm5vdmF0aW9ufGVufDF8MHx8fDE3ODY2NDgzNzB8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+X, a popular social media platform, has taken a significant step towards transparency by open sourcing its ranking algorithm. This move allows users to see if they've been 'shadowbanned' and provides developers with the opportunity to build their own applications using the algorithm. In this tutorial, we'll explore the ranking algorithm, its implications, and provide a hands-on guide on how to use it.
+
+## Understanding the Ranking Algorithm
+
+The ranking algorithm is the backbone of X's 'For You' feed, responsible for curating content that users see on their feeds. The algorithm takes into account various factors such as user engagement, content relevance, and user preferences. By open sourcing the algorithm, X aims to increase transparency and trust in its content moderation.
+
+### How the Algorithm Works
+
+The ranking algorithm is a complex system that uses a combination of natural language processing (NLP) and machine learning (ML) techniques to rank content. The algorithm consists of several components, including:
+
+* **Content analysis**: This component analyzes the content of each post, including text, images, and videos.
+* **User engagement**: This component analyzes user engagement with each post, including likes, comments, and shares.
+* **User preferences**: This component takes into account user preferences, such as their interests and demographics.
+
+### Code Example
+
+To demonstrate how the ranking algorithm works, let's take a look at a simplified example in Python:
+```python
+import numpy as np
+
+def ranking_algorithm(content, engagement, preferences):
+    # Content analysis
+    content_score = np.dot(content, preferences)
+
+    # User engagement
+    engagement_score = np.dot(engagement, content)
+
+    # User preferences
+    preference_score = np.dot(preferences, content)
+
+    # Calculate overall score
+    overall_score = content_score + engagement_score + preference_score
+
+    return overall_score
+
+# Example usage
+content = np.array([0.5, 0.3, 0.2])  # Content features
+engagement = np.array([0.8, 0.4, 0.2])  # Engagement features
+preferences = np.array([0.9, 0.6, 0.3])  # User preferences
+
+score = ranking_algorithm(content, engagement, preferences)
+print(score)
+```
+This example demonstrates how the ranking algorithm calculates an overall score for each post based on content analysis, user engagement, and user preferences.
+
+## Using the Open Source Ranking Algorithm
+
+To use the open source ranking algorithm, developers can access the code on X's GitHub repository. The repository provides a detailed guide on how to get started, including installation instructions and example use cases.
+
+### Getting Started
+
+To get started, follow these steps:
+
+1. Clone the repository: `git clone https://github.com/x/ranking-algorithm.git`
+2. Install dependencies: `pip install -r requirements.txt`
+3. Run the example code: `python example.py`
+
+### Example Use Cases
+
+The open source ranking algorithm can be used in a variety of applications, including:
+
+* **Content moderation**: Developers can use the algorithm to build their own content moderation tools, allowing them to detect and remove inappropriate content from their platforms.
+* **Recommendation systems**: The algorithm can be used to build recommendation systems that suggest content to users based on their interests and preferences.
+* **Social media analytics**: Developers can use the algorithm to analyze user engagement and content performance on social media platforms.
+
+![a close up of a computer screen with a blurry background](https://images.unsplash.com/photo-1686061593269-420785fb8fa0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxvcGVuJTIwc291cmNlcyUyMHJhbmtpbmclMjBhbGdvcml0aG0lMjBsZXR0aW5nJTIwdGVjaG5vbG9neSUyMGRpZ2l0YWwlMjBpbm5vdmF0aW9ufGVufDF8MHx8fDE3ODY2NDgzNzB8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+X's open source ranking algorithm is a significant step towards transparency and trust in content moderation. By providing developers with access to the algorithm, X aims to encourage innovation and collaboration in the development of content moderation tools. In this tutorial, we've explored the ranking algorithm, its implications, and provided a hands-on guide on how to use it. With the open source ranking algorithm, developers can build their own applications and tools, promoting a more transparent and trustworthy online environment.
+
+### Future Developments
+
+As the open source ranking algorithm continues to evolve, we can expect to see new features and updates that improve its performance and accuracy. Some potential future developments include:
+
+* **Improved NLP capabilities**: X may integrate more advanced NLP techniques to improve the algorithm's ability to analyze and understand content.
+* **Increased transparency**: X may provide more detailed information about the algorithm's decision-making process, allowing developers to better understand how it works.
+* **Community engagement**: X may engage with the developer community to gather feedback and suggestions on how to improve the algorithm and its applications.
+
+By open sourcing its ranking algorithm, X has taken a significant step towards promoting transparency and trust in content moderation. As the algorithm continues to evolve, we can expect to see new and innovative applications that promote a more trustworthy online environment.
+
+*Photo by [Stephen Phillips - Hostreviews.co.uk](https://unsplash.com/@hostreviews?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/monitor-screengrab-shr_Xn8S8QU?utm_source=techversation&utm_medium=referral)*

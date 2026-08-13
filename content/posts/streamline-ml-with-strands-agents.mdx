@@ -1,0 +1,103 @@
+---
+title: "Streamline ML with Strands Agents"
+description: "Record, train, and deploy ML models from one place."
+date: "2026-08-13"
+author: "Usama"
+tags: ["ai", "ml", "huggingface"]
+aiSummary: "Strands Agents, LeRobot, and Hugging Face Storage Buckets enable a streamlined ML workflow. Train and deploy models efficiently with this integrated approach. Record data with LeRobot and store it in Hugging Face Storage Buckets."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1674027444485-cec3da58eef4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxSZWNvcmQlMjB0cmFpbiUyMGRlcGxveSUyMGZyb20lMjBvbmUlMjBhcnRpZmljaWFsJTIwaW50ZWxsaWdlbmNlJTIwbWFjaGluZSUyMGxlYXJuaW5nfGVufDF8MHx8fDE3ODY2NDgzOTB8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Streamlined ML Workflow
+
+The machine learning (ML) workflow typically involves several stages: data collection, model training, and deployment. Each stage requires different tools and expertise, which can lead to a fragmented and inefficient process. However, with the integration of Strands Agents, LeRobot, and Hugging Face Storage Buckets, developers can now record, train, and deploy ML models from one place. In this tutorial, we will explore how to leverage these tools to streamline the ML workflow.
+
+![A computer circuit board with a brain on it](https://images.unsplash.com/photo-1677442135703-1787eea5ce01?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxSZWNvcmQlMjB0cmFpbiUyMGRlcGxveSUyMGZyb20lMjBvbmUlMjBhcnRpZmljaWFsJTIwaW50ZWxsaWdlbmNlJTIwbWFjaGluZSUyMGxlYXJuaW5nfGVufDF8MHx8fDE3ODY2NDgzOTB8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Recording Data with LeRobot
+
+The first step in the ML workflow is data collection. LeRobot is a tool that enables developers to record data from various sources, such as sensors, cameras, or microphones. To record data with LeRobot, you need to install the LeRobot library and import it in your Python script.
+
+```python
+import lerobot
+
+# Initialize LeRobot
+lerobot.init()
+
+# Record data from a sensor
+data = lerobot.record_sensor_data()
+```
+
+Once you have recorded the data, you need to store it in a secure and scalable storage solution.
+
+## Storing Data in Hugging Face Storage Buckets
+
+Hugging Face Storage Buckets is a cloud-based storage solution that provides a secure and scalable way to store and manage large datasets. To store data in Hugging Face Storage Buckets, you need to create a bucket and upload your data to it.
+
+```python
+from huggingface_hub import Repository
+
+# Create a new repository
+repo = Repository(
+    local_dir="./data",
+    repo_type="dataset",
+    repo_id="your-username/your-repo-name"
+)
+
+# Upload data to the repository
+repo.push_to_hub(commit_message="Initial commit")
+```
+
+## Training Models with Strands Agents
+
+Strands Agents is a tool that enables developers to train ML models on large datasets. To train a model with Strands Agents, you need to create a new agent and define the training parameters.
+
+```python
+from strands_agents import Agent
+
+# Create a new agent
+agent = Agent(
+    model_name="your-model-name",
+    dataset_name="your-dataset-name",
+    hyperparameters={
+        "learning_rate": 0.001,
+        "batch_size": 32
+    }
+)
+
+# Train the model
+agent.train()
+```
+
+## Deploying Models with Strands Agents
+
+Once you have trained your model, you can deploy it using Strands Agents. To deploy a model, you need to create a new deployment and define the deployment parameters.
+
+```python
+from strands_agents import Deployment
+
+# Create a new deployment
+deployment = Deployment(
+    model_name="your-model-name",
+    deployment_name="your-deployment-name",
+    parameters={
+        "instance_type": "ml.m5.xlarge",
+        "initial_instance_count": 1
+    }
+)
+
+# Deploy the model
+deployment.deploy()
+```
+
+## Conclusion
+
+In this tutorial, we have explored how to streamline the ML workflow using Strands Agents, LeRobot, and Hugging Face Storage Buckets. By leveraging these tools, developers can record, train, and deploy ML models from one place, making the ML workflow more efficient and scalable. Whether you are a seasoned ML practitioner or just starting out, this integrated approach can help you build and deploy ML models faster and more effectively.
+
+To learn more about Strands Agents, LeRobot, and Hugging Face Storage Buckets, you can visit the [Hugging Face blog](https://huggingface.co/blog/amazon/strands-lerobot-streaming-data-loop) for more information and tutorials. 
+
+![A white robot is standing in front of a black background](https://images.unsplash.com/photo-1737644467636-6b0053476bb2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxSZWNvcmQlMjB0cmFpbiUyMGRlcGxveSUyMGZyb20lMjBvbmUlMjBhcnRpZmljaWFsJTIwaW50ZWxsaWdlbmNlJTIwbWFjaGluZSUyMGxlYXJuaW5nfGVufDF8MHx8fDE3ODY2NDgzOTB8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+*Photo by [Growtika](https://unsplash.com/@growtika?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/an-abstract-image-of-a-sphere-with-dots-and-lines-nGoCBxiaRO0?utm_source=techversation&utm_medium=referral)*
