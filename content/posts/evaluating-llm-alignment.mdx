@@ -1,0 +1,96 @@
+---
+title: "Evaluating LLM Alignment"
+description: "Assessing moral grounds in LLM ethical judgments."
+date: "2026-08-14"
+author: "Usama"
+tags: ["llm", "ethics", "alignment"]
+aiSummary: "Agreement with human judgments is not a reliable proxy for evaluating large language model alignment. This tutorial demonstrates how to assess moral grounds in LLM ethical judgments using concrete code examples. By analyzing the underlying principles and contextual assumptions, developers can better understand the alignment of LLMs with human values."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1565292793248-f5c13612c48e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxBZ3JlZW1lbnQlMjBOb3QlMjBBbGlnbm1lbnQlMjBEaXZlcmdlbnQlMjBNb3JhbCUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4NjY5MzM2NXww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+
+The increasing use of large language models (LLMs) in various applications has raised concerns about their alignment with human values. While agreement with human judgments is often used as a proxy for evaluating LLM alignment, it does not necessarily indicate that the models rely on the same moral grounds. In this tutorial, we will explore how to assess the moral grounds in LLM ethical judgments and provide concrete code examples to demonstrate the process.
+
+## Understanding the Problem
+
+The problem of evaluating LLM alignment can be illustrated using the following example. Suppose we have a dataset of ethical dilemmas, and we want to evaluate the alignment of an LLM with human values. We can use the following dataset:
+
+| Dilemma | Human Judgment |
+| --- | --- |
+| Should a self-driving car prioritize the safety of its passengers or pedestrians? | Prioritize passengers |
+| Is it ethical to use AI to automate jobs, potentially displacing human workers? | Not ethical |
+
+We can train an LLM on this dataset and evaluate its performance using metrics such as accuracy. However, this approach does not provide insight into the moral grounds underlying the LLM's judgments.
+
+## Analyzing Moral Grounds
+
+To analyze the moral grounds in LLM ethical judgments, we need to examine the underlying principles and contextual assumptions. One approach is to use techniques such as feature attribution or saliency maps to identify the most relevant input features driving the LLM's judgments.
+
+```python
+import numpy as np
+import torch
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+# Load the pre-trained LLM and tokenizer
+model = AutoModelForSequenceClassification.from_pretrained("bert-base-uncased")
+tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+
+# Define the dataset
+dilemmas = [
+    "Should a self-driving car prioritize the safety of its passengers or pedestrians?",
+    "Is it ethical to use AI to automate jobs, potentially displacing human workers?"
+]
+human_judgments = [1, 0]  # 1: prioritize passengers, 0: not ethical
+
+# Preprocess the input data
+inputs = tokenizer(dilemmas, return_tensors="pt", padding=True, truncation=True)
+
+# Get the attention weights
+attention_weights = model(inputs["input_ids"], attention_mask=inputs["attention_mask"])[1]
+
+# Compute the feature attribution scores
+attribution_scores = np.mean(attention_weights.detach().numpy(), axis=1)
+```
+
+By analyzing the feature attribution scores, we can identify the most relevant input features driving the LLM's judgments. For example, we may find that the LLM is relying heavily on the presence of certain keywords or phrases in the input text.
+
+![a scale with the words fake news on it](https://images.unsplash.com/photo-1709285671944-a27fcbd207eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxBZ3JlZW1lbnQlMjBOb3QlMjBBbGlnbm1lbnQlMjBEaXZlcmdlbnQlMjBNb3JhbCUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4NjY5MzM2NXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Evaluating Alignment
+
+To evaluate the alignment of the LLM with human values, we need to compare the moral grounds underlying the LLM's judgments with those of human annotators. One approach is to use techniques such as crowdsourcing or expert evaluation to collect human annotations on the same dataset.
+
+```python
+import pandas as pd
+
+# Load the human annotations
+human_annotations = pd.read_csv("human_annotations.csv")
+
+# Compute the alignment score
+alignment_score = np.mean(human_annotations["human_judgment"] == human_annotations["llm_judgment"])
+
+# Print the alignment score
+print("Alignment score:", alignment_score)
+```
+
+By evaluating the alignment score, we can determine the extent to which the LLM is aligned with human values. A low alignment score may indicate that the LLM is relying on different moral grounds or contextual assumptions than human annotators.
+
+## Conclusion
+
+Evaluating the alignment of LLMs with human values is a complex task that requires careful analysis of the moral grounds underlying the LLM's judgments. By using techniques such as feature attribution and crowdsourcing, developers can gain insight into the principles and assumptions driving the LLM's decisions. By comparing the moral grounds of the LLM with those of human annotators, we can evaluate the alignment of the LLM with human values and identify areas for improvement.
+
+![the word bereavement spelled with cubes on a table](https://images.unsplash.com/photo-1619988045329-168072414dbb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxBZ3JlZW1lbnQlMjBOb3QlMjBBbGlnbm1lbnQlMjBEaXZlcmdlbnQlMjBNb3JhbCUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4NjY5MzM2NXww&ixlib=rb-4.1.0&q=80&w=1080)
+
+### Future Work
+
+Future work in this area could involve exploring new techniques for analyzing moral grounds in LLM ethical judgments, such as using multimodal inputs or incorporating domain-specific knowledge. Additionally, researchers could investigate the use of LLMs in applications where alignment with human values is critical, such as healthcare or education.
+
+### References
+
+* [arXiv:2608.12368](https://arxiv.org/abs/2608.12368)
+* [Hugging Face Transformers](https://huggingface.co/transformers/)
+
+*Photo by [Enayet Raheem](https://unsplash.com/@raheemsphoto?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/chapter-6-regression-models-for-overdispersed-countresponse-book-page-3RQnQyyzA9c?utm_source=techversation&utm_medium=referral)*
