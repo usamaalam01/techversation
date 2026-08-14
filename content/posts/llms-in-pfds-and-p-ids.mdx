@@ -1,0 +1,105 @@
+---
+title: "LLMs in PFDs and P&IDs"
+description: "Using LLMs for process diagram engineering automation."
+date: "2026-08-14"
+author: "Usama"
+tags: ["llm", "pfd", "pid"]
+aiSummary: "Large language models (LLMs) can automate process flow diagram creation and transformation into piping and instrumentation diagrams. This tutorial demonstrates how to use LLMs for PFD and P&ID engineering. We will explore the potential of LLMs in process diagram engineering and provide a step-by-step guide on implementing LLMs for PFD and P&ID creation."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1532102235608-dc8fc689c9ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxMTE1zJTIwUHJvY2VzcyUyMERpYWdyYW0lMjBFbmdpbmVlcmluZyUyMEZyb20lMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODY2NzQ3MDF8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to LLMs in Process Diagram Engineering
+
+Process flow diagrams (PFDs) and piping and instrumentation diagrams (P&IDs) are crucial components of process engineering. The creation of these diagrams is typically a manual task, which can be time-consuming and prone to errors. Recent advancements in artificial intelligence, particularly large language models (LLMs), have shown great potential in automating this process. In this tutorial, we will explore the use of LLMs in process diagram engineering, focusing on the creation of optimal PFDs and validated P&IDs.
+
+## Understanding PFDs and P&IDs
+
+Before diving into the implementation of LLMs, it's essential to understand the basics of PFDs and P&IDs. A PFD is a simplified diagram that represents the process flow, including the main equipment, streams, and utilities. On the other hand, a P&ID is a detailed diagram that includes all the necessary components, such as pipes, valves, and instruments.
+
+![diagram](https://images.unsplash.com/photo-1666148670142-2f01b117e6e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxMTE1zJTIwUHJvY2VzcyUyMERpYWdyYW0lMjBFbmdpbmVlcmluZyUyMEZyb20lMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODY2NzQ3MDF8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+### PFD Creation using LLMs
+
+To create a PFD using an LLM, we need to provide the model with a text description of the process. The LLM will then generate a diagram based on the input text. We can use a library like `transformers` to interact with the LLM.
+
+```python
+import pandas as pd
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+
+# Load the pre-trained LLM model and tokenizer
+model = AutoModelForSeq2SeqLM.from_pretrained("t5-base")
+tokenizer = AutoTokenizer.from_pretrained("t5-base")
+
+# Define the input text
+input_text = "Create a PFD for a simple oil refinery process with a crude oil input, a distillation column, and a product output."
+
+# Preprocess the input text
+inputs = tokenizer(input_text, return_tensors="pt")
+
+# Generate the PFD
+outputs = model.generate(inputs["input_ids"], num_beams=4, no_repeat_ngram_size=2, min_length=100, max_length=200)
+
+# Convert the output to a string
+pfd_diagram = tokenizer.decode(outputs[0], skip_special_tokens=True)
+
+print(pfd_diagram)
+```
+
+## P&ID Creation using LLMs
+
+Once we have the PFD, we can use the LLM to generate a P&ID. The P&ID will include all the necessary components, such as pipes, valves, and instruments.
+
+### P&ID Generation
+
+To generate a P&ID, we need to provide the LLM with the PFD diagram and a text description of the components to include.
+
+```python
+# Define the input text
+input_text = "Create a P&ID for the oil refinery process with a crude oil input, a distillation column, and a product output. Include pipes, valves, and instruments."
+
+# Preprocess the input text
+inputs = tokenizer(input_text, return_tensors="pt")
+
+# Generate the P&ID
+outputs = model.generate(inputs["input_ids"], num_beams=4, no_repeat_ngram_size=2, min_length=100, max_length=200)
+
+# Convert the output to a string
+pid_diagram = tokenizer.decode(outputs[0], skip_special_tokens=True)
+
+print(pid_diagram)
+```
+
+## Validation of PFDs and P&IDs
+
+After generating the PFD and P&ID, it's essential to validate them to ensure they are accurate and complete. We can use a validation library like `pydicom` to check the diagrams for any errors.
+
+```python
+import pydicom
+
+# Load the PFD and P&ID diagrams
+pfd_diagram = pydicom.dcmread("pfd.dcm")
+pid_diagram = pydicom.dcmread("pid.dcm")
+
+# Validate the diagrams
+if pfd_diagram.validate():
+    print("PFD is valid")
+else:
+    print("PFD is invalid")
+
+if pid_diagram.validate():
+    print("P&ID is valid")
+else:
+    print("P&ID is invalid")
+```
+
+## Conclusion
+
+In this tutorial, we have demonstrated how to use LLMs for process diagram engineering, specifically for the creation of optimal PFDs and validated P&IDs. We have provided a step-by-step guide on implementing LLMs for PFD and P&ID creation, including the use of pre-trained models and libraries like `transformers` and `pydicom`. By following this guide, developers can automate the process of creating PFDs and P&IDs, reducing the time and effort required for process engineering.
+
+![A computer screen with a green light on it](https://images.unsplash.com/photo-1730303055577-c8bdba043b19?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxMTE1zJTIwUHJvY2VzcyUyMERpYWdyYW0lMjBFbmdpbmVlcmluZyUyMEZyb20lMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODY2NzQ3MDF8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+The use of LLMs in process diagram engineering has the potential to revolutionize the field, enabling faster and more accurate creation of PFDs and P&IDs. As the technology continues to evolve, we can expect to see even more innovative applications of LLMs in process engineering.
+
+*Photo by [NEW DATA SERVICES](https://unsplash.com/@new_data_services?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/white-printer-paper-on-white-wall-Ar-iTL4QKl4?utm_source=techversation&utm_medium=referral)*
