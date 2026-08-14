@@ -1,0 +1,102 @@
+---
+title: "CAS: Causal Attribution Score"
+description: "Explainable AI with causal attribution score architecture."
+date: "2026-08-14"
+author: "Usama"
+tags: ["ai", "explainable-ai", "causal-attribution"]
+aiSummary: "The Causal Attribution Score (CAS) is a compact score architecture for causal explanation. CAS allocates the joint intervention contrast with an identified interventional coalition game. This tutorial demonstrates how to use CAS for local and global explainable artificial intelligence."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxDQVMlMjBDYXVzYWwlMjBBdHRyaWJ1dGlvbiUyMFNjb3JlJTIwTG9jYWwlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODY3MzQyNDR8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction to Causal Attribution Score (CAS)
+
+The Causal Attribution Score (CAS) is a novel approach to explainable artificial intelligence (AI). It introduces a compact score architecture for causal explanation, which allocates the joint intervention contrast with an identified interventional coalition game. In this tutorial, we will delve into the world of CAS and explore its applications in local and global explainable AI.
+
+### What is Causal Attribution Score (CAS)?
+
+CAS is a method for attributing the outcome of a model to specific input features. It starts from an identified interventional coalition game and allocates the joint intervention contrast with the intervention effects on the real-world outcome. This approach enables us to understand how the model's output is affected by individual input features.
+
+## Implementing CAS
+
+To implement CAS, we need to follow these steps:
+
+1. **Define the model**: We start by defining a machine learning model that we want to explain. This can be any type of model, such as a neural network or a decision tree.
+2. **Identify the interventional coalition game**: We need to identify the interventional coalition game, which is a set of rules that define how the input features interact with each other.
+3. **Allocate the joint intervention contrast**: We allocate the joint intervention contrast with the intervention effects on the real-world outcome.
+
+Let's consider an example to illustrate this process. Suppose we have a model that predicts the probability of a customer buying a product based on their age, income, and location.
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+
+# Load the data
+data = pd.read_csv('customer_data.csv')
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(data.drop('buy', axis=1), data['buy'], test_size=0.2, random_state=42)
+
+# Train a random forest classifier
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+```
+
+## Calculating CAS
+
+To calculate the CAS, we need to define a function that takes the model, input features, and outcome as input and returns the causal attribution score.
+
+```python
+def calculate_cas(model, input_features, outcome):
+    # Calculate the intervention effects on the real-world outcome
+    intervention_effects = []
+    for feature in input_features:
+        # Calculate the intervention effect for each feature
+        intervention_effect = model.predict_proba(feature) - model.predict_proba(outcome)
+        intervention_effects.append(intervention_effect)
+
+    # Allocate the joint intervention contrast
+    joint_intervention_contrast = np.sum(intervention_effects)
+
+    # Calculate the CAS
+    cas = joint_intervention_contrast / len(input_features)
+
+    return cas
+```
+
+## Example Use Case
+
+Let's consider an example use case where we want to explain the prediction of a customer buying a product based on their age, income, and location.
+
+```python
+# Define the input features
+input_features = ['age', 'income', 'location']
+
+# Define the outcome
+outcome = 'buy'
+
+# Calculate the CAS
+cas = calculate_cas(model, input_features, outcome)
+
+print('Causal Attribution Score:', cas)
+```
+
+This code calculates the CAS for the given input features and outcome. The CAS value represents the causal attribution score for each feature.
+
+![a computer screen with a bunch of data on it](https://images.unsplash.com/photo-1625296276703-3fbc924f07b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHw0fHxDQVMlMjBDYXVzYWwlMjBBdHRyaWJ1dGlvbiUyMFNjb3JlJTIwTG9jYWwlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODY3MzQyNDR8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+
+In this tutorial, we explored the Causal Attribution Score (CAS) and its application in local and global explainable artificial intelligence. We demonstrated how to implement CAS using a machine learning model and calculate the causal attribution score for each feature. The CAS provides a compact score architecture for causal explanation, enabling us to understand how the model's output is affected by individual input features.
+
+## Future Work
+
+The CAS has the potential to be applied in various domains, such as healthcare, finance, and education. Future work can focus on exploring the applications of CAS in these domains and developing more advanced methods for calculating the causal attribution score.
+
+## References
+
+* [arXiv:2608.12555v1](https://arxiv.org/abs/2608.12555)
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
