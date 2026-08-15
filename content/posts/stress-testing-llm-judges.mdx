@@ -1,0 +1,111 @@
+---
+title: "Stress Testing LLM Judges"
+description: "Evaluating epistemic stability with the Wiggle Framework"
+date: "2026-08-15"
+author: "Usama"
+tags: ["ai", "llm", "evaluation"]
+aiSummary: "The Wiggle Framework is a stress test for evaluating the epistemic stability of LLM judges. It assesses their performance under re-prompting, challenge, and sustained pushback. This tutorial provides a step-by-step guide to implementing the Wiggle Framework and evaluating LLM judges."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1618771623063-6c3faa854a61?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxKYWdnZWQlMjBKdWRnZXMlMjBFcGlzdGVtaWMlMjBTdGFiaWxpdHklMjBVbmRlciUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4Njc5ODMxMnww&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Large Language Models (LLMs) have become a crucial component in various applications, including model evaluations, online grading, and reward modeling. However, the accuracy of LLM judges is not sufficient to guarantee their stability under different scenarios. The Wiggle Framework, introduced in the paper "Jagged Judges: Epistemic Stability Under Silence, Pressure, and Persistence" ([arXiv:2608.12645](https://arxiv.org/abs/2608.12645)), provides a unified stress test for evaluating the epistemic stability of LLM judges.
+
+## Understanding the Wiggle Framework
+The Wiggle Framework consists of three main components:
+1. **Re-prompting**: This involves re-asking the same question with different phrasings or wording to assess the judge's consistency.
+2. **Challenge**: This component evaluates the judge's performance when faced with contradictory or misleading information.
+3. **Sustained pushback**: This tests the judge's ability to maintain its decision under repeated challenges or criticisms.
+
+### Implementing the Wiggle Framework
+To demonstrate the implementation of the Wiggle Framework, we will use a simple LLM judge that classifies text as either "positive" or "negative". We will use the Hugging Face Transformers library in Python to implement the LLM judge.
+
+```python
+import torch
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+# Load pre-trained LLM model and tokenizer
+model = AutoModelForSequenceClassification.from_pretrained("distilbert-base-uncased")
+tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
+
+# Define a function to classify text using the LLM judge
+def classify_text(text):
+    inputs = tokenizer(text, return_tensors="pt")
+    outputs = model(**inputs)
+    logits = outputs.logits
+    classification = torch.argmax(logits)
+    return classification
+```
+
+## Evaluating the LLM Judge with the Wiggle Framework
+To evaluate the LLM judge using the Wiggle Framework, we need to create a set of test cases that cover the three components of the framework.
+
+### Re-prompting
+We will create a set of re-prompted questions that ask the same thing but with different wording. For example:
+
+* Original question: "Is the movie good?"
+* Re-prompted question: "What is your opinion on the film?"
+* Re-prompted question: "Do you think the movie is worth watching?"
+
+```python
+# Define a list of re-prompted questions
+re_prompted_questions = [
+    "Is the movie good?",
+    "What is your opinion on the film?",
+    "Do you think the movie is worth watching?"
+]
+
+# Evaluate the LLM judge on the re-prompted questions
+for question in re_prompted_questions:
+    classification = classify_text(question)
+    print(f"Question: {question}, Classification: {classification}")
+```
+
+### Challenge
+We will create a set of challenging questions that provide contradictory or misleading information. For example:
+
+* Original question: "Is the movie good?"
+* Challenging question: "The movie received bad reviews, but I think it's good. What's your opinion?"
+
+```python
+# Define a list of challenging questions
+challenging_questions = [
+    "The movie received bad reviews, but I think it's good. What's your opinion?",
+    "I know the movie has a low rating, but I enjoyed it. Do you think it's worth watching?"
+]
+
+# Evaluate the LLM judge on the challenging questions
+for question in challenging_questions:
+    classification = classify_text(question)
+    print(f"Question: {question}, Classification: {classification}")
+```
+
+### Sustained Pushback
+We will create a set of questions that simulate sustained pushback by repeatedly challenging the LLM judge's decision.
+
+```python
+# Define a list of questions that simulate sustained pushback
+pushback_questions = [
+    "I know you think the movie is good, but what about the bad reviews?",
+    "But don't you think the movie is overrated?",
+    "I still don't think the movie is worth watching. Can you explain why you think it is?"
+]
+
+# Evaluate the LLM judge on the pushback questions
+for question in pushback_questions:
+    classification = classify_text(question)
+    print(f"Question: {question}, Classification: {classification}")
+```
+
+![a 3d image of a judge's hammer on a black background](https://images.unsplash.com/photo-1645570990200-2701a49d45ca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxKYWdnZWQlMjBKdWRnZXMlMjBFcGlzdGVtaWMlMjBTdGFiaWxpdHklMjBVbmRlciUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4Njc5ODMxMnww&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Conclusion
+The Wiggle Framework provides a comprehensive approach to evaluating the epistemic stability of LLM judges. By implementing the framework, developers can identify potential weaknesses in their LLM judges and improve their performance under different scenarios. The code examples provided in this tutorial demonstrate how to implement the Wiggle Framework using the Hugging Face Transformers library in Python.
+
+![the word justice written in black ink on a concrete surface](https://images.unsplash.com/photo-1680768807837-545880de1a9d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxKYWdnZWQlMjBKdWRnZXMlMjBFcGlzdGVtaWMlMjBTdGFiaWxpdHklMjBVbmRlciUyMHNjaWVuY2UlMjByZXNlYXJjaCUyMGRhdGF8ZW58MXwwfHx8MTc4Njc5ODMxMnww&ixlib=rb-4.1.0&q=80&w=1080)
+
+By following the steps outlined in this tutorial, developers can create more robust and reliable LLM judges that can withstand various challenges and provide accurate evaluations.
+
+*Photo by [Sasun Bughdaryan](https://unsplash.com/@sasun1990?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/judges-gavel-and-open-book-on-table-ozS0tPf8QT0?utm_source=techversation&utm_medium=referral)*
