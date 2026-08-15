@@ -1,0 +1,73 @@
+---
+title: "Attention is all you have"
+description: "Learn to work with 56,804 public agent skills using attention."
+date: "2026-08-15"
+author: "Usama"
+tags: ["ai", "skills", "attention"]
+aiSummary: "The number of public agent skills has reached 56,804, but the dominant delivery model is installation, leaving the long tail with no practical path to use. This post provides a step-by-step guide on how to work with these skills using attention. We will explore the concept of attention and its applications in skill delivery."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1705484229341-4f7f7519b718?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxza2lsbHMlMjBBdHRlbnRpb24lMjBhbGwlMjB5b3UlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODY3NzY2Mzd8MA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+The number of public agent skills has reached 56,804, and teams are writing many more privately. However, the dominant delivery model is installation, which means that once a skill is installed, its description remains in the system prompt, competing for fewer than 100 reliable trigger slots. This leaves the long tail with no practical path to use and forces teams' own playbooks to compete for the limited slots. In this post, we will explore the concept of attention and its applications in skill delivery.
+
+## What is Attention?
+Attention is a mechanism that allows models to focus on specific parts of the input data that are relevant to the task at hand. It is a key component of many state-of-the-art models, including transformers and language models. In the context of skill delivery, attention can be used to select the most relevant skills for a given task or prompt.
+
+![Woman working on laptop with charts and graphs.](https://images.unsplash.com/photo-1763038311036-6d18805537e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxza2lsbHMlMjBBdHRlbnRpb24lMjBhbGwlMjB5b3UlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODY3NzY2Mzd8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## How to Use Attention for Skill Delivery
+To use attention for skill delivery, we need to follow these steps:
+
+### Step 1: Define the Task or Prompt
+First, we need to define the task or prompt for which we want to select the most relevant skills. This can be a natural language prompt or a specific task that we want to accomplish.
+
+### Step 2: Create a Skill Embedding
+Next, we need to create a skill embedding that represents each skill in a dense vector space. This can be done using a variety of techniques, including word embeddings or skill-specific embeddings.
+
+### Step 3: Compute Attention Weights
+Once we have the skill embeddings, we can compute attention weights that represent the relevance of each skill to the task or prompt. This can be done using a attention mechanism, such as dot-product attention or multi-head attention.
+
+### Step 4: Select the Most Relevant Skills
+Finally, we can select the most relevant skills based on the attention weights. This can be done by sorting the skills by their attention weights and selecting the top-N skills.
+
+## Example Code
+Here is an example code snippet in Python that demonstrates how to use attention for skill delivery:
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+# Define the task or prompt
+task = "Write a tutorial on attention for skill delivery"
+
+# Create a skill embedding
+skill_embeddings = nn.Embedding(56804, 128)
+
+# Compute attention weights
+attention_weights = nn.MultiHeadAttention(128, 8)
+
+# Select the most relevant skills
+def select_skills(task, skill_embeddings, attention_weights):
+    # Compute attention weights
+    attention_weights = attention_weights(task, skill_embeddings.weight)
+
+    # Select the top-N skills
+    top_skills = torch.topk(attention_weights, 10)
+
+    return top_skills
+
+# Test the function
+top_skills = select_skills(task, skill_embeddings, attention_weights)
+print(top_skills)
+```
+## Conclusion
+In this post, we explored the concept of attention and its applications in skill delivery. We demonstrated how to use attention to select the most relevant skills for a given task or prompt. By using attention, we can improve the efficiency and effectiveness of skill delivery and provide a better experience for users.
+
+![Scrabble tiles spelling out the word statistics on a wooden surface](https://images.unsplash.com/photo-1705484229173-691d4fb8cd1a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxza2lsbHMlMjBBdHRlbnRpb24lMjBhbGwlMjB5b3UlMjBzY2llbmNlJTIwcmVzZWFyY2glMjBkYXRhfGVufDF8MHx8fDE3ODY3NzY2Mzd8MA&ixlib=rb-4.1.0&q=80&w=1080)
+
+Note: The code snippet provided is a simplified example and may need to be modified to work with your specific use case. Additionally, the attention mechanism used in the example is a multi-head attention mechanism, which is a type of attention mechanism that is commonly used in transformer models.
+
+*Photo by [Markus Winkler](https://unsplash.com/@markuswinkler?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/scrabble-tiles-spelling-out-the-word-data-on-a-wooden-surface-z6hKpyCuQME?utm_source=techversation&utm_medium=referral)*
