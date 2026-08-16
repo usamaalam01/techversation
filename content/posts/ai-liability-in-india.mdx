@@ -1,0 +1,70 @@
+---
+title: "AI Liability in India"
+description: "Examining consumer rights and AI liability in India."
+date: "2026-08-16"
+author: "Usama"
+tags: ["ai", "consumer-rights", "india"]
+aiSummary: "The Consumer Protection Act, 2019, in India addresses harm caused by defective AI products and services. This working paper examines the adequacy of the Act in allocating liability across the AI value chain. We will explore the implications of AI liability in India and provide a practical example of how to assess AI-related harm."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1780504863220-514ba37dcba0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxDb25zdW1lciUyMFJpZ2h0cyUyMEluZGlhJTIwV29ya2luZyUyMFBhcGVyJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg2ODQ0OTE3fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+As AI systems become increasingly prevalent in consumer-facing applications, questions about liability for AI-related harms remain unresolved. In India, the Consumer Protection Act, 2019, aims to address harm caused by defective products and services, including those related to AI. In this tutorial, we will delve into the implications of AI liability in India and provide a practical example of how to assess AI-related harm.
+
+## Background
+The Consumer Protection Act, 2019, in India provides a framework for consumer rights and liabilities. The Act defines a consumer as anyone who buys a product or service for personal use. In the context of AI, this means that consumers who use AI-powered products or services are protected under the Act. 
+
+![Indian currency rests on a map of india.](https://images.unsplash.com/photo-1751273907387-cf1f5d273960?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxDb25zdW1lciUyMFJpZ2h0cyUyMEluZGlhJTIwV29ya2luZyUyMFBhcGVyJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg2ODQ0OTE3fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+### AI Liability
+The question of AI liability is complex and has been debated by scholars and policymakers. In India, the Consumer Protection Act, 2019, allocates liability across the AI value chain, including manufacturers, sellers, and service providers. However, the Act does not specifically address AI-related harms, leaving room for interpretation.
+
+## Assessing AI-Related Harm
+To assess AI-related harm, we need to consider the following factors:
+
+* **Defect**: Was the AI product or service defective?
+* **Damage**: Did the defect cause damage to the consumer?
+* **Causation**: Was the damage caused by the defect?
+
+We can use a decision tree to illustrate the process of assessing AI-related harm. Here is an example implemented in Python:
+```python
+import pandas as pd
+
+# Define a decision tree
+def assess_ai_harm(defect, damage, causation):
+    if defect and damage and causation:
+        return "Liability established"
+    elif defect and damage and not causation:
+        return "Investigate further"
+    elif defect and not damage:
+        return "No harm found"
+    else:
+        return "No liability"
+
+# Create a sample dataset
+data = {
+    "Defect": [True, False, True, False],
+    "Damage": [True, True, False, False],
+    "Causation": [True, False, True, False]
+}
+df = pd.DataFrame(data)
+
+# Apply the decision tree
+df["Outcome"] = df.apply(lambda row: assess_ai_harm(row["Defect"], row["Damage"], row["Causation"]), axis=1)
+
+print(df)
+```
+This code defines a decision tree that takes into account the factors mentioned above and applies it to a sample dataset.
+
+## Conclusion
+In conclusion, the Consumer Protection Act, 2019, in India provides a framework for addressing harm caused by defective AI products and services. However, the Act does not specifically address AI-related harms, leaving room for interpretation. By using a decision tree to assess AI-related harm, we can provide a more structured approach to allocating liability across the AI value chain.
+
+![a man sitting in the back of a truck filled with books](https://images.unsplash.com/photo-1706038416148-59f92ceeedb2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwzfHxDb25zdW1lciUyMFJpZ2h0cyUyMEluZGlhJTIwV29ya2luZyUyMFBhcGVyJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg2ODQ0OTE3fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+For further reading, you can refer to the working paper on [arXiv](https://arxiv.org/abs/2608.12863). The paper provides a detailed analysis of the Consumer Protection Act, 2019, and its implications for AI liability in India. 
+
+Note: This tutorial is for educational purposes only and should not be considered as legal advice. If you have any specific questions or concerns about AI liability in India, please consult a qualified legal professional.
+
+*Photo by [Anurag Jamwal](https://unsplash.com/@aj4xo?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/vendor-weighing-items-at-a-vibrant-street-market-RxRXTEQYYSo?utm_source=techversation&utm_medium=referral)*
