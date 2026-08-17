@@ -1,0 +1,77 @@
+---
+title: "LLM Serving Evolution"
+description: "A year in LLM serving workload evolution and optimization techniques."
+date: "2026-08-17"
+author: "Usama"
+tags: ["llm", "serving", "optimization"]
+aiSummary: "Large Language Model serving has become a critical cloud workload. This post explores the evolution of LLM serving workloads and provides practical techniques for caching and load-balancing. We will discuss the importance of realistic traces and provide working code examples to demonstrate optimization strategies."
+category: "tutorials"
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwxfHxZZWFyJTIwTExNJTIwU2VydmluZyUyMFdvcmtsb2FkJTIwRXZvbHV0aW9uJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg2OTUwNTI1fDA&ixlib=rb-4.1.0&q=80&w=1080"
+draft: true
+---
+
+## Introduction
+Large Language Model (LLM) serving has become a critical cloud workload, and understanding the evolution of these workloads is essential for optimizing serving systems. In this post, we will explore the concept of LLM serving workload evolution and discuss practical techniques for caching and load-balancing. We will also provide working code examples to demonstrate these optimization strategies.
+
+## Understanding LLM Serving Workload Evolution
+LLM serving workloads are characterized by their dynamic and unpredictable nature. As users interact with models, the workload evolves over time, making it challenging to optimize serving systems. To better understand this evolution, it's essential to analyze realistic traces of LLM serving workloads. These traces can provide valuable insights into how users interact with models and help identify opportunities for optimization.
+
+![monitor screengrab](https://images.unsplash.com/photo-1560472354-b33ff0c44a43?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MzY4MzJ8MHwxfHNlYXJjaHwyfHxZZWFyJTIwTExNJTIwU2VydmluZyUyMFdvcmtsb2FkJTIwRXZvbHV0aW9uJTIwc2NpZW5jZSUyMHJlc2VhcmNoJTIwZGF0YXxlbnwxfDB8fHwxNzg2OTUwNTI1fDA&ixlib=rb-4.1.0&q=80&w=1080)
+
+## Caching Techniques for LLM Serving
+Caching is a widely used technique for optimizing LLM serving workloads. By storing frequently accessed data in a cache, serving systems can reduce the latency and improve the overall performance. Here is an example of how to implement a simple cache using Python:
+```python
+import functools
+
+def cache_results(func):
+    cache = {}
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        key = str(args) + str(kwargs)
+        if key in cache:
+            return cache[key]
+        result = func(*args, **kwargs)
+        cache[key] = result
+        return result
+    return wrapper
+
+@cache_results
+def expensive_computation(input_data):
+    # Simulate an expensive computation
+    import time
+    time.sleep(2)
+    return input_data * 2
+
+print(expensive_computation(10))  # Takes 2 seconds
+print(expensive_computation(10))  # Returns cached result
+```
+In this example, the `cache_results` decorator caches the results of the `expensive_computation` function. This way, if the function is called again with the same input, the cached result is returned instead of recomputing the result.
+
+## Load-Balancing Techniques for LLM Serving
+Load-balancing is another crucial technique for optimizing LLM serving workloads. By distributing the workload across multiple servers, serving systems can improve the overall performance and reduce the latency. Here is an example of how to implement a simple load-balancer using Python:
+```python
+import random
+
+class LoadBalancer:
+    def __init__(self, servers):
+        self.servers = servers
+
+    def get_server(self):
+        return random.choice(self.servers)
+
+# Create a list of servers
+servers = ["Server 1", "Server 2", "Server 3"]
+
+# Create a load-balancer
+load_balancer = LoadBalancer(servers)
+
+# Get a server from the load-balancer
+server = load_balancer.get_server()
+print(server)
+```
+In this example, the `LoadBalancer` class distributes the workload across multiple servers. The `get_server` method returns a randomly selected server from the list of available servers.
+
+## Conclusion
+In this post, we explored the concept of LLM serving workload evolution and discussed practical techniques for caching and load-balancing. We provided working code examples to demonstrate these optimization strategies. By understanding the evolution of LLM serving workloads and applying these techniques, developers can optimize their serving systems and improve the overall performance. For more information on LLM serving workloads, please refer to the [arXiv paper](https://arxiv.org/abs/2608.13573).
+
+*Photo by [Luke Chesser](https://unsplash.com/@lukechesser?utm_source=techversation&utm_medium=referral) on [Unsplash](https://unsplash.com/photos/graphs-of-performance-analytics-on-a-laptop-screen-JKUTrJ4vK00?utm_source=techversation&utm_medium=referral)*
